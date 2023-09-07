@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\tiendaController;
 
 /*
@@ -17,9 +14,11 @@ use App\Http\Controllers\tiendaController;
 |
 */
 
-Route::get('/', [tiendaController::class, 'home'])->name('pagina_inicio');
+Route::get('/home', [tiendaController::class, 'home'])->name('pagina_inicio');
+Route::get('/', [tiendaController::class, 'home']);
 
 Route::middleware(['auth'])->group(function(){
+    Route::get('/crud', [tiendaController::class, 'admin'])->name('ir_admin');
 });
 
 Auth::routes();
