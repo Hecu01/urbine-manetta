@@ -5,20 +5,22 @@ use App\Http\Controllers\tiendaController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Trabajo final PP3 
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Programadores: Luciana Manetta, Urbine Valentin
+| Curso: 3° Análisis de Sistemas
 |
 */
-
+// página de inicio
 Route::get('/home', [tiendaController::class, 'home'])->name('pagina_inicio');
 Route::get('/', [tiendaController::class, 'home']);
 
+// Rutas que acceden los registrados
 Route::middleware(['auth'])->group(function(){
     Route::get('/crud', [tiendaController::class, 'admin'])->name('ir_admin');
 });
-
+// Route::group(['middleware' => 'administrator'], function () {
+//     Rutas que solo los administradores pueden acceder. (incompleto)
+// });
 Auth::routes();

@@ -5,7 +5,7 @@
         @else
             <li class="nav-item dropdown  btn btn-success btn-sm" style="color: #fff">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff; height:25px; padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                Usuario: {{ Auth::user()->name }}
+                Admin: {{ Auth::user()->name }}
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -50,7 +50,9 @@
                     </ul>
                 </li>
             @else
-
+                <li class="nav-item">
+                    <a class="nav-link active" href=" {{ route('ir_admin') }} ">CRUD</a>
+                </li>
 
             @endguest
 
