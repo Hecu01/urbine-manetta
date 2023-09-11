@@ -18,7 +18,7 @@ Route::get('/', [tiendaController::class, 'home']);
 
 // Rutas que acceden los registrados
 Route::middleware(['auth'])->group(function(){
-    Route::get('/crud', [tiendaController::class, 'admin'])->name('ir_admin');
+    Route::get('/administrador', [tiendaController::class, 'admin'])->name('ir_admin');
 });
 // Route::group(['middleware' => 'administrator'], function () {
 //     Rutas que solo los administradores pueden acceder. (incompleto)
