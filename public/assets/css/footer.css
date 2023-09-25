@@ -1,0 +1,26 @@
+#footer-admin {
+  background-color: #0080db;
+  color: #fff;
+}
+#footer-admin div {
+  justify-content: space-between;
+}
+#footer-admin div .logo-y-nombre {
+  display: flex;
+  align-items: center;
+  margin: 0px 20px;
+}
+#footer-admin div .logo-y-nombre .imagen-logo img {
+  border: 3px solid #ffffff;
+  box-shadow: 0px 0px 3px #fff;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+}
+#footer-admin div .logo-y-nombre span {
+  margin: 0px 2px;
+  font-weight: 600;
+  font-size: 1.4em;
+  text-shadow: 0px 0px 1px #fff;
+  text-decoration: underline;
+}/*# sourceMappingURL=footer.css.map */

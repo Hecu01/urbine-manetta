@@ -12,6 +12,7 @@
     
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
     
     <!-- Fonts -->
     <!-- <link rel="dns-prefetch" href="//fonts.bunny.net"> -->
@@ -69,11 +70,11 @@
                             Valentin (admin)
                             </a>
             
-                            <div class="dropdown-menu dropdown-menu-end" style="margin-top: 8px;"  aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                    Logout
+                                    Destruír sesión
                                 </a>
             
                                 <form id="logout-form" action="" method="POST" class="d-none">
@@ -218,10 +219,22 @@
 
 
     <div class="section-principal d-flex " style="justify-content: space-between;">
-        <aside class="left-aside">
-            <h5>TiendaFit</h5>
+        <aside class="left-aside" id="left-aside">
+            <div class="foto-local-y-admin">
+                <div class="local">
+                    <img src="img/local.jpg" alt="" style="width: 100%;">
+                </div>
+                <div id="foto-admin">
+                    <img src="img/mi-foto.jpg" alt="foto de ..." >
+                </div>
+            </div>
+            <div class="mas-informacion">
+                <h3>TiendaFit</h3>
+                <span><i class="fa-solid fa-location-dot"></i> Casa central</span><br>
+                <span><i class="fa-solid fa-screwdriver-wrench"></i> Valentin Urbine</span>
+            </div>
         </aside>
-        <section class="row " style="padding-top: 5px;">
+        <section class="row" style="padding-top: 5px; justify-content: center;">
             <!-- Clientes activos -->
             <article class="article" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
@@ -234,7 +247,6 @@
                 </div>
                 <div class="bottom">
                     <p>Clientes activos</p>
-                    <a href="#" class="button-gestionar">Gestionar</a>
                 </div>
             </article>
             
@@ -250,11 +262,10 @@
                 </div>
                 <div class="bottom">
                     <p>Ventas realizadas</p>
-                    <a href="#" class="button-gestionar">Gestionar</a>
                 </div>
             </article>
             
-            <!-- Productos dieteticos -->
+            <!-- Sumplementos y dieta -->
             <article class="article article3" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
                     <span>
@@ -265,50 +276,86 @@
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Stock: sumplementos y dieta</p>
-                    <a href="#" class="button-gestionar">Gestionar</a>
+                    <p>Sumplementos y dieta</p>
                 </div>
             </article>
-            <!-- Productos dieteticos -->
-            <article class="article article3" onclick="alert('Te llevare a la tabla')">
+            
+            
+            <!-- Artículos deportivos -->
+            <article class="article article4" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
                     <span>
-                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-football"></i>
                     </span>
                     <span class="recuento">
-                        325k
+                        135
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Stock: sumplementos y dieta</p>
-                    <a href="#" class="button-gestionar">Gestionar</a>
+                    <p>Artículos deportivos</p>
                 </div>
             </article>
-            <!-- Productos dieteticos -->
-            <article class="article article3" onclick="alert('Te llevare a la tabla')">
+            
+                        
+            <!-- Ropa deportiva -->
+            <article class="article article5" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
                     <span>
-                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-shirt"></i>
                     </span>
                     <span class="recuento">
-                        325k
+                        13k
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Stock: sumplementos y dieta</p>
-                    <a href="#" class="button-gestionar">Gestionar</a>
+                    <p>Ropa deportiva</p>
                 </div>
             </article>
 
+            <!-- Productos dieteticos -->
+            <article class="article article6" onclick="alert('Te llevare a la tabla')">
+                <div class="top">
+                    <span>
+                        <i class="fa-solid fa-truck"></i>
+                    </span>
+                    <span class="recuento">
+                        459
+                    </span>
+                </div>
+                <div class="bottom">
+                    <p>Pedidos para reponer mercadería</p>
+                </div>
+            </article>
 
-            
-            
-            
         </section>
-        <aside class="left-aside" style="margin-left: 30px;">
+        <aside class="right-aside" id="right-aside">
             <h5>TiendaFit</h5>
         </aside>
     </div>
+    <footer class="navbar" id="footer-admin" style="height:350px">
+        <div class="informacion-footer">
+    
+            <div class="center">
+    
+                <!-- Logo y nombre -->
+                <div class="logo-y-nombre">
+                    <div class="imagen-logo">
+                        <img src="img/logo.png" alt="" draggable="false">
+                    </div>
+                    <span>
+                        TiendaFit
+                    </span>
+                </div>
+            </div>
+    
+            <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit, doloribus. Eum quia cumque repellendus atque corrupti laudantium, excepturi autem, nulla libero corporis harum doloribus sunt vero. Totam aut dicta non?
+            </span>
+    
+    
+        </div>
+        
+    </footer>
     <script>
         // mostrar imagen en el form
         function previewImage(event, querySelector){

@@ -80,8 +80,26 @@
 }
 
 .section-principal aside {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  width: 200px;
+  width: 320px;
+  box-shadow: 0px 0px 3px #000;
+  background: rgba(255, 166, 0, 0.0901960784);
+}
+.section-principal #left-aside {
+  width: 320px;
+}
+.section-principal #left-aside {
+  box-shadow: 1px 1px 3px #000;
+  height: -moz-min-content;
+  height: min-content;
+  padding-bottom: 15px;
+  font-family: sans-serif;
+  width: 320px;
+}
+.section-principal #left-aside .mas-informacion h3 {
+  margin: 0px 3px;
+}
+.section-principal #left-aside .mas-informacion span {
+  margin: 0px 5px;
 }
 .section-principal section .article {
   cursor: pointer;
@@ -89,10 +107,9 @@
   border-radius: 20px;
   background-color: rgb(0, 68, 255);
   border: 1px solid rgb(0, 68, 255);
-  box-shadow: 0px 0px 15px rgb(0, 68, 255);
-  margin: 10px;
-  margin-left: 30px;
-  width: 260px;
+  box-shadow: 0px 0px 5px rgb(0, 0, 0);
+  margin: 10px 14px;
+  width: 240px;
   height: 150px;
   transition: all 0.3s;
 }
@@ -115,8 +132,10 @@
 .section-principal section .article .bottom a {
   text-decoration: none;
   position: absolute;
-  left: 155px;
+  left: 150px;
+  top: 50px;
   color: #cecece;
+  font-size: 0.9em;
 }
 .section-principal section .article:hover {
   transform: scale(1.03);
@@ -124,10 +143,37 @@
 .section-principal section .article2 {
   background-color: rgb(0, 165, 8);
   border: 1px solid rgb(0, 165, 8);
-  box-shadow: 0px 0px 15px rgb(0, 165, 8);
 }
 .section-principal section .article3 {
   background-color: rgb(25, 101, 189);
   border: 1px solid rgb(25, 101, 189);
-  box-shadow: 0px 0px 15px rgb(25, 101, 189);
+}
+.section-principal section .article4 {
+  background-color: rgb(16, 153, 163);
+  border: 1px solid rgb(16, 153, 163);
+}
+.section-principal section .article5 {
+  background-color: rgb(16, 163, 102);
+  border: 1px solid rgb(16, 163, 102);
+}
+.section-principal section .article6 {
+  background-color: rgb(192, 192, 0);
+  border: 1px solid rgb(204, 204, 0);
+}
+
+.foto-local-y-admin {
+  position: relative;
+  width: 230px;
+}
+
+#foto-admin {
+  position: absolute;
+  top: 100px;
+  left: 135px;
+}
+#foto-admin img {
+  border: 2px solid #fff;
+  width: 75px;
+  height: 75px;
+  box-shadow: 0px 0px 1px #000;
 }/*# sourceMappingURL=style.css.map */
