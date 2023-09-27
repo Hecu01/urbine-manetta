@@ -37,7 +37,6 @@
 #navigator-admin div .logo-y-nombre {
   display: flex;
   align-items: center;
-  margin: 0px 20px;
 }
 #navigator-admin div .logo-y-nombre .imagen-logo img {
   border: 3px solid #ffffff;
@@ -55,10 +54,18 @@
 }
 #navigator-admin div .usuario-logueado {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  height: 30px;
+}
+#navigator-admin div .usuario-logueado .invitado {
+  margin-right: -55px;
+}
+#navigator-admin div .usuario-logueado .invitado a {
+  margin-top: -15px;
 }
 #navigator-admin div .usuario-logueado ul {
   margin-top: 10px;
+  padding: 0;
 }
 #navigator-admin div .usuario-logueado .ayuda {
   margin-bottom: 7.5px;
@@ -78,6 +85,19 @@
 #navigator-admin div .left .direccion {
   margin-left: 20px;
 }
+#navigator-admin .bottom-nav {
+  margin-top: 5px;
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+}
+#navigator-admin .bottom-nav ul {
+  display: flex;
+  align-items: flex-end;
+}
+#navigator-admin .bottom-nav ul li {
+  margin: 0px 10px;
+}
 
 .section-principal aside {
   width: 320px;
@@ -85,15 +105,12 @@
   background: rgba(255, 166, 0, 0.0901960784);
 }
 .section-principal #left-aside {
-  width: 320px;
-}
-.section-principal #left-aside {
   box-shadow: 1px 1px 3px #000;
   height: -moz-min-content;
   height: min-content;
   padding-bottom: 15px;
   font-family: sans-serif;
-  width: 320px;
+  width: 350px;
 }
 .section-principal #left-aside .mas-informacion h3 {
   margin: 0px 3px;
@@ -160,6 +177,10 @@
   background-color: rgb(192, 192, 0);
   border: 1px solid rgb(204, 204, 0);
 }
+.section-principal section .not-defined {
+  background-color: rgb(67, 67, 67);
+  border: 1px solid rgb(67, 67, 67);
+}
 
 .foto-local-y-admin {
   position: relative;
@@ -176,4 +197,9 @@
   width: 75px;
   height: 75px;
   box-shadow: 0px 0px 1px #000;
+}
+
+#right-aside .mas-informacion {
+  padding: 5px;
+  width: 290px;
 }/*# sourceMappingURL=style.css.map */

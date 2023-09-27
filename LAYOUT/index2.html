@@ -23,17 +23,17 @@
     <title>Crud</title>
 </head>
 <body>
-    <!-- Si es admin, podrá acceder al crud, sino, no. -->
+    <!-- Si es usuarioooo (no accedera al crud) -->
     <nav class="navbar   " id="navigator-admin">
         <div class="container-fluid">
-            <div class="left d-flex">
+            <div class="left">
                 <!-- Botón barra -->
-                <button class="button-left " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <!-- <button class="button-left mt-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <i class="fa-solid fa-bars"></i>
                     
-                </button>
+                </button> -->
  
-                <!-- Direccion -->
+                <!-- Direccion
                 <div class="direccion mt-1">
                     <span class="svg-home">
                         <i class="fa-solid fa-house"></i>
@@ -43,7 +43,38 @@
                         TiendaFit, Casa central.
                     </span>
                     
+                </div> -->
+                
+                <!-- Usuario Logueado -->
+                <div class="usuario-logueado mt-1" >
+                    <ul>
+                        <li class="nav-item dropdown  " style="color: #fff; list-style: none; ">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff;  padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <span>
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            Valentin
+                            </a>
+            
+                            <div class="dropdown-menu dropdown-menu-end invitado" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    Destruír sesión
+                                </a>
+            
+                                <form id="logout-form" action="" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li> 
+                    </ul>
+                    <span class="ayuda mt-1" title="Ayuda" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </span>
+
                 </div>
+    
             </div>
             <div class="center">
 
@@ -59,38 +90,6 @@
             </div>
             <div class="right d-flex">
 
-                <!-- Usuario Logueado -->
-                <div class="usuario-logueado">
-                    <ul>
-                        <li class="nav-item dropdown  " style="color: #fff; list-style: none; margin-top: -5px;">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff; height:20px; padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <span>
-                                <i class="fa-solid fa-user"></i>
-                            </span>
-                            Valentin (admin)
-                            </a>
-            
-                            <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#"
-                                    onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                    Destruír sesión
-                                </a>
-            
-                                <form id="logout-form" action="" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li> 
-                    </ul>
-                    <span class="ayuda" title="Ayuda" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="fa-regular fa-circle-question"></i>
-                    </span>
-                    <span class="ayuda mx-2" title="Notificaciones" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                        <i class="fa-solid fa-bell"></i>
-                    </span>
-                </div>
-    
                 <!-- Búsqueda -->
                 <div class="busqueda">
                     <form class="d-flex">
@@ -128,9 +127,24 @@
                 <!-- <form class="d-flex">
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> -->
-            </div>
-
+                </form> 
+            </div>-->
+            
+        </div>
+        <div class="bottom-nav">
+            <ul>
+                <li><a href="">Inicio</a></li>
+                <li><a href="">Hombres</a></li>
+                <li><a href="">Mujeres</a></li>
+                <li><a href="">Niños/as</a></li>
+                <li><a href="">Fútbol</a></li>
+                <li><a href="">Rugby</a></li>
+                <li><a href="">Handball</a></li>
+                <li><a href="">Natación</a></li>
+                <li><a href="">Voley</a></li>
+                <li><a href="">Running</a></li>
+                <li><a href="">Hockey</a></li>
+            </ul>
         </div>
         
     </nav>

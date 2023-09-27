@@ -37,8 +37,7 @@
         .logo-y-nombre{
             display: flex;
             align-items: center;
-            
-            
+            margin: 0px 20px;
             .imagen-logo{
                 img{
                     border: 3px solid #ffffff;
@@ -58,17 +57,9 @@
         }
         .usuario-logueado{
             display: flex;
-            align-items: center;
-            height: 30px;
-            .invitado{
-                margin-right: -55px;
-                a{
-                    margin-top: -15px;
-                }
-            }
+            align-items: flex-end;
             ul{
                 margin-top: 10px;
-                padding: 0;
             }
             .ayuda{
 
@@ -93,19 +84,6 @@
         .left{
             .direccion{
                 margin-left: 20px;
-            }
-        }
-    }
-    .bottom-nav{
-        margin-top: 5px;
-        height: 30px;
-        background-color: rgb(255, 255, 255);
-        width: 100%;
-        ul{
-            display: flex;
-            align-items: flex-end;
-            li{
-                margin: 0px 10px;
             }
         }
     }

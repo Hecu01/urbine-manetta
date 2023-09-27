@@ -2,25 +2,27 @@
   background-color: #0080db;
   color: #fff;
 }
-#footer-admin div {
-  justify-content: space-between;
+#footer-admin .informacion-footer {
+  width: 300px;
+  margin: 10px;
+  margin-left: 30px;
 }
-#footer-admin div .logo-y-nombre {
+#footer-admin .informacion-footer .logo-y-nombre {
   display: flex;
   align-items: center;
-  margin: 0px 20px;
+  margin-bottom: 10px;
 }
-#footer-admin div .logo-y-nombre .imagen-logo img {
+#footer-admin .informacion-footer .logo-y-nombre .imagen-logo img {
   border: 3px solid #ffffff;
   box-shadow: 0px 0px 3px #fff;
   border-radius: 100%;
-  width: 40px;
-  height: 40px;
+  width: 110px;
+  height: 110px;
 }
-#footer-admin div .logo-y-nombre span {
+#footer-admin .informacion-footer .logo-y-nombre span {
   margin: 0px 2px;
   font-weight: 600;
-  font-size: 1.4em;
+  font-size: 2.4em;
   text-shadow: 0px 0px 1px #fff;
   text-decoration: underline;
 }/*# sourceMappingURL=footer.css.map */
