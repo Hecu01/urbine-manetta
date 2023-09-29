@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('section-principal')
+
+
     {{-- @include('partials/admin/formulario1') --}}
     <div class="section-principal d-flex " style="justify-content: space-between;">
         <aside class="left-aside" id="left-aside">

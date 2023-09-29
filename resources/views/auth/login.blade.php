@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('section-principal')    
-    <div class="container mt-5">
+    <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">{{ __('Inicio de sesión') }}</div>
 
