@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fecha de Nacimiento</title>
+</head>
+<body>
+    <form>
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input type="text" id="fechaNacimiento" placeholder="DD/MM/AAAA" maxlength="10" required>
+        <input type="submit" value="Enviar">
+    </form>
+
+    <script>
+        // Función para agregar la diagonal automáticamente
+        document.getElementById('fechaNacimiento').addEventListener('input', function (e) {
+            var input = e.target;
+            var value = input.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
+            var formattedValue = '';
+            
+            if (value.length > 0) {
+                formattedValue = value.substring(0, 2);
+            }
+            
+            if (value.length >= 2) {
+                formattedValue += '/' + value.substring(2, 4);
+            }
+            
+            if (value.length >= 4) {
+                formattedValue += '/' + value.substring(4, 8);
+            }
+            
+            input.value = formattedValue;
+        });
+    </script>
+</body>
+</html>
