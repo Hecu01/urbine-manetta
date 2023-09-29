@@ -9,7 +9,7 @@
                     <img src="{{asset('assets/img/logo.png')}} " alt="" draggable="false">
                 </div>
                 <span>
-                    TiendaFit
+                    Sportivo
                 </span>
             </div>
         </div>

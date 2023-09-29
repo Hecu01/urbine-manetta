@@ -1,0 +1,101 @@
+#navigator-usuario {
+  background-color: rgb(0, 128, 219);
+  color: #fff;
+}
+#navigator-usuario div {
+  justify-content: space-between;
+  /* Direccion */
+}
+#navigator-usuario div .button-left {
+  height: 33px;
+  width: 33px;
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px;
+  font-size: 1.3em;
+  background-color: #0080db;
+}
+#navigator-usuario div .button-left i {
+  color: #fff;
+}
+#navigator-usuario div .button-left:hover {
+  transform: scale(1.2);
+  text-shadow: 0px 0px 2px #fff;
+  transition: all 0.2s ease-out;
+}
+#navigator-usuario div .direccion {
+  position: relative;
+  display: flex;
+}
+#navigator-usuario div .direccion .svg-home {
+  color: #fff;
+}
+#navigator-usuario div .direccion .address {
+  margin-left: 5px;
+  margin-top: 2px;
+}
+#navigator-usuario div .logo-y-nombre {
+  display: flex;
+  align-items: center;
+}
+#navigator-usuario div .logo-y-nombre .imagen-logo img {
+  border: 3px solid #ffffff;
+  box-shadow: 0px 0px 3px #fff;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+}
+#navigator-usuario div .logo-y-nombre span {
+  margin: 0px 2px;
+  font-weight: 600;
+  font-size: 1.4em;
+  text-shadow: 0px 0px 1px #fff;
+  text-decoration: underline;
+}
+#navigator-usuario div .usuario-logueado {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+#navigator-usuario div .usuario-logueado .invitado {
+  margin-right: -55px;
+}
+#navigator-usuario div .usuario-logueado .invitado a {
+  margin-top: -15px;
+}
+#navigator-usuario div .usuario-logueado ul {
+  margin-top: 10px;
+  padding: 0;
+}
+#navigator-usuario div .usuario-logueado .ayuda {
+  margin-bottom: 7.5px;
+  margin-left: 5px;
+}
+#navigator-usuario div .usuario-logueado .ayuda i {
+  font-size: 1.1rem;
+}
+#navigator-usuario div .usuario-logueado .ayuda :hover {
+  cursor: pointer;
+  color: #cecece;
+  transition: all 0.2s;
+}
+#navigator-usuario div .right .busqueda {
+  margin-left: 50px;
+}
+#navigator-usuario div .left .direccion {
+  margin-left: 20px;
+}
+#navigator-usuario .bottom-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+}
+#navigator-usuario .bottom-nav ul {
+  display: flex;
+  align-items: flex-end;
+}
+#navigator-usuario .bottom-nav ul li {
+  margin: 0px 10px;
+}/*# sourceMappingURL=nav-usuario.css.map */

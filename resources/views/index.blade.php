@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('section-principal')
-    <div class="row" style="background: url({{ asset('assets/img/background.jpg')}}) no-repeat center/cover; height:auto; padding-bottom:20px">
-        <div class="d-flex justify-content-center">
+    <div class="row" style=" height:auto; padding-bottom:20px; height:500px">
+        {{-- <div class="d-flex justify-content-center">
 
             <article>
                 <div class="card" style="width: 18rem;">
@@ -45,6 +45,7 @@
                 
                 </div>
             </article>
-        </div>
+        </div> --}}
+
     </div>
 @endsection

@@ -9,9 +9,10 @@
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         
-        <!-- STYLE CSS -->
+        <!-- Style CSS -->
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/nav-usuario.css') }}">
         
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -24,25 +25,34 @@
         <title>{{ isset($title) ? $title : 'Sitio Web' }}</title>
     </head>
     <body>
+
+        
         <!-- Si es admin, podrá acceder al crud, sino, no. -->
         @guest 
             <x-nav-public/>
         @else    
             @if (Auth::user()->administrator == false)
-                <x-nav-public/>
+                <x-nav-usuario/>
             @else
                 {{-- <x-nav-admin/> --}}
-                <x-new-nav-admin/>
+                <x-nav-admin/>
             @endif
         @endguest 
-        <div class="">
 
+        <div class="">
             <section>
                 @yield('section-principal')
             </section>
         </div>
         <x-footer/>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
+
+
+
+
+
+        
     </body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </html>

@@ -37,6 +37,7 @@
 #navigator-admin div .logo-y-nombre {
   display: flex;
   align-items: center;
+  margin: 0px 20px;
 }
 #navigator-admin div .logo-y-nombre .imagen-logo img {
   border: 3px solid #ffffff;
@@ -54,18 +55,10 @@
 }
 #navigator-admin div .usuario-logueado {
   display: flex;
-  align-items: center;
-  height: 30px;
-}
-#navigator-admin div .usuario-logueado .invitado {
-  margin-right: -55px;
-}
-#navigator-admin div .usuario-logueado .invitado a {
-  margin-top: -15px;
+  align-items: flex-end;
 }
 #navigator-admin div .usuario-logueado ul {
   margin-top: 10px;
-  padding: 0;
 }
 #navigator-admin div .usuario-logueado .ayuda {
   margin-bottom: 7.5px;
@@ -84,19 +77,6 @@
 }
 #navigator-admin div .left .direccion {
   margin-left: 20px;
-}
-#navigator-admin .bottom-nav {
-  margin-top: 5px;
-  height: 30px;
-  background-color: rgb(255, 255, 255);
-  width: 100%;
-}
-#navigator-admin .bottom-nav ul {
-  display: flex;
-  align-items: flex-end;
-}
-#navigator-admin .bottom-nav ul li {
-  margin: 0px 10px;
 }
 
 .section-principal aside {
@@ -202,4 +182,4 @@
 #right-aside .mas-informacion {
   padding: 5px;
   width: 290px;
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style backup.css.map */
