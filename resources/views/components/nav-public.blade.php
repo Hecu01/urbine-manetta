@@ -72,20 +72,29 @@
             <div class="usuario-logueado mt-1" >
 
                 @guest
+                    <span class="mx-1">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    </div>
 
-                    <li class="nav-item dropdown d-block mx-2">
+                    <span class="mx-1">
+                        <i class="fa-solid fa-sun"></i>
+                    </span>
+
+                    {{-- <li class="nav-item dropdown d-block mx-2">
                         <a class="nav-link " href="{{ route('login') }}" id="navbarDropdown">
-                        Iniciar sesión 
+                            Iniciar sesión 
                         </a>
-
                     </li>
                     <li class="nav-item dropdown d-block mx-2">
                         <a class="nav-link " href="{{ route('register') }}" id="navbarDropdown" >
-                        Registrarme
+                            Registrarme
                         </a>
-
-                    </li>
-                @else @endguest
+                    </li> --}}
+                @else 
+                @endguest
 
 
 
@@ -105,6 +114,17 @@
             </div>
         </div>
         <div class="right d-flex">
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
+                    ES /
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
 
             <!-- Búsqueda -->
             <div class="busqueda">
@@ -114,19 +134,7 @@
                 </form>
             </div>
         </div>
-        <!-- Sale por la izquierda -->
-        <div class="offcanvas offcanvas-start" style="width: 300px;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navegacion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div>
-                    Hola soy hecu
-                </div>
 
-            </div>
-        </div>
 
         
     </div>

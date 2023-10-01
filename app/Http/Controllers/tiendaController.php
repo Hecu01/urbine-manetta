@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class tiendaController extends Controller
 {
     public function home(){
-        $title = "Tienda - Inicio";
+        $title = "Sportivo - Inicio";
         return view('index', compact('title'));
     }
     public function admin(){
@@ -17,7 +17,7 @@ class tiendaController extends Controller
         if (!Auth::check() || !Auth::user()->administrator) {
             return redirect()->route('pagina_inicio'); 
         }
-        $title = "Tienda - Admin";
+        $title = "Sportivo - Admin";
         return view('admin.admin', compact('title'));
     }
 }

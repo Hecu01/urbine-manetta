@@ -34,7 +34,6 @@
             @if (Auth::user()->administrator == false)
                 <x-nav-usuario/>
             @else
-                {{-- <x-nav-admin/> --}}
                 <x-nav-admin/>
             @endif
         @endguest 
