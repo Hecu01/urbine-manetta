@@ -1,68 +1,19 @@
 $color-primario: rgb(0,128,219);
+$form-switch-checked-color: rgb(0,0,0);
 
 #navigator-usuario{
     background-color: $color-primario;
     color: #fff;
+    
 
-    div{
+    #top-navigator{
         justify-content: space-between;
-        .button-left{
-
-            height: 33px;
-            width: 33px;
-            border: none;
-            border-radius: 10px;
-            margin-right: 10px;
-            font-size: 1.3em;
-            background-color: #0080db;
-            i{
-                color: #fff;
-            }
-        }
-        .button-left:hover{
-            transform: scale(1.2);
-            text-shadow: 0px 0px 2px #fff;
-            transition: all 0.2s ease-out;
-        }
-        /* Direccion */
-        .direccion{
-            position: relative;
-            display: flex;
-            .svg-home{
-                color: #fff;
-            }
-            .address{
-                margin-left: 5px;
-                margin-top: 2px;
-            }
-        }
-        // Logo y nombre
-        .logo-y-nombre{
-            display: flex;
-            align-items: center;
-            
-            
-            .imagen-logo{
-                img{
-                    border: 3px solid #ffffff;
-                    box-shadow: 0px 0px 3px #fff;
-                    border-radius: 100%;
-                    width: 40px;
-                    height: 40px;
-                }
-            }
-            span{
-                margin: 0px 2px;
-                font-weight: 600;
-                font-size: 1.4em;
-                text-shadow: 0px 0px 1px #fff;
-                text-decoration: underline;
-            }
-        }
+        align-items: center;
+        padding-top: 0px;
+        // Usuario logueado
         .usuario-logueado{
             display: flex;
-            align-items: center;
-            height: 30px;
+            margin-bottom: 5px;
             .invitado{
                 margin-right: -55px;
                 a{
@@ -88,30 +39,114 @@ $color-primario: rgb(0,128,219);
             }
             
         }
+        // Logo y nombre
+        .logo-y-nombre{
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            
+            .imagen-logo{
+                img{
+                    border: 3px solid #ffffff;
+                    box-shadow: 0px 0px 3px #fff;
+                    border-radius: 100%;
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            span{
+                margin: 0px 2px;
+                font-weight: 600;
+                font-size: 1.4em;
+                text-shadow: 0px 0px 1px #fff;
+                text-decoration: underline;
+            }
+        }
         .right{
-            .busqueda{
-                margin-left: 50px;
-            }
-        }
-        .left{
-            .direccion{
-                margin-left: 20px;
-            }
-        }
-    }
+            display: flex;
+            justify-content: flex-end;
+            height: 45px;
+            // Cambiart de tema claro a oscuro, y viceversa.
+            #contenedor-switch-cambio-tema{
+                background: #353535; 
+                color:#fff; 
+                padding: 5px; 
+                border-radius:30px; 
+                margin-bottom: 5px;
 
+                #form-switch{
+                    margin-left: 8px; 
+                    margin-top: 2px;
+                    color: black;
+
+                }
+            }
+
+            // Cambiar idioma.
+            #contenedor-dropdown-idiomas{
+                background: #353535; color:#fff; 
+                padding:5px;
+                padding-bottom:7px;  
+                margin-bottom: 5px;
+                right: 0em;
+
+                #dropdown-idiomas{
+                    background-color: #353535;
+                    margin-top: 6px;
+                    left: -3.9em;
+                    min-width:130px;
+                    :hover{
+                        background: rgb(11, 122, 173);
+                    }
+                    li:hover{
+                        background: rgb(11, 122, 173);
+                    }
+
+                }
+            }
+        }
+        // .left{
+        //     .direccion{
+        //         margin-left: 20px;
+        //     }
+        // }
+    }
+    // Fondo blanco, ancor azules
     .bottom-nav{
         display: flex;
         justify-content: center;
-        margin-top: 5px;
+        align-items: center;
 
+        height: 43px;
+        padding-bottom: 0px;
+        padding-top: 8px;
         background-color: rgb(255, 255, 255);
+        width: 100%;
         ul{
             display: flex;
             align-items: flex-end;
+            flex-wrap: wrap;
             li{
                 margin: 0px 10px;
             }
         }
     }
+
+
+
+
+    .bottom-bottom-nav{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        #carrito-de-compras{
+            font-size: 1.2em;
+            margin: 12px 15px 0px 0px;
+            
+        }
+        .busqueda{
+            margin: 8px 0px 0px 0px;
+        }
+    }
 }
+

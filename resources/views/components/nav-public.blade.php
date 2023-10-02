@@ -65,25 +65,43 @@
 
 
 <!-- Si es usuarioooo (no accedera al crud) -->
-<nav class="navbar   " id="navigator-usuario">
+<nav class="navbar" id="navigator-usuario">
     <div class="container-fluid">
         <div class="left">
-            <!-- Usuario Logueado -->
             <div class="usuario-logueado mt-1" >
 
                 @guest
-                    <span class="mx-1">
-                        <i class="fa-solid fa-user"></i>
-                    </span>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <div class="dropdown mx-3">
+                        <a href="#" class="dropdown-toggle comun_ancor" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
+                            Usuarios
+                            <i class="fa-solid fa-user"></i>
+
+                        </a>
+
+                        <ul class="dropdown-menu ">
+                            <li><a class="dropdown-item" href="{{ route('login') }}">Iniciar sesión</a></li>
+                            <li><a class="dropdown-item" href="{{ route('register') }}">Registrarme</a></li>
+                        </ul>
                     </div>
 
-                    <span class="mx-1">
-                        <i class="fa-solid fa-sun"></i>
-                    </span>
 
-                    {{-- <li class="nav-item dropdown d-block mx-2">
+
+                    <div class="d-flex">
+                        <span class="">
+                            <i class="fa-solid fa-sun"></i>
+                        </span>
+                        <div class="form-check form-switch" style="margin-left: 8px">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        </div>
+                        <span class="">
+                            <i class="fa-solid fa-moon"></i>
+                        </span>
+                    </div>
+
+  
+
+                    {{-- 
+                    <li class="nav-item dropdown d-block mx-2">
                         <a class="nav-link " href="{{ route('login') }}" id="navbarDropdown">
                             Iniciar sesión 
                         </a>
@@ -92,7 +110,8 @@
                         <a class="nav-link " href="{{ route('register') }}" id="navbarDropdown" >
                             Registrarme
                         </a>
-                    </li> --}}
+                    </li> 
+                    --}}
                 @else 
                 @endguest
 
@@ -115,7 +134,7 @@
         </div>
         <div class="right d-flex">
             <div class="dropdown">
-                <a href="#" class="dropdown-toggle" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="dropdown-toggle comun_ancor" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
                     ES /
                 </a>
 
@@ -129,7 +148,7 @@
             <!-- Búsqueda -->
             <div class="busqueda">
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
+                    <input class="form-control me-2" type="search" placeholder="Búsqueda" aria-label="Search" >
                     <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>

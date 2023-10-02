@@ -70,7 +70,7 @@
             <!-- Búsqueda -->
             <div class="busqueda">
                 <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
+                    <input class="form-control me-2" type="search" placeholder="Búsqueda" aria-label="Search" >
                     <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>

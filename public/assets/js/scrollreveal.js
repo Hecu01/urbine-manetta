@@ -1,0 +1,1 @@
+// ScrollReveal().reveal('.mensaje-bienvenida', { delay: 500 }); (FUNCIONA)

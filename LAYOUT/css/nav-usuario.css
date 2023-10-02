@@ -4,6 +4,7 @@
 }
 #navigator-usuario div {
   justify-content: space-between;
+  align-items: center;
   /* Direccion */
 }
 #navigator-usuario div .button-left {
@@ -55,7 +56,6 @@
 #navigator-usuario div .usuario-logueado {
   display: flex;
   align-items: center;
-  height: 30px;
 }
 #navigator-usuario div .usuario-logueado .invitado {
   margin-right: -55px;
@@ -80,15 +80,15 @@
   transition: all 0.2s;
 }
 #navigator-usuario div .right .busqueda {
-  margin-left: 50px;
-}
-#navigator-usuario div .left .direccion {
-  margin-left: 20px;
+  margin: 0;
 }
 #navigator-usuario .bottom-nav {
   display: flex;
   justify-content: center;
+  align-content: center;
   margin-top: 5px;
+  height: 30px;
+  padding-top: 13px;
   background-color: rgb(255, 255, 255);
   width: 100%;
 }
@@ -98,4 +98,28 @@
 }
 #navigator-usuario .bottom-nav ul li {
   margin: 0px 10px;
+}
+#navigator-usuario #contenedor-switch-cambio-tema {
+  background: #353535;
+  color: #fff;
+  padding: 5px;
+  border-radius: 30px;
+  position: absolute;
+  top: 100px;
+  box-shadow: 3px 3px 3px #000;
+}
+#navigator-usuario #contenedor-switch-cambio-tema #form-switch {
+  margin-left: 8px;
+  margin-top: 4px;
+  color: black;
+}
+#navigator-usuario #contenedor-dropdown-idiomas {
+  background: #353535;
+  color: #fff;
+  padding: 5px;
+  padding-bottom: 7px;
+  position: absolute;
+  top: 100px;
+  box-shadow: 3px 3px 3px #000;
+  right: 0em;
 }/*# sourceMappingURL=nav-usuario.css.map */

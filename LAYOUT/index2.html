@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- STYLE CSS -->
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/nav-usuario.css">
     <link rel="stylesheet" href="css/footer.css">
     
@@ -20,99 +21,178 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Scripts -->
     <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
-    <title>Crud</title>
+    <title>Index</title>
 </head>
 <body>
+
     <!-- Si es usuarioooo (no accedera al crud) -->
-    <nav class="navbar   " id="navigator-usuario">
+    <nav class="navbar" id="navigator-usuario">
         <div class="container-fluid">
             <div class="left">
                 <!-- Usuario Logueado -->
-                <div class="usuario-logueado mt-1" >
-                    <ul>
-                        <li class="nav-item dropdown  " style="color: #fff; list-style: none; ">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff;  padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <div class="usuario-logueado" >
+
+                    <li class="nav-item dropdown  " style="color: #fff; list-style: none; margin-top: -5px;">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff; height:20px; padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <span>
                                 <i class="fa-solid fa-user"></i>
                             </span>
-                            Valentin
+                            Usuario: Valentin
+                        </a>
+        
+                        <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                Destruír sesión
                             </a>
-            
-                            <div class="dropdown-menu dropdown-menu-end invitado" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#"
-                                    onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                    Destruír sesión
-                                </a>
-            
-                                <form id="logout-form" action="" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li> 
-                    </ul>
-                    <span class="ayuda mt-1" title="Ayuda" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="fa-regular fa-circle-question"></i>
-                    </span>
+        
+                            <form id="logout-form" action=""method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li> 
 
+                    <!-- <span class="ayuda mt-1" title="Ayuda" type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </span> -->
+
+                    
+                    <div class="d-flex mx-3">
+                        <span class="">
+                            <i class="fa-solid fa-sun"></i>
+                        </span>
+                        <div class="form-check form-switch" style="margin-left: 8px; margin-top: 4px; color: black;">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        </div>
+                        <span class="">
+                            <i class="fa-solid fa-moon"></i>
+                        </span>
+                    </div>
                 </div>
-    
+
             </div>
             <div class="center">
 
+                <!-- Logo y nombre -->
+                <div class="logo-y-nombre">
+                    <a href="index2.html" class="d-flex" style="color: #fff;">
+                        <div class="imagen-logo">
+                            <img src="img/logo.png"  alt="" draggable="false">
+                        </div>
+                        <span>
+                            Sportivo
+                        </span>
+                    </a>
+
+                </div>
+            </div>
+            <div class="right d-flex">
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle comun_ancor" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
+                        ES /
+                    </a>
+    
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Español</a></li>
+                        <li><a class="dropdown-item" href="#">Inglés</a></li>
+                        <li><a class="dropdown-item" href="#">Portugués</a></li>
+                    </ul>
+                </div>
+                <div class="">
+                    <a href="" style="color: #fff;">
+                        <span style="margin-left: 10px;margin-top: 5px;">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </span>
+                    </a>
+                </div>
+                <!-- Búsqueda -->
+                <div class="busqueda">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Búsqueda" aria-label="Search" >
+                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+            </div>
+
+
+            
+        </div>
+        <div class="bottom-nav">
+            <ul
+            style="display: flex; flex-wrap: wrap;">
+                <li><a href="">Inicio</a></li>
+                <li><a href="#">Hombres</a></li>
+                <li><a href="#">Mujeres</a></li>
+                <li><a href="#">Niños/as</a></li>
+                <li><a href="#">Fútbol</a></li>
+                <li><a href="#">Rugby</a></li>
+                <li><a href="#">Handball</a></li>
+                <li><a href="#">Natación</a></li>
+                <li><a href="#">Voley</a></li>
+                <li><a href="#">Running</a></li>
+                <li><a href="#">Hockey</a></li>
+                <li><a href="#">Atletismo</a></li>
+                <li><a href="#">Ciclismo</a></li>
+            </ul>
+        </div>
+        
+    </nav>
+    <section class="section-bienvenida" >
+        <div class="contenedor">
+            <div class="mensaje-bienvenida">
+                <h1>
+                    Sportivo<br>
+                    Tu tienda deportiva
+                </h1>
+                <h2>Compras online y en el local</h2>
+                
+            </div>
+
+        </div>
+        <div class="brand" >
+            <div class="">
+                <h4>Inicia sesión y registrate, así podés comprar y agregar comentarios sobre nuestros productos</h4>
+                <button class="btn btn-secondary">
+                    Entrar
+                </button>
+                <button class="btn btn-secondary">
+                    Registrarse
+                </button>
+            </div>
+
+        </div>
+
+        <div class="">
+
+        </div>
+
+    </section>
+
+    <footer class="navbar" id="footer-admin" style="height:350px">
+        <div class="informacion-footer">
+    
+            <div class="center">
+    
                 <!-- Logo y nombre -->
                 <div class="logo-y-nombre">
                     <div class="imagen-logo">
                         <img src="img/logo.png" alt="" draggable="false">
                     </div>
                     <span>
-                        TiendaFit
+                        Sportivo
                     </span>
                 </div>
             </div>
-            <div class="right d-flex">
-
-                <!-- Búsqueda -->
-                <div class="busqueda">
-                    <form class="d-flex">
-                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
-                      <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-                </div>
-            </div>
-            <!-- Sale por la izquierda -->
-            <div class="offcanvas offcanvas-start" style="width: 300px;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navegacion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <div>
-                        Hola soy hecu
-                    </div>
-
-                </div>
-            </div>
-
-            
-        </div>
-        <div class="bottom-nav">
-            <ul>
-                <li><a href="">Inicio</a></li>
-                <li><a href="">Hombres</a></li>
-                <li><a href="">Mujeres</a></li>
-                <li><a href="">Niños/as</a></li>
-                <li><a href="">Fútbol</a></li>
-                <li><a href="">Rugby</a></li>
-                <li><a href="">Handball</a></li>
-                <li><a href="">Natación</a></li>
-                <li><a href="">Voley</a></li>
-                <li><a href="">Running</a></li>
-                <li><a href="">Hockey</a></li>
-            </ul>
+    
+            <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit, doloribus. Eum quia cumque repellendus atque corrupti laudantium, excepturi autem, nulla libero corporis harum doloribus sunt vero. Totam aut dicta non?
+            </span>
+    
+    
         </div>
         
-    </nav>
+    </footer>
  
     <script>
         // mostrar imagen en el form
