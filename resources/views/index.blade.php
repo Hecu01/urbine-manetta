@@ -12,22 +12,26 @@
             </div>
 
         </div>
-        <div class="brand" >
+        @guest        
+            <div class="brand" >
+                <div class="">
+                    <span>Si ves esto, es porque está en etapa de desarollo</span>
+                    <h4>Inicia sesión y registrate, así podés comprar y agregar comentarios sobre nuestros productos</h4>
+                    <button class="btn btn-secondary">
+                        Entrar
+                    </button>
+                    <button class="btn btn-secondary">
+                        Registrarse
+                    </button>
+                </div>
+
+            </div>
             <div class="">
-                <h4>Inicia sesión y registrate, así podés comprar y agregar comentarios sobre nuestros productos</h4>
-                <button class="btn btn-secondary">
-                    Entrar
-                </button>
-                <button class="btn btn-secondary">
-                    Registrarse
-                </button>
             </div>
 
-        </div>
+        @else
+        @endguest
 
-        <div class="">
-
-        </div>
 
     </section>
 @endsection

@@ -14,7 +14,7 @@
                 </span>
                 <span class="address">
 
-                    TiendaFit, Casa central.
+                    Sportivo, Casa central.
                 </span>
                 
             </div>
@@ -27,7 +27,7 @@
                     <img src="{{ asset('assets/img/logo.png')}}" alt="" draggable="false">
                 </div>
                 <span>
-                    TiendaFit
+                    Sportivo
                 </span>
             </div>
         </div>

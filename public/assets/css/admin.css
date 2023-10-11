@@ -1,3 +1,14 @@
+input[type=file] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
 .section-principal aside {
   width: 320px;
   box-shadow: 0px 0px 3px #000;
@@ -101,4 +112,31 @@
 #right-aside .mas-informacion {
   padding: 5px;
   width: 290px;
+}
+
+#articulos-deportivos {
+  width: 1000px;
+  height: auto;
+  padding-bottom: 20px;
+  margin: 0px 15px;
+}
+#articulos-deportivos ul {
+  border: 1px solid rgba(255, 0, 136, 0.377);
+  border-bottom: none;
+}
+
+#articulos-deportivos2 {
+  border: 1px solid rgba(255, 0, 136, 0.377);
+  box-shadow: 0px 0px 5px rgba(255, 0, 135, 0.5);
+  z-index: -1;
+}
+#articulos-deportivos2 div div table thead td {
+  border: 2px solid rgba(255, 0, 136, 0.377);
+  border-top: 1px solid rgba(255, 0, 136, 0.377);
+  font-weight: bolder;
+  text-align: center;
+}
+#articulos-deportivos2 div div table tbody tr td {
+  border: 1px solid rgba(255, 0, 136, 0.377);
+  text-align: center;
 }/*# sourceMappingURL=admin.css.map */

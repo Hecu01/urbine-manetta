@@ -37,19 +37,14 @@
 
         
         <!-- Si es admin, podrá acceder al crud, sino, no. -->
-        @guest 
-            <x-nav-usuario/>
-        @else    
-            @if (Auth::user()->administrator == false)
-                <x-nav-usuario/>
-            @else
-                <x-nav-admin/>
-            @endif
-        @endguest 
+
+
+        <x-nav-admin/>
+
 
         <!-- Sección principal -->
-        <div class="">
-            <section>
+        <div class="section-principal d-flex " style="justify-content: space-between;" id="seccion-recontraprincipal">
+            <section class="row" style="padding-top: 5px; justify-content: center;" >
                 @yield('section-principal')
             </section>
         </div>
@@ -59,8 +54,8 @@
 
 
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             // mostrar imagen en el form
             function previewImage(event, querySelector){
@@ -88,6 +83,9 @@
             $(document).ready(function() {
                 $('#redirigirBoton').click(function() {
                     window.location.href = "{{ route('nuevo_articulo') }}";
+                });
+                $('#volver-admin').click(function() {
+                    window.location.href = "{{ route('ir_admin') }}";
                 });
                 
             });

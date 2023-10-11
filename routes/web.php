@@ -16,9 +16,22 @@ use App\Http\Controllers\tiendaController;
 Route::get('/home', [tiendaController::class, 'home'])->name('pagina_inicio');
 Route::get('/', [tiendaController::class, 'home']);
 
-// Rutas que acceden los registrados
-Route::middleware(['auth'])->group(function(){
-    Route::get('/administrador', [tiendaController::class, 'admin'])->name('ir_admin');
+// Hombres
+Route::get('/hombres', [tiendaController::class, 'hombres'])->name('hombres');
+
+// Rutas que acceden los admins
+Route::group([], __DIR__ . '/admin.php');
+
+Route::get('producto/{filename}', function ($filename){
+    $path = storage_path('productos/' . $filename);
+    if (!File::exists($path)) {
+        abort(404);
+    }
+    $file = File::get($path);
+    $type = File::mimeType($path);
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    return $response;
 });
 
 

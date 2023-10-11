@@ -2,57 +2,82 @@
 <nav class="navbar   " id="navigator-usuario" style="position: relative">
     <div class="container-fluid" id="top-navigator">
         <div class="left">
-            <!-- Usuario Logueado -->
-            <div class="usuario-logueado " >
+            @guest
+                <!-- Usuario no logueado -->
+                <div class="usuario-logueado false " >
 
-                
-                <li class="nav-item dropdown  " style="color: #fff; list-style: none; margin-top: -5px;">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff; height:20px; padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <span>
+        
+                    <div class="dropdown " >
+                        <a href="#"style="color: #fff; text-decoration:none" data-bs-toggle="dropdown" aria-expanded="false">
+                            Usuarios
                             <i class="fa-solid fa-user"></i>
-                        </span>
-                        Usuario: {{ Auth::user()->name }}
-                    </a>
-    
-                    <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#"
-                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                            Destruír sesión
                         </a>
-    
-                        <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
-                            @csrf
-                        </form>
+            
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{route('login')}}">Entrar</a></li>
+                            <li><a class="dropdown-item" href="{{route('register')}}">Registrarse</a></li>
+                        </ul>
+                    </div>    
+
+
+
+                </div>
+            @else
+                <!-- Usuario Logueado -->
+                <div class="usuario-logueado " >
+
+                    
+                    <li class="nav-item dropdown  " style="color: #fff; list-style: none; margin-top: -5px;">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff; height:20px; padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <span>
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            Usuario: {{ Auth::user()->name }}
+                        </a>
+        
+                        <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                Destruír sesión
+                            </a>
+        
+                            <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li> 
+                    <!-- Notificaciones -->
+                    <div class="dropdown">
+                        <a href="#"  style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span style="margin-left: 10px;margin-top: 5px;">
+                                <i class="fa-regular fa-bell"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Español</a></li>
+                            <li><a class="dropdown-item" href="#">Inglés</a></li>
+                            <li><a class="dropdown-item" href="#">Portugués</a></li>
+                        </ul>
                     </div>
-                </li> 
-                <div class="dropdown">
-                    <a href="#"  style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span style="margin-left: 10px;margin-top: 5px;">
-                            <i class="fa-regular fa-bell"></i>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Español</a></li>
-                        <li><a class="dropdown-item" href="#">Inglés</a></li>
-                        <li><a class="dropdown-item" href="#">Portugués</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown">
-                    <a href="#"  style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span style="margin-left: 10px;margin-top: 5px;">
-                            <i class="fa-regular fa-circle-question"></i>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Español</a></li>
-                        <li><a class="dropdown-item" href="#">Inglés</a></li>
-                        <li><a class="dropdown-item" href="#">Portugués</a></li>
-                    </ul>
-                </div>
+
+                    <!-- Ayuda -->
+                    <div class="dropdown">
+                        <a href="#"  style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span style="margin-left: 10px;margin-top: 5px;">
+                                <i class="fa-regular fa-circle-question"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">¿Cómo comprar?</a></li>
+                            <li><a class="dropdown-item" href="#">¿Cómo canjear puntos?</a></li>
+                            <li><a class="dropdown-item" href="#">Manual de usuario</a></li>
+                        </ul>
+                    </div>
 
 
-            </div>
+                </div>
+            @endguest
 
         </div>
         <div class="center">
@@ -107,29 +132,90 @@
 
         
     </div>
-    <div class="bottom-nav">
-        <ul>
-            <li><a href="">Inicio</a></li>
-            <li><a href="">Hombres</a></li>
-            <li><a href="">Mujeres</a></li>
-            <li><a href="">Niños</a></li>
-            <li><a href="">Niñas</a></li>
-            <li><a href="">Deportes de campo</a></li>
-            <li><a href="">Deportes de Gimnasio</a></li>
-            <li><a href="">Deportes Cerrados</a></li>
-            <li><a href="">Artes Marciales y combate</a></li>
-            <li><a href="">Fútbol</a></li>
-            <li><a href="">Rugby</a></li>
-            <li><a href="">Handball</a></li>
-            <li><a href="">Natación</a></li>
-            <li><a href="">Voley</a></li>
-            <li><a href="">Running</a></li>
-            <li><a href="">Hockey</a></li>
-            <li><a href="">Basketball</a></li>
-            <li><a href="">Boxeo</a></li>
-            <li><a href="">Kingboxing</a></li>
-            <li><a href="">Tae Kwondo</a></li>
-        </ul>
+    <div class="bottom-nav d-flex" style="flex-wrap: wrap;">
+
+        <a href="">Inicio</a></li>
+        
+
+        <div id="li-hombres">
+            <a href="#">
+                Hombres
+            </a>
+            <div class="sub-li-hombres">
+                <ul>
+                    <li>
+                        <a href=" {{ route ('hombres') }}">
+                            Hombres
+                        </a>
+                    </li>
+                    <li>
+                        Zapatillas
+                        <div class="sub-li-zapatillas">
+                            <ul>
+                                <li>Running</li>
+                                <li>Botines</li>
+                                <li>Remeras</li>
+                                <li>Pantalones</li>
+                                <li>Calzas</li>
+                            </ul>
+                        </div> 
+                    </li>
+                    <li>
+                        Botines
+                        <div class="sub-li-zapatillas botines">
+                            <ul>
+                                <li>Talle 36-37</li>
+                                <li>Talle 37-38</li>
+                                <li>Talle 38-39</li>
+                                <li>Talle 39-40</li>
+                                <li>Talle 40-41</li>
+                                <li>Talle 41-42</li>
+                                <li>Talle 42-43</li>
+                                <li>Talle 43-44</li>
+                                <li>Talle 44-45</li>
+
+                            </ul>
+                        </div> 
+                    </li>
+                    <li>Remeras
+                        <div class="sub-li-zapatillas remeras">
+                            <ul>
+                                <li>Talle L</li>
+                                <li>Talle M</li>
+                                <li>Talle XL</li>
+                                <li>Talle XXL</li>
+                                <li>Talle XXXL</li>
+
+                            </ul>
+                        </div> 
+
+                    </li>
+                    <li>Pantalones</li>
+                    <li>Calzas</li>
+                </ul>
+            </div> 
+        </div>
+    
+    
+        <a href="">Mujeres</a>
+        <a href="">Niños</a>
+        <a href="">Niñas</a>
+        <!-- {{-- <li><a href="">Deportes de campo</a></li>
+        <li><a href="">Deportes de Gimnasio</a></li>
+        <li><a href="">Deportes Cerrados</a></li> --}} -->
+        <a href="">Artes Marciales y combate</a>
+        <a href="">Fútbol</a>
+        <a href="">Rugby</a>
+        <a href="">Handball</a>
+        <a href="">Natación</a>
+        <a href="">Voley</a>
+        <a href="">Running</a>
+        <a href="">Hockey</a>
+         <a href="">Basketball</a>
+        <!-- {{-- <li><a href="">Boxeo</a></li>
+        <li><a href="">Kingboxing</a></li>
+        <li><a href="">Tae Kwondo</a></li> --}} -->
+
     </div>
     <div class="bottom-bottom-nav">  
         <div class="dropdown " id="carrito-de-compras">
@@ -140,7 +226,9 @@
             </a>
 
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Español</a></li>
+                <li>
+                    <a class="dropdown-item dropdown" href="#">Español</a>                
+                </li>
                 <li><a class="dropdown-item" href="#">Inglés</a></li>
                 <li><a class="dropdown-item" href="#">Portugués</a></li>
             </ul>
