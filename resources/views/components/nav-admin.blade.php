@@ -14,7 +14,7 @@
                 </span>
                 <span class="address">
 
-                    Sportivo, Casa central.
+                    De la nación 356, San nicolás
                 </span>
                 
             </div>

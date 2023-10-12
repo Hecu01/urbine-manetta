@@ -11,6 +11,7 @@
   background: rgba(0, 0, 0, 0.3490196078);
   box-shadow: 5px 5px 1px #000;
   margin-left: 6em;
+  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   text-align: center;
