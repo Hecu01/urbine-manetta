@@ -11,6 +11,7 @@
   background: rgba(0, 0, 0, 0.3490196078);
   box-shadow: 5px 5px 1px #000;
   margin-left: 6em;
+  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   text-align: center;
@@ -33,4 +34,20 @@
   align-items: center;
   padding-left: 10px;
   color: #000;
+}
+
+.section {
+  background: url("../img/fondo-2.jpg") no-repeat center/cover;
+  background-attachment: fixed;
+  height: 1200px;
+}
+
+.contenedor-resultados {
+  padding: 10px;
+}
+.contenedor-resultados .resultado {
+  box-shadow: 1px 1px 5px #000;
+}
+.contenedor-resultados .resultado .descripcion p {
+  margin: 5px 0px;
 }/*# sourceMappingURL=index.css.map */

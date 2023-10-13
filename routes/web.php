@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tiendaController;
+use App\Http\Controllers\BusquedaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,21 @@ use App\Http\Controllers\tiendaController;
 */
 // página de inicio
 Route::get('/home', [tiendaController::class, 'home'])->name('pagina_inicio');
-Route::get('/', [tiendaController::class, 'home']);
+Route::get('/', [tiendaController::class, 'home'])->name('home');
 
-// Hombres
-Route::get('/hombres', [tiendaController::class, 'hombres'])->name('hombres');
+// Búsquedas
+Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
+Route::get('/detalles/{id}',[BusquedaController::class, 'verDetalles'])->name('detalles');
+
 
 // Rutas que acceden los admins
 Route::group([], __DIR__ . '/admin.php');
+
+
+
+
+
+
 
 Route::get('producto/{filename}', function ($filename){
     $path = storage_path('productos/' . $filename);

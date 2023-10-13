@@ -39,3 +39,20 @@ $color-primario: rgb(0,128,219);
         color: #000;
     }
 }
+
+.section{
+    background: url('../img/fondo-2.jpg') no-repeat center/cover;
+    background-attachment: fixed;
+    height: 1200px;
+}
+.contenedor-resultados{
+    padding:10px;
+    .resultado{
+        box-shadow: 1px 1px 5px #000;
+        .descripcion{
+            p{
+                margin: 5px 0px;
+            }
+        }
+    }
+}

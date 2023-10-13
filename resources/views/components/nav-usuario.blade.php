@@ -134,7 +134,7 @@
     </div>
     <div class="bottom-nav d-flex" style="flex-wrap: wrap;">
 
-        <a href="">Inicio</a></li>
+        <a href="{{ route('home') }}">Inicio</a></li>
         
 
         <div id="li-hombres">
@@ -144,7 +144,7 @@
             <div class="sub-li-hombres">
                 <ul>
                     <li>
-                        <a href=" {{ route ('hombres') }}">
+                        <a href=" #">
                             Hombres
                         </a>
                     </li>
@@ -234,8 +234,8 @@
             </ul>
         </div>      
         <div class="busqueda col-6">
-            <form class="d-flex">
-                <input class="form-control me-2 " type="search" placeholder="Búsqueda" aria-label="Search" >
+            <form class="d-flex" action="{{ route('buscar')  }}" method="GET">
+                <input class="form-control me-2 " type="search" name="articulo-buscado" placeholder="Búsqueda" aria-label="Search" >
                 <button class="btn btn-danger" type="submit"> <span ><i class="fa-solid fa-magnifying-glass"></i></span></button>
             </form>
         </div>
