@@ -11,7 +11,8 @@
     
                     <h1 >{{ $elemento->nombre}}</h1>
                     <p >Disponibles: {{ $elemento->stock}} </p>
-                    <p >Precio: {{ $elemento->precio}} </p>
+                    <p >Precio: ${{number_format($elemento->precio, 0, ',', '.')}} </p>
+
         
                 </div>
             </div>
