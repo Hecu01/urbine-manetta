@@ -5,7 +5,6 @@
         {{-- <h1>hombres</h1> --}}
     </div>
     <div class="row" style="height: 550px; background:rgb(177, 145, 145);">
-{{-- 
         @foreach ($articulo as $hombre)        
             <div class="card" style="width: 18rem;">
                 <div class="" style="width: 200px; margin:auto">
@@ -22,6 +21,6 @@
                 <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
-        @endforeach --}}
+        @endforeach 
     </div>
 @endsection
