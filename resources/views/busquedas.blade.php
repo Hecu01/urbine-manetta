@@ -2,8 +2,8 @@
 @section('section-principal')
     <div class="section">
     
-        <div class="">
-            {{-- <h1>hombres</h1> --}}
+        <div class="" style="background: #ffffff96; width:min:content; text-align:center">
+            <h1>Busqueda: <strong>{{ $query }}</strong></h1>
         </div>
         <div class="contenedor-resultados" >
             @foreach ($resultados as $resultado)     

@@ -12,7 +12,7 @@
                         <i class="fa-solid fa-user-plus"></i>
                     </span>
                     <span class="recuento">
-                        56k
+                        0
                     </span>
                 </div>
                 <div class="bottom">
@@ -26,7 +26,7 @@
                         <i class="fa-solid fa-chart-line"></i>
                     </span>
                     <span class="recuento">
-                        325k
+                        0
                     </span>
                 </div>
                 <div class="bottom">
@@ -41,7 +41,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </span>
                     <span class="recuento">
-                        325k
+                        0
                     </span>
                 </div>
                 <div class="bottom">
@@ -73,7 +73,7 @@
                         <i class="fa-solid fa-shirt"></i>
                     </span>
                     <span class="recuento">
-                        13k
+                        0
                     </span>
                 </div>
                 <div class="bottom">
@@ -88,7 +88,7 @@
                         <i class="fa-solid fa-truck"></i>
                     </span>
                     <span class="recuento">
-                        459
+                        0
                     </span>
                 </div>
                 <div class="bottom">
@@ -108,7 +108,7 @@
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Lorem, ipsum dolor.</p>
+                    <p>Compras online pendiente</p>
                 </div>
             </article>
             <!-- Artículos deportivos -->
