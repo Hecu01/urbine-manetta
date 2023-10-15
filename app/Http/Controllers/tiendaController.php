@@ -60,7 +60,7 @@ class tiendaController extends Controller
         if (!Auth::check() || !Auth::user()->administrator) {
             return redirect()->route('pagina_inicio'); 
         }
-        return view('admin.nuevo_articulo', compact('categorias', 'articulos', 'volver'));
+        return view('admin.nuevo_articulo_deportivo', compact('categorias', 'articulos', 'volver'));
     }
 
     public function agregar_articulo(Request $request){

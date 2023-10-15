@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('section-principal')
-    <div class="section">
+    <div class="section" style="height: 650px">
     
         <div class="" style="background: #ffffff96; width:min:content; text-align:center">
             <h1>Busqueda: <strong>{{ $query }}</strong></h1>
@@ -33,6 +33,9 @@
                     </div>
                 </div>  
             @endforeach 
+            @if($contar_resultados < 1)
+                <p style="width:fit-content; background: #ffffff8a; padding:10px">No se ha encontrado nada </p>
+            @endif
         </div>
     </div>
 @endsection

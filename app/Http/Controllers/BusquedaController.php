@@ -10,7 +10,8 @@ class BusquedaController extends Controller
     public function buscar(Request $request){
         $query = $request->input('articulo-buscado');
         $resultados = Articulo::where('nombre', 'LIKE', "%$query%")->get();
-        return view('busquedas', compact('resultados', 'query'));
+        $contar_resultados = Articulo::where('nombre', 'LIKE', "%$query%")->count();
+        return view('busquedas', compact('resultados', 'query', 'contar_resultados'));
     }
     public function verDetalles($id){
         $elemento = Articulo::find($id);
