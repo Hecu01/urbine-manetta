@@ -1,5 +1,5 @@
-<nav class="navbar" id="navigator-admin">
-    <div class="container-fluid">
+<nav class="navbar pb-1" id="navigator-admin">
+    <div class="container-fluid mb-1">
         <div class="left d-flex">
             <!-- Botón barra -->
             <button class="button-left " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -23,21 +23,23 @@
 
             <!-- Logo y nombre -->
             <div class="logo-y-nombre">
-                <div class="imagen-logo">
-                    <img src="{{ asset('assets/img/logo.png')}}" alt="" draggable="false">
-                </div>
-                <span>
+                <a href="{{ route('home')}}" class="flex items-center text-white decoration-none text-2xl hover:text-3xl">
+
+                    <div class="imagen-logo mx-1">
+                        <img src="{{ asset('assets/img/logo.png')}}" alt="" draggable="false">
+                    </div>
+
                     Sportivo
-                </span>
+                </a>
             </div>
         </div>
         <div class="right d-flex">
 
             <!-- Usuario Logueado -->
-            <div class="usuario-logueado">
-                <ul>
+            <div class="usuario-logueado ">
+                <ul class="">
                     
-                    <li class="nav-item dropdown  " style="color: #fff; list-style: none; margin-top: -5px;">
+                    <li class="nav-item dropdown  capitalize" style="">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" style="color: #fff; height:20px; padding:3px;" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <span>
                             <i class="fa-solid fa-user"></i>
@@ -69,48 +71,53 @@
 
             <!-- Búsqueda -->
             <div class="busqueda">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Búsqueda" aria-label="Search" >
+                <form class="d-flex" action="{{ route('buscar')  }}" method="GET">
+                    <input class="form-control me-2" type="search" name="articulo-buscado" placeholder="Búsqueda" aria-label="Search" >
                     <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
         </div>
 
-
-        <!-- Sale por la izquierda -->
-        <div class="offcanvas offcanvas-start" style="width: 300px;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navegacion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-
-                <ul>
-                    <li><a href="{{ route('pagina_inicio') }}">Inicio</a></li>
-                    <li><a href="{{ route('ir_admin') }}">Admin</a></li>
-                </ul>
-
-            </div>
-        </div>
-        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('pagina_inicio') }}">INICIO</a>
-                </li>
-    
-
-                    <li class="nav-item">
-                        <a class="nav-link active" href=" {{ route('ir_admin') }} ">CRUD</a>
-                    </li>
-    
-    
-            </ul> -->
-            <!-- <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form> 
-        </div>-->
-
     </div>
+    <div class="m-auto bg-white text-cyan-700 ">
+        <ul class="flex flex-wrap w-auto">
+            <a href="{{ route('home') }}" class="mx-1.5">Inicio</a></li>
+            <a href="{{ route('ir_admin') }}" class="mx-1.5">Administrador</a></li>
+        
 
+
+            <a href="#"class="mx-1.5">
+                Hombres
+            </a>
+     
+        
+        
+            <a href="" class="mx-1.5">Mujeres</a>
+            <a href="" class="mx-1.5">Niños</a>
+            <a href="" class="mx-1.5">Niñas</a>        
+            <a href="" class="mx-1.5">Mujeres</a>
+            <a href="" class="mx-1.5">Niños</a>
+            <a href="" class="mx-1.5">Niñas</a>        
+            <a href="" class="mx-1.5">Mujeres</a>
+            <a href="" class="mx-1.5">Niños</a>
+            <a href="" class="mx-1.5">Niñas</a>
+            <!-- {{-- <li><a href="" class="mx-1.5">Deportes de campo</a></li>
+            <li><a href="" class="mx-1.5">Deportes de Gimnasio</a></li>
+            <li><a href="" class="mx-1.5">Deportes Cerrados</a></li> --}} -->
+            <a href="" class="mx-1.5">Artes Marciales y combate</a>
+            <a href="" class="mx-1.5">Fútbol</a>
+            <a href="" class="mx-1.5">Rugby</a>
+            <a href="" class="mx-1.5">Handball</a>
+            <a href="" class="mx-1.5">Natación</a>
+            <a href="" class="mx-1.5">Voley</a>
+            <a href="" class="mx-1.5">Running</a>
+            <a href="" class="mx-1.5">Hockey</a>
+             <a href="" class="mx-1.5">Basketball</a>
+            <!-- {{-- <li><a href="" class="mx-1.5">Boxeo</a></li>
+            <li><a href="" class="mx-1.5">Kingboxing</a></li>
+            <li><a href="" class="mx-1.5">Tae Kwondo</a></li> --}} -->
+
+
+        </ul>
+    </div>
 </nav>

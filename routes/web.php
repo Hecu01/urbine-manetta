@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tiendaController;
 use App\Http\Controllers\BusquedaController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,9 @@ Route::get('/detalles/{id}',[BusquedaController::class, 'verDetalles'])->name('d
 Route::group([], __DIR__ . '/admin.php');
 
 
+// Agregar al carrito
+// Route::get('/cart', 'CartController@index');
+// Route::post('/cart/add', 'CartController@addToCart');
 
 
 

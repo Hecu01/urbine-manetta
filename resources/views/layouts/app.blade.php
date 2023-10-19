@@ -10,8 +10,17 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         
         <!-- Bootstrap 5 -->
+        
+        
+        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+
+
+        {{-- Tailwind local --}}
+        @vite('resources/css/app.css')
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://cdn.tailwindcss.com"></script>
+
+    
+
         <!-- Style CSS -->
         <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
@@ -31,6 +40,9 @@
         
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {{-- Notificaciones Toastr --}}
+        <link rel="stylesheet" href="{{ asset('plugins\toastr\toastr.min.css') }}">
         <title>{{ isset($title) ? $title : 'Sitio Web' }}</title>
     </head>
     <body >
@@ -58,43 +70,17 @@
         <x-footer/>
 
 
-
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> --}}
 
-        <script>
-            // mostrar imagen en el form
-            function previewImage(event, querySelector){
-        
-            //Recuperamos el input que desencadeno la acción
-            const input = event.target;
-        
-            //Recuperamos la etiqueta img donde cargaremos la imagen
-            $imgPreview = document.querySelector(querySelector);
-        
-            // Verificamos si existe una imagen seleccionada
-            if(!input.files.length) return
-        
-            //Recuperamos el archivo subido
-            file = input.files[0];
-        
-            //Creamos la url
-            objectURL = URL.createObjectURL(file);
-        
-            //Modificamos el atributo src de la etiqueta img
-            $imgPreview.src = objectURL;
-                    
-            }
-    
-            $(document).ready(function() {
-                $('#redirigirBoton').click(function() {
-                    window.location.href = "{{ route('nuevo_articulo') }}";
-                });
-                
-            });
-        </script>
 
         <script src="{{ asset('assets/js/scrollreveal.js')}}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+        <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
+        <script src="{{ asset('assets/js/main.js')}}"></script>
+
+        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
 
     </body>
     

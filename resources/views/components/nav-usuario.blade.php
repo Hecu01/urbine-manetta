@@ -84,12 +84,14 @@
 
             <!-- Logo y nombre -->
             <div class="logo-y-nombre">
-                <div class="imagen-logo">
-                    <img src="{{ asset('assets/img/logo.png')}}" alt="" draggable="false">
-                </div>
-                <span>
+                <a href="{{ route('home')}}" class="flex items-center text-white decoration-none text-2xl hover:text-3xl">
+
+                    <div class="imagen-logo mx-1">
+                        <img src="{{ asset('assets/img/logo.png')}}" alt="" draggable="false">
+                    </div>
+
                     Sportivo
-                </span>
+                </a>
             </div>
         </div>
         <div class="right d-flex" >
@@ -116,13 +118,50 @@
         
             <div class="d-flex " id="contenedor-dropdown-idiomas" style="">
                 <div class="dropdown" id="display-dropdown">
-                    <a href="#" class="dropdown-toggle"  style="color: #fff; text-decoration: none" data-bs-toggle="dropdown" aria-expanded="false">
-                        ES / <span style=""><img src="{{ asset('assets/img/español.jpg')}}" alt="" height="15px"></span>
+                    <a href="#" class="dropdown-toggle flex items-center pt-1"  style="color: #fff; text-decoration: none" data-bs-toggle="dropdown" aria-expanded="false">
+                        ES / 
+                        <span style="">
+                            <img src="{{ asset('assets/img/español.jpg')}}" alt="" class="w-8 mx-1">
+                        </span>
                     </a>
-                    <ul class="dropdown-menu " id="dropdown-idiomas" style="text-align:end">
-                        <li><a class="dropdown-item" style="color:#fff" href="#">Español <span class="mx-1"><img src="{{ asset('assets/img/español.jpg')}}" alt="" height="15px"></span></a></li>
-                        <li><a class="dropdown-item" style="color:#fff" href="#">Portugués <span class="mx-1"><img src="{{ asset('assets/img/portugues.jpg')}}" alt="" height="15px"></span></a></li>
-                        <li><a class="dropdown-item" style="color: #fff" href="#">Inglés <span class="mx-1"><img src="{{ asset('assets/img/ingles.jpg')}}" alt="" height="15px"></span></a></li>
+                    <ul class="dropdown-menu w-16" id="dropdown-idiomas" style="text-align:end; margin-left: -20px">
+                        <li >
+                            <a class="dropdown-item h-8 flex items-center" style="color:#fff" href="#">Español 
+                                <span class="mx-1  " >
+                                    <img src="{{ asset('assets/img/español.jpg')}}" alt="" class="w-8 mx-1" style="margin-top:-20px">
+                                </span>
+                            </a>
+                        </li>
+
+                        <li >
+                            <a class="dropdown-item h-8 flex items-center" style="color:#fff" href="#">Portugués 
+                                <span class="mx-1  " >
+                                    <img src="{{ asset('assets/img/portugues.jpg')}}" alt="" class="w-8 mx-1" style="margin-top:-20px">
+                                </span>
+                            </a>
+                        </li>
+
+                        <li >
+                            <a class="dropdown-item h-8 flex items-center" style="color:#fff" href="#">Inglés 
+                                <span class="mx-1  " >
+                                    <img src="{{ asset('assets/img/ingles.jpg')}}" alt="" class="w-8 mx-1" style="margin-top:-20px">
+                                </span>
+                            </a>
+                        </li>
+                        {{-- <li>
+                            <a class="dropdown-item h-8 flex items-center" style="color:#fff" href="#">Portugués
+                                <span class="mx-1 ">
+                                    <img src="{{ asset('assets/img/portugues.jpg')}}" alt="" class="w-8" >
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item h-8 flex items-center" style="color: #fff" href="#">Inglés 
+                                <span class="mx-1 mt-6">
+                                    <img src="{{ asset('assets/img/ingles.jpg')}}" alt="" class="w-8">
+                                </span>
+                            </a>
+                        </li> --}}
                     </ul>
                 </div>
         
@@ -132,9 +171,9 @@
 
         
     </div>
-    <div class="bottom-nav d-flex" style="flex-wrap: wrap;">
+    <div class="bottom-nav d-flex text-cyan-700"  style="flex-wrap: wrap;">
 
-        <a href="{{ route('home') }}">Inicio</a></li>
+        <a href="{{ route('home') }}" class="hover:text-cyan-500">Inicio</a></li>
         
 
         <div id="li-hombres">
@@ -225,21 +264,28 @@
                 </span>
             </a>
 
-            <ul class="dropdown-menu">
-                <li>
+            <ul class="dropdown-menu w-96 h-96 ">
+                <h1 class="text-lg text-center ">El carrito está vacío</h1>
+                {{-- <li>
                     <a class="dropdown-item dropdown" href="#">Español</a>                
-                </li>
-                <li><a class="dropdown-item" href="#">Inglés</a></li>
-                <li><a class="dropdown-item" href="#">Portugués</a></li>
+                </li> --}}
+
             </ul>
         </div>      
         <div class="busqueda col-6">
             <form class="d-flex" action="{{ route('buscar')  }}" method="GET">
-                <input class="form-control me-2 " type="search" name="articulo-buscado" placeholder="Búsqueda" aria-label="Search" >
+                <input class="form-control me-2 " type="search" name="articulo-buscado" placeholder="Buscá lo que necesitás acá" aria-label="Search" >
                 <button class="btn btn-danger" type="submit"> <span ><i class="fa-solid fa-magnifying-glass"></i></span></button>
             </form>
+            
         </div>
+        
+        
     </div>
+
+    
+      
+      
 {{-- 
     <div class="d-flex mx-3" id="contenedor-switch-cambio-tema" style="">
         <span class="">

@@ -1,10 +1,14 @@
 <?php
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\tiendaController;
+
+use App\Http\Controllers\AdminController;
 
 // Rutas que acceden los admins
 Route::middleware(['auth'])->group(function(){
-    Route::get('/admin', [tiendaController::class, 'admin'])->name('ir_admin');
-    Route::get('/admin/agregar-articulo-deportivo', [tiendaController::class, 'nuevo_articulo'])->name('nuevo_articulo');
-    Route::post('/agregar-articulo-deportivo', [tiendaController::class, 'agregar_articulo'])->name('añadir_articulo');
+    Route::get('/admin', [AdminController::class, 'admin'])->name('ir_admin');
+    
+    // articulos deportivos
+    Route::get('/admin/agregar-articulo-deportivo', [AdminController::class, 'nuevo_articulo'])->name('nuevo_articulo');
+    Route::get('/admin/agregar-articulo-deportivo', [AdminController::class, 'nuevo_articulo'])->name('nuevo_articulo');
+    Route::post('/admin/agregar-articulo-deportivo', [AdminController::class, 'agregar_articulo'])->name('añadir_articulo');
+    Route::delete('/admin/agregar-articulo-deportivo/{id}',[AdminController::class, 'eliminar_articulo'] )->name('eliminar_articulo');
 });

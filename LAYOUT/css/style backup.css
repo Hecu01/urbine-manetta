@@ -86,7 +86,6 @@
 }
 .section-principal #left-aside {
   box-shadow: 1px 1px 3px #000;
-  height: -webkit-min-content;
   height: -moz-min-content;
   height: min-content;
   padding-bottom: 15px;

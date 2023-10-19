@@ -1,3 +1,14 @@
+/* Ocultar los botones de un input de tipo number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
 .section-bienvenida .contenedor {
   background: url("../img/fondo-2.jpg") no-repeat center/cover;
   height: 500px;
@@ -11,7 +22,6 @@
   background: rgba(0, 0, 0, 0.3490196078);
   box-shadow: 5px 5px 1px #000;
   margin-left: 6em;
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   text-align: center;

@@ -52,17 +52,19 @@
             
             <!-- Artículos deportivos -->
             <article class="article article4"  id="redirigirBoton">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-football"></i>
-                    </span>
-                    <span class="recuento">
-                        {{ $artDeportivos }}
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Artículos deportivos</p>
-                </div>
+                <a href="{{ route('nuevo_articulo') }}" class="text-white no-underline">
+                    <div class="top">
+                        <span>
+                            <i class="fa-solid fa-football"></i>
+                        </span>
+                        <span class="recuento">
+                            {{ $artDeportivos }}
+                        </span>
+                    </div>
+                    <div class="bottom">
+                        <p>Artículos deportivos</p>
+                    </div>
+                </a>
             </article>
             
                         

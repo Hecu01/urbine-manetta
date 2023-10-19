@@ -1,18 +1,18 @@
-<aside class="left-aside" id="left-aside" style="width: fit-content" >
+<aside  id="left-aside" class="left-aside bg-slate-100 rounded-xl  w-fit"  >
     <a href="{{ route('ir_admin') }}" style="color: currentColor; text-decoration:none; ">
 
         <div class="foto-local-y-admin">
-            <div class="local">
-                <img src="{{ asset('assets/img/local.jpg')}}" alt="" style="width: 100%;">
+            <div class="local rounded-xl">
+                <img src="{{ asset('assets/img/local.jpg')}}" class="rounded-xl" alt="" style="width: 100%;">
             </div>
             <div id="foto-admin">
                 <img src="{{ asset('assets/img/mi-foto.jpg')}}" alt="foto de ..." >
             </div>
         </div>
         <div class="mas-informacion">
-            <h3>Sportivo</h3>
+            <h3 class="text-3xl">Sportivo</h3>
             <span><i class="fa-solid fa-location-dot"></i> Casa central</span><br>
-            <span><i class="fa-solid fa-screwdriver-wrench"></i> Valentin Urbine</span>
+            <span><i class="fa-solid fa-screwdriver-wrench"></i> {{ Auth::user()->name }} </span>
         </div>
     </a>
     

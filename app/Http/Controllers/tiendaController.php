@@ -21,68 +21,55 @@ class tiendaController extends Controller
     }
 
 
+    // Función para agregar un producto al carrito
+    public function addToCart(Request $request)
+    {
+        $product_id = $request->product_id; // Obtén el ID del producto desde la solicitud
+        $product = articulo::find($product_id); // Encuentra el producto en la base de datos
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function admin(){
-        $volver = false; 
-        $user = Auth::user();
-        $artDeportivos = Articulo::where('id_categoria', '1')->count();
-        // Si no es admin, volvé a casa che.
-        if (!Auth::check() || !Auth::user()->administrator) {
-            return redirect()->route('pagina_inicio'); 
+        if (!$product) {
+            return back()->with('error', 'Producto no encontrado');
         }
-        $title = "Sportivo - Admin";
-        return view('admin.admin', compact('title', 'artDeportivos','volver'));
-    }
-    
-    public function nuevo_articulo(){
-        $volver = true; 
 
-        $categorias = Categoria::all(); 
-        $articulos = Articulo::all(); 
-        if (!Auth::check() || !Auth::user()->administrator) {
-            return redirect()->route('pagina_inicio'); 
+        // Agrega el producto al carrito
+        $cart = Session::get('cart');
+        if (!$cart) {
+            $cart = [
+                $product_id => [
+                    'name' => $product->name,
+                    'quantity' => 1,
+                    'price' => $product->price,
+                ]
+            ];
+            Session::put('cart', $cart);
+            return redirect()->back()->with('success', 'Producto agregado al carrito');
         }
-        return view('admin.nuevo_articulo_deportivo', compact('categorias', 'articulos', 'volver'));
+
+        if (isset($cart[$product_id])) {
+            $cart[$product_id]['quantity']++;
+        } else {
+            $cart[$product_id] = [
+                'name' => $product->name,
+                'quantity' => 1,
+                'price' => $product->price,
+            ];
+        }
+
+        Session::put('cart', $cart);
+        return redirect()->back()->with('success', 'Producto agregado al carrito');
     }
 
-    public function agregar_articulo(Request $request){
-        $articuloNuevo = new Articulo;
-        $articuloNuevo->nombre = $request->nombre_producto;
-        $articuloNuevo->genero = $request->genero;
-        $articuloNuevo->precio = $request->precio;
-        $articuloNuevo->marca = $request->marca;
-        $articuloNuevo->color = $request->color;
-        $articuloNuevo->stock = $request->stock;
-        $articuloNuevo->id_categoria = $request->categoria;
-        $nombreArticulo = $request->nombre_producto;
+    // Función para eliminar un producto del carrito
+    public function removeFromCart($product_id)
+    {
+        $cart = Session::get('cart');
 
-        if($request->hasFile('foto')){
-			$file = $request->file('foto');
-			$carpetaDestino = storage_path('productos');
-			$filename = $file->getClientOriginalName();
-			$uploadSuccess = $request->file('foto')->move($carpetaDestino, $filename);
-			$articuloNuevo->foto = $filename;
-		}
+        if (isset($cart[$product_id])) {
+            unset($cart[$product_id]);
+            Session::put('cart', $cart);
+            return redirect()->back()->with('success', 'Producto eliminado del carrito');
+        }
 
-        $articuloNuevo->save();
-        return back()->with('mensaje', 'Artículo agregado con éxito.');
+        return redirect()->back()->with('error', 'Producto no encontrado en el carrito');
     }
 }

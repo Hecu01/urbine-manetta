@@ -2,15 +2,13 @@
 @section('section-principal')
     <section class="section-bienvenida" >
         <div class="contenedor">
-            <div class="mensaje-bienvenida">
+            <div class="mensaje-bienvenida font-">
                 <h1>
                     Sportivo<br>
                     Tu tienda deportiva
                 </h1>
                 <h2>Compras online y en el local</h2>
-                
             </div>
-
         </div>
         @guest        
             <div class="brand" >
@@ -31,7 +29,13 @@
 
         @else
         @endguest
-
+        
+   
 
     </section>
+
+
+      
+
+  
 @endsection

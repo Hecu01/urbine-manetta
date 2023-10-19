@@ -1,6 +1,10 @@
 @extends('admin.layouts.plantilla_admin')
 @section('section-principal')
-  @include('admin.layouts.aside-left')
+
+  <div class="w-fit">
+    @include('admin.layouts.aside-left')
+  </div>
+ 
 
   @if (session('mensaje'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -8,7 +12,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @endif 
-    <div class="" id="articulos-deportivos" >
+    <div id="articulos-deportivos">
         <ul class="nav nav-tabs" id="myTab" role="tablist" style="display: flex; justify-content:space-between">
           <div class="d-flex">
 
@@ -66,9 +70,15 @@
                           </td>
                           <td>{{ $articulo->stock}}</td>
                           <td>
-                            <button class="btn btn-success btn-sm"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-                            <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-eye"></i></button>
+                            <div class="d-flex justify-content-center">
+                              <button class="btn btn-success btn-sm"><i class="fa-solid fa-pencil"></i></button>
+                              <form class="mx-1" action="{{ route('eliminar_articulo', ['id' => $articulo->id]) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                              </form>
+                              <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-eye"></i></button>
+                            </div>
 
                           </td>
 
@@ -78,7 +88,7 @@
                     </tbody>
                 </table>
               </div>
-              <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+              <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                 <form class="row g-3 p-3" 
                   action="{{ route('añadir_articulo')}}" 
                   method="POST"  
@@ -96,15 +106,28 @@
                           <input type="text" name="nombre_producto" class="form-control" id="inputEmail4">
                         </div>
   
-                        <div class="col-md-12">
-                          <label for="inputEmail4" class="form-label">Genero del producto</label>
-  
-                          <select name="genero" id="" class="form-select">
-                            <option value="" selected hidden>Seleccione una opción</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Femenino</option>
-                            <option value="U">Unisex</option>
-                          </select>
+                        <div class="col-md-12 flex mt-1 justify-between">
+
+                          <div class="col-md-5 ">
+                            <label for="inputEmail4" class="form-label">Genero del producto</label>
+    
+                            <select name="genero" id="" class="form-select">
+                              <option value="" selected hidden></option>
+                              <option value="M">Masculino</option>
+                              <option value="F">Femenino</option>
+                              <option value="U">Unisex</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Tipo de producto</label>
+    
+                            <select name="genero" id="" class="form-select">
+                              <option value="" selected hidden></option>
+                              <option value="M">Calzado</option>
+                              <option value="M">Proteccion</option>
+
+                            </select>
+                          </div>
                         </div>
                       </div>
                       <div class="" style="display: flex; justify-content: space-between; align-items:center; position: relative; margin-left:50px">
@@ -153,8 +176,8 @@
                     
                     <div class="col-md-12">
                       <label for="inputState" class="form-label">Stock</label>
-                      <input type="number"name="stock" class="form-control" id="inputStock">
-
+                      
+                      <input type="text"name="stock" onwheel="preventScroll(event)"  oninput="formatNumber(this)"  class="form-control" id="stock" onsubmit="removeDots2()" >
                     </div>
 
                   </div>
@@ -164,10 +187,11 @@
                         <button type="submit" class="btn btn-primary">Agregar</button>
                       </div>
                       <div class="col-md-3 d-flex">
-                        <label for="inputState" class="form-label mx-2 mt-2">PRECIO 
-
-                        </label>
-                        <input type="number"name="precio" class="form-control" id="inputStock">                      
+                        <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
+                        <div class="input-group">
+                          <span class="input-group-text " style="border:1px solid rgba(255, 0, 136, 0.377);" id="inputGroupPrepend2" >$</span>
+                          <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
+                        </div>
                       </div>
                     </div>
                     <style>
@@ -188,4 +212,27 @@
         </div>
 
     </div>
+  <script>
+    function formatNumber(input) {
+      // Eliminar caracteres no numéricos
+      var num = input.value.replace(/[^0-9]/g, '');
+      // Formatear con separadores de miles
+      input.value = num.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function preventScroll(event) {
+      event.preventDefault();
+    }
+
+    // Remover puntos
+    function removeDots() {
+      var input = document.getElementById('precio');
+      input.value = input.value.replace(/\./g, '');
+    }
+      // Remover puntos
+      function removeDots2() {
+      var input = document.getElementById('stock');
+      input.value = input.value.replace(/\./g, '');
+    }
+  </script>
 @endsection
+
