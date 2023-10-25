@@ -1,15 +1,7 @@
 input[type="file"] {
     display: none;
 }
-.custom-file-upload {
-    // transition: 0.5s all;
-    // border: 1px solid #ccc;
-    // background-color: #ccc;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
+
 // .custom-file-upload:hover {
 //     transition: 0.5s all;
 //     background-color: #a0a0a0;
@@ -38,12 +30,10 @@ input[type="file"] {
     }
     section{
 
-        .article{
+        .article0{
             cursor: pointer;
             color: #fff;
             border-radius: 20px;
-            background-color: rgb(0, 68, 255);
-            border: 1px solid rgb(0, 68, 255);
             box-shadow: 0px 0px 5px rgb(0, 0, 0);
             margin: 10px 14px;
             width: 240px;
@@ -80,6 +70,10 @@ input[type="file"] {
         }
         .article:hover{
             transform: scale(1.03);
+        }
+        .article1{
+            background-color: rgb(0, 68, 255);
+            border: 1px solid rgb(0, 68, 255);
         }
         .article2{
             background-color: rgb(0, 165, 8);

@@ -86,6 +86,22 @@
                             <button class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
                               Comprar
                             </button>
+                            <form action="{{ route('cart.store') }}" method="POST">
+                              {{ csrf_field() }}
+                              <input type="hidden" value="{{ $pro->id }}" id="id" name="id">
+                              <input type="hidden" value="{{ $pro->name }}" id="name" name="name">
+                              <input type="hidden" value="{{ $pro->price }}" id="price" name="price">
+                              <input type="hidden" value="{{ $pro->image_path }}" id="img" name="img">
+                              <input type="hidden" value="{{ $pro->slug }}" id="slug" name="slug">
+                              <input type="hidden" value="1" id="quantity" name="quantity">
+                              <div class="card-footer" style="background-color: white;">
+                                    <div class="row">
+                                      <button class="btn btn-secondary btn-sm" class="tooltip-test" title="add to cart">
+                                          <i class="fa fa-shopping-cart"></i> agregar al carrito
+                                      </button>
+                                  </div>
+                              </div>
+                          </form>
                             <button class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
                               <a href="#" class="text-black no-underline">
                                 Agregar al carrito

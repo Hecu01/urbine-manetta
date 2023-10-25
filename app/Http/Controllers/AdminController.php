@@ -45,15 +45,6 @@ class AdminController extends Controller
     }
 
     public function agregar_articulo(Request $request){
-        $articuloNuevo = new Articulo;
-        $articuloNuevo->nombre = $request->nombre_producto;
-        $articuloNuevo->genero = $request->genero;
-        $articuloNuevo->precio = $request->precio;
-        $articuloNuevo->marca = $request->marca;
-        $articuloNuevo->color = $request->color;
-        $articuloNuevo->stock = $request->stock;
-        $articuloNuevo->id_categoria = $request->categoria;
-        $nombreArticulo = $request->nombre_producto;
 
         if($request->hasFile('foto')){
 			$file = $request->file('foto');
@@ -62,8 +53,35 @@ class AdminController extends Controller
 			$uploadSuccess = $request->file('foto')->move($carpetaDestino, $filename);
 			$articuloNuevo->foto = $filename;
 		}
+        $articuloNuevo = Articulo::create([
+            'Nombre' =>  $request->nombre_producto,
+            'genero' => $request->genero,
+            'precio' => $request->precio,
+            'marca' => $request->marca,
+            'color' => $request->color,
+            'stock' =>  $request->stock,
+            'id_cateogria' => $request->categoria,
+            'foto' => $filename
+        ]);
 
-        $articuloNuevo->save();
+        // $articuloNuevo = new Articulo;
+        // $articuloNuevo->nombre = $request->nombre_producto;
+        // $articuloNuevo->genero = $request->genero;
+        // $articuloNuevo->precio = $request->precio;
+        // $articuloNuevo->marca = $request->marca;
+        // $articuloNuevo->color = $request->color;
+        // $articuloNuevo->stock = $request->stock;
+        // $articuloNuevo->id_categoria = $request->categoria;
+
+        // if($request->hasFile('foto')){
+		// 	$file = $request->file('foto');
+		// 	$carpetaDestino = storage_path('productos');
+		// 	$filename = $file->getClientOriginalName();
+		// 	$uploadSuccess = $request->file('foto')->move($carpetaDestino, $filename);
+		// 	$articuloNuevo->foto = $filename;
+		// }
+
+        // $articuloNuevo->save();
         return back()->with('mensaje', 'Artículo agregado con éxito.');
     }
 }

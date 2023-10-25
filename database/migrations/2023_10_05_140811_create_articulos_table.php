@@ -17,14 +17,14 @@ return new class extends Migration
             $table->string('talle')->nullable();
             $table->string('genero')->nullable();
             $table->string('precio')->nullable();
-            $table->char('marca')->nullable();
+            $table->string('marca')->nullable();
             
             // Categoria
             $table ->foreignId('id_categoria')
-                    ->nullable()
-                    ->constrained('categorias')
-                    ->cascadeOnUpdate()
-                    ->nullOnDelete();
+                   ->nullable()
+                   ->constrained('categorias')
+                   ->cascadeOnUpdate()
+                   ->nullOnDelete();
 
             $table->string('color')->nullable();
             $table->string('stock')->nullable();

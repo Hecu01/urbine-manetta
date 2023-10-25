@@ -2,13 +2,6 @@ input[type=file] {
   display: none;
 }
 
-.custom-file-upload {
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
 .section-principal aside {
   box-shadow: 0px 0px 3px #000;
   background: rgba(255, 166, 0, 0.0901960784);
@@ -26,35 +19,33 @@ input[type=file] {
 .section-principal #left-aside .mas-informacion span {
   margin: 0px 5px;
 }
-.section-principal section .article {
+.section-principal section .article0 {
   cursor: pointer;
   color: #fff;
   border-radius: 20px;
-  background-color: rgb(0, 68, 255);
-  border: 1px solid rgb(0, 68, 255);
   box-shadow: 0px 0px 5px rgb(0, 0, 0);
   margin: 10px 14px;
   width: 240px;
   height: 150px;
   transition: all 0.3s;
 }
-.section-principal section .article .top {
+.section-principal section .article0 .top {
   display: flex;
   justify-content: space-between;
 }
-.section-principal section .article .top span i {
+.section-principal section .article0 .top span i {
   padding: 15px 0px;
   font-size: 2.5em;
 }
-.section-principal section .article .top .recuento {
+.section-principal section .article0 .top .recuento {
   padding: 0px;
   font-size: 3em;
   font-family: Arial, Helvetica, sans-serif;
 }
-.section-principal section .article .bottom {
+.section-principal section .article0 .bottom {
   position: relative;
 }
-.section-principal section .article .bottom a {
+.section-principal section .article0 .bottom a {
   text-decoration: none;
   position: absolute;
   left: 150px;
@@ -64,6 +55,10 @@ input[type=file] {
 }
 .section-principal section .article:hover {
   transform: scale(1.03);
+}
+.section-principal section .article1 {
+  background-color: rgb(0, 68, 255);
+  border: 1px solid rgb(0, 68, 255);
 }
 .section-principal section .article2 {
   background-color: rgb(0, 165, 8);

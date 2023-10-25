@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\tiendaController;
 use App\Http\Controllers\BusquedaController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CarritoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,12 @@ Route::group([], __DIR__ . '/admin.php');
 // Route::get('/cart', 'CartController@index');
 // Route::post('/cart/add', 'CartController@addToCart');
 
+// Route::get('/', [CarritoController::class, 'shop'])->name('shop');
+Route::get('/carrito', [CarritoController::class, 'cart'])->name('cart.index');
+Route::post('/add', [CarritoController::class, 'add'])->name('cart.store');
+Route::post('/update', [CarritoController::class, 'update'])->name('cart.update');
+Route::post('/remove', [CarritoController::class, 'remove'])->name('cart.remove');
+Route::post('/clear', [CarritoController::class, 'clear'])->name('cart.clear');
 
 
 

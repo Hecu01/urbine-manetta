@@ -6,7 +6,7 @@
 
         <section class="row" style="padding-top: 5px; justify-content: center;" >
             <!-- Clientes activos -->
-            <article class="article" >
+            <article class="article0 article1" >
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-user-plus"></i>
@@ -20,7 +20,7 @@
                 </div>
             </article>
             <!-- Clientes activos -->
-            <article class="article article2" onclick="alert('Te llevare a la tabla')">
+            <article class="article0 article2" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-chart-line"></i>
@@ -35,7 +35,7 @@
             </article>
             
             <!-- Sumplementos y dieta -->
-            <article class="article article3" onclick="alert('Te llevare a la tabla')">
+            <article class="article0 article3" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-heart"></i>
@@ -51,7 +51,7 @@
             
             
             <!-- Artículos deportivos -->
-            <article class="article article4"  id="redirigirBoton">
+            <article class="article0 article4"  id="redirigirBoton">
                 <a href="{{ route('nuevo_articulo') }}" class="text-white no-underline">
                     <div class="top">
                         <span>
@@ -69,7 +69,7 @@
             
                         
             <!-- Ropa deportiva -->
-            <article class="article article5" onclick="alert('Te llevare a la tabla')">
+            <article class="article0 article5" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-shirt"></i>
@@ -84,7 +84,7 @@
             </article>
             
             <!-- Productos dieteticos -->
-            <article class="article article6" onclick="alert('Te llevare a la tabla')">
+            <article class="article0 article6" onclick="alert('Te llevare a la tabla')">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-truck"></i>
@@ -100,35 +100,39 @@
             
                 
             <!-- Artículos deportivos -->
-            <article class="article not-defined" onclick="alert('Te llevare a la tabla')" >
+            <article class="article0 bg-cyan-500" onclick="alert('Te llevare a la tabla')" >
                 <div class="top">
                     <span>
-                        <i class="fa-solid fa-question"></i>
+                        <i class="fa-solid fa-coins"></i>
                     </span>
                     <span class="recuento">
                         0
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Compras online pendiente</p>
+                    <p>Compras online pendiente
+
+                        <br>
+                        <span class="text-l">- Ya pagaron</span>
+                    </p>
                 </div>
             </article>
             <!-- Artículos deportivos -->
-            <article class="article not-defined" onclick="alert('Te llevare a la tabla')" >
+            <article class="article0 bg-purple-500 border-purple-500" onclick="alert('Te llevare a la tabla')" >
                 <div class="top">
                     <span>
-                        <i class="fa-solid fa-question"></i>
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
                     </span>
                     <span class="recuento">
                         0
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Lorem, ipsum dolor.</p>
+                    <p>Admins</p>
                 </div>
             </article>
             <!-- Artículos deportivos -->
-            <article class="article not-defined" onclick="alert('Te llevare a la tabla')" >
+            <article class="article0 bg-red-500 border-red-500" onclick="alert('Te llevare a la tabla')" >
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-question"></i>
@@ -138,7 +142,7 @@
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Lorem, ipsum dolor.</p>
+                    <p>Categorias</p>
                 </div>
             </article> 
         </section>

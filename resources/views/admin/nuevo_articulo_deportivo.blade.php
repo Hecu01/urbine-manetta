@@ -21,7 +21,7 @@
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Tabla <i class="fa-solid fa-table"></i></button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Nuevo articulo <i class="fa-solid fa-circle-plus"></i></button>
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Crear articulo deportivo <i class="fa-solid fa-circle-plus"></i></button>
               </li>
 
             </ul>
@@ -94,23 +94,26 @@
                   method="POST"  
                   enctype="multipart/form-data">
                   @csrf
-                  <div class="col-md-12">
+                  <div class="col-md-12 flex ">
 
-                    <div class="d-flex">
+                    <div class="col-md-6">
 
-                      <div class="col-md-6">
-
-   
+                      <div class="col-md-12">
+  
+                        <div class="col-md-12">
+                          <h1 class="text-white text-3xl shadow-1 border-1 bg-pink-500/[0.9] w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo artículo deportivo')">Nuevo artículo deportivo</h1>
+                        </div>
+    
                         <div class="col-md-12">
                           <label for="inputEmail4" class="form-label">Titulo producto</label>
                           <input type="text" name="nombre_producto" class="form-control" id="inputEmail4">
                         </div>
   
                         <div class="col-md-12 flex mt-1 justify-between">
-
+  
                           <div class="col-md-5 ">
                             <label for="inputEmail4" class="form-label">Genero del producto</label>
-    
+                            
                             <select name="genero" id="" class="form-select">
                               <option value="" selected hidden></option>
                               <option value="M">Masculino</option>
@@ -119,81 +122,123 @@
                             </select>
                           </div>
                           <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Tipo de producto</label>
-    
+                            <label for="inputState" class="form-label">Stock</label>
+                            <input type="text"name="stock" onwheel="preventScroll(event)"  oninput="formatNumber(this)"  class="form-control" id="stock" onsubmit="removeDots2()" >
+
+                            {{-- <label for="inputEmail4" class="form-label">Tipo de producto</label>
+                            
                             <select name="genero" id="" class="form-select">
                               <option value="" selected hidden></option>
-                              <option value="M">Calzado</option>
-                              <option value="M">Proteccion</option>
-
-                            </select>
+                              <option value="M">Zapatilla de Futbol 5</option>
+                              <option value="M">Botines de Futbol</option>
+                              <option value="M">Pelota de voley</option>
+                              <option value="M">Pelota de Handaball</option>
+                              <option value="M">Pelota de Handaball</option>
+                              <option value="M">Pechera</option>
+                              <option value="M">Pelota</option>
+  
+                            </select> --}}
                           </div>
                         </div>
                       </div>
-                      <div class="" style="display: flex; justify-content: space-between; align-items:center; position: relative; margin-left:50px">
+                        
+  
+  
+                      <div class="col-md-12 flex justify-between">
+       
+    
+                        <div class="col-md-5">
+                          <label for="inputCity" class="form-label">Color</label>
+                          <input type="text" name="color" class="form-control" id="inputCity">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="inputAddress" class="form-label">Marca</label>
+                          <input type="text" name="marca" class="form-control" id="inputAddress" placeholder="Adidas, nike, otro">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="col-md-12">
+    
+                          <label class="form-label">Descripción</label>
+                          <textarea class="form-control" placeholder="Podés brindar más  detalles sobre el producto, por ejemplo, ideal para empezar, pero, no para hacer uso profesional (por ejemplo)." id="" style="min-height: 110px; max-height:110px;" ></textarea>
+                        </div>
+                        
+
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="col-md-12" style=" position: relative; ">
             
-                        <label class="custom-file-upload btn btn-danger" style="text-align:center; margin:0px 30px; margin-right:20px;">
-                          <input type="file" id="foto-aspirante" class="btn btn-secondary " name="foto" onchange="previewImage(event, '#imgPreview')" >
-                          Subir foto
-                        </label>
-                        <div class="container d-flex justify-content-center" style="height: 130px;width:130px;  display:flex; justify-content: center; box-shadow: 0px 0px 1px #000; background:#fff">
-                            <a href="#" type="button">
-                                <img id="imgPreview" style="height: 130px; width:130px;">
+
+                        <div class="container d-flex justify-content-center bg-gray-500 " style="height: 250px;width:250px;  display:flex; justify-content: center;  background:#fff">
+                            <a href="#" type="button" class="bg-gray-200">
+                                <img id="imgPreview" style="height: 250px; width:250px;" >
                             </a>
                         </div>
+
                       </div>
-                    </div>
+                      <div class="col-md-12 grid justify-center my-3 ">
+                        <label class=" btn text-white hover:scale-105 " style="background-color: #ec4899;text-align:center; width:100% ">
+                          <input type="file" id="foto-aspirante" class="" name="foto" onchange="previewImage(event, '#imgPreview')" >
+                          Subir foto
+                        </label>
+                      </div>
 
-                  </div>
-                  <div class="col-md-6">
-
-                    <div class="col-md-12">
-                      <label for="inputAddress" class="form-label">Marca</label>
-                      <input type="text" name="marca" class="form-control" id="inputAddress" placeholder="Adidas, nike, rebook, umbro">
-                    </div>
-                    <div class="col-md-12">
-                      <label for="inputAddress2" class="form-label">Categoria</label>
-                      <select name="categoria" id="" class="form-select">
-                        <option value="" selected hidden>Seleccione una opción</option>
-                        @foreach ($categorias as $categoria)                          
-                          <option value="{{ $categoria->id}}">{{ $categoria->categoria}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-
-                    <div class="col-md-12">
-                      <label for="inputCity" class="form-label">Color</label>
-                      <input type="text" name="color" class="form-control" id="inputCity">
-                    </div>
-
-                  </div>
-                  <div class="col-md-6">
-                    <div class="col-md-12">
-
-                      <label class="form-label">Descripción</label>
-                      <textarea class="form-control" placeholder="Podés brindar más  detalles sobre el producto, por ejemplo, ideal para empezar, pero, no para hacer uso profesional (por ejemplo)." id="" style="min-height: 110px; max-height:110px;" ></textarea>
-                    </div>
-                    
-                    <div class="col-md-12">
-                      <label for="inputState" class="form-label">Stock</label>
                       
-                      <input type="text"name="stock" onwheel="preventScroll(event)"  oninput="formatNumber(this)"  class="form-control" id="stock" onsubmit="removeDots2()" >
-                    </div>
+                      <div class="col-md-12 flex justify-center " >
+                        <div class="col-md-8 d-flex items-center" style="border-top: 1px solid #ec4899">
 
-                  </div>
+                          <div class="mr-5 bg-rose-500 p-1 h-min rounded-full text-white w-min">
 
-                    <div class="col-12 d-flex " style="justify-content:space-between">
-                      <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary">Agregar</button>
-                      </div>
-                      <div class="col-md-3 d-flex">
-                        <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
-                        <div class="input-group">
-                          <span class="input-group-text " style="border:1px solid rgba(255, 0, 136, 0.377);" id="inputGroupPrepend2" >$</span>
-                          <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
+                            <div class="form-check form-switch   ">
+                              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                              <label class="form-check-label" for="flexSwitchCheckDefault">Calzado</label>
+                            </div>
+
+                          </div>
+                          <div class="ml-5  p-1  p-1 h-min   w-min">
+                            <h1></h1>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                              <label class="form-check-label" for="flexRadioDefault1">
+                                Niños
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                              <label class="form-check-label" for="flexRadioDefault2">
+                                Adultos
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                              <label class="form-check-label" for="flexRadioDefault2">
+                                Ambos
+                              </label>
+                            </div>
+                          </div>
+
+                          
                         </div>
                       </div>
                     </div>
+
+
+                  </div>
+                  
+
+                  <div class="col-12 d-flex " style="justify-content:space-between">
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-primary">Agregar</button>
+                    </div>
+                    <div class="col-md-3 d-flex">
+                      <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
+                      <div class="input-group">
+                        <span class="input-group-text " style="border:1px solid rgba(255, 0, 136, 0.377);" id="inputGroupPrepend2" >$</span>
+                        <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
+                      </div>
+                    </div>
+                  </div>
                     <style>
                       .form-control, .form-select{
                         border :1px solid rgba(255, 0, 136, 0.466);
