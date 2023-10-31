@@ -6,14 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\Categoria;
 use App\Models\Articulo;
+use App\Models\Calzado;
 
 class AdminController extends Controller
 {
-    
-
-
-
-
     public function admin(){
         $volver = false; 
         $user = Auth::user();
@@ -27,14 +23,19 @@ class AdminController extends Controller
     }
     
     public function nuevo_articulo(){
-        // mostar btn "Volver"
-        $volver = true; 
+        // mostrar btn "Volver"
+        $volver = true;
+        
+        // Importamos modelos 
+        $calzados = Calzado::all();
         $categorias = Categoria::all(); 
-        $articulos = Articulo::all(); 
+        $articulos = Articulo::all();
+        
+        // Si es admin, regrese a home  
         if (!Auth::check() || !Auth::user()->administrator) {
             return redirect()->route('pagina_inicio'); 
         }
-        return view('admin.nuevo_articulo_deportivo', compact('categorias', 'articulos', 'volver'));
+        return view('admin.nuevo_articulo_deportivo', compact('categorias', 'articulos', 'volver', 'calzados'));
     }
     public function eliminar_articulo($id){
 
@@ -46,42 +47,52 @@ class AdminController extends Controller
 
     public function agregar_articulo(Request $request){
 
+    
+
         if($request->hasFile('foto')){
-			$file = $request->file('foto');
-			$carpetaDestino = storage_path('productos');
-			$filename = $file->getClientOriginalName();
-			$uploadSuccess = $request->file('foto')->move($carpetaDestino, $filename);
-			$articuloNuevo->foto = $filename;
-		}
+            $file = $request->file('foto');
+            $carpetaDestino = storage_path('productos');
+            $filename = $file->getClientOriginalName();
+            $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
+        }
         $articuloNuevo = Articulo::create([
-            'Nombre' =>  $request->nombre_producto,
+            'nombre' =>  $request->nombre_producto,
             'genero' => $request->genero,
-            'precio' => $request->precio,
+            'precio' => $request->precio,            
+            'stock' => $request->stock,
             'marca' => $request->marca,
+            'stock' => $request->stock,
             'color' => $request->color,
-            'stock' =>  $request->stock,
-            'id_cateogria' => $request->categoria,
+            'id_categoria' => $request->categoria,
+            'dirigido_a' => $request->publico_dirigido,
+            'tipo_producto' => $request->tipoProducto,
             'foto' => $filename
         ]);
 
-        // $articuloNuevo = new Articulo;
-        // $articuloNuevo->nombre = $request->nombre_producto;
-        // $articuloNuevo->genero = $request->genero;
-        // $articuloNuevo->precio = $request->precio;
-        // $articuloNuevo->marca = $request->marca;
-        // $articuloNuevo->color = $request->color;
-        // $articuloNuevo->stock = $request->stock;
-        // $articuloNuevo->id_categoria = $request->categoria;
+        // Comienzo de la lógica de unión de muchos a muchos,
+        // si es que es un calzado
+        $tipoProducto = $request->input('tipoProducto');
 
-        // if($request->hasFile('foto')){
-		// 	$file = $request->file('foto');
-		// 	$carpetaDestino = storage_path('productos');
-		// 	$filename = $file->getClientOriginalName();
-		// 	$uploadSuccess = $request->file('foto')->move($carpetaDestino, $filename);
-		// 	$articuloNuevo->foto = $filename;
-		// }
+        if($tipoProducto == "calzado"){
+            // Obtén los datos del array de tallas y el array de stock
+            $calzados = $request->input('calzados'); // Acceder al array 
+            $stocks = $request->input('stocks'); // Acceder al array 
+            
+            // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
+            foreach ($calzados as $indice => $calzado) {
+                // Obtén la instancia de talla existente
+                $calzado = Calzado::where('calzado', $calzado)->first(); 
 
-        // $articuloNuevo->save();
+
+                if (!is_null($calzado)) {
+                    $stocks = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
+
+                    // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
+                    $articuloNuevo->calzados()->attach($calzado, ['stocks' => $stocks]);
+                }            
+            }
+        }
+
         return back()->with('mensaje', 'Artículo agregado con éxito.');
     }
 }

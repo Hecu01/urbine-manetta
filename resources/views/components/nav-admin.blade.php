@@ -79,8 +79,8 @@
         </div>
 
     </div>
-    <div class="m-auto bg-white text-cyan-700 ">
-        <ul class="flex flex-wrap w-auto">
+    <div class="m-auto bg-white text-cyan-700 container-fluid">
+        <ul class="flex flex-wrap w-auto container justify-center">
             <a href="{{ route('home') }}" class="mx-1.5">Inicio</a></li>
             <a href="{{ route('ir_admin') }}" class="mx-1.5">Administrador</a></li>
         

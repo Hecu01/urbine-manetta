@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call(CategoriasDefault::class);
         $this->call(AdminDefault::class);
+        $this->call(CalzadosDefault::class);
     }
 }

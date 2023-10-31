@@ -16,19 +16,15 @@ return new class extends Migration
             $table->string('nombre')->nullable();
             $table->string('talle')->nullable();
             $table->string('genero')->nullable();
-            $table->string('precio')->nullable();
+            $table->integer('precio')->nullable();
             $table->string('marca')->nullable();
-            
-            // Categoria
-            $table ->foreignId('id_categoria')
-                   ->nullable()
-                   ->constrained('categorias')
-                   ->cascadeOnUpdate()
-                   ->nullOnDelete();
-
+            $table->foreignId('id_categoria')->nullable()->constrained('categorias')->cascadeOnUpdate()->nullOnDelete();
             $table->string('color')->nullable();
-            $table->string('stock')->nullable();
+            $table->integer('stock')->nullable();
             $table->string('descripcion')->nullable();
+            $table->string('tipo_producto')->nullable(); // calzado, ropa, accesorio
+            $table->string('dirigido_a')->nullable(); //niños, adultos, ambos
+            
             $table->string('foto',1000)->nullable();
             
             $table->timestamps();
