@@ -73,25 +73,33 @@ class AdminController extends Controller
         // si es que es un calzado
         $tipoProducto = $request->input('tipoProducto');
 
+
+
+
         if($tipoProducto == "calzado"){
             // Obtén los datos del array de tallas y el array de stock
             $calzados = $request->input('calzados'); // Acceder al array 
             $stocks = $request->input('stocks'); // Acceder al array 
-            
+
             // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
             foreach ($calzados as $indice => $calzado) {
                 // Obtén la instancia de talla existente
                 $calzado = Calzado::where('calzado', $calzado)->first(); 
 
-
                 if (!is_null($calzado)) {
-                    $stocks = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
+                    $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
 
                     // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
-                    $articuloNuevo->calzados()->attach($calzado, ['stocks' => $stocks]);
+                    $articuloNuevo->calzados()->attach($calzado, ['stocks' => $stock]);
                 }            
             }
+
+
         }
+
+
+
+        
 
         return back()->with('mensaje', 'Artículo agregado con éxito.');
     }

@@ -23,7 +23,7 @@
                     </div> --}}
                     <!-- center-->
                     <div class="mr-3 " >
-                        @foreach( $calzados as $calzado)
+                        @foreach($calzados as $calzado)
                             @if($calzado->calzado > 38)
                                 <div class="mx-3  my-1">
                                     <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
