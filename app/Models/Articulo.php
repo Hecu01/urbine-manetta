@@ -9,9 +9,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Articulo extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'genero', 'precio', 'stock', 'marca','color','id_categoria', 'foto', 'dirigido_a','tipo_producto'];
-    public function calzados()
-    {
+    protected $fillable = [
+        'id',
+        'nombre', 
+        'genero', 
+        'precio', 
+        'stock', 
+        'marca',
+        'color',
+        'id_categoria', 
+        'foto', 
+        'dirigido_a',
+        'tipo_producto'
+    ];
+    public function calzados(){
         return $this->belongsToMany(Calzado::class)->withPivot('stocks');
     }
+
 }

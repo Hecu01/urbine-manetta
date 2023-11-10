@@ -78,20 +78,25 @@ class AdminController extends Controller
 
         if($tipoProducto == "calzado"){
             // Obtén los datos del array de tallas y el array de stock
-            $calzados = $request->input('calzados'); // Acceder al array 
-            $stocks = $request->input('stocks'); // Acceder al array 
+            $calzados = $request->input('calzados');      // Acceder al array 
+            $stocks = $request->input('stocks');          // Acceder al array 
+            $calzadoIds = $request->input('calzado_ids'); // Acceder al array
 
             // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
             foreach ($calzados as $indice => $calzado) {
-                // Obtén la instancia de talla existente
-                $calzado = Calzado::where('calzado', $calzado)->first(); 
+    
 
-                if (!is_null($calzado)) {
+                if (isset($stocks[$indice]) > 0) {
+                    // Obtén la instancia de talla existente
+                    $calzado = Calzado::where('calzado', $calzado)->first(); 
+
                     $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
 
                     // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
-                    $articuloNuevo->calzados()->attach($calzado, ['stocks' => $stock]);
-                }            
+                    $articuloNuevo->calzados()->attach($calzado->id, ['stocks' => $stock]);
+       
+                }
+
             }
 
 

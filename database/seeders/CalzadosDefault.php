@@ -13,82 +13,16 @@ class CalzadosDefault extends Seeder
      */
     public function run(): void
     {
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '28',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '29',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '30',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '31',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '32',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '33',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '34',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '36',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '37',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '38',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '39',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '40',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '41',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '42',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '43',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '44',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '45',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '46',
-        ]);
-        Calzado::create([
-            'nombre' => 'calzado n°',
-            'calzado' => '47',
-        ]);
-
+        // Declaramos el numero base
+        $numero = 27;
+        
+        // Iteramos y agregamos los 20 calzados disponible
+        for ($i = 0; $i <= 19; $i++ ){
+            Calzado::create([
+                'nombre' => 'calzado n°',
+                'calzado' => $numero,
+            ]);
+            $numero = $numero + 1;
+        }
     }
 }

@@ -28,9 +28,8 @@
                 </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputState" class="form-label">Stock</label>
-                    <input type="text" name="stock" onwheel="preventScroll(event)"  class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
-
+                    <label for="stock_input" class="form-label">Stock</label>
+                    <input type="text" name="stock" onwheel="preventScroll(event)"  class="form-control total" id="stock_input"  aria-describedby="inputGroupPrepend2" value="" required>
   
                     {{-- Categoria --}}
                     <input type="text" name="categoria" id="" value="1" hidden>
@@ -86,7 +85,7 @@
                 <div class="">
                     <label for="inputState" class="form-label mx-2 " >Tipo de producto</label>
                     <div class="input-group d-flex" >
-                        <select name="tipoProducto" id="SelectTypeProduct" class="form-select">
+                        <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
                             <option value="" selected hidden></option>
                             <option value="calzado">Calzado</option>
                             <option value="accesorio">Accesorio</option>

@@ -26,9 +26,10 @@
                         @foreach($calzados as $calzado)
                             @if($calzado->calzado > 38)
                                 <div class="mx-3  my-1">
+                                    <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
                                     <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
                                     <label for="calzado-{{$calzado->id}}" class="mx-1">Calzado {{ $calzado->calzado }}</label>
-                                    <input type="text" name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small" style="width:25px;height:22px" > 
+                                    <input type="text" name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma" style="width:25px;height:22px" > 
                                 </div>
                             @endif
                         @endforeach
