@@ -1,3 +1,5 @@
+
+
 /* Ocultar los botones de un input de tipo number */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -47,9 +49,8 @@ input[type=number] {
 }
 
 .section {
-  background: url("../img/fondo-2.jpg") no-repeat center/cover;
-  background-attachment: fixed;
-  height: 1200px;
+  height: auto;
+  padding-bottom: 30px;
 }
 
 .contenedor-resultados {

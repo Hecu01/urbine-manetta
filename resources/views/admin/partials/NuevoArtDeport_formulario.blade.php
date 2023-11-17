@@ -1,4 +1,4 @@
-<form class="row g-3 p-3" action="{{ route('añadir_articulo')}}" method="POST" enctype="multipart/form-data">
+<form class="row g-3 p-3" action="{{ route('añadir_articulo')}}" method="POST" id="FormArtDeport" enctype="multipart/form-data">
     @csrf
     <div class="col-md-12 flex ">
 
@@ -29,8 +29,8 @@
                 </div>
                 <div class="col-md-6">
                     <label for="stock_input" class="form-label">Stock</label>
-                    <input type="text" name="stock" onwheel="preventScroll(event)"  class="form-control total" id="stock_input"  aria-describedby="inputGroupPrepend2" value="" required>
-  
+                    <input type="text" name="stock"   class="form-control total" id="stock_input" required>
+                    
                     {{-- Categoria --}}
                     <input type="text" name="categoria" id="" value="1" hidden>
                 </div>
@@ -55,26 +55,37 @@
             <div class="col-md-12">
 
                 <label class="form-label">Descripción</label>
-                <textarea class="form-control" placeholder="Podés brindar más  detalles sobre el producto, por ejemplo, ideal para empezar, pero, no para hacer uso profesional (por ejemplo)." id="" style="min-height: 110px; max-height:110px;" ></textarea>
+                <textarea class="form-control" placeholder="Podés brindar más  detalles sobre el producto, por ejemplo, ideal para empezar, pero, no para hacer uso profesional (por ejemplo)." id="" style="min-height: 110px; max-height:110px;" name="descripcion"></textarea>
             </div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="col-md-12" style=" position: relative; ">
+        <div class="col-md-12" style=" position: relative; margin: 10px 0px">
 
+            <div class="container d-flex justify-content-center bg-gray-500 " style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff">
+                <!-- Carrusel para previsualizar imágenes -->
+                <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"  data-bs-interval="3000">
+                    <div class="carousel-inner " id="imagePreviewInner"  style="height: 100%">
+                        <!-- Las imágenes previsualizadas se mostrarán aquí -->
+                    </div>
 
-        <div class="container d-flex justify-content-center bg-gray-500 " style="height: 250px;width:250px;  display:flex; justify-content: center;  background:#fff">
-            <a href="#" type="button" class="bg-gray-200">
-                <img id="imgPreview" style="height: 250px; width:250px;" >
-            </a>
-        </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#imagePreviewCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#imagePreviewCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
 
         </div>
         <div class="col-md-12 grid justify-center my-3 ">
-        <label class=" btn text-white hover:scale-105 " style="background-color: #ec4899;text-align:center; width:100% ">
-            <input type="file" id="foto-aspirante" class="" name="foto" onchange="previewImage(event, '#imgPreview')" >
-            Subir foto
-        </label>
+            <label class=" btn text-white hover:scale-105 " for="imageInput" style="background-color: #ec4899;text-align:center; width:100% ">
+                <input type="file" name="foto" id="imageInput" multiple accept="image/*">
+                Cargar fotos
+            </label>
         </div>
 
         
@@ -132,14 +143,23 @@
             </div>
         </div>
     </div>
+
+
+
   <style>
     .form-control, .form-select{
       border :1px solid rgba(255, 0, 136, 0.466);
       box-shadow: 0px 0px 5px rgba(255, 0, 136, 0.288); /*Si no gusta borrarlo*/
     }
-
+    /* Estilos para el modo de solo lectura */
+    .estilo-readonly {
+        background-color: #f2f2f2; /* Cambia el color de fondo a un tono gris */
+        border: 1px solid #ccc; /* Añade un borde gris */
+        cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
+        /* Agrega otros estilos según sea necesario */
+    }
   </style>
-</form>
+</form> 
 
 <script>
     // Mostrar u ocultar el campo de opciones de calzado según el tipo seleccionado
@@ -151,4 +171,42 @@
             opcionesCalzado.style.display = 'none';
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Manejar cambios en el campo de entrada de imágenes
+        document.getElementById('imageInput').addEventListener('change', handleImagePreview);
+    });
+
+    function handleImagePreview(event) {
+        // Limpiar el carrusel de previsualización
+        document.getElementById('imagePreviewInner').innerHTML = '';
+
+        // Obtener archivos seleccionados
+        const files = event.target.files;
+
+        // Mostrar previsualización de imágenes
+        for (const file of files) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('d-block');
+                img.style.height= '250px';
+
+                const item = document.createElement('div');
+                item.classList.add('carousel-item');
+
+                // Marcar el primer elemento como activo
+                if (document.getElementById('imagePreviewInner').childElementCount === 0) {
+                    item.classList.add('active');
+                }
+
+                item.appendChild(img);
+                document.getElementById('imagePreviewInner').appendChild(item);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
 </script>

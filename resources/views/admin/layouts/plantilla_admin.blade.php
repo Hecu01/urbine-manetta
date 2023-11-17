@@ -10,8 +10,8 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         
         <!-- Bootstrap 5 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        
         <!-- Style CSS -->
         <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
@@ -20,7 +20,6 @@
         <link rel="stylesheet" href="{{ asset('assets/css/nav-admin.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/nav-usuario.css') }}">
         
-        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
         
         {{-- Tailwind local --}}
         @vite('resources/css/app.css')
@@ -34,18 +33,18 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
         <!-- Scripts -->
-        @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+        @vite(['resources/sass/app.scss'])
+
+        {{-- Notificaciones Toastr --}}
+        <link rel="stylesheet" href="{{ asset('plugins\toastr\toastr.min.css') }}">
+
         <title>{{ isset($title) ? $title : 'Sitio Web' }}</title>
     </head>
     <body >
 
-        
-        <!-- Si es admin, podrá acceder al crud, sino, no. -->
-
-
+        <!-- Navigator admin -->
         <x-nav-admin/>
-
-
+        
         <!-- Sección principal -->
         <div class="section-principal d-flex " style="justify-content: space-between;" id="seccion-recontraprincipal">
             <section class="flex" style="padding-top: 5px; justify-content: center;" >
@@ -56,31 +55,28 @@
         <!--Footer-->
         <x-footer/>
 
-
-
-
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             // mostrar imagen en el form
             function previewImage(event, querySelector){
         
-            //Recuperamos el input que desencadeno la acción
-            const input = event.target;
-        
-            //Recuperamos la etiqueta img donde cargaremos la imagen
-            $imgPreview = document.querySelector(querySelector);
-        
-            // Verificamos si existe una imagen seleccionada
-            if(!input.files.length) return
-        
-            //Recuperamos el archivo subido
-            file = input.files[0];
-        
-            //Creamos la url
-            objectURL = URL.createObjectURL(file);
-        
-            //Modificamos el atributo src de la etiqueta img
-            $imgPreview.src = objectURL;
+                //Recuperamos el input que desencadeno la acción
+                const input = event.target;
+            
+                //Recuperamos la etiqueta img donde cargaremos la imagen
+                $imgPreview = document.querySelector(querySelector);
+            
+                // Verificamos si existe una imagen seleccionada
+                if(!input.files.length) return
+            
+                //Recuperamos el archivo subido
+                file = input.files[0];
+            
+                //Creamos la url
+                objectURL = URL.createObjectURL(file);
+            
+                //Modificamos el atributo src de la etiqueta img
+                $imgPreview.src = objectURL;
                     
             }
     
@@ -95,8 +91,10 @@
 
         <script src="{{ asset('assets/js/scrollreveal.js')}}"></script>
         <script src="{{ asset('assets/js/admin.js') }}" ></script>
+        <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
+
         
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     
 </html>

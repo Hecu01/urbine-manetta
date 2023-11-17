@@ -22,16 +22,24 @@ class AdminController extends Controller
         return view('admin.admin', compact('title', 'artDeportivos','volver'));
     }
     
-    public function nuevo_articulo(){
-        // mostrar btn "Volver"
+    public function nuevo_articulo(Request $request){
+        // Mostrar btn "Volver"
         $volver = true;
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('images'); // Almacenar la imagen en la carpeta 'images' en el almacenamiento
+                $product->images()->create(['path' => $path]);
+            }
+        }
+    
         
         // Importamos modelos 
         $calzados = Calzado::all();
         $categorias = Categoria::all(); 
-        $articulos = Articulo::all();
+        $articulos = Articulo::paginate(5);
         
-        // Si es admin, regrese a home  
+        // Si no es admin, regrese a home  
         if (!Auth::check() || !Auth::user()->administrator) {
             return redirect()->route('pagina_inicio'); 
         }
@@ -47,19 +55,19 @@ class AdminController extends Controller
 
     public function agregar_articulo(Request $request){
 
-    
-
         if($request->hasFile('foto')){
             $file = $request->file('foto');
             $carpetaDestino = storage_path('productos');
             $filename = $file->getClientOriginalName();
             $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
         }
+
         $articuloNuevo = Articulo::create([
             'nombre' =>  $request->nombre_producto,
             'genero' => $request->genero,
             'precio' => $request->precio,            
             'stock' => $request->stock,
+            'descripcion' => $request->descripcion,
             'marca' => $request->marca,
             'stock' => $request->stock,
             'color' => $request->color,
@@ -72,9 +80,6 @@ class AdminController extends Controller
         // Comienzo de la lógica de unión de muchos a muchos,
         // si es que es un calzado
         $tipoProducto = $request->input('tipoProducto');
-
-
-
 
         if($tipoProducto == "calzado"){
             // Obtén los datos del array de tallas y el array de stock
@@ -96,16 +101,8 @@ class AdminController extends Controller
                     $articuloNuevo->calzados()->attach($calzado->id, ['stocks' => $stock]);
        
                 }
-
             }
-
-
         }
-
-
-
-        
-
         return back()->with('mensaje', 'Artículo agregado con éxito.');
     }
 }

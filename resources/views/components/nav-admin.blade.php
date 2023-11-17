@@ -1,11 +1,7 @@
 <nav class="navbar pb-1" id="navigator-admin">
     <div class="container-fluid mb-1">
         <div class="left d-flex">
-            <!-- Botón barra -->
-            <button class="button-left " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                <i class="fa-solid fa-bars"></i>
-                
-            </button>
+
 
             <!-- Direccion -->
             <div class="direccion mt-1">
