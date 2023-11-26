@@ -1,5 +1,3 @@
-
-
 /* Ocultar los botones de un input de tipo number */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {

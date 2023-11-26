@@ -7,7 +7,7 @@
         <div class="col-md-12">
 
             <div class="col-md-12">
-                <h1 class="text-white text-3xl shadow-1 border-1 bg-pink-500/[0.9] w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo artículo deportivo')">Nuevo artículo deportivo</h1>
+                <h1 class="text-white text-3xl shadow-1 border-1 bg-sky-500/[0.9] w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo artículo deportivo')">Nuevo artículo deportivo</h1>
             </div>
 
             <div class="col-md-12">
@@ -44,11 +44,11 @@
 
             <div class="col-md-5">
                 <label for="inputCity" class="form-label">Color</label>
-                <input type="text" name="color" class="form-control" id="inputCity">
+                <input type="text" name="color" class="form-control" id="inputCity" required>
             </div>
             <div class="col-md-6">
                 <label for="inputAddress" class="form-label">Marca</label>
-                <input type="text" name="marca" class="form-control" id="inputAddress" placeholder="Adidas, nike, otro">
+                <input type="text" name="marca" class="form-control" id="inputAddress" required placeholder="Adidas, nike, otro">
             </div>
         </div>
         <div class="col-md-12">
@@ -82,7 +82,7 @@
 
         </div>
         <div class="col-md-12 grid justify-center my-3 ">
-            <label class=" btn text-white hover:scale-105 " for="imageInput" style="background-color: #ec4899;text-align:center; width:100% ">
+            <label class=" btn text-white hover:scale-105 " for="imageInput" style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
                 <input type="file" name="foto" id="imageInput" multiple accept="image/*">
                 Cargar fotos
             </label>
@@ -90,7 +90,7 @@
 
         
         <div class="col-md-12 flex justify-center " >
-            <div class="col-md-9 flex justify-center items-center" style="border-top: 1px solid #ec4899">
+            <div class="col-md-9 flex justify-center items-center" style="border-top: 1px solid rgb(16, 153, 163)">
 
 
                 <div class="">
@@ -101,7 +101,7 @@
                             <option value="calzado">Calzado</option>
                             <option value="accesorio">Accesorio</option>
                         </select>          
-                        <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgba(255, 0, 136, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
+                        <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
                     </div>
                 </div>
 
@@ -138,7 +138,7 @@
         <div class="col-md-3 d-flex">
             <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
             <div class="input-group">
-                <span class="input-group-text " style="border:1px solid rgba(255, 0, 136, 0.377);" id="inputGroupPrepend2" >$</span>
+                <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);" id="inputGroupPrepend2" >$</span>
                 <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
             </div>
         </div>
@@ -148,8 +148,8 @@
 
   <style>
     .form-control, .form-select{
-      border :1px solid rgba(255, 0, 136, 0.466);
-      box-shadow: 0px 0px 5px rgba(255, 0, 136, 0.288); /*Si no gusta borrarlo*/
+      border :1px rgb(16, 153, 163);
+      box-shadow: 0px 0px 5px rgba(16, 153, 163); /*Si no gusta borrarlo*/
     }
     /* Estilos para el modo de solo lectura */
     .estilo-readonly {

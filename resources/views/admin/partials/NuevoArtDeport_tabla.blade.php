@@ -1,5 +1,6 @@
-<table class="table table-hover">
-    <thead  style="border:1px solid rgba(255, 0, 136, 0.377); text-align:center">
+<!-- Botón que activa el popover -->
+<table class="table table-hover font-sans">
+    <thead  style="border:1px solid rgb(16, 153, 163); text-align:center">
       <th>Foto</th>
       <th>Nombre</th>
       <th>Precio</th>
@@ -7,7 +8,7 @@
       <th>Categoria</th>
       <th>Stock</th>
     </thead>
-    <tbody class="table-group-divider" id="tabla-articulos-deportivos">
+    <tbody  id="tabla-articulos-deportivos">
       @foreach ($articulos as $articulo)
         <tr>
 
@@ -22,7 +23,36 @@
               @endif
             @endforeach
           </td>
-          <td>{{ $articulo->stock}}</td>
+          <td>
+            @if($articulo->tipo_producto == 'calzado')
+              <a href="#" id="popoverButton-{{ $articulo->id }}" >
+                {{ $articulo->stock}}
+              </a>  
+
+              <!-- Contenedor del popover (inicialmente oculto) -->
+              <div id="popoverContent-{{ $articulo->id }}"  class="hidden bg-white border p-1 absolute z-10 mt-2 w-fit bg-gray-100 ">
+                <h3 class="text-xl underline">Calzados - disponibles</h3>
+                {{-- Logica para que cargue los calzados correspondientes --}}
+                  @if($articulo->tipo_producto == "calzado" && count($articulo->calzados) > 0)
+                    <div class=" my-2   hover:cursor ">
+                      <div class="inline-block relative ">
+                            @foreach($articulo->calzados as $calzado)
+                              @if($calzado->pivot->stocks > 0)
+                                <p >Talle N° {{ $calzado->calzado }} - Disponibles {{$calzado->pivot->stocks}}</p>
+                              @endif
+                            @endforeach
+  
+                      </div>
+                    </div>
+                  @endif
+                
+              </div>
+
+
+            @else
+              {{ $articulo->stock}}
+            @endif
+          </td>
           <td>
             <div class="d-flex justify-content-center">
               <button class="btn btn-success btn-sm"><i class="fa-solid fa-pencil"></i></button>

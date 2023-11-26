@@ -39,7 +39,7 @@
                             <a class="dropdown-item" href="#"
                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
-                                Destruír sesión
+                                Cerrar sesión
                             </a>
         
                             <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
@@ -257,21 +257,60 @@
 
     </div>
     <div class="bottom-bottom-nav">  
-        <div class="dropdown " id="carrito-de-compras">
-            <a href="#"style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
-                <span style="margin-left: 10px;margin-top: 5px;">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </span>
-            </a>
 
-            <ul class="dropdown-menu w-96 h-96 ">
-                <h1 class="text-lg text-center ">El carrito está vacío</h1>
-                {{-- <li>
-                    <a class="dropdown-item dropdown" href="#">Español</a>                
-                </li> --}}
+        {{-- Invitado --}}
+        @guest
 
-            </ul>
-        </div>      
+            <div class="dropdown " id="carrito-de-compras">
+                <button style="color: #fff" data-bs-toggle="modal" data-bs-target="#miModal" type="button">
+                    <span style="margin-left: 10px;margin-top: 5px;">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </span>
+                </button>
+
+
+
+            </div>   
+            <!-- Modal -->
+            <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content text-black">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-xl" id="miModalLabel">Atención!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <!-- Contenido del modal -->
+                            
+                            <p class="text-xl  ">Inicia sesión o regístrate para poder comprar o agregar al carrito</p>
+                            <a class="btn btn-primary" href="{{ route('login') }}">Entrar</a>
+                            <a class="btn btn-primary" href="{{ route('register') }}">Registrarse</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+       
+        {{-- Logueado --}}
+        @else
+
+            <div class="dropdown " id="carrito-de-compras">
+                <a href="#"style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#miModal">
+                    <span style="margin-left: 10px;margin-top: 5px;">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </span>
+                </a>
+
+                <ul class="dropdown-menu w-96 h-96 ">
+                    <h1 class="text-lg text-center ">El carrito está vacío</h1>
+                    {{-- <li>
+                        <a class="dropdown-item dropdown" href="#">Español</a>                
+                    </li> --}}
+
+                </ul>
+            </div>   
+        @endguest
+        
         <div class="busqueda col-6">
             <form class="d-flex" action="{{ route('buscar')  }}" method="GET">
                 <input class="form-control me-2 " type="search" name="articulo-buscado" placeholder="Buscá lo que necesitás acá" aria-label="Search" >

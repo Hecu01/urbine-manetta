@@ -87,3 +87,58 @@ function eliminarArticulo() {
         }
     });
 }
+
+
+// Asegúrate de que este código se ejecute después de que se haya cargado la página
+document.addEventListener("DOMContentLoaded", function() {
+    // Obtén todos los checkboxes
+    var checkboxes = document.querySelectorAll('input[type="checkbox"][name^="calzados"]');
+
+    // Agrega un evento change a cada checkbox
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            // Obtén el ID del calzado correspondiente
+            var calzadoId = checkbox.id.split('-')[1];
+
+            // Obtén el campo de texto correspondiente
+            var stockInput = document.getElementById('stock-' + calzadoId);
+
+            // Habilita o deshabilita el campo de texto según el estado del checkbox
+            stockInput.disabled = !checkbox.checked;
+        });
+    });
+});
+
+
+
+// Espera a que el contenido HTML esté completamente cargado
+// Agrega el script para controlar la visibilidad del popover para cada tupla -->
+document.addEventListener("DOMContentLoaded", function() {
+    // Agrega un evento clic a todos los enlaces para alternar la visibilidad del popover
+    document.querySelectorAll('[id^="popoverButton-"]').forEach(function(popoverButton) {
+        var popoverContentId = popoverButton.id.replace('popoverButton-', 'popoverContent-');
+        var popoverContent = document.getElementById(popoverContentId);
+
+        popoverButton.addEventListener('click', function() {
+            // Oculta todos los popovers antes de mostrar el actual
+            document.querySelectorAll('[id^="popoverContent-"]').forEach(function(element) {
+                element.classList.add('hidden');
+            });
+
+            // Muestra el popover actual
+            popoverContent.classList.toggle('hidden');
+        });
+    });
+
+    // Cierra el popover si se hace clic fuera de él
+    document.addEventListener('click', function(event) {
+        var isPopoverButton = event.target.matches('[id^="popoverButton-"]');
+        var isPopoverContent = event.target.matches('[id^="popoverContent-"]');
+
+        if (!isPopoverButton && !isPopoverContent) {
+            document.querySelectorAll('[id^="popoverContent-"]').forEach(function(element) {
+                element.classList.add('hidden');
+            });
+        }
+    });
+});

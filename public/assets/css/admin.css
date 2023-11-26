@@ -1,3 +1,4 @@
+@charset "UTF-8";
 input[type=file] {
   display: none;
 }
@@ -107,29 +108,34 @@ input[type=file] {
   width: 290px;
 }
 
-#articulos-deportivos {
+/*
+|------------------------------------------
+| Artículos deportivos
+|------------------------------------------
+*/
+.estilos-crear-articulos-ropa {
   width: 800px;
   height: auto;
   padding-bottom: 20px;
   margin: 0px 15px;
 }
-#articulos-deportivos ul {
-  border: 1px solid rgba(255, 0, 136, 0.377);
+.estilos-crear-articulos-ropa ul {
+  border: 1px solid rgb(16, 153, 163);
   border-bottom: none;
 }
 
-#articulos-deportivos2 {
-  border: 1px solid rgba(255, 0, 136, 0.377);
-  box-shadow: 0px 0px 5px rgba(255, 0, 135, 0.5);
+.estilos-crear-articulos-ropa2 {
+  border: 1px solid rgb(16, 153, 163);
+  box-shadow: 0px 0px 5px rgb(16, 153, 163);
   z-index: -1;
 }
-#articulos-deportivos2 div div table thead td {
-  border: 2px solid rgba(255, 0, 136, 0.377);
-  border-top: 1px solid rgba(255, 0, 136, 0.377);
+.estilos-crear-articulos-ropa2 div div table thead td {
+  border: 2px solid rgb(16, 153, 163);
+  border-top: 1px solid rgb(16, 153, 163);
   font-weight: bolder;
   text-align: center;
 }
-#articulos-deportivos2 div div table tbody tr td {
-  border: 1px solid rgba(255, 0, 136, 0.377);
+.estilos-crear-articulos-ropa2 div div table tbody tr td {
+  border: 1px solid rgb(16, 153, 163);
   text-align: center;
 }/*# sourceMappingURL=admin.css.map */

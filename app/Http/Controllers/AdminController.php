@@ -10,6 +10,11 @@ use App\Models\Calzado;
 
 class AdminController extends Controller
 {
+    /*
+    |------------------------------------------------------------------------
+    | Página Index del admin 
+    |------------------------------------------------------------------------
+    */
     public function admin(){
         $volver = false; 
         $user = Auth::user();
@@ -22,9 +27,16 @@ class AdminController extends Controller
         return view('admin.admin', compact('title', 'artDeportivos','volver'));
     }
     
-    public function nuevo_articulo(Request $request){
+
+    /*
+    |------------------------------------------------------------------------
+    | Controladores de Artículos deportivos
+    |------------------------------------------------------------------------
+    */
+    public function IndexArticuloDeportivo(Request $request){
         // Mostrar btn "Volver"
         $volver = true;
+        $artDeportivos = Articulo::where('id_categoria', '1')->count();
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -38,12 +50,11 @@ class AdminController extends Controller
         $calzados = Calzado::all();
         $categorias = Categoria::all(); 
         $articulos = Articulo::paginate(5);
-        
         // Si no es admin, regrese a home  
         if (!Auth::check() || !Auth::user()->administrator) {
             return redirect()->route('pagina_inicio'); 
         }
-        return view('admin.nuevo_articulo_deportivo', compact('categorias', 'articulos', 'volver', 'calzados'));
+        return view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'volver', 'calzados', 'artDeportivos'));
     }
     public function eliminar_articulo($id){
 
@@ -104,5 +115,15 @@ class AdminController extends Controller
             }
         }
         return back()->with('mensaje', 'Artículo agregado con éxito.');
+    }
+
+    /*
+    |------------------------------------------------------------------------
+    | Controladores de Ropa deportiva
+    |------------------------------------------------------------------------
+    */
+
+    public function IndexRopaDeportiva(){
+        return view('admin.RopasDeportivas');
     }
 }

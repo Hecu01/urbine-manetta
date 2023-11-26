@@ -69,18 +69,22 @@
             
                         
             <!-- Ropa deportiva -->
-            <article class="article0 article5" onclick="alert('Te llevare a la tabla')">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-shirt"></i>
-                    </span>
-                    <span class="recuento">
-                        0
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Ropa deportiva</p>
-                </div>
+            <article class="article0 article5" >
+
+                <a href="{{ route('nuevo_ropa') }}" class="text-white no-underline">
+                    <div class="top">
+                        <span>
+                            <i class="fa-solid fa-shirt"></i>
+                        </span>
+                        <span class="recuento">
+                            0
+                        </span>
+                    </div>
+                    <div class="bottom">
+                        <p>Ropa deportiva</p>
+                    </div>
+                </a>
+
             </article>
             
             <!-- Productos dieteticos -->

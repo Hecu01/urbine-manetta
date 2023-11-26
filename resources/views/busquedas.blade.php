@@ -10,7 +10,21 @@
 
         <div class="contenedor-resultados gap-4 justify-center flex flex-wrap" >
             @foreach ($resultados as $resultado)     
-              <div class="w-min bg-white shadow-lg  h-fit">
+              <div class="w-min bg-white shadow-lg  h-fit position-relative">
+                @guest
+                @else
+                  @if (Auth::user()->administrator == true)
+                    <div class="position-absolute right-1 rounded-full flex">
+                      <div class="hover:scale-125">
+  
+                        <a href="" class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline" title="Editar producto: ID {{$resultado->id}}">Editar <i class="fa-solid fa-pen"></i></a>
+                      </div>
+                      <div class="hover:scale-125">
+                        <a href="" class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline" title="Eliminar producto: ID {{$resultado->id}}">Eliminar <i class="fa-solid fa-trash"></i></a>
+                      </div>
+                    </div>  
+                  @endif
+                @endguest
                   <div class="flex font-sans ">
                       <div class="flex w-48 relative content-center">
                         <img src="{{ url('producto/' . $resultado->foto) }}" alt="" class="absolute inset-0   object-cover w-full  m-auto" loading="lazy" />
@@ -35,7 +49,7 @@
                                 <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer">
                                     @foreach($resultado->calzados as $calzado)
                                       @if($calzado->pivot->stocks > 0)
-                                        <option value="{{ $calzado->id }}">Talle N° {{ $calzado->calzado }}</option>
+                                        <option value="{{ $calzado->id }}">Talle {{ $calzado->calzado }} - Disponibles {{ $calzado->pivot->stocks }} unidades</option>
                                       @endif
                                     @endforeach
                                 </select>
@@ -89,11 +103,13 @@
                               </div>
                             {{-- Logueado --}}
                             @else
-                              <button class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
-                                Comprar
+                              <button class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white" type="button" onclick="alert('te llevaré a los metodos de pago');">
+                                <a href="#" class="text-white no-underline">
+                                  Comprar
+                                </a>
                               </button>
 
-                              <button class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
+                              <button class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button" onclick="alert('agregado al carrito');">
                                 <a href="#" class="text-black no-underline">
                                   Agregar al carrito
                                 </a>
