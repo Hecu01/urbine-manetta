@@ -138,15 +138,15 @@
             <!-- Artículos deportivos -->
             <article class="article0 bg-red-500 border-red-500" onclick="alert('Te llevare a la tabla')" >
                 <div class="top">
-                    <span>
-                        <i class="fa-solid fa-question"></i>
+                    <span class="mt-3 text-3xl">
+                        OFF %
                     </span>
                     <span class="recuento">
                         0
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Categorias</p>
+                    <p>Descuentos</p>
                 </div>
             </article> 
         </section>
@@ -154,7 +154,11 @@
     </div>
 
    
-    
+    <style>
+        .article0:hover{
+            transform: scale(1.1);
+        }
+    </style>
     
 
 @endsection

@@ -24,7 +24,7 @@ class AdminController extends Controller
             return redirect()->route('pagina_inicio'); 
         }
         $title = "Sportivo - Admin";
-        return view('admin.admin', compact('title', 'artDeportivos','volver'));
+        return view('admin.Admin', compact('title', 'artDeportivos','volver'));
     }
     
 
