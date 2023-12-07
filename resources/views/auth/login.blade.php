@@ -1,21 +1,73 @@
-@extends('layouts.app')
-@section('section-principal')    
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">{{ __('Inicio de sesión') }}</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @vite('resources/css/app.css')
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="path/to/tailwind.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/nav-admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/nav-usuario.css') }}">
+    
+    <!-- Scrollreveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    
+    <!-- Font awesoma -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- Notificaciones Toastr --}}
+    <link rel="stylesheet" href="{{ asset('plugins\toastr\toastr.min.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sportivo - login</title>
+</head>
+<body>
+    <div class="flex justify-content-center  my-5">
+        <div class="w-fit ">
+            <div class="card shadow-2xl ">
+                <div class=" flex items-center border pr-2">
+
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
+                    <h1 class=" px-2  underline">Inicio de sesión</h1>
+                </div>
+
+
+                <div class="card-body pb-0">
+                    <form method="POST" action="{{ route('login') }}" >
+                        @csrf
+
+                        <div class="row mb-3">
+
+                            <div class="flex justify-center">
+
+                                
+                                {{-- <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingInput" name="email"  required autocomplete="email" autofocus>
+                                    <label for="floatingInput">Correo electrónico</label>
+                                </div> --}}
+
+                                <div class="col-md-9 ">
+
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control   @error('email') is-invalid @enderror" id="floatingInput" placeholder="name@example.com" required autocomplete="email" autofocus name="email">
+                                        <label for="floatingInput">Correo electrónico</label>
+                                    </div>
+    
+    
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>El correo o la contraseña están mal</strong>
@@ -23,13 +75,17 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="row mb-3">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
+                        <div class="row mb-3">
+                            <div class="flex justify-center">
+                                <div class="col-md-9 ">
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" id="floatingPassword" placeholder="Password">
+                                        <label for="floatingPassword">Contraseña</label>
+                                    </div>
+        
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>El correo o la contraseña están mal</strong>
@@ -37,38 +93,53 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+                             
+                        <div class="flex justify-center mb-3">
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                        <label class="form-check-label" for="remember">
-                                            {{ __('Recordame') }}
-                                        </label>
-                                    </div>
-                                </div>
+                                <label class="form-check-label" for="remember">
+                                    {{ __('Recordame') }}
+                                </label>
                             </div>
+                            @if (Route::has('password.request'))
+                                <div class="">
 
-                            <div class="row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Entrar') }}
-                                    </button>
-
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Olvidaste la contraseña?') }}
-                                        </a>
-                                    @endif
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Olvidaste la contraseña?') }}
+                                    </a>
                                 </div>
+                            @endif
+                        </div>
+
+                        <div class="flex justify-center mb-0">
+                            <div class="col-md-5 grid">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Entrar') }}
+                                </button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        
+                        <div class="mt-4">
+
+                            <p class="text-center">
+                                ¿No tenés cuenta? <br>
+                                <a  href="{{ route('register') }}">
+                                    Registrate
+                                </a>
+                            </p>
+                        </div>
+
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+    
+</body>
+</html>
+
 
 
