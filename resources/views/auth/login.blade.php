@@ -135,6 +135,9 @@
                     </form>
                 </div>
             </div>
+            <div class="flex justify-center mt-4">
+                <a class="btn btn-secondary hover:scale-105" href="{{ route('home') }}">PÁG. INICIO</a>
+            </div>
         </div>
     </div>
     

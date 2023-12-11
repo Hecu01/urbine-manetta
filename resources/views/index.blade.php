@@ -24,8 +24,7 @@
                 </div>
 
             </div>
-            <div class="">
-            </div>
+
 
         @else
         @endguest

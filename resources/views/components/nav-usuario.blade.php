@@ -37,8 +37,7 @@
         
                         <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"  aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#"
-                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Cerrar sesión
                             </a>
         
@@ -54,10 +53,16 @@
                                 <i class="fa-regular fa-bell"></i>
                             </span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Español</a></li>
-                            <li><a class="dropdown-item" href="#">Inglés</a></li>
-                            <li><a class="dropdown-item" href="#">Portugués</a></li>
+                        <ul class="dropdown-menu w-96 h-64">
+                            <div class="h-100 " id="notificaciones-container">
+                                <div class="top">
+                                    <h1 class="text-lg text-center border-b uppercase py-1">No hay notificaciones nuevas</h1>
+                                </div>
+                                <div class="no-notificaciones flex content-center justify-center mt-5 opacity-50 scale-105" >
+                                    <img src="{{asset('assets/img/logo.png')}}" alt="" draggable="false">
+                                </div>
+                            </div>
+ 
                         </ul>
                     </div>
 
@@ -97,13 +102,7 @@
         <div class="right d-flex" >
 
             
-            {{-- <!-- Búsqueda -->
-            <div class="busqueda">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Búsqueda" aria-label="Search" >
-                    <button class="btn btn-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </form>
-            </div> --}}
+
             <div class="d-flex mx-3" id="contenedor-switch-cambio-tema" style="">
                 <span class="">
                     <i class="fa-solid fa-sun"></i>
@@ -148,20 +147,7 @@
                                 </span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a class="dropdown-item h-8 flex items-center" style="color:#fff" href="#">Portugués
-                                <span class="mx-1 ">
-                                    <img src="{{ asset('assets/img/portugues.jpg')}}" alt="" class="w-8" >
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item h-8 flex items-center" style="color: #fff" href="#">Inglés 
-                                <span class="mx-1 mt-6">
-                                    <img src="{{ asset('assets/img/ingles.jpg')}}" alt="" class="w-8">
-                                </span>
-                            </a>
-                        </li> --}}
+ 
                     </ul>
                 </div>
         
@@ -316,40 +302,6 @@
                 <input class="form-control me-2 " type="search" name="articulo-buscado" placeholder="Buscá lo que necesitás acá" aria-label="Search" >
                 <button class="btn btn-danger" type="submit"> <span ><i class="fa-solid fa-magnifying-glass"></i></span></button>
             </form>
-            
         </div>
-        
-        
     </div>
-
-    
-      
-      
-{{-- 
-    <div class="d-flex mx-3" id="contenedor-switch-cambio-tema" style="">
-        <span class="">
-            <i class="fa-solid fa-sun"></i>
-        </span>
-        <div class="form-check form-switch" id="form-switch" style="">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-        </div>
-        <span class="">
-            <i class="fa-solid fa-moon"></i>
-        </span>
-    </div>
-
-    <div class="d-flex mx-3" id="contenedor-dropdown-idiomas" style="">
-        <div class="dropdown">
-            <a href="#"  style="color: #fff; text-decoration: none" data-bs-toggle="dropdown" aria-expanded="false">
-                ES / <span style=""><img src="{{ asset('assets/img/español.jpg')}}" alt="" height="15px"></span>
-            </a>
-            <ul class="dropdown-menu" id="dropdown-idiomas" style="">
-                <li><a class="dropdown-item" style="color:#fff" href="#">Español</a></li>
-                <li><a class="dropdown-item" style="color:#fff" href="#">Inglés</a></li>
-                <li><a class="dropdown-item" style="color:#fff" href="#">Portugués</a></li>
-            </ul>
-        </div>
-
-    </div>
-     --}}
 </nav>
