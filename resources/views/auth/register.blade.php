@@ -119,9 +119,7 @@
 <body>
     <div class="flex justify-content-center  my-2">
         <div class="w-fit ">
-            <div class="flex justify-center mb-3 mt-1">
-                <a class="btn btn-secondary hover:scale-105" href="{{ route('home') }}">PÁG. INICIO</a>
-            </div>
+
             <div class="card shadow-2xl ">
                 <div class=" flex items-center border pr-2">
 
@@ -234,7 +232,9 @@
                     </form>
                 </div>
             </div>
-
+            <div class="flex justify-center  mt-4">
+                <a class="btn btn-secondary hover:scale-105" href="{{ route('home') }}">PÁG. INICIO</a>
+            </div>
         </div>
     </div>
     
