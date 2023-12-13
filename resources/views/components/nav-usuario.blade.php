@@ -1,3 +1,9 @@
+@php
+    $carrito = session()->get('carrito', []);
+    // Convierte el carrito en una colección para ser compatible con darryldecode/cart
+    $cartItems = collect($carrito);
+    $contarItems = collect($carrito)->count();
+@endphp
 <!-- Si es usuarioooo (no accedera al crud) -->
 <nav class="navbar   " id="navigator-usuario" style="position: relative">
     <div class="container-fluid" id="top-navigator">
@@ -288,7 +294,27 @@
                 </a>
 
                 <ul class="dropdown-menu w-96 h-96 ">
-                    <h1 class="text-lg text-center ">El carrito está vacío</h1>
+                    @if($contarItems > 0)
+                        <h1 class="text-lg text-center ">Carrito de compras</h1>
+                        @foreach ($cartItems as $item)
+                            <div class="flex">
+                                <div class="">
+                                    <img src="{{ $item['imagen'] }}" alt="">
+
+                                </div>
+                                <div>
+                                    <p>ID: {{ $item['id'] }}</p>
+                                    <p>Nombre: {{ $item['name'] }}</p>
+                                    <p>Precio: {{ $item['price'] }}</p>
+                                    <p>Cantidad: {{ $item['quantity'] }}</p>
+                                    <hr>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <h1 class="text-lg text-center ">El carrito está vacío</h1>
+                    @endif
+
                     {{-- <li>
                         <a class="dropdown-item dropdown" href="#">Español</a>                
                     </li> --}}

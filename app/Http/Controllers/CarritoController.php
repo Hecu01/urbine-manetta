@@ -2,56 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Articulo;
 use Illuminate\Http\Request;
+use Darryldecode\Cart\Facades\CartFacade;
 
 class CarritoController extends Controller
 {
-    public function shop()
+    // Mostrar el carrito
+    public function mi_carrito()
     {
-        $products = Articulo::all();
-       //dd($products);
-        return view('index')->withTitle('E-COMMERCE STORE | SHOP')->with(['products' => $products]);
+        // Recupera el carrito de la sesión
+        $carrito = session()->get('carrito', []);
+
+        // Convierte el carrito en una colección para ser compatible con darryldecode/cart
+        $cartItems = collect($carrito);
+
+        // Retornar la vista con el contenido del carrito
+        return view('carrito', ['cartItems' => $cartItems]);
     }
 
-    public function cart()  {
-        $cartCollection = \Cart::getContent();
-        //dd($cartCollection);
-        return view('carrito')->withTitle('E-COMMERCE STORE | CART')->with(['cartCollection' => $cartCollection]);;
-    }
-    public function remove(Request $request){
-        \Cart::remove($request->id);
-        return redirect()->route('cart.index')->with('success_msg', 'Item is removed!');
-    }
+    // Método para añadir un producto al carrito
+    public function añadirAlCarrito(Request $request)
+    {
+        $productoId = $request->input('producto_id');
+        $nombre = $request->input('nombre');
+        $precio = $request->input('precio');
+        $imagen = $request->input('imagen');
+        $cantidad = $request->input('cantidad', 1);
 
-    public function add(Request$request){
-        \Cart::add(array(
-            'id' => $request->id,
-            'name' => $request->name,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'attributes' => array(
-                'image' => $request->img,
-                'slug' => $request->slug
-            )
-        ));
-        return redirect()->route('cart.index')->with('success_msg', 'Item Agregado a sú Carrito!');
-    }
+        // Recupera el carrito de la sesión
+        $carrito = session()->get('carrito', []);
 
-    public function update(Request $request){
-        \Cart::update($request->id,
-            array(
-                'quantity' => array(
-                    'relative' => false,
-                    'value' => $request->quantity
-                ),
-        ));
-        return redirect()->route('cart.index')->with('success_msg', 'Cart is Updated!');
-    }
+        // Añade el producto al carrito
+        $carrito[] = [
+            'id' => $productoId,
+            'name' => $nombre,
+            'price' => $precio,
+            'quantity' => $cantidad,
+            'imagen' => $imagen,
+        ];
 
-    public function clear(){
-        \Cart::clear();
-        return redirect()->route('cart.index')->with('success_msg', 'Car is cleared!');
-    }
+        // Guarda el carrito actualizado en la sesión
+        session()->put('carrito', $carrito);
 
+        // Redirigir a la página del carrito
+        return redirect()->route('carrito.index');
+    }
 }

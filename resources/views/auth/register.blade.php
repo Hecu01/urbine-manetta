@@ -196,7 +196,7 @@
 
                                     <div class="form-floating">
                                         <input type="password" class="form-control"  name="password_confirmation" required id="password-confirm" placeholder="Password" autocomplete="new-password">
-                                        <label for="password-confirm">Confirmar contrasñea</label>
+                                        <label for="password-confirm">Confirmar contraseña</label>
                                     </div>
 
                                     @error('password')

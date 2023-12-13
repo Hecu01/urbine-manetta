@@ -23,25 +23,16 @@ Route::get('/', [tiendaController::class, 'home'])->name('home');
 Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
 Route::get('/detalles/{id}',[BusquedaController::class, 'verDetalles'])->name('detalles');
 
-
 // Rutas que acceden los admins
 Route::group([], __DIR__ . '/admin.php');
 
-
 // Agregar al carrito
-// Route::get('/cart', 'CartController@index');
-// Route::post('/cart/add', 'CartController@addToCart');
-
-// Route::get('/', [CarritoController::class, 'shop'])->name('shop');
-Route::get('/carrito', [CarritoController::class, 'cart'])->name('cart.index');
-Route::post('/add', [CarritoController::class, 'add'])->name('cart.store');
-Route::post('/update', [CarritoController::class, 'update'])->name('cart.update');
-Route::post('/remove', [CarritoController::class, 'remove'])->name('cart.remove');
-Route::post('/clear', [CarritoController::class, 'clear'])->name('cart.clear');
+Route::get('/carrito-de-compras', [CarritoController::class, 'mi_carrito'])->name('carrito.index');
+Route::post('/carrito/añadir', [CarritoController::class, 'añadirAlCarrito'])->name('carrito.añadir');
 
 
 
-
+// IGNORAR
 Route::get('producto/{filename}', function ($filename){
     $path = storage_path('productos/' . $filename);
     if (!File::exists($path)) {

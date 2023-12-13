@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('section-principal')
+<a href="{{ route('carrito.index') }}"> IR A MI CARRITO</a>
     <section class="section-bienvenida" >
         <div class="contenedor">
             <div class="mensaje-bienvenida font-">

@@ -29,7 +29,7 @@
                       <div class="flex w-48 relative content-center">
                         <img src="{{ url('producto/' . $resultado->foto) }}" alt="" class="absolute inset-0   object-cover w-full  m-auto" loading="lazy" />
                       </div>
-                      <form class="flex-auto p-6">
+                      <div class="flex-auto p-6">
                         <div class="flex flex-wrap">
                           <h1 class="flex-auto text-lg font-semibold text-slate-900">
                             {{ $resultado->nombre}}
@@ -60,7 +60,7 @@
                           <div class="w-16 my-2 mx-3">
   
                             <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500   py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer ">
-                              @for ($i = 1; $i <= 10; $i++)
+                              @for ($i = 1; $i <= $resultado->stock; $i++)
                                 <option value="">{{$i}} unidades</option>
                               @endfor
     
@@ -82,6 +82,8 @@
                                   Agregar al carrito
                                 </a>
                               </button>
+
+
                               <!-- Modal -->
                               <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -109,11 +111,18 @@
                                 </a>
                               </button>
 
-                              <button class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button" onclick="alert('agregado al carrito');">
-                                <a href="#" class="text-black no-underline">
-                                  Agregar al carrito
-                                </a>
-                              </button>
+                              <form method="POST" action="{{ route('carrito.añadir') }}" class="w-min">
+                                @csrf
+                                <input type="hidden" name="producto_id" value="{{ $resultado->id }}">
+                                <input type="hidden" name="nombre" value="{{ $resultado->nombre }}">
+                                <input type="hidden" name="precio" value="{{ $resultado->precio }}">
+                                <input type="hidden" name="imagen" value="{{ $resultado->foto }}">
+                                <input type="hidden" name="cantidad" value="1" min="1"> <!-- Cambiado a visible para que el usuario pueda seleccionar la cantidad -->
+                                <button type="submit" class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900">
+                                    Agregar al carrito
+                                </button>
+                              </form>
+                            
                             @endguest
 
                           </div>
@@ -126,7 +135,7 @@
                         <p class="text-sm text-slate-700">
                           Tiene hasta 10 días hábiles para cambiarse
                         </p>
-                      </form>
+                      </div>
                   </div>
               </div>
 
