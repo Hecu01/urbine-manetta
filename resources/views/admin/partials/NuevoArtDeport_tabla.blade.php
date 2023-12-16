@@ -55,7 +55,11 @@
           </td>
           <td>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-success btn-sm"><i class="fa-solid fa-pencil"></i></button>
+
+              <a href="{{ route('EditarArtDep', $articulo->id) }}" class="btn btn-success btn-sm"  title="Editar">
+              
+                <i class="fa-solid fa-pen-to-square"></i>
+             </a>
               <form class="mx-1" id="deleteForm" data-id="{{ $articulo->id }}" action="{{ route('eliminar_articulo', ['id' => $articulo->id]) }}" method="POST">
                 @method('DELETE')
                 @csrf

@@ -119,7 +119,7 @@
                                 <input type="hidden" name="imagen" value="{{ $resultado->foto }}">
                                 <input type="hidden" name="cantidad" value="1" min="1"> <!-- Cambiado a visible para que el usuario pueda seleccionar la cantidad -->
                                 <button type="submit" class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900">
-                                    Agregar al carrito
+                                  Agregar al carrito  
                                 </button>
                               </form>
                             

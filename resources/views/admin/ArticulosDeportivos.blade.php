@@ -56,7 +56,7 @@
 
             
   <!-- Artículos deportivos -->
-  <article class="article0 article4 "  id="redirigirBoton">
+  <article class="article0 article4   px-2"  id="redirigirBoton">
     <a href="{{ route('nuevo_articulo') }}" class="text-white no-underline">
       <div class="top">
         <span>

@@ -18,6 +18,7 @@ use App\Http\Controllers\CarritoController;
 // página de inicio
 Route::get('/home', [tiendaController::class, 'home'])->name('pagina_inicio');
 Route::get('/', [tiendaController::class, 'home'])->name('home');
+Route::get('/pagos', [tiendaController::class, 'pago'])->name('pago');
 
 // Búsquedas
 Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');

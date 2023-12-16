@@ -56,6 +56,55 @@ class AdminController extends Controller
         }
         return view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'volver', 'calzados', 'artDeportivos'));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // editar FACULTAD ... ÉSTE NO
+    public function editar ($id){
+        $carreras = Carrera::all();
+        $registro = Registro::findOrFail($id);
+        return view('admin/editar_aspirante',compact('registro', 'carreras'));
+        
+        // $registro = TuModelo::find($id);
+        $opcionesSelect = ['opcion1', 'opcion2', 'opcion3']; // Aquí debes obtener las opciones disponibles desde tu base de datos
+        return view('tu_vista_de_edicion', compact('registro', 'opcionesSelect'));
+
+
+    }
+    public function update(Request $request, $id){
+        // Datos Nacimiento [1/5]
+        $registro = Registro::findOrFail($id);
+        $registro->nombre = $request->nombre_aspirante;
+
+        $registro->save();
+
+        return back()->with('mensaje', 'registro actualizado');
+    }
+
+
+
+
+    public function EditArtDeport($id){
+        $volver = true;
+        $articulo = Articulo::findOrFail($id);
+        return view('admin.editar.ArtDep_edit', compact('articulo', 'volver'));
+
+    }
+
+
+
     public function eliminar_articulo($id){
 
         $articulos = Articulo::find($id); 
@@ -64,7 +113,20 @@ class AdminController extends Controller
 
     }
 
-    public function agregar_articulo(Request $request){
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function agregar_articulo_deportivo(Request $request){
 
         if($request->hasFile('foto')){
             $file = $request->file('foto');

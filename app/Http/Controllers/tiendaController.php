@@ -14,6 +14,10 @@ class tiendaController extends Controller
         $title = "Sportivo - Inicio";
         return view('index', compact('title'));
     }
+    public function pago(){
+        $title = "Métodos de pago";
+        return view('orders.payment', compact('title'));
+    }
     public function hombres(){
         $title = "Sportivo - hombres";
         $articulo = Articulo::where('genero', 'M')->get();

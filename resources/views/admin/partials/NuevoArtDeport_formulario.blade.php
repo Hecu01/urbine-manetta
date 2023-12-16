@@ -138,7 +138,7 @@
         <div class="col-md-3 d-flex">
             <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
             <div class="input-group">
-                <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);" id="inputGroupPrepend2" >$</span>
+                <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);" id="signo-peso" >$</span>
                 <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
             </div>
         </div>
@@ -147,8 +147,13 @@
 
 
   <style>
+    #signo-peso{
+        z-index: 1;
+        border :1px rgb(3, 3, 3);
+      box-shadow: -1px 0px 5px rgba(16, 153, 163); 
+    }
     .form-control, .form-select{
-      border :1px rgb(16, 153, 163);
+      border :1px rgb(3, 3, 3);
       box-shadow: 0px 0px 5px rgba(16, 153, 163); /*Si no gusta borrarlo*/
     }
     /* Estilos para el modo de solo lectura */
