@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('largo_cm');
             $table->integer('ancho_cm');
             $table->string('genero');
+            $table->string('cintura_para');
             $table->timestamps();
         });
     }

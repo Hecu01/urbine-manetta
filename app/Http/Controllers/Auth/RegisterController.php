@@ -49,6 +49,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -64,9 +65,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $filename = null;
+        if(request()->hasFile('foto')){
+            $file = request()->file('foto');
+            $carpetaDestino = storage_path('usuarios');
+            $filename = $file->getClientOriginalName();
+            $uploadSuccess = request()->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'foto' => $filename,
             'password' => Hash::make($data['password']),
         ]);
     }

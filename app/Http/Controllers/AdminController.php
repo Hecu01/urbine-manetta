@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Talle;
+use App\Models\Calzado;
+use App\Models\Articulo;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
-use App\Models\Categoria;
-use App\Models\Articulo;
-use App\Models\Calzado;
 
 class AdminController extends Controller
 {
@@ -19,14 +21,43 @@ class AdminController extends Controller
         $volver = false; 
         $user = Auth::user();
         $artDeportivos = Articulo::where('id_categoria', '1')->count();
+        $adminesActivos = User::where('administrator', true)->count();
+
         // Si no es admin, volvé a casa che.
         if (!Auth::check() || !Auth::user()->administrator) {
             return redirect()->route('pagina_inicio'); 
         }
+
         $title = "Sportivo - Admin";
-        return view('admin.Admin', compact('title', 'artDeportivos','volver'));
+        return view('admin.Admin', compact('title', 'artDeportivos','volver', 'adminesActivos'));
     }
     
+    /*
+    |------------------------------------------------------------------------
+    | Controladores de Admines
+    |------------------------------------------------------------------------
+    */
+    public function VerAdmines(){
+        $volver = true; 
+        $user = Auth::user();
+        $usuarios = User::where('administrator', false)->get();
+
+        // Si no es admin, volvé a casa che.
+        if (!Auth::check() || !Auth::user()->administrator) {
+            return redirect()->route('pagina_inicio'); 
+        }
+        $title = "Sportivo - Admines";
+        return view('admin.AdminesActivos', compact('title', 'volver', 'usuarios'));
+    }
+
+
+    public function HabilitarAdmin(Request $request, $id) {
+        $usuario = User::findOrFail($id);
+        $cambioValor = 1;
+        $usuario->administrator = $cambioValor;
+        $usuario->save();
+        return redirect()->route('admins');
+    }
 
     /*
     |------------------------------------------------------------------------
@@ -70,28 +101,6 @@ class AdminController extends Controller
 
 
 
-
-    // editar FACULTAD ... ÉSTE NO
-    public function editar ($id){
-        $carreras = Carrera::all();
-        $registro = Registro::findOrFail($id);
-        return view('admin/editar_aspirante',compact('registro', 'carreras'));
-        
-        // $registro = TuModelo::find($id);
-        $opcionesSelect = ['opcion1', 'opcion2', 'opcion3']; // Aquí debes obtener las opciones disponibles desde tu base de datos
-        return view('tu_vista_de_edicion', compact('registro', 'opcionesSelect'));
-
-
-    }
-    public function update(Request $request, $id){
-        // Datos Nacimiento [1/5]
-        $registro = Registro::findOrFail($id);
-        $registro->nombre = $request->nombre_aspirante;
-
-        $registro->save();
-
-        return back()->with('mensaje', 'registro actualizado');
-    }
 
 
 
@@ -186,6 +195,55 @@ class AdminController extends Controller
     */
 
     public function IndexRopaDeportiva(){
-        return view('admin.RopasDeportivas');
+        $volver = true;
+        // Importamos modelos 
+        $talles = Talle::all();
+        return view('admin.RopasDeportivas', compact('volver', 'talles'));
+    }
+    public function añadir_ropa(Request $request){
+
+        if($request->hasFile('foto')){
+            $file = $request->file('foto');
+            $carpetaDestino = storage_path('productos');
+            $filename = $file->getClientOriginalName();
+            $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
+        }
+
+        $articuloNuevo = Articulo::create([
+            'nombre' =>  $request->nombre_producto,
+            'genero' => $request->genero,
+            'precio' => $request->precio,            
+            'stock' => $request->stock,
+            'descripcion' => $request->descripcion,
+            'marca' => $request->marca,
+            'stock' => $request->stock,
+            'color' => $request->color,
+            'id_categoria' => $request->categoria,
+            'dirigido_a' => $request->publico_dirigido,
+            'tipo_producto' => $request->tipoProducto,
+            'foto' => $filename
+        ]);
+
+
+        // Obtén los datos del array de tallas y el array de stock
+        $calzados = $request->input('calzados');      // Acceder al array 
+        $stocks = $request->input('stocks');          // Acceder al array 
+        $calzadoIds = $request->input('calzado_ids'); // Acceder al array
+
+        // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
+        foreach ($calzados as $indice => $calzado) {
+
+            if (isset($stocks[$indice]) > 0) {
+                // Obtén la instancia de talla existente
+                $calzado = Calzado::where('calzado', $calzado)->first(); 
+
+                $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
+
+                // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
+                $articuloNuevo->calzados()->attach($calzado->id, ['stocks' => $stock]);
+
+            }
+        }
+        return back()->with('mensaje', 'Artículo agregado con éxito.');
     }
 }

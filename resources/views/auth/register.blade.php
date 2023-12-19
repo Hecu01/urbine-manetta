@@ -129,9 +129,30 @@
 
 
                 <div class="card-body pb-0">
-                    <form method="POST" action="{{ route('register') }}" >
+                    <form method="POST"  action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
+                        <div class="row ">
+                            <div class="flex justify-center">
+                                <div class="col-md-9 ">
+                                    <h3 class="text-center">Tu foto de perfil</h3>
+                                    <div class="container d-flex justify-content-center shadow-sm border-2 " style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff; ">
+                                        <!-- Carrusel para previsualizar imágenes -->
+                                        <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"  data-bs-interval="3000">
+                                            <div class="carousel-inner " id="imagePreviewInner"  style="height: auto; ">
+                                                <!-- Las imágenes previsualizadas se mostrarán aquí -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 grid justify-center my-3 ">
+                                        <label class=" btn text-white hover:scale-105 " for="imageInput" style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
+                                            <input type="file" name="foto" id="imageInput" multiple accept="image/*">
+                                            Cargar foto
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row ">
                             <div class="flex justify-center">
                                 <div class="col-md-9 ">
@@ -237,7 +258,47 @@
             </div>
         </div>
     </div>
+    <script>
+
     
+        document.addEventListener('DOMContentLoaded', function () {
+            // Manejar cambios en el campo de entrada de imágenes
+            document.getElementById('imageInput').addEventListener('change', handleImagePreview);
+        });
+    
+        function handleImagePreview(event) {
+            // Limpiar el carrusel de previsualización
+            document.getElementById('imagePreviewInner').innerHTML = '';
+    
+            // Obtener archivos seleccionados
+            const files = event.target.files;
+    
+            // Mostrar previsualización de imágenes
+            for (const file of files) {
+                const reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('d-block');
+                    img.style.height= '250px';
+    
+                    const item = document.createElement('div');
+                    item.classList.add('carousel-item');
+    
+                    // Marcar el primer elemento como activo
+                    if (document.getElementById('imagePreviewInner').childElementCount === 0) {
+                        item.classList.add('active');
+                    }
+    
+                    item.appendChild(img);
+                    document.getElementById('imagePreviewInner').appendChild(item);
+                };
+    
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 </html>
 

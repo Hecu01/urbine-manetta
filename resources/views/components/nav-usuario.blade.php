@@ -91,10 +91,10 @@
             @endguest
 
         </div>
-        <div class="center">
+        <div class="center pl-5">
 
             <!-- Logo y nombre -->
-            <div class="logo-y-nombre">
+            <div class="logo-y-nombre ">
                 <a href="{{ route('home')}}" class="flex items-center text-white decoration-none text-2xl hover:text-3xl">
 
                     <div class="imagen-logo mx-1">
@@ -109,18 +109,22 @@
 
             
 
-            <div class="d-flex mx-3" id="contenedor-switch-cambio-tema" style="">
-                <span class="">
-                    <i class="fa-solid fa-sun"></i>
-                </span>
-                <div class="form-check form-switch" id="form-switch" style="">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+
+            <div class=" p-0 mr-5 mt-1">
+
+
+                <!-- Direccion -->
+                <div class="direccion mt-1">
+                    <span class="svg-home">
+                        <i class="fa-solid fa-house"></i>
+                    </span>
+                    <span class="address">
+
+                        De la nación 356, San nicolás
+                    </span>
+                    
                 </div>
-                <span class="">
-                    <i class="fa-solid fa-moon"></i>
-                </span>
             </div>
-        
             <div class="d-flex " id="contenedor-dropdown-idiomas" style="">
                 <div class="dropdown" id="display-dropdown">
                     <a href="#" class="dropdown-toggle flex items-center pt-1"  style="color: #fff; text-decoration: none" data-bs-toggle="dropdown" aria-expanded="false">

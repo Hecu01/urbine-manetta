@@ -62,7 +62,7 @@
     <div class="col-md-6">
         <div class="col-md-12" style=" position: relative; margin: 10px 0px">
 
-            <div class="container d-flex justify-content-center bg-gray-500 " style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff">
+            <div class="container d-flex justify-content-center shadow-sm border-2 " style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff">
                 <!-- Carrusel para previsualizar imágenes -->
                 <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"  data-bs-interval="3000">
                     <div class="carousel-inner " id="imagePreviewInner"  style="height: 100%">

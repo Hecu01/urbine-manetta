@@ -6,7 +6,7 @@
                 <img src="{{ asset('assets/img/local.jpg')}}" class="rounded-xl" alt="" style="width: 100%;">
             </div>
             <div id="foto-admin">
-                <img src="{{ asset('assets/img/mi-foto.jpg')}}" alt="foto de ..." >
+                <img src="{{ url('usuario/' . Auth::user()->foto) }}" alt="">
             </div>
         </div>
         <div class="mas-informacion">

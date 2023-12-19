@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\tiendaController;
+use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\BusquedaController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +17,19 @@ use App\Http\Controllers\CarritoController;
 |
 */
 // página de inicio
-Route::get('/home', [tiendaController::class, 'home'])->name('pagina_inicio');
-Route::get('/', [tiendaController::class, 'home'])->name('home');
-Route::get('/pagos', [tiendaController::class, 'pago'])->name('pago');
+Route::get('/', [TiendaController::class, 'home'])->name('home');
+Route::get('/home', [TiendaController::class, 'home'])->name('pagina_inicio');
+Route::get('/pagos', [TiendaController::class, 'pago'])->name('pago');
 
 // Búsquedas
 Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
 Route::get('/detalles/{id}',[BusquedaController::class, 'verDetalles'])->name('detalles');
+
+// Rutas de usuarios
+Route::middleware(['auth'])->group(function(){
+    Route::get('/domicilios', [UsuarioController::class, 'domicilio'])->name('domicilio');
+    Route::post('/domicilios', [UsuarioController::class, 'agregar_domicilio'])->name('agregar_direccion');
+});
 
 // Rutas que acceden los admins
 Route::group([], __DIR__ . '/admin.php');
@@ -32,8 +39,9 @@ Route::get('/carrito-de-compras', [CarritoController::class, 'mi_carrito'])->nam
 Route::post('/carrito/añadir', [CarritoController::class, 'añadirAlCarrito'])->name('carrito.añadir');
 
 
-
-// IGNORAR
+/*
+|-------------------- IGNORAR --------------------
+*/
 Route::get('producto/{filename}', function ($filename){
     $path = storage_path('productos/' . $filename);
     if (!File::exists($path)) {
@@ -45,24 +53,19 @@ Route::get('producto/{filename}', function ($filename){
     $response->header("Content-Type", $type);
     return $response;
 });
+Route::get('usuario/{filename}', function ($filename1){
+    $path = storage_path('usuarios/' . $filename1);
+    if (!File::exists($path)) {
+        abort(404);
+    }
+    $file = File::get($path);
+    $type = File::mimeType($path);
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    return $response;
+});
+/*
+|-------------------- IGNORAR --------------------
+*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Route::group(['middleware' => 'administrator'], function () {
-//     Rutas que solo los administradores pueden acceder. (incompleto)
-// });
 Auth::routes();

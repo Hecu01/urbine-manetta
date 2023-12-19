@@ -13,5 +13,5 @@
     </tbody>
 </table>
 <div class="flex justify-center">
-  {{ $articulos->links('pagination::bootstrap-4') }}
+  {{-- {{ $articulos->links('pagination::bootstrap-4') }} --}}
 </div>

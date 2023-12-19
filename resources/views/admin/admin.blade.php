@@ -103,7 +103,7 @@
             </article>
             
                 
-            <!-- Artículos deportivos -->
+            
             <article class="article0 bg-cyan-500" onclick="alert('Te llevare a la tabla')" >
                 <div class="top">
                     <span>
@@ -121,21 +121,23 @@
                     </p>
                 </div>
             </article>
-            <!-- Artículos deportivos -->
-            <article class="article0 bg-purple-500 border-purple-500" onclick="alert('Te llevare a la tabla')" >
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-screwdriver-wrench"></i>
-                    </span>
-                    <span class="recuento">
-                        0
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Admins</p>
-                </div>
+            
+            <article class="article0 bg-purple-500 border-purple-500"  >
+                <a href="{{ route('admins') }}" class="text-white no-underline">
+                    <div class="top">
+                        <span>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </span>
+                        <span class="recuento">
+                            {{ $adminesActivos }}
+                        </span>
+                    </div>
+                    <div class="bottom">
+                        <p>Admins</p>
+                    </div>
+                </a>
             </article>
-            <!-- Artículos deportivos -->
+            
             <article class="article0 bg-red-500 border-red-500" onclick="alert('Te llevare a la tabla')" >
                 <div class="top">
                     <span class="mt-3 text-3xl">

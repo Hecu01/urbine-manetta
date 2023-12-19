@@ -12,7 +12,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @endif 
-  <div class="estilos-crear-articulos-ropa">
+  <div class="estilos-crear-articulos-ropa ">
       <ul class="nav nav-tabs" id="myTab" role="tablist" style="display: flex; justify-content:space-between">
         <div class="d-flex">
 
@@ -21,7 +21,7 @@
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Tabla <i class="fa-solid fa-table"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Crear articulo deportivo <i class="fa-solid fa-circle-plus"></i></button>
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Crear ropa deportiva <i class="fa-solid fa-circle-plus"></i></button>
             </li>
 
           </ul>
@@ -37,11 +37,11 @@
         </div>
           
       </ul>
-      <div id="estilos-crear-articulos-ropa2">
+      <div  class=" estilos-crear-articulos-ropa3">
           <div class="tab-content" id="myTabContent">
               
             <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0" style="min-height:500px;overflow-x:visible">
-              @include('admin.partials.NuevoRopaDeport_tabla')
+              {{-- @include('admin.partials.NuevoRopaDeport_tabla') --}}
             </div>
             <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
               @include('admin.partials.NuevoRopaDeport_formulario')
@@ -58,22 +58,21 @@
   <!-- Ropa deportiva -->
   <article class="article0 article5 p-2 hover:scale-105" >
 
-    <a href="{{ route('nuevo_articulo') }}" class="text-white no-underline">
+    <a href="{{ route('nuevo_ropa') }}" class="text-white no-underline">
       <div class="top">
         <span>
-          <i class="fa-solid fa-shirt"></i>
+            <i class="fa-solid fa-shirt"></i>
         </span>
         <span class="recuento">
-          0
+            0
         </span>
       </div>
       <div class="bottom">
-        <p>Ropa deportiva disponible</p>
+          <p>Ropa deportiva</p> 
       </div>
     </a>
 
   </article>
-          
 
 
 

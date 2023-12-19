@@ -18,6 +18,7 @@ class AdminDefault extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('20406080'),
+            'foto' => 'admin.jpg',
             'administrator' => true,
         ]);
     }

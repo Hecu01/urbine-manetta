@@ -8,7 +8,6 @@ $(document).ready(function(){
     |
     */ 
 
-
     // Selecciona el tipo de producto
     $('#SelectTypeProduct').change(function () {
 
@@ -67,7 +66,20 @@ $(document).ready(function(){
             }
         });
         $("#stock_input").val(suma);
+        $("#stock_input_ropa").val(suma);
     });
+
+    /* 
+    |
+    |--------------------------------------------------------------------------
+    | URL - ropa deportiva
+    |--------------------------------------------------------------------------
+    |
+    */ 
+    $("#stock_input_ropa").prop('readonly', true).val('');
+
+    
+
 });
 function eliminarArticulo() {
     var form = $('#deleteForm');
@@ -102,6 +114,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Obtén el campo de texto correspondiente
             var stockInput = document.getElementById('stock-' + calzadoId);
+
+            // Habilita o deshabilita el campo de texto según el estado del checkbox
+            stockInput.disabled = !checkbox.checked;
+        });
+    });
+});
+// Asegúrate de que este código se ejecute después de que se haya cargado la página
+document.addEventListener("DOMContentLoaded", function() {
+    // Obtén todos los checkboxes
+    var checkboxes2 = document.querySelectorAll('input[type="checkbox"][name^="talles"]');
+
+    // Agrega un evento change a cada checkbox
+    checkboxes2.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            // Obtén el ID del calzado correspondiente
+            var talleId = checkbox.id.split('-')[1];
+
+            // Obtén el campo de texto correspondiente
+            var stockInput = document.getElementById('stock-' + talleId);
 
             // Habilita o deshabilita el campo de texto según el estado del checkbox
             stockInput.disabled = !checkbox.checked;
