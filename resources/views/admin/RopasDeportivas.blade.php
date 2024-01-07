@@ -41,7 +41,7 @@
           <div class="tab-content" id="myTabContent">
               
             <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0" style="min-height:500px;overflow-x:visible">
-              {{-- @include('admin.partials.NuevoRopaDeport_tabla') --}}
+              @include('admin.partials.NuevoRopaDeport_tabla')
             </div>
             <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
               @include('admin.partials.NuevoRopaDeport_formulario')
@@ -64,7 +64,7 @@
             <i class="fa-solid fa-shirt"></i>
         </span>
         <span class="recuento">
-            0
+            {{ $ropaDeportivas}}
         </span>
       </div>
       <div class="bottom">

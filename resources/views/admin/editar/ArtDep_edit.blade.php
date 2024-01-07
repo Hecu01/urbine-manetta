@@ -21,9 +21,10 @@
 
         <div class="estilos-crear-articulos-ropa2">
                 
- 
-            <form class="row g-3 p-3" action="{{ route('añadir_articulo')}}" method="POST" id="FormArtDeport" enctype="multipart/form-data">
+            <form class="row g-3 p-3" action="{{ route('articulos.actualizar', ['id' => $articulo->id]) }}" method="POST" id="FormArtDeport" enctype="multipart/form-data">
+
                 @csrf
+                @method("PUT")
                 <div class="col-md-12 flex ">
             
                 <div class="col-md-6">
@@ -67,8 +68,8 @@
 
                             </div>
                             <div class="col-md-6">
-                                <label for="stock_input" class="form-label">Stock</label>
-                                <input type="text" name="stock"   class="form-control total" id="stock_input" required>
+                                <label for="stock_input" class="form-label">Stock  </label>
+                                <input type="text" name="stock"  value="{{ $articulo->stock }}"  class="form-control total" id="stock_input" required>
                                 
                                 {{-- Categoria --}}
                                 <input type="text" name="categoria" id="" value="1" hidden>
@@ -97,36 +98,67 @@
                             <textarea class="form-control" placeholder="Podés brindar más  detalles sobre el producto, por ejemplo, ideal para empezar, pero, no para hacer uso profesional (por ejemplo)." id="" style="min-height: 110px; max-height:110px;" name="descripcion"></textarea>
                         </div>
                     </div>
+
+                    <div class="col-md-12">
+                        <div class="mr-3 " >
+
+                            <div class="inline-block relative ">
+                                {{-- @php 
+                                    $variable = [];
+                                @endphp
+                                @foreach($articulo->calzados as $calzado)
+                                  @if($calzado->pivot->stocks > 0)
+                                    <p >Talle N° {{ $calzado->calzado }} - Disponibles {{$calzado->pivot->stocks}} - id {{$calzado->pivot->calzado_id}}</p>
+                                    @php
+                                        $variable[] = $calzado->pivot->calzado_id;
+                                    @endphp
+                                  @endif
+                                @endforeach
+                                        --}}
+                            </div>
+                            <div>
+                                
+                                @foreach($calzados as $calzado)
+                                    @php
+                                        $calzadoAsociado = $articulo->calzados->firstWhere('pivot.calzado_id', $calzado->id);
+                                    @endphp
+
+                                    <div class="mx-3 my-1">
+                                        @if($calzado->calzado > 38)
+                                            @if($calzadoAsociado)
+                                                {{-- Calzado existente --}}
+                                                <input type="hidden" name="calzado_ids[]" value="{{ $calzadoAsociado->id }}">
+                                                <input type="checkbox" checked name="calzados[]" id="calzado-{{ $calzadoAsociado->id }}" value="{{ $calzadoAsociado->calzado }}" class="form-check-input">
+                                                <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">Calzado {{ $calzadoAsociado->calzado }}</label>
+                                                <input type="text" name="stocks[]" id="stock-{{ $calzadoAsociado->id }}" class="border-1 text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px;" value="{{ $calzadoAsociado->pivot->stocks }}">
+                                            @else
+                                                {{-- Nuevo calzado --}}
+                                                <input type="hidden" name="calzado_ids[]" value="{{ $calzado->id }}">
+                                                <input type="checkbox" name="calzados[]" id="calzado-{{ $calzado->id }}" value="{{ $calzado->calzado }}" class="form-check-input">
+                                                <label for="calzado-{{ $calzado->id }}" class="mx-1">Calzado {{ $calzado->calzado }}</label>
+                                                <input type="text" name="stocks[]" id="stock-{{ $calzado->id }}" class="border-1 text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px;">
+                                            @endif
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+    
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="col-md-12" style=" position: relative; margin: 10px 0px">
             
                         <div class="container d-flex justify-content-center bg-gray-500 " style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff">
                             <!-- Carrusel para previsualizar imágenes -->
-                            <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"  data-bs-interval="3000">
-                                <div class="carousel-inner " id="imagePreviewInner"  style="height: 100%">
-                                    <!-- Las imágenes previsualizadas se mostrarán aquí -->
-                                </div>
-            
-                                <button class="carousel-control-prev" type="button" data-bs-target="#imagePreviewCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#imagePreviewCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+                            <div  class="">
+                                <img src="{{ url('producto/' . $articulo->foto) }}" alt=" " style="height: 250px;width:250px;" class="absolute inset-0   object-cover w-full  m-auto" loading="lazy" />
+                            </div>    
+                   
                         </div>
             
                     </div>
-                    <div class="col-md-12 grid justify-center my-3 ">
-                        <label class=" btn text-white hover:scale-105 " for="imageInput" style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
-                            <input type="file" name="foto" id="imageInput" multiple accept="image/*">
-                            Cargar fotos
-                        </label>
-                    </div>
-            
+
                     
                     <div class="col-md-12 flex justify-center " >
                         <div class="col-md-9 flex justify-center items-center" style="border-top: 1px solid rgb(16, 153, 163)">
@@ -136,11 +168,21 @@
                                 <label for="inputState" class="form-label mx-2 " >Tipo de producto</label>
                                 <div class="input-group d-flex" >
                                     <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
-                                        <option value="" selected hidden></option>
-                                        <option value="calzado">Calzado</option>
-                                        <option value="accesorio">Accesorio</option>
-                                    </select>          
-                                    <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
+
+                                        @if($articulo->tipo_producto = "calzado")
+                                            <option value="{{ $articulo->tipo_producto}}">{{ $articulo->tipo_producto}} (original)</option>
+                                            <option value="accesorio">Accesorio</option>
+                                        @else 
+                                            <option value="calzado">calzado</option>
+                                            <option value="{{ $articulo->tipo_producto}}">{{ $articulo->tipo_producto}} (original)</option>
+                                        @endif
+
+                                    </select>
+                                    @if($articulo->tipo_producto = "calzado")
+                                        <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377);" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
+                                    @else
+                                        <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
+                                    @endif          
                                 </div>
                             </div>
             
@@ -153,6 +195,8 @@
                                         <option value="adultos">Adultos</option>
                                         <option value="niños">Niños</option>
                                         <option value="ambos">Ambos</option>
+
+
                                     </select>
                                 </div>
                             </div>
@@ -172,7 +216,7 @@
             
                 <div class="col-12 d-flex " style="justify-content:space-between">
                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary">Agregar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
                     </div>
                     <div class="col-md-3 d-flex">
                         <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>

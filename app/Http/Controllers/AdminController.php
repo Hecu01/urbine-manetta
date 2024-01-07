@@ -21,6 +21,7 @@ class AdminController extends Controller
         $volver = false; 
         $user = Auth::user();
         $artDeportivos = Articulo::where('id_categoria', '1')->count();
+        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
         $adminesActivos = User::where('administrator', true)->count();
 
         // Si no es admin, volvé a casa che.
@@ -29,7 +30,7 @@ class AdminController extends Controller
         }
 
         $title = "Sportivo - Admin";
-        return view('admin.Admin', compact('title', 'artDeportivos','volver', 'adminesActivos'));
+        return view('admin.Admin', compact('title', 'artDeportivos','volver', 'adminesActivos', 'ropaDeportivas'));
     }
     
     /*
@@ -88,31 +89,13 @@ class AdminController extends Controller
         return view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'volver', 'calzados', 'artDeportivos'));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function EditArtDeport($id){
         $volver = true;
         $articulo = Articulo::findOrFail($id);
-        return view('admin.editar.ArtDep_edit', compact('articulo', 'volver'));
+        $calzados = Calzado::all();
+        return view('admin.editar.ArtDep_edit', compact('articulo', 'volver','calzados'));
 
     }
-
-
 
     public function eliminar_articulo($id){
 
@@ -121,19 +104,6 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Tupla eliminada exitosamente.');
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function agregar_articulo_deportivo(Request $request){
 
@@ -188,6 +158,22 @@ class AdminController extends Controller
         return back()->with('mensaje', 'Artículo agregado con éxito.');
     }
 
+
+
+    // En tu controlador o donde proceses el formulario
+    public function actualizarArtDeport(Request $request, $id)
+    {
+        $articulo = Articulo::findOrFail($id);
+
+        // Sincronizar las relaciones muchos a muchos$stocks = $request->stocks ?? 0; // Si $request->stocks es nulo, asigna 0
+        $stocks = $request->stocks ?? 0; // Si $request->stocks es nulo, asigna 0
+        $articulo->calzados()->sync($request->calzado_ids, ['stocks' => $stocks]);
+        
+
+        // Resto de la lógica para procesar el formulario...
+
+        return redirect()->back()->with('success', 'Calzados actualizados correctamente.');
+    }
     /*
     |------------------------------------------------------------------------
     | Controladores de Ropa deportiva
@@ -195,11 +181,17 @@ class AdminController extends Controller
     */
 
     public function IndexRopaDeportiva(){
+        // volver
         $volver = true;
+
         // Importamos modelos 
         $talles = Talle::all();
-        return view('admin.RopasDeportivas', compact('volver', 'talles'));
+        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
+        $articulos = Articulo::paginate(5);
+        $categorias = Categoria::all(); 
+        return view('admin.RopasDeportivas', compact('volver', 'talles', 'ropaDeportivas', 'articulos', 'categorias'));
     }
+
     public function añadir_ropa(Request $request){
 
         if($request->hasFile('foto')){
@@ -226,21 +218,21 @@ class AdminController extends Controller
 
 
         // Obtén los datos del array de tallas y el array de stock
-        $calzados = $request->input('calzados');      // Acceder al array 
+        $talles = $request->input('talles');      // Acceder al array 
         $stocks = $request->input('stocks');          // Acceder al array 
-        $calzadoIds = $request->input('calzado_ids'); // Acceder al array
+        $tallesIds = $request->input('talle_ids'); // Acceder al array
 
         // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
-        foreach ($calzados as $indice => $calzado) {
+        foreach ($talles as $indice => $talle) {
 
             if (isset($stocks[$indice]) > 0) {
                 // Obtén la instancia de talla existente
-                $calzado = Calzado::where('calzado', $calzado)->first(); 
+                $talle = Talle::where('talle_ropa', $talle)->first(); 
 
                 $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
 
                 // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
-                $articuloNuevo->calzados()->attach($calzado->id, ['stocks' => $stock]);
+                $articuloNuevo->talles()->attach($talle->id, ['stocks' => $stock]);
 
             }
         }

@@ -77,7 +77,7 @@
                             <i class="fa-solid fa-shirt"></i>
                         </span>
                         <span class="recuento">
-                            0
+                            {{ $ropaDeportivas }}
                         </span>
                     </div>
                     <div class="bottom">

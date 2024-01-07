@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Talle;
 use App\Models\Calzado;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,9 @@ class Articulo extends Model
     ];
     public function calzados(){
         return $this->belongsToMany(Calzado::class)->withPivot('stocks');
+    }
+    public function talles(){
+        return $this->belongsToMany(Talle::class)->withPivot('stocks');
     }
 
 }
