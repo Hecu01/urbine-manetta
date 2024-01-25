@@ -13,7 +13,7 @@
  
 
     <div class="m-2" style="height: 500px">
-        Reposición de mercadería
+        Descuentos
     </div>
 @endsection
 

@@ -3,6 +3,11 @@
 
   <div class="w-fit">
     @include('admin.layouts.aside-left')
+    <div class="flex justify-center mt-3">
+        <a href="{{ route('nuevo_articulo') }}"id="boton-regresar-atras" class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size:3em;">
+          <i class="fa-solid fa-circle-arrow-left"></i> Atrás
+        </a>
+    </div>
   </div>
  
     {{-- <form 

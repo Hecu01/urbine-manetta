@@ -12,7 +12,7 @@
 
             <div class="col-md-12">
                 <label for="inputEmail4" class="form-label">Titulo producto</label>
-                <input type="text" name="nombre_producto" class="form-control" id="inputEmail4">
+                <input type="text" name="nombre_producto" class="form-control" placeholder="Inserte un titulo bonito al producto">
             </div>
 
             <div class="col-md-12 flex mt-1 justify-between">
@@ -21,7 +21,7 @@
                 <label for="inputEmail4" class="form-label">Genero del producto</label>
                 
                 <select name="genero" id="" class="form-select">
-                    <option value="" selected hidden></option>
+                    <option value="" selected hidden>Elija una opción</option>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
                     <option value="U">Unisex</option>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="stock_input" class="form-label">Stock</label>
-                    <input type="text" name="stock"   class="form-control total" id="stock_input" required>
+                    <input type="text" name="stock" placeholder="cantidad disponible"  class="form-control total" id="stock_input" required>
                     
                     {{-- Categoria --}}
                     <input type="text" name="categoria" id="" value="1" hidden>
@@ -44,7 +44,7 @@
 
             <div class="col-md-5">
                 <label for="inputCity" class="form-label">Color</label>
-                <input type="text" name="color" class="form-control" id="inputCity" required>
+                <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required>
             </div>
             <div class="col-md-6">
                 <label for="inputAddress" class="form-label">Marca</label>

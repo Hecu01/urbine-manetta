@@ -3,6 +3,12 @@
 
   <div class="w-fit">
     @include('admin.layouts.aside-left')
+    <div class="flex justify-center mt-3">
+      <a href="{{ route('ir_admin') }}" id="boton-regresar-atras" class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
+        <i class="fa-solid fa-circle-arrow-left"></i> Atrás
+      </a>
+
+    </div>
   </div>
  
 
@@ -30,8 +36,8 @@
         <div class="mx-1">
           <li>
             <form class="d-flex mt-1" role="search">
-                <input class="form-control me-2 form-control-sm" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-primary btn-sm" type="submit">Search</button>
+                <input class="form-control me-2 form-control-sm" type="search" placeholder="Buscar" aria-label="Search">
+                <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
             </form>
           </li>
         </div>

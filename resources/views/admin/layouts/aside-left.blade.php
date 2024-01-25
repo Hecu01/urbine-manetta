@@ -11,15 +11,12 @@
         </div>
         <div class="mas-informacion">
             <h3 class="text-3xl">Sportivo</h3>
-            <span><i class="fa-solid fa-location-dot"></i> Casa central</span><br>
-            <span><i class="fa-solid fa-screwdriver-wrench"></i> {{ Auth::user()->name }} </span>
+            <ul style="margin: 3px 0px 0px 5px;padding:0">
+                <li><i class="fa-solid fa-location-dot"></i> De la nación 356, San Nicolás </li>
+                <li><i class="fa-solid fa-screwdriver-wrench"></i> Admin: <strong class="capitalize">{{ Auth::user()->name }}</strong></li>
+            </ul>
         </div>
     </a>
-    
-    @if ($volver == true)
-        <button class="btn btn-secondary btn-sm mx-2" id="volver-admin">
-            VOLVER
-        </button>
-    @endif
+
 </aside>
 
