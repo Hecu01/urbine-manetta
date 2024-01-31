@@ -7,14 +7,51 @@ $(document).ready(function(){
     |--------------------------------------------------------------------------
     |
     */ 
+    // tabla
+    // // dar un mensaje de que es normal el sólo lectura
+    // $("#mostrarToastr").on("click", function() {
+    //     toastr["error"]("Producto eliminado correctamente", "Mensaje")
 
+    //     toastr.options = {
+    //     "closeButton": false,
+    //     "debug": false,
+    //     "newestOnTop": false,
+    //     "progressBar": false,
+    //     "positionClass": "toast-bottom-center",
+    //     "preventDuplicates": false,
+    //     "onclick": null,
+    //     "showDuration": "300",
+    //     "hideDuration": "1000",
+    //     "timeOut": "5000",
+    //     "extendedTimeOut": "1000",
+    //     "showEasing": "swing",
+    //     "hideEasing": "linear",
+    //     "showMethod": "fadeIn",
+    //     "hideMethod": "fadeOut"
+    //     }
+    // });
+
+    // // Eliminar la tupla utilizando AJAX
+    // $.ajax({
+    //     url: '/eliminar-tupla/ID_DE_LA_TUPLA_A_ELIMINAR',
+    //     type: 'DELETE',
+    //     success: function(response) {
+    //         toastr.error(response.success, "Mensaje");
+    //     },
+    //     error: function(xhr, status, error) {
+    //         // Manejar el error si la eliminación falla
+    //         console.error(xhr.responseText);
+    //     }
+    // });
+
+    // Formulario 
     // Selecciona el tipo de producto
     $('#SelectTypeProduct').change(function () {
 
         var selectedOption = $(this).val();
         if (selectedOption === 'calzado') {
             // valor true
-
+        
             // muestra el btn agregar calzados
             $('#agregar-calzados').show();
 

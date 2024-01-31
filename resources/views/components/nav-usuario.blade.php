@@ -7,10 +7,10 @@
 <!-- Si es usuarioooo (no accedera al crud) -->
 <nav class="navbar   " id="navigator-usuario" style="position: relative">
     <div class="container-fluid" id="top-navigator">
-        <div class="left">
+        <div class="left flex">
             @guest
                 <!-- Usuario no logueado -->
-                <div class="usuario-logueado false " >
+                <div class="usuario-logueado false hover:scale-105 " >
 
         
                     <div class="dropdown " >
@@ -89,6 +89,26 @@
 
                 </div>
             @endguest
+            <!-- Ayuda -->
+            <div class=" " style="margin-left:10px;">
+
+
+                <div class="dropdown " >
+                    <a href="#" style="color: currentcolor; text-decoration:none" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ayuda
+                        <i class="fa-regular fa-circle-question"></i>
+                    </a>
+        
+                    <ul class="dropdown-menu">
+                        <li class="hover:bg-cyan-500"><a class="dropdown-item" href="#">¿Cómo comprar?</a></li>
+                        <li><a class="dropdown-item" href="#">¿Cómo canjear puntos?</a></li>
+                        <li><a class="dropdown-item" href="#">Manual de usuario</a></li>
+                    </ul>
+                </div>    
+
+
+
+            </div>
 
         </div>
         <div class="center pl-5">
@@ -307,6 +327,7 @@
 
                                 </div>
                                 <div>
+                                    <img src="{{ url('producto/'. $item['imagen']) }}" alt="" width="70px" height="70px">
                                     <p>ID: {{ $item['id'] }}</p>
                                     <p>Nombre: {{ $item['name'] }}</p>
                                     <p>Precio: {{ $item['price'] }}</p>

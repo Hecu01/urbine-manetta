@@ -28,9 +28,15 @@
                 </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="stock_input" class="form-label">Stock</label>
-                    <input type="text" name="stock" placeholder="cantidad disponible"  class="form-control total" id="stock_input" required>
-                    
+                    <label for="inputState" class="form-label mx-2 " >Tipo de producto</label>
+                    <div class="input-group d-flex" >
+                        <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
+                            <option value="" selected hidden></option>
+                            <option value="calzado">Calzado</option>
+                            <option value="accesorio">Accesorio</option>
+                        </select>          
+                        <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
+                    </div>
                     {{-- Categoria --}}
                     <input type="text" name="categoria" id="" value="1" hidden>
                 </div>
@@ -93,16 +99,11 @@
             <div class="col-md-9 flex justify-center items-center" style="border-top: 1px solid rgb(16, 153, 163)">
 
 
-                <div class="">
-                    <label for="inputState" class="form-label mx-2 " >Tipo de producto</label>
-                    <div class="input-group d-flex" >
-                        <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
-                            <option value="" selected hidden></option>
-                            <option value="calzado">Calzado</option>
-                            <option value="accesorio">Accesorio</option>
-                        </select>          
-                        <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
-                    </div>
+                <div class="col-md-6">
+                    <label for="stock_input" class="form-label">Stock</label>
+                    <input type="text" name="stock" placeholder="cantidad"  class="form-control total" id="stock_input" required>
+                    
+
                 </div>
 
                 <div class="ml-5 p-1 p-1">
@@ -128,7 +129,7 @@
 
     <!-- calzados disponibles (acá está el problema de array string conversion) (linea 120) -->
     <div style="display: none" id="contenedor-modal-calzados">
-        @include('admin.partials.NuevoArtDeport_modal')
+        @include('admin.partials.ArticulosDeportivos.Modal_ArtDeport')
     </div>
 
     <div class="col-12 d-flex " style="justify-content:space-between">

@@ -9,6 +9,7 @@ use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -129,6 +130,7 @@ class AdminController extends Controller
     public function IndexArticuloDeportivo(Request $request){
         // Mostrar btn "Volver"
         $artDeportivos = Articulo::where('id_categoria', '1')->count();
+        $title="Sportivo - Articulos Deportivos";
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -140,10 +142,10 @@ class AdminController extends Controller
         // Importamos modelos 
         $calzados = Calzado::all();
         $categorias = Categoria::all(); 
-        $articulos = Articulo::paginate(5);
+        $articulos = Articulo::paginate(4);
 
         // Si no es admin, redirija a la página de inicio
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'calzados', 'artDeportivos'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'calzados', 'artDeportivos', 'title'));
     }
 
     public function EditArtDeport($id){
@@ -155,11 +157,11 @@ class AdminController extends Controller
     }
 
     public function eliminar_articulo($id){
-
         $articulos = Articulo::find($id); 
         $articulos->delete();
-        return redirect()->back()->with('success', 'Tupla eliminada exitosamente.');
-
+        // Después de agregar el artículo exitosamente
+        Session::flash('eliminado', true);
+        return redirect()->route('nuevo_articulo');
     }
 
     public function agregar_articulo_deportivo(Request $request){
@@ -212,7 +214,9 @@ class AdminController extends Controller
                 }
             }
         }
-        return back()->with('mensaje', 'Artículo agregado con éxito.');
+        // Después de agregar el artículo exitosamente
+        Session::flash('mensaje', true);
+        return redirect()->route('nuevo_articulo');
     }
 
 
