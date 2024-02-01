@@ -30,8 +30,8 @@
         <div class="mx-1">
           <li>
             <form class="d-flex mt-1" role="search">
-                <input class="form-control me-2 form-control-sm" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-primary btn-sm" type="submit">Search</button>
+                <input class="form-control me-2 form-control-sm" type="search" placeholder="Buscar" aria-label="Buscar">
+                <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
             </form>
           </li>
         </div>
