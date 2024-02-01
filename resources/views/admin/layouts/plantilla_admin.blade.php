@@ -81,13 +81,7 @@
                     
             }
     
-            $(document).ready(function() {
-  
-                $('#volver-admin').click(function() {
-                    window.location.href = "{{ route('ir_admin') }}";
-                });
-                
-            });
+     
         </script>
 
         <script src="{{ asset('assets/js/scrollreveal.js')}}"></script>

@@ -11,26 +11,34 @@
             </div>
 
             <div class="col-md-12">
+                
                 <label for="inputEmail4" class="form-label">Titulo producto</label>
-                <input type="text" name="nombre_producto" class="form-control" id="inputEmail4">
+                <input type="text" name="nombre_producto" class="form-control" placeholder="Inserte un titulo bonito al producto">
             </div>
 
-            <div class="col-md-12 flex mt-1 justify-between">
+            <div class="col-md-12 flex mt-1 justify-between my-1">
 
                 <div class="col-md-5 ">
                 <label for="inputEmail4" class="form-label">Genero del producto</label>
                 
                 <select name="genero" id="" class="form-select">
-                    <option value="" selected hidden></option>
+                    <option value="" selected hidden>Elija una opción</option>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
                     <option value="U">Unisex</option>
                 </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="stock_input" class="form-label">Stock</label>
-                    <input type="text" name="stock"   class="form-control total" id="stock_input" required>
-                    
+                        <label for="inputEmail4" class="form-label">Público dirigido</label>
+                        
+                        <select name="publico_dirigido" id="publico-dirigido" class="form-select">
+                            <option value="" selected hidden></option>
+                            <option value="adultos">Adultos</option>
+                            <option value="niños">Niños</option>
+                            <option value="ambos">Ambos</option>
+                        </select>
+
+
                     {{-- Categoria --}}
                     <input type="text" name="categoria" id="" value="1" hidden>
                 </div>
@@ -39,12 +47,21 @@
         
 
 
-        <div class="col-md-12 flex justify-between">
+        <div class="col-md-12 flex justify-between my-1">
 
 
             <div class="col-md-5">
-                <label for="inputCity" class="form-label">Color</label>
-                <input type="text" name="color" class="form-control" id="inputCity" required>
+                <label for="inputState" class="form-label " >Tipo de producto</label>
+                <div class="input-group d-flex" >
+                    <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
+                        <option value="" selected hidden></option>
+                        <option value="calzado">Calzado</option>
+                        <option value="accesorio">Accesorio</option>
+                    </select>          
+                    <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
+                </div>
+                {{-- <label for="inputCity" class="form-label">Color</label>
+                <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required> --}}
             </div>
             <div class="col-md-6">
                 <label for="inputAddress" class="form-label">Marca</label>
@@ -93,8 +110,17 @@
             <div class="col-md-9 flex justify-center items-center" style="border-top: 1px solid rgb(16, 153, 163)">
 
 
-                <div class="">
-                    <label for="inputState" class="form-label mx-2 " >Tipo de producto</label>
+                <div class="col-md-5">
+                    <label for="stock_input" class="form-label">Stock</label>
+                    <input type="text" name="stock" placeholder="cantidad"  class="form-control total" id="stock_input" required>
+                    
+
+                </div>
+
+                <div class="ml-5 p-1 p-1">
+                    <label for="inputCity" class="form-label">Color</label>
+                    <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required>
+                    {{-- <label for="inputState" class="form-label mx-2 " >Tipo de producto</label>
                     <div class="input-group d-flex" >
                         <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
                             <option value="" selected hidden></option>
@@ -102,20 +128,7 @@
                             <option value="accesorio">Accesorio</option>
                         </select>          
                         <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
-                    </div>
-                </div>
-
-                <div class="ml-5 p-1 p-1">
-                    <div class="">
-                        <label for="inputEmail4" class="form-label">Público dirigido</label>
-                        
-                        <select name="publico_dirigido" id="" class="form-select">
-                            <option value="" selected hidden></option>
-                            <option value="adultos">Adultos</option>
-                            <option value="niños">Niños</option>
-                            <option value="ambos">Ambos</option>
-                        </select>
-                    </div>
+                    </div> --}}
                 </div>
 
                 
@@ -128,7 +141,7 @@
 
     <!-- calzados disponibles (acá está el problema de array string conversion) (linea 120) -->
     <div style="display: none" id="contenedor-modal-calzados">
-        @include('admin.partials.NuevoArtDeport_modal')
+        @include('admin.partials.ArticulosDeportivos.Modal_ArtDeport')
     </div>
 
     <div class="col-12 d-flex " style="justify-content:space-between">
@@ -147,6 +160,10 @@
 
 
   <style>
+    label{
+        font-weight: 600;
+    
+    }
     #signo-peso{
         z-index: 1;
         border :1px rgb(3, 3, 3);

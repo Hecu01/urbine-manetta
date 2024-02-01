@@ -3,28 +3,37 @@
     <div class="modal-dialog">
         <div class="modal-content" >
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregá calzados disponibles</h5>
+                <h3 class="modal-title" id="exampleModalLabel">Calzados disponibles</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body  ">
-                <h3 class="text-xl text-center"> Disponibilidad - Calzado - Unidades</h3>
                 <div class="flex justify-center">
+                    <div id="msj" >
+                        <h2>¡Seleccioná el público dirigido!</h2>
+                    </div>
                     <!-- left-->
-                    {{-- <div class="mr-3 " >
+                    <div  id="calzados-ninios" style="display:none;">
+                        <h3>Calzado niños</h3>
                         @foreach( $calzados as $calzado)
-                            @if($calzado->calzado < 38)
+                            @if($calzado->calzado <= 34)
                                 <div class="mx-3  my-1">
+                                    <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
                                     <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
                                     <label for="calzado-{{$calzado->id}}" class="mx-1">Calzado {{ $calzado->calzado }}</label>
-                                    <input type="text" name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small" style="width:25px;height:22px"> 
+                                    <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
+                                    
+
                                 </div>
                             @endif
                         @endforeach
-                    </div> --}}
+                    </div>
+                    <div id="separador" class="mx-3" style="border-right:1px solid #00000096; display:none;"></div>
                     <!-- center-->
-                    <div class="mr-3 " >
+                    <div  id="calzados-adultos" style="display:none;">
+                        <h3>Calzado Adultos</h3>
+
                         @foreach($calzados as $calzado)
-                            @if($calzado->calzado > 38)
+                            @if($calzado->calzado > 34)
                                 <div class="mx-3  my-1">
                                     <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
                                     <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
@@ -43,7 +52,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

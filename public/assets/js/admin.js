@@ -1,20 +1,103 @@
 $(document).ready(function(){
-
     /* 
     |
     |--------------------------------------------------------------------------
-    | URL - agregar-articulo-deportivo
+    | Sportivo - Artículos Deportivos
     |--------------------------------------------------------------------------
     |
     */ 
+    // Mostrar u ocultar el boton busqueda de articulos deportivos
+    $("#formulario").on("click", function() {
+        $("#busqueda-artdeport").hide();
+    })
+    $("#accesorios").on("click", function() {
+        $("#busqueda-artdeport").show();
+    })
+    $("#calzados").on("click", function() {
+        $("#busqueda-artdeport").show();
+    })
 
+    // Modal de "está seguro que quiere eliminarlo?"
+    var modalEliminar = document.getElementById('modalEliminar');
+    modalEliminar.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var id = button.getAttribute('data-id');
+        var form = document.getElementById('formEliminar');
+        form.action = '/admin/articulo-deportivo/' + id; // Ruta de eliminación de productos en Laravel
+    });
+
+
+    // tabla
+    // // dar un mensaje de que es normal el sólo lectura
+    // $("#mostrarToastr").on("click", function() {
+    //     toastr["error"]("Producto eliminado correctamente", "Mensaje")
+
+    //     toastr.options = {
+    //     "closeButton": false,
+    //     "debug": false,
+    //     "newestOnTop": false,
+    //     "progressBar": false,
+    //     "positionClass": "toast-bottom-center",
+    //     "preventDuplicates": false,
+    //     "onclick": null,
+    //     "showDuration": "300",
+    //     "hideDuration": "1000",
+    //     "timeOut": "5000",
+    //     "extendedTimeOut": "1000",
+    //     "showEasing": "swing",
+    //     "hideEasing": "linear",
+    //     "showMethod": "fadeIn",
+    //     "hideMethod": "fadeOut"
+    //     }
+    // });
+
+    // // Eliminar la tupla utilizando AJAX
+    // $.ajax({
+    //     url: '/eliminar-tupla/ID_DE_LA_TUPLA_A_ELIMINAR',
+    //     type: 'DELETE',
+    //     success: function(response) {
+    //         toastr.error(response.success, "Mensaje");
+    //     },
+    //     error: function(xhr, status, error) {
+    //         // Manejar el error si la eliminación falla
+    //         console.error(xhr.responseText);
+    //     }
+    // });
+
+    // Calzados niños y adultos
+    $('#publico-dirigido').change(function () {
+        var opcion_elegida = $(this).val();
+
+        if (opcion_elegida === "adultos"){
+            $('#calzados-ninios').hide();
+            $('#separador').hide();
+            $('#calzados-adultos').show();
+            $('#msj').hide();
+        }else if(opcion_elegida === "niños"){
+            $('#calzados-adultos').hide();
+            $('#calzados-ninios').show();
+            $('#msj').hide();
+        }else if(opcion_elegida === "ambos"){
+            $('#calzados-ninios').show();
+            $('#separador').show();
+            $('#calzados-adultos').show();
+            $('#msj').hide();
+        }else{
+            $('#calzados-ninios').hide();
+            $('#separador').hide();
+            $('#calzados-adultos').hide();
+            $('#msj').show();
+        }
+
+    });
+    // Formulario 
     // Selecciona el tipo de producto
     $('#SelectTypeProduct').change(function () {
 
         var selectedOption = $(this).val();
         if (selectedOption === 'calzado') {
             // valor true
-
+        
             // muestra el btn agregar calzados
             $('#agregar-calzados').show();
 
@@ -72,7 +155,7 @@ $(document).ready(function(){
     /* 
     |
     |--------------------------------------------------------------------------
-    | URL - ropa deportiva
+    | Sportivo - ropa deportiva
     |--------------------------------------------------------------------------
     |
     */ 

@@ -5,6 +5,7 @@
     
     @foreach ($cartItems as $item)
         <div>
+            <img src="{{ url('producto/'. $item['imagen']) }}" alt="" width="70px" height="70px">
             <p>ID: {{ $item['id'] }}</p>
             <p>Nombre: {{ $item['name'] }}</p>
             <p>Precio: {{ $item['price'] }}</p>

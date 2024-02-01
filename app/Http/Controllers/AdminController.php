@@ -9,6 +9,7 @@ use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -18,38 +19,87 @@ class AdminController extends Controller
     |------------------------------------------------------------------------
     */
     public function admin(){
-        $volver = false; 
         $user = Auth::user();
         $artDeportivos = Articulo::where('id_categoria', '1')->count();
         $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
         $adminesActivos = User::where('administrator', true)->count();
 
-        // Si no es admin, volvé a casa che.
-        if (!Auth::check() || !Auth::user()->administrator) {
-            return redirect()->route('pagina_inicio'); 
-        }
-
         $title = "Sportivo - Admin";
-        return view('admin.Admin', compact('title', 'artDeportivos','volver', 'adminesActivos', 'ropaDeportivas'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'artDeportivos', 'adminesActivos', 'ropaDeportivas'));
+
     }
     
+    /*
+    |------------------------------------------------------------------------
+    | Página Clientes Activos
+    |------------------------------------------------------------------------
+    */
+    public function clientes(){
+        $user = Auth::user();
+        $title = "Sportivo - Clientes";
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ClientesActivos', compact('title'));
+        
+    }
+
+    /*
+    |------------------------------------------------------------------------
+    | Página Ventas realizadas
+    |------------------------------------------------------------------------
+    */
+    public function ventas(){
+        $user = Auth::user();
+        $title = "Sportivo - Ventas";
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Ventas', compact('title'));
+    }
+
+    /*
+    |------------------------------------------------------------------------
+    | Página Dietas y Suplementos
+    |------------------------------------------------------------------------
+    */
+    public function suplementos(){
+        $user = Auth::user();
+        $title = "Sportivo - Suplementos";
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.SuplementosDieta', compact('title'));
+        
+    }
+
+    /*
+    |------------------------------------------------------------------------
+    | Página Mercadería
+    |------------------------------------------------------------------------
+    */
+    public function mercaderia(){
+        $user = Auth::user();
+        $title = "Sportivo - Mercadería";
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ReposicionMercaderia', compact('title'));
+        
+    }
+
+    /*
+    |------------------------------------------------------------------------
+    | Página Compras pendientes online
+    |------------------------------------------------------------------------
+    */
+    public function compras_online(){
+        $user = Auth::user();
+        $title = "Compras pendientes";
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ComprasPendientesOnline', compact('title'));
+    }
+
     /*
     |------------------------------------------------------------------------
     | Controladores de Admines
     |------------------------------------------------------------------------
     */
-    public function VerAdmines(){
-        $volver = true; 
+    public function VerAdmines(){ 
         $user = Auth::user();
         $usuarios = User::where('administrator', false)->get();
-
-        // Si no es admin, volvé a casa che.
-        if (!Auth::check() || !Auth::user()->administrator) {
-            return redirect()->route('pagina_inicio'); 
-        }
         $title = "Sportivo - Admines";
-        return view('admin.AdminesActivos', compact('title', 'volver', 'usuarios'));
+
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.AdminesActivos', compact('title', 'usuarios'));
     }
+
 
 
     public function HabilitarAdmin(Request $request, $id) {
@@ -60,6 +110,18 @@ class AdminController extends Controller
         return redirect()->route('admins');
     }
 
+    
+    /*
+    |------------------------------------------------------------------------
+    | Página Descuentos
+    |------------------------------------------------------------------------
+    */
+    public function descuentos(){
+        $user = Auth::user();
+        $title = "Sportivo - Descuentos";
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Descuentos', compact('title'));
+    }
+
     /*
     |------------------------------------------------------------------------
     | Controladores de Artículos deportivos
@@ -67,8 +129,8 @@ class AdminController extends Controller
     */
     public function IndexArticuloDeportivo(Request $request){
         // Mostrar btn "Volver"
-        $volver = true;
         $artDeportivos = Articulo::where('id_categoria', '1')->count();
+        $title="Sportivo - Articulos Deportivos";
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -77,32 +139,30 @@ class AdminController extends Controller
             }
         }
     
-        
         // Importamos modelos 
         $calzados = Calzado::all();
         $categorias = Categoria::all(); 
-        $articulos = Articulo::paginate(5);
-        // Si no es admin, regrese a home  
-        if (!Auth::check() || !Auth::user()->administrator) {
-            return redirect()->route('pagina_inicio'); 
-        }
-        return view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'volver', 'calzados', 'artDeportivos'));
+        $articulos = Articulo::paginate(4);
+
+        // Si no es admin, redirija a la página de inicio
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'calzados', 'artDeportivos', 'title'));
     }
 
     public function EditArtDeport($id){
-        $volver = true;
         $articulo = Articulo::findOrFail($id);
         $calzados = Calzado::all();
-        return view('admin.editar.ArtDep_edit', compact('articulo', 'volver','calzados'));
+        $title = "Editando artículo";
+
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.editar.ArtDep_edit', compact('articulo', 'calzados', 'title'));
 
     }
 
     public function eliminar_articulo($id){
-
         $articulos = Articulo::find($id); 
         $articulos->delete();
-        return redirect()->back()->with('success', 'Tupla eliminada exitosamente.');
-
+        // Después de agregar el artículo exitosamente
+        Session::flash('eliminado', true);
+        return redirect()->route('nuevo_articulo');
     }
 
     public function agregar_articulo_deportivo(Request $request){
@@ -155,7 +215,9 @@ class AdminController extends Controller
                 }
             }
         }
-        return back()->with('mensaje', 'Artículo agregado con éxito.');
+        // Después de agregar el artículo exitosamente
+        Session::flash('mensaje', true);
+        return redirect()->route('nuevo_articulo');
     }
 
 
@@ -174,22 +236,21 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Calzados actualizados correctamente.');
     }
+
+
+
     /*
     |------------------------------------------------------------------------
     | Controladores de Ropa deportiva
     |------------------------------------------------------------------------
     */
-
     public function IndexRopaDeportiva(){
-        // volver
-        $volver = true;
-
         // Importamos modelos 
         $talles = Talle::all();
         $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
         $articulos = Articulo::paginate(5);
         $categorias = Categoria::all(); 
-        return view('admin.RopasDeportivas', compact('volver', 'talles', 'ropaDeportivas', 'articulos', 'categorias'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.RopasDeportivas', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias'));
     }
 
     public function añadir_ropa(Request $request){

@@ -27,16 +27,19 @@ Route::get('/detalles/{id}',[BusquedaController::class, 'verDetalles'])->name('d
 
 // Rutas de usuarios
 Route::middleware(['auth'])->group(function(){
+    // Agregar domicilio
     Route::get('/domicilios', [UsuarioController::class, 'domicilio'])->name('domicilio');
     Route::post('/domicilios', [UsuarioController::class, 'agregar_domicilio'])->name('agregar_direccion');
+
+    // Agregar al carrito
+    Route::get('/carrito-de-compras', [CarritoController::class, 'mi_carrito'])->name('carrito.index');
+    Route::post('/carrito/añadir', [CarritoController::class, 'añadirAlCarrito'])->name('carrito.añadir');
 });
 
 // Rutas que acceden los admins
 Route::group([], __DIR__ . '/admin.php');
 
-// Agregar al carrito
-Route::get('/carrito-de-compras', [CarritoController::class, 'mi_carrito'])->name('carrito.index');
-Route::post('/carrito/añadir', [CarritoController::class, 'añadirAlCarrito'])->name('carrito.añadir');
+
 
 
 /*
