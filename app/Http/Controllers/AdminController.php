@@ -151,8 +151,9 @@ class AdminController extends Controller
     public function EditArtDeport($id){
         $articulo = Articulo::findOrFail($id);
         $calzados = Calzado::all();
+        $title = "Editando artículo";
 
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.editar.ArtDep_edit', compact('articulo', 'calzados'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.editar.ArtDep_edit', compact('articulo', 'calzados', 'title'));
 
     }
 

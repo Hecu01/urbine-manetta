@@ -1,12 +1,32 @@
 $(document).ready(function(){
-
     /* 
     |
     |--------------------------------------------------------------------------
-    | URL - agregar-articulo-deportivo
+    | Sportivo - Artículos Deportivos
     |--------------------------------------------------------------------------
     |
     */ 
+    // Mostrar u ocultar el boton busqueda de articulos deportivos
+    $("#formulario").on("click", function() {
+        $("#busqueda-artdeport").hide();
+    })
+    $("#accesorios").on("click", function() {
+        $("#busqueda-artdeport").show();
+    })
+    $("#calzados").on("click", function() {
+        $("#busqueda-artdeport").show();
+    })
+
+    // Modal de "está seguro que quiere eliminarlo?"
+    var modalEliminar = document.getElementById('modalEliminar');
+    modalEliminar.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var id = button.getAttribute('data-id');
+        var form = document.getElementById('formEliminar');
+        form.action = '/admin/articulo-deportivo/' + id; // Ruta de eliminación de productos en Laravel
+    });
+
+
     // tabla
     // // dar un mensaje de que es normal el sólo lectura
     // $("#mostrarToastr").on("click", function() {
@@ -44,6 +64,32 @@ $(document).ready(function(){
     //     }
     // });
 
+    // Calzados niños y adultos
+    $('#publico-dirigido').change(function () {
+        var opcion_elegida = $(this).val();
+
+        if (opcion_elegida === "adultos"){
+            $('#calzados-ninios').hide();
+            $('#separador').hide();
+            $('#calzados-adultos').show();
+            $('#msj').hide();
+        }else if(opcion_elegida === "niños"){
+            $('#calzados-adultos').hide();
+            $('#calzados-ninios').show();
+            $('#msj').hide();
+        }else if(opcion_elegida === "ambos"){
+            $('#calzados-ninios').show();
+            $('#separador').show();
+            $('#calzados-adultos').show();
+            $('#msj').hide();
+        }else{
+            $('#calzados-ninios').hide();
+            $('#separador').hide();
+            $('#calzados-adultos').hide();
+            $('#msj').show();
+        }
+
+    });
     // Formulario 
     // Selecciona el tipo de producto
     $('#SelectTypeProduct').change(function () {
@@ -109,7 +155,7 @@ $(document).ready(function(){
     /* 
     |
     |--------------------------------------------------------------------------
-    | URL - ropa deportiva
+    | Sportivo - ropa deportiva
     |--------------------------------------------------------------------------
     |
     */ 

@@ -1,28 +1,22 @@
+
 <!-- Botón que activa el popover -->
 <table class="table table-hover font-sans">
     <thead  style="border:1px solid rgb(16, 153, 163); text-align:center">
       <th>Foto</th>
-      <th>Nombre</th>
+      <th>Titulo</th>
       <th>Precio</th>
       <th>Marca</th>
-      <th>Categoria</th>
       <th>Stock</th>
     </thead>
     <tbody  id="tabla-articulos-deportivos">
       @foreach ($articulos as $articulo)
-        @if($articulo->id_categoria == 1)
+        @if($articulo->id_categoria == 1 && $articulo->tipo_producto == "calzado")
             <tr>
                 <td> <img src="{{ url('producto/'. $articulo->foto) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px"> </td>
                 <td><a href="{{ $articulo->id }}">{{ $articulo->nombre}}</a></td>
                 <td>$ {{ number_format($articulo->precio, 0, ',', '.') }}</td>
                 <td>{{ $articulo->marca }}</td>
-                <td>
-                    @foreach ($categorias as $categoria)
-                        @if($articulo->id_categoria == $categoria->id)
-                            {{ $categoria=$categoria->categoria }}
-                        @endif
-                    @endforeach
-                </td>
+
                 <td>
                     @if($articulo->tipo_producto == 'calzado')
                         <a href="#" id="popoverButton-{{ $articulo->id }}">

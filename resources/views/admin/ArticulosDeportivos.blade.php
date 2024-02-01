@@ -30,39 +30,43 @@
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Accesorios <i class="fa-solid fa-table"></i></button>
+            <button class="nav-link active" id="accesorios" data-bs-toggle="tab" data-bs-target="#accesorios-pane" type="button" role="tab" aria-controls="accesorios-pane" aria-selected="true">Articulos <i class="fa-solid fa-table"></i></button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link " >Calzados <i class="fa-solid fa-table"></i></button>
+            <button class="nav-link" id="calzados" data-bs-toggle="tab" data-bs-target="#calzados-pane" type="button" role="tab" aria-controls="calzados-pane" aria-selected="true">Calzados <i class="fa-solid fa-table"></i></button>
           </li>
 
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Nuevo Producto <i class="fa-solid fa-circle-plus"></i></button>
+            <button class="nav-link" id="formulario" data-bs-toggle="tab" data-bs-target="#formulario-pane" type="button" role="tab" aria-controls="formulario-pane" aria-selected="false">Nuevo Producto <i class="fa-solid fa-circle-plus"></i></button>
           </li>
 
         </ul>
 
       </div>
-      <div class="mx-1">
-        <li>
-          <form class="d-flex mt-1" role="search">
-            <input class="form-control me-2 form-control-sm" type="search" placeholder="Buscar" aria-label="Search">
-            <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
-          </form>
-        </li>
+      <div class="mx-1 " id="busqueda-artdeport">
+        <form class="d-flex mt-1" role="search">
+          <input class="form-control me-2 form-control-sm" type="search" placeholder="Buscar" aria-label="Search">
+          <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
+        </form>
       </div>
         
     </ul>
     <div class="estilos-crear-articulos-ropa2">
       <div class="tab-content" id="myTabContent">
           
-        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0" style="min-height:500px;overflow-x:visible">
-          @include('admin.partials.ArticulosDeportivos.Tabla_ArtDeport')
+        <div class="tab-pane fade show active" id="accesorios-pane" role="tabpanel" aria-labelledby="accesorios" tabindex="0" style="min-height:500px;overflow-x:visible">
+          @include('admin.partials.ArticulosDeportivos.TablaAccesorios_ArtDeport')
           <div class="flex justify-center">
             {{ $articulos->links('pagination::bootstrap-4') }}
           </div>
         </div>
-        <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+
+        <div class="tab-pane fade " id="calzados-pane" role="tabpanel" aria-labelledby="calzado" tabindex="0" style="min-height:500px;overflow-x:visible">
+          @include('admin.partials.ArticulosDeportivos.TablaCalzados_ArtDeport')
+
+          
+        </div>
+        <div class="tab-pane fade " id="formulario-pane" role="tabpanel" aria-labelledby="formulario" tabindex="0">
           @include('admin.partials.ArticulosDeportivos.Formulario_ArtDeport')
 
           
@@ -96,39 +100,6 @@
 
 
 
-  <script>
-  
-    // Modal de "está seguro que quiere eliminarlo?"
-    var modalEliminar = document.getElementById('modalEliminar');
-    modalEliminar.addEventListener('show.bs.modal', function (event) {
-      var button = event.relatedTarget;
-      var id = button.getAttribute('data-id');
-      var form = document.getElementById('formEliminar');
-      form.action = '/admin/articulo-deportivo/' + id; // Ruta de eliminación de productos en Laravel
-    });
-
-
-    function formatNumber(input) {
-      // Eliminar caracteres no numéricos
-      var num = input.value.replace(/[^0-9]/g, '');
-      // Formatear con separadores de miles
-      input.value = num.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-    function preventScroll(event) {
-      event.preventDefault();
-    }
-
-    // Remover puntos
-    function removeDots() {
-      var input = document.getElementById('precio');
-      input.value = input.value.replace(/\./g, '');
-    }
-      // Remover puntos
-      function removeDots2() {
-      var input = document.getElementById('stock');
-      input.value = input.value.replace(/\./g, '');
-    }
-  </script>
 
 
 @endsection
