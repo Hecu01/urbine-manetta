@@ -13,7 +13,7 @@
             <div class="col-md-12">
                 
                 <label for="inputEmail4" class="form-label">Titulo producto</label>
-                <input type="text" name="nombre_producto" class="form-control" placeholder="Inserte un titulo bonito al producto">
+                <input type="text" name="nombre_producto"  class="form-control" placeholder="Inserte un titulo bonito al producto">
             </div>
 
             <div class="col-md-12 flex mt-1 justify-between my-1">
@@ -21,7 +21,7 @@
                 <div class="col-md-5 ">
                 <label for="inputEmail4" class="form-label">Genero del producto</label>
                 
-                <select name="genero" id="" class="form-select">
+                <select name="genero" id="" class="form-select" required>
                     <option value="" selected hidden>Elija una opción</option>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
@@ -31,7 +31,7 @@
                 <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Público dirigido</label>
                         
-                        <select name="publico_dirigido" id="publico-dirigido" class="form-select">
+                        <select name="publico_dirigido" id="publico-dirigido" class="form-select" required>
                             <option value="" selected hidden></option>
                             <option value="adultos">Adultos</option>
                             <option value="niños">Niños</option>
@@ -53,15 +53,13 @@
             <div class="col-md-5">
                 <label for="inputState" class="form-label " >Tipo de producto</label>
                 <div class="input-group d-flex" >
-                    <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
+                    <select name="tipoProducto" id="SelectTypeProduct" class="form-select" required >
                         <option value="" selected hidden></option>
                         <option value="calzado">Calzado</option>
                         <option value="accesorio">Accesorio</option>
                     </select>          
                     <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
                 </div>
-                {{-- <label for="inputCity" class="form-label">Color</label>
-                <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required> --}}
             </div>
             <div class="col-md-6">
                 <label for="inputAddress" class="form-label">Marca</label>
@@ -120,15 +118,7 @@
                 <div class="ml-5 p-1 p-1">
                     <label for="inputCity" class="form-label">Color</label>
                     <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required>
-                    {{-- <label for="inputState" class="form-label mx-2 " >Tipo de producto</label>
-                    <div class="input-group d-flex" >
-                        <select name="tipoProducto" id="SelectTypeProduct" class="form-select" >
-                            <option value="" selected hidden></option>
-                            <option value="calzado">Calzado</option>
-                            <option value="accesorio">Accesorio</option>
-                        </select>          
-                        <span  id="agregar-calzados"  class="input-group-text hover:cursor-pointer hover:scale-105 " style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">+</span>
-                    </div> --}}
+
                 </div>
 
                 
@@ -152,7 +142,7 @@
             <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
             <div class="input-group">
                 <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);" id="signo-peso" >$</span>
-                <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
+                <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="precioFinal"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
             </div>
         </div>
     </div>

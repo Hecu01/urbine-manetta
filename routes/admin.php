@@ -32,6 +32,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/admin/articulo-deportivo/editar/{id}', [AdminController::class, 'EditArtDeport'])->name('EditarArtDep');
     Route::put('/articulos/{id}', [AdminController::class, 'actualizarArtDeport'])->name('articulos.actualizar');
 
+    Route::get('/accesorio', [AdminController::class, 'busquedaAjaxArtDeportAccesorio']);
+    Route::get('/calzado', [AdminController::class, 'busquedaAjaxArtDeportCalzado']);
+
     // Ropa deportiva
     Route::get('/admin/ropa-deportiva', [AdminController::class, 'IndexRopaDeportiva'])->name('nuevo_ropa');
     Route::post('/admin/ropa-deportiva', [AdminController::class, 'añadir_ropa'])->name('añadir_ropa');

@@ -1,6 +1,4 @@
-
-<!-- Botón que activa el popover -->
-<table class="table table-hover font-sans">
+<table class="table table-hover font-sans" id="resultsTable2">
     <thead  style="border:1px solid rgb(16, 153, 163); text-align:center">
       <th>Foto</th>
       <th>Titulo</th>
@@ -8,13 +6,14 @@
       <th>Marca</th>
       <th>Stock</th>
     </thead>
-    <tbody  id="tabla-articulos-deportivos">
+    <tbody  id="tabla-articulos-deportivos2">
       @foreach ($articulos as $articulo)
         @if($articulo->id_categoria == 1 && $articulo->tipo_producto == "calzado")
             <tr>
                 <td> <img src="{{ url('producto/'. $articulo->foto) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px"> </td>
+                <td>{{ $articulo->id }}</td>
                 <td><a href="{{ $articulo->id }}">{{ $articulo->nombre}}</a></td>
-                <td>$ {{ number_format($articulo->precio, 0, ',', '.') }}</td>
+                <td class="precio">$ {{ number_format($articulo->precio, 0, ',', '.') }}</td>
                 <td>{{ $articulo->marca }}</td>
 
                 <td>
@@ -58,25 +57,4 @@
     </tbody>
 </table>
 
-<!-- Modal -->
-<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalEliminarLabel">Eliminar Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro que deseas eliminar el producto?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <form id="formEliminar" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+

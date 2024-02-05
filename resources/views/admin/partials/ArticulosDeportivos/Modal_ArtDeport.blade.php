@@ -16,12 +16,22 @@
                         <h3>Calzado niños</h3>
                         @foreach( $calzados as $calzado)
                             @if($calzado->calzado <= 34)
-                                <div class="mx-3  my-1">
-                                    <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
-                                    <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
-                                    <label for="calzado-{{$calzado->id}}" class="mx-1">Calzado {{ $calzado->calzado }}</label>
-                                    <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
-                                    
+                                <div class="mx-3 flex my-1">
+                                    <div class="">
+
+                                        <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
+                                        <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
+                                        <label for="calzado-{{$calzado->id}}" class="mx-1">Calzado {{ $calzado->calzado }}</label>
+                                        <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
+                                    </div>
+                                    <div class="mx-2">
+                                        {{-- <input type="checkbox" name="precios[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" > --}}
+
+                                        <label for="calzado-{{$calzado->id}}" class="mx-1">precio </label>
+                                        <input type="text" disabled name="precios[]" id="precio-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:100px;height:22px; " >
+
+                                        <input type="checkbox" name="checkboxes[]" id="checkbox-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
+                                    </div>
 
                                 </div>
                             @endif

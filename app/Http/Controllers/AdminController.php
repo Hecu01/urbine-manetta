@@ -128,7 +128,6 @@ class AdminController extends Controller
     |------------------------------------------------------------------------
     */
     public function IndexArticuloDeportivo(Request $request){
-        // Mostrar btn "Volver"
         $artDeportivos = Articulo::where('id_categoria', '1')->count();
         $title="Sportivo - Articulos Deportivos";
 
@@ -142,10 +141,37 @@ class AdminController extends Controller
         // Importamos modelos 
         $calzados = Calzado::all();
         $categorias = Categoria::all(); 
-        $articulos = Articulo::paginate(4);
+        $articulos = Articulo::paginate(10);
 
         // Si no es admin, redirija a la página de inicio
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'calzados', 'artDeportivos', 'title'));
+    }
+
+    public function busquedaAjaxArtDeportAccesorio (Request $request){
+        $searchTerm = $request->input('searchTerm');
+
+        
+        // Realiza la lógica de búsqueda en tu modelo y obtén los resultados
+        $results = Articulo::where(function($query) use ($searchTerm) {
+            $query->where('nombre', 'like', '%'.$searchTerm.'%')
+                ->orWhere('marca', 'like', '%'.$searchTerm.'%')
+                ->orWhere('id', 'like', '%'.$searchTerm.'%');
+        })->where('id_categoria', 1)->where('tipo_producto', 'accesorio')->orderBy('nombre', 'asc')->get();
+
+        return response()->json($results);
+    }
+
+    public function busquedaAjaxArtDeportCalzado (Request $request){
+        $searchTerm2 = $request->input('searchTerm2');
+
+        // Realiza la lógica de búsqueda en tu modelo y obtén los resultados
+        $results2 = Articulo::where(function($query) use ($searchTerm2) {
+            $query->where('nombre', 'like', '%'.$searchTerm2.'%')
+                ->orWhere('marca', 'like', '%'.$searchTerm2.'%')
+                ->orWhere('id', 'like', '%'.$searchTerm2.'%');
+        })->where('id_categoria', 1)->where('tipo_producto', 'calzado')->get();
+        
+        return response()->json($results2);
     }
 
     public function EditArtDeport($id){

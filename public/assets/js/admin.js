@@ -1,21 +1,190 @@
 $(document).ready(function(){
     /* 
     |
-    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------------
     | Sportivo - Artículos Deportivos
-    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------------
     |
     */ 
+
+    // Agrega un evento change a cada checkbox con el nombre que comienza con "calzados"
+    $('input[type="checkbox"][name^="calzados"]').change(function() {
+        // Obtén el ID del calzado correspondiente
+        var calzadoId = $(this).attr('id').split('-')[1];
+
+        // Obtén el campo de texto correspondiente y deshabilítalo si el checkbox está desmarcado
+        $('#stock-' + calzadoId).prop('disabled', !$(this).prop('checked'));
+
+
+        // Habilita o deshabilita el campo de texto según el estado del checkbox
+        $('#precio-' + calzadoId).prop('readonly', $(this).prop('checked'));
+    
+        // Agregar evento input al input de precio
+        $('#precioFinal').on('input', function() {
+            var precio = parseFloat($(this).val()); // Obtener el valor del input de precio
+
+            $('#precio-' + calzadoId).val(precio);
+    
+        });
+    });
+    // Agrega un evento change a cada checkbox con el nombre que comienza con "calzados"
+    $('input[type="checkbox"][name^="checkboxes"]').change(function() {
+        
+    })
+
+    // Sumatoria para el stock, en caso de calzados
+    $(".input-suma").on("input", function(){
+        var suma = 0;
+        $(".input-suma").each(function(){
+            if(!isNaN(this.value) && this.value.length != 0) {
+                suma += parseFloat(this.value);
+            }
+        });
+        $("#stock_input").val(suma);
+        $("#stock_input_ropa").val(suma);
+    });
+
+
+    
     // Mostrar u ocultar el boton busqueda de articulos deportivos
     $("#formulario").on("click", function() {
-        $("#busqueda-artdeport").hide();
+        $("#busqueda-calzados").hide();
+        $("#busqueda-accesorios").hide();
     })
     $("#accesorios").on("click", function() {
-        $("#busqueda-artdeport").show();
+        $("#busqueda-calzados").hide();
+        $("#busqueda-accesorios").show();
+
     })
     $("#calzados").on("click", function() {
-        $("#busqueda-artdeport").show();
+        $('#busqueda-calzados').css('display', 'block');
+        $("#busqueda-accesorios").hide();
     })
+
+    /* ---------------- Tabla accesorios ---------------- */
+
+    var originalTable = $('#resultsTable').html();
+
+    // Busqueda tipeando sin dar a buscar 
+    $('#searchInput').on('input', function() {
+        var searchTerm = $(this).val();
+
+        // está vacío el input:search?
+        if (searchTerm.trim() === '') {
+            // Restaura la tabla original cuando el campo de búsqueda está vacío
+            $('#resultsTable').html(originalTable);
+            return;
+        }
+        else{
+            $.ajax({
+                url: '/accesorio',
+                method: 'GET',
+                data: {
+                    searchTerm: searchTerm
+                },
+                success: function(response) {
+                    // Elimina todas las filas de datos excepto la primera (encabezados)
+                    $('#resultsTable tr:gt(0)').remove();
+                    // Actualiza la tabla con los resultados de la búsqueda
+                    $.each(response, function(index, resultado) {
+                        // Formatear el precio con separadores de miles y el símbolo de peso
+                        var precioFormateado = '$ ' + resultado.precio.toLocaleString();
+                        var row = $('<tr>');
+
+                        // Agregar la imagen como una nueva celda de la tabla
+                        var imagen2 = $('<img>').attr('src', '/producto/' + resultado.foto).attr('alt', resultado.nombre).attr('width', '70px').attr('height', '70px');
+                        var tdImagen = $('<td>').append(imagen2);
+                        row.append(tdImagen);
+                        $('<td>').text(resultado.id).appendTo(row);
+                        $('<td>').text(resultado.nombre).appendTo(row);
+                        $('<td>').text(precioFormateado).addClass('precio').appendTo(row);
+                        $('<td>').text(resultado.marca).appendTo(row);
+                        $('<td>').text(resultado.stock).appendTo(row);
+                        
+
+                        // Agregar las celdas para los botones
+                        var tdBotones = $('<td>');
+                        var botonEditar = $('<a>').attr('href', '{{ route("EditarArtDep", ' + resultado.id + ') }}').addClass('btn btn-success btn-sm').attr('title', 'Editar').append($('<i>').addClass('fa-solid fa-pen-to-square'));
+                        var botonEliminar = $('<button>').addClass('btn btn-danger btn-sm eliminar-btn mx-1').attr('data-id', resultado.id).attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modalEliminar').append($('<i>').addClass('fa-solid fa-trash'));
+                        var botonVer = $('<button>').addClass('btn btn-secondary btn-sm').append($('<i>').addClass('fa-solid fa-eye'));
+
+                        // Añadir los botones a la celda correspondiente
+                        tdBotones.append(botonEditar, botonEliminar, botonVer);
+
+                        // Agregar la celda de botones a la fila
+                        row.append(tdBotones);
+
+                        row.appendTo($('#resultsTable'));
+
+                        
+                    });
+                }
+            });
+        }
+
+    });
+    
+    /* ---------------- Tabla Calzado ---------------- */
+
+    var originalTable2 = $('#resultsTable2').html();
+
+    // Busqueda tipeando sin dar a buscar 
+    $('#searchInput2').on('input', function() {
+        var searchTerm2 = $(this).val();
+
+        // está vacío el input:search?
+        if (searchTerm2.trim() === '') {
+            // Restaura la tabla original cuando el campo de búsqueda está vacío
+            $('#resultsTable2').html(originalTable2);
+            return;
+        }
+        else{
+            $.ajax({
+                url: '/calzado',
+                method: 'GET',
+                data: {
+                    searchTerm2: searchTerm2
+                },
+                success: function(response) {
+                    // Elimina todas las filas de datos excepto la primera (encabezados)
+                    $('#resultsTable2 tr:gt(0)').remove();
+                    // Actualiza la tabla con los resultados de la búsqueda
+                    $.each(response, function(index, resultado) {
+                        // Formatear el precio con separadores de miles y el símbolo de peso
+                        var precioFormateado = '$ ' + resultado.precio.toLocaleString();
+                        var row = $('<tr>');
+
+                        // Agregar la imagen como una nueva celda de la tabla
+                        var imagen2 = $('<img>').attr('src', '/producto/' + resultado.foto).attr('alt', resultado.nombre).attr('width', '70px').attr('height', '70px');
+                        var tdImagen = $('<td>').append(imagen2);
+                        row.append(tdImagen);
+                        $('<td>').text(resultado.id).appendTo(row);
+                        $('<td>').text(resultado.nombre).appendTo(row);
+                        $('<td>').text(precioFormateado).addClass('precio').appendTo(row);
+                        $('<td>').text(resultado.marca).appendTo(row);
+                        $('<td>').text(resultado.stock).appendTo(row);
+                        
+                        // Agregar las celdas para los botones
+                        var tdBotones = $('<td>');
+                        var botonEditar = $('<a>').attr('href', '{{ route("EditarArtDep", ' + resultado.id + ') }}').addClass('btn btn-success btn-sm').attr('title', 'Editar').append($('<i>').addClass('fa-solid fa-pen-to-square'));
+                        var botonEliminar = $('<button>').addClass('btn btn-danger btn-sm eliminar-btn mx-1').attr('data-id', resultado.id).attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modalEliminar').append($('<i>').addClass('fa-solid fa-trash'));
+                        var botonVer = $('<button>').addClass('btn btn-secondary btn-sm').append($('<i>').addClass('fa-solid fa-eye'));
+                        
+                        // Añadir los botones a la celda correspondiente
+                        tdBotones.append(botonEditar, botonEliminar, botonVer);
+                        // Agregar la celda de botones a la fila
+                        row.append(tdBotones);
+                        row.appendTo($('#resultsTable2'));
+
+                        
+                    });
+                }
+            });
+        }
+
+    });
+
+
 
     // Modal de "está seguro que quiere eliminarlo?"
     var modalEliminar = document.getElementById('modalEliminar');
@@ -27,42 +196,6 @@ $(document).ready(function(){
     });
 
 
-    // tabla
-    // // dar un mensaje de que es normal el sólo lectura
-    // $("#mostrarToastr").on("click", function() {
-    //     toastr["error"]("Producto eliminado correctamente", "Mensaje")
-
-    //     toastr.options = {
-    //     "closeButton": false,
-    //     "debug": false,
-    //     "newestOnTop": false,
-    //     "progressBar": false,
-    //     "positionClass": "toast-bottom-center",
-    //     "preventDuplicates": false,
-    //     "onclick": null,
-    //     "showDuration": "300",
-    //     "hideDuration": "1000",
-    //     "timeOut": "5000",
-    //     "extendedTimeOut": "1000",
-    //     "showEasing": "swing",
-    //     "hideEasing": "linear",
-    //     "showMethod": "fadeIn",
-    //     "hideMethod": "fadeOut"
-    //     }
-    // });
-
-    // // Eliminar la tupla utilizando AJAX
-    // $.ajax({
-    //     url: '/eliminar-tupla/ID_DE_LA_TUPLA_A_ELIMINAR',
-    //     type: 'DELETE',
-    //     success: function(response) {
-    //         toastr.error(response.success, "Mensaje");
-    //     },
-    //     error: function(xhr, status, error) {
-    //         // Manejar el error si la eliminación falla
-    //         console.error(xhr.responseText);
-    //     }
-    // });
 
     // Calzados niños y adultos
     $('#publico-dirigido').change(function () {
@@ -141,22 +274,13 @@ $(document).ready(function(){
 
     });
 
-    $(".input-suma").on("input", function(){
-        var suma = 0;
-        $(".input-suma").each(function(){
-            if(!isNaN(this.value) && this.value.length != 0) {
-                suma += parseFloat(this.value);
-            }
-        });
-        $("#stock_input").val(suma);
-        $("#stock_input_ropa").val(suma);
-    });
+
 
     /* 
     |
-    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------------
     | Sportivo - ropa deportiva
-    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------------
     |
     */ 
     $("#stock_input_ropa").prop('readonly', true).val('');
@@ -184,25 +308,9 @@ function eliminarArticulo() {
 }
 
 
-// Asegúrate de que este código se ejecute después de que se haya cargado la página
-document.addEventListener("DOMContentLoaded", function() {
-    // Obtén todos los checkboxes
-    var checkboxes = document.querySelectorAll('input[type="checkbox"][name^="calzados"]');
 
-    // Agrega un evento change a cada checkbox
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            // Obtén el ID del calzado correspondiente
-            var calzadoId = checkbox.id.split('-')[1];
 
-            // Obtén el campo de texto correspondiente
-            var stockInput = document.getElementById('stock-' + calzadoId);
 
-            // Habilita o deshabilita el campo de texto según el estado del checkbox
-            stockInput.disabled = !checkbox.checked;
-        });
-    });
-});
 // Asegúrate de que este código se ejecute después de que se haya cargado la página
 document.addEventListener("DOMContentLoaded", function() {
     // Obtén todos los checkboxes

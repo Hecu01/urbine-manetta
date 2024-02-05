@@ -43,10 +43,20 @@
         </ul>
 
       </div>
-      <div class="mx-1 " id="busqueda-artdeport">
+      <!-- Búsqueda articulos deportivos accesorios -->
+      <div class="mx-1 " id="busqueda-accesorios">
         <form class="d-flex mt-1" role="search">
-          <input class="form-control me-2 form-control-sm" type="search" placeholder="Buscar" aria-label="Search">
-          <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
+          <input class="form-control me-2 form-control-sm" type="search" placeholder="Buscar" aria-label="Search" id="searchInput" >
+          {{-- <button class="btn btn-primary btn-sm" type="submit">Buscar</button> --}}
+          @csrf
+        </form>
+      </div>
+      <!-- Búsqueda articulos deportivos calzados -->
+      <div class="mx-1 " style="display: none" id="busqueda-calzados">
+        <form class="d-flex mt-1" role="search">
+          <input class="form-control me-2 form-control-sm" type="search" placeholder="Buscar" aria-label="Search" id="searchInput2" >
+          {{-- <button class="btn btn-primary btn-sm" type="submit">Buscar</button> --}}
+          @csrf
         </form>
       </div>
         
@@ -63,7 +73,9 @@
 
         <div class="tab-pane fade " id="calzados-pane" role="tabpanel" aria-labelledby="calzado" tabindex="0" style="min-height:500px;overflow-x:visible">
           @include('admin.partials.ArticulosDeportivos.TablaCalzados_ArtDeport')
-
+          <div class="flex justify-center">
+            {{ $articulos->links('pagination::bootstrap-4') }}
+          </div>
           
         </div>
         <div class="tab-pane fade " id="formulario-pane" role="tabpanel" aria-labelledby="formulario" tabindex="0">
@@ -98,7 +110,28 @@
   </article>
 
 
-
+<!-- Modal -->
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEliminarLabel">Eliminar Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar el producto?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form id="formEliminar" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

@@ -1,6 +1,6 @@
 
 <!-- Modal -->
-<div class="modal fade  "id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  "id="art-agreg-con-exito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
                 <div class="header flex items-center justify-center">
@@ -28,7 +28,7 @@
   <!-- JavaScript para activar el modal al cargar la página -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        var modal = new bootstrap.Modal(document.getElementById('art-agreg-con-exito'));
         modal.show();
     });
   </script>
