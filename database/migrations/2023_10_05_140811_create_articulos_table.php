@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre')->nullable();
             $table->string('talle')->nullable();
             $table->string('genero')->nullable();
-            $table->integer('precio')->nullable();
+            $table->decimal('precio', 8, 2)->nullable();
             $table->string('marca')->nullable();
             $table->foreignId('id_categoria')->nullable()->constrained('categorias')->cascadeOnUpdate()->nullOnDelete();
             $table->string('color')->nullable();
@@ -24,8 +24,11 @@ return new class extends Migration
             $table->string('descripcion')->nullable();
             $table->string('tipo_producto')->nullable(); // calzado, ropa, accesorio
             $table->string('dirigido_a')->nullable(); //niños, adultos, ambos
-            
             $table->string('foto',1000)->nullable();
+
+            // Añade una columna para la relación con descuentos
+            $table->unsignedBigInteger('descuento_id')->nullable()->unique()->constrained('descuentos')->onDelete('cascade');
+
             
             $table->timestamps();
         });

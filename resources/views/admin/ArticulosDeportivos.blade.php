@@ -133,7 +133,21 @@
   </div>
 </div>
 
+<script>
+  // Obtener todas las pestañas
+  var tabs = document.querySelectorAll('.nav-link');
 
+  // Iterar sobre cada pestaña
+  tabs.forEach(function(tab) {
+      // Escuchar el evento de clic en la pestaña
+      tab.addEventListener('click', function() {
+          // Obtener el ID de la pestaña
+          var tabId = this.getAttribute('id');
+          // Actualizar el fragmento del URL
+          window.location.hash = tabId;
+      });
+  });
+</script>
 
 @endsection
 

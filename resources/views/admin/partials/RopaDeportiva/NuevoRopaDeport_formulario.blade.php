@@ -133,7 +133,7 @@
     </div>
 
     <!-- calzados disponibles (acá está el problema de array string conversion) (linea 120) -->
-    @include('admin.partials.NuevoRopaDeport_modal')
+    @include('admin.partials.RopaDeportiva.NuevoRopaDeport_modal')
 
     <div class="col-12 d-flex " style="justify-content:space-between">
         <div class="col-md-3">

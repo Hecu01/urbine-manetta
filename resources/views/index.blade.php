@@ -31,12 +31,9 @@
                 </div>
 
             </div>
-
-
-        @else
         @endguest
         
-   
+        
 
     </section>
 

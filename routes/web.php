@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group(function(){
     // Agregar domicilio
     Route::get('/domicilios', [UsuarioController::class, 'domicilio'])->name('domicilio');
     Route::post('/domicilios', [UsuarioController::class, 'agregar_domicilio'])->name('agregar_direccion');
+    
+    // Perfil
+    Route::get('/mi-perfil', [TiendaController::class, 'mi_perfil'])->name('mi_perfil');
 
     // Agregar al carrito
     Route::get('/carrito-de-compras', [CarritoController::class, 'mi_carrito'])->name('carrito.index');

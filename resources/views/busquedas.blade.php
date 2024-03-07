@@ -11,6 +11,13 @@
         <div class="contenedor-resultados gap-4 justify-center flex flex-wrap" >
             @foreach ($resultados as $resultado)     
               <div class="w-min bg-white shadow-lg  h-fit position-relative">
+                @if( isset($resultado->descuento) && $resultado->descuento->activo == true)
+                  <span class="bg-red-500 text-white" style="padding: 0px 3px ;font-size:13px;position:absolute; right:24px; top:76px; font-family:'Times New Roman', Times, serif">
+                    -{{ str_replace('.', ',', number_format($resultado->descuento->porcentaje, $resultado->descuento->porcentaje == round($resultado->descuento->porcentaje) ? 0 : 2)) }}% OFF
+
+
+                  </span>
+                @endif
                 @guest
                 @else
                   @if (Auth::user()->administrator == true)
@@ -33,11 +40,36 @@
                         <div class="flex flex-wrap">
                           <h1 class="flex-auto text-lg font-semibold text-slate-900">
                             {{ $resultado->nombre}}
-                              
                           </h1>
-                          <div class="text-lg font-semibold text-slate-500">
+
+                          <!-- Lógica del descuento -->
+                          @if( isset($resultado->descuento) && $resultado->descuento->activo == true)
+                            <div class=""style=" position:relative">
+
+                              <div class="text-lg font-semibold text-slate-500">
+                                  $ {{number_format($resultado->precio - $resultado->descuento->plata_descuento, 0, ',', '.')}} AR
+                                  
+                              </div>
+                              <div class="text-lg font-semibold text-slate-500 text-sm" style="position:absolute; right:0">
+                                  
+                                  <span style="text-decoration:line-through">$ {{number_format($resultado->precio, 0, ',', '.')}}</span>
+                                  
+                                  antes
+                                  
+                              </div>
+                            </div>
+
+
+                          @else
+                            
+                          
+                          
+                            <div class="text-lg font-semibold text-slate-500">
                               $ {{number_format($resultado->precio, 0, ',', '.')}} AR
-                          </div>
+                            </div>
+
+                          @endif
+
                           <div class="w-full flex-none text-sm font-medium text-slate-700 my-2">
                             Hay {{ $resultado->stock}} unidades disponibles
                           </div>
@@ -45,11 +77,11 @@
                         <div class="flex">
                           @if($resultado->tipo_producto == "calzado" && count($resultado->calzados) > 0)
                             <div class="bg-gray-100 my-2 w-min   hover:cursor ">
-                              <div class="inline-block relative w-32">
-                                <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer">
+                              <div class="inline-block relative "  style="width:120px">
+                                <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer" id="talle">
                                     @foreach($resultado->calzados as $calzado)
                                       @if($calzado->pivot->stocks > 0)
-                                        <option value="{{ $calzado->id }}">Talle {{ $calzado->calzado }} - Disponibles {{ $calzado->pivot->stocks }} unidades</option>
+                                        <option value="{{ $calzado->id }}" data-stock="{{ $calzado->pivot->stocks }}">Talle {{ $calzado->calzado }} </option>
                                       @endif
                                     @endforeach
                                 </select>
@@ -59,12 +91,9 @@
                           @endif
                           <div class="w-16 my-2 mx-3">
   
-                            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500   py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer ">
-                              @for ($i = 1; $i <= $resultado->stock; $i++)
-                                <option value="">{{$i}} unidades</option>
-                              @endfor
-    
+                            <select id="unidades" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer">
                             </select>
+                            
                           </div>
                         </div>
 

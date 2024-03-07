@@ -54,12 +54,12 @@
 
                                     <select class="form-select " name="distrito" style="height: 60px" aria-label="Default select example">
                                         <option selected hidden>Seleccione un distrito</option>
-                                        <option value="1">San Nicolás de los Arroyos</option>
-                                        <option value="2">Ramallo</option>
-                                        <option value="3">Villa Ramallo</option>
-                                        <option value="3">Villa Gral Savio</option>
-                                        <option value="3">La Emilia</option>
-                                        <option value="3">Villa Constitución</option>
+                                        <option value="San Nicolás de los Arroyos">San Nicolás de los Arroyos</option>
+                                        <option value="Ramallo">Ramallo</option>
+                                        <option value="Villa Ramallo">Villa Ramallo</option>
+                                        <option value="Villa Gral Savio">Villa Gral Savio</option>
+                                        <option value="La Emilia">La Emilia</option>
+                                        <option value="Villa Constitución">Villa Constitución</option>
                                     </select>
                                 </div>
 

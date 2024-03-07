@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminDefault::class);
         $this->call(CalzadosDefault::class);
         $this->call(TalleSeeder::class);
+        $this->call(DeportesDefault::class);
     }
 }

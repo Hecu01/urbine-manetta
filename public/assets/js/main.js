@@ -24,6 +24,28 @@ $(document).ready(function() {
     toastr.success('Agregaste al carrito');
   
   });
+  /* 
+  |
+  |--------------------------------------------------------------------------------
+  | Sportivo - búsqueda
+  |--------------------------------------------------------------------------------
+  |
+  */ 
     
+  $('#talle').on('change', function () {
+    var selectedTalle = $(this).find('option:selected');
+    var maxStock = selectedTalle.data('stock');
+    updateUnidadesOptions(maxStock);
+  });
+
+  function updateUnidadesOptions(maxStock) {
+
+    var unidadesSelect = $('#unidades');
+    unidadesSelect.empty();
+    for (var i = 1; i <= maxStock; i++) {
+        var option = $('<option></option>').attr('value', i).text(i + ' unidades');
+        unidadesSelect.append(option);
+    }
+}
 });
 

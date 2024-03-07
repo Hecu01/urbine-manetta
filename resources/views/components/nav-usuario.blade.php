@@ -1,8 +1,21 @@
 @php
+    use App\Models\Deporte;
     $carrito = session()->get('carrito', []);
     // Convierte el carrito en una colección para ser compatible con darryldecode/cart
     $cartItems = collect($carrito);
     $contarItems = collect($carrito)->count();
+    
+    // Obtener categorías únicas
+    $categorias = Deporte::distinct()->pluck('categoria_deporte');
+
+    // Cargar los deportes por categoría
+    $deportesPorCategoria = [];
+    foreach ($categorias as $categoria) {
+        $deportesPorCategoria[$categoria] = Deporte::where('categoria_deporte', $categoria)
+                                                    ->orderBy('deporte', 'asc')
+                                                    ->get();
+    }
+
 @endphp
 <!-- Si es usuarioooo (no accedera al crud) -->
 <nav class="navbar   " id="navigator-usuario" style="position: relative">
@@ -192,84 +205,43 @@
         <a href="{{ route('home') }}" class="hover:text-cyan-500">Inicio</a></li>
         
 
-        <div id="li-hombres">
-            <a href="#">
+        <div >
+            <a href="#" class="boton-categoria">
                 Hombres
             </a>
-            <div class="sub-li-hombres">
+            
+            <div class="absolute bg-blue-500 text-white boton-categoria" id="contenedor-hombres" style="left: 0; width:100%; z-index:2; display:none; min-height:200px; height:auto;">
                 <ul>
-                    <li>
-                        <a href=" #">
-                            Hombres
-                        </a>
-                    </li>
-                    <li>
-                        Zapatillas
-                        <div class="sub-li-zapatillas">
-                            <ul>
-                                <li>Running</li>
-                                <li>Botines</li>
-                                <li>Remeras</li>
-                                <li>Pantalones</li>
-                                <li>Calzas</li>
-                            </ul>
-                        </div> 
-                    </li>
-                    <li>
-                        Botines
-                        <div class="sub-li-zapatillas botines">
-                            <ul>
-                                <li>Talle 36-37</li>
-                                <li>Talle 37-38</li>
-                                <li>Talle 38-39</li>
-                                <li>Talle 39-40</li>
-                                <li>Talle 40-41</li>
-                                <li>Talle 41-42</li>
-                                <li>Talle 42-43</li>
-                                <li>Talle 43-44</li>
-                                <li>Talle 44-45</li>
-
-                            </ul>
-                        </div> 
-                    </li>
-                    <li>Remeras
-                        <div class="sub-li-zapatillas remeras">
-                            <ul>
-                                <li>Talle L</li>
-                                <li>Talle M</li>
-                                <li>Talle XL</li>
-                                <li>Talle XXL</li>
-                                <li>Talle XXXL</li>
-
-                            </ul>
-                        </div> 
-
-                    </li>
-                    <li>Pantalones</li>
-                    <li>Calzas</li>
+                    <li><a href="" class="text-white avl">Canilleras</a></li>
+                    <li><a href=""class="text-white avl">Zapatillas</a></li>
+                    <li><a href="" class="text-white avl">Botines</a></li>
+                    <li><a href="" class="text-white avl">Zapatillas para correr</a></li>
+                    <li><a href="" class="text-white avl">Botas de fútbol</a></li>
+                    <li><a href="" class="text-white avl">Zapatos de baloncesto</a></li>
+                    <li><a href="" class="text-white avl">Zapatillas de tenis</a></li>
+                    <style>
+                        .avl{
+                            text-decoration: none
+                        }
+                    </style>
+                    
+                    
+                    
                 </ul>
-            </div> 
+            </div>
         </div>
     
     
-        <a href="">Mujeres</a>
-        <a href="">Niños</a>
-        <a href="">Niñas</a>
-        <!-- {{-- <li><a href="">Deportes de campo</a></li>
-        <li><a href="">Deportes de Gimnasio</a></li>
-        <li><a href="">Deportes Cerrados</a></li> --}} -->
-        <a href="">Artes Marciales y combate</a>
-        <a href="">Fútbol</a>
-        <a href="">Rugby</a>
-        <a href="">Handball</a>
-        <a href="">Natación</a>
-        <a href="">Voley</a>
-        <a href="">Running</a>
-        <a href="">Hockey</a>
-         <a href="">Basketball</a>
-        <!-- {{-- <li><a href="">Boxeo</a></li>
-        <li><a href="">Kingboxing</a></li>
-        <li><a href="">Tae Kwondo</a></li> --}} -->
+        @foreach ($deportesPorCategoria as $categoria => $deportes)
+            <a href="" >
+                {{ $categoria }}       
+            </a>
+            <ul style="display:none">
+                @foreach ($deportes as $deporte)
+                    <li>{{ $deporte->nombre }}</li>
+                @endforeach
+            </ul>
+        @endforeach
 
     </div>
     <div class="bottom-bottom-nav">  
@@ -350,7 +322,7 @@
         
         <div class="busqueda col-6">
             <form class="d-flex" action="{{ route('buscar')  }}" method="GET">
-                <input class="form-control me-2 " type="search" name="articulo-buscado" placeholder="Buscá lo que necesitás acá" aria-label="Search" >
+                <input class="form-control me-2 " type="search" required name="articulo-buscado" placeholder="Buscá lo que necesitás acá" aria-label="Search" >
                 <button class="btn btn-danger" type="submit"> <span ><i class="fa-solid fa-magnifying-glass"></i></span></button>
             </form>
         </div>

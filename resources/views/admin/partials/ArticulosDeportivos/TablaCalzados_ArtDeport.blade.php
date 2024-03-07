@@ -1,6 +1,7 @@
 <table class="table table-hover font-sans" id="resultsTable2">
     <thead  style="border:1px solid rgb(16, 153, 163); text-align:center">
       <th>Foto</th>
+      <th>Id</th>
       <th>Titulo</th>
       <th>Precio</th>
       <th>Marca</th>

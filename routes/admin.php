@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VentaController;
+use App\Http\Controllers\ArtDeportController;
+use App\Http\Controllers\DescuentoController;
 
 // Rutas que acceden los admins
 Route::middleware(['auth'])->group(function(){
@@ -9,9 +12,6 @@ Route::middleware(['auth'])->group(function(){
 
     // Clientes
     Route::get('/admin/clientes-activos', [AdminController::class, 'clientes'])->name('clientes');
-    
-    // Ventas
-    Route::get('/admin/ventas-realizadas', [AdminController::class, 'ventas'])->name('ventas');
     
     // Suplementos y Dieta
     Route::get('/admin/suplementos-y-dieta', [AdminController::class, 'suplementos'])->name('suplementos');
@@ -23,17 +23,23 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/admin/compras-pendientes-online', [AdminController::class, 'compras_online'])->name('compras_online');
     
     // Descuentos
-    Route::get('/admin/descuentos', [AdminController::class, 'descuentos'])->name('descuentos');
-    
-    // Articulos deportivos
-    Route::get('/admin/articulo-deportivo', [AdminController::class, 'IndexArticuloDeportivo'])->name('nuevo_articulo');
-    Route::post('/admin/articulo-deportivo', [AdminController::class, 'agregar_articulo_deportivo'])->name('añadir_articulo');
-    Route::delete('/admin/articulo-deportivo/{id}',[AdminController::class, 'eliminar_articulo'] )->name('eliminar_articulo');
-    Route::get('/admin/articulo-deportivo/editar/{id}', [AdminController::class, 'EditArtDeport'])->name('EditarArtDep');
-    Route::put('/articulos/{id}', [AdminController::class, 'actualizarArtDeport'])->name('articulos.actualizar');
+    Route::get('/admin/descuentos', [DescuentoController::class, 'descuentos'])->name('descuentos');
+    Route::get('/descuento', [DescuentoController::class, 'buscarArtParaDescuento']);
+    Route::get('/admin/descuento/producto/{id}', [DescuentoController::class, 'aplicarDescuento'])->name('aplicarDescuento');
+    Route::post('/articulo/descuento/{articuloId}', [DescuentoController::class, 'crear'])->name('crearDescuento');
+    Route::put('cambiar-estado-descuento/{id}', [DescuentoController::class, 'cambiarEstadoDescuento'])->name('cambiar.estado.descuento');
+    Route::delete('/eliminar/{id}', [DescuentoController::class, 'eliminarDescuento'])->name('eliminar.descuento');
 
-    Route::get('/accesorio', [AdminController::class, 'busquedaAjaxArtDeportAccesorio']);
-    Route::get('/calzado', [AdminController::class, 'busquedaAjaxArtDeportCalzado']);
+
+
+    // Articulos deportivos
+    Route::get('/admin/articulo-deportivo', [ArtDeportController::class, 'IndexArticuloDeportivo'])->name('nuevo_articulo');
+    Route::post('/admin/articulo-deportivo', [ArtDeportController::class, 'agregar_articulo_deportivo'])->name('añadir_articulo');
+    Route::delete('/admin/articulo-deportivo/{id}',[ArtDeportController::class, 'eliminar_articulo'] )->name('eliminar_articulo');
+    Route::get('/admin/articulo-deportivo/editar/{id}', [ArtDeportController::class, 'EditArtDeport'])->name('EditarArtDep');
+    Route::put('/articulos/{id}', [ArtDeportController::class, 'actualizarArtDeport'])->name('articulos.actualizar');
+    Route::get('/accesorio', [ArtDeportController::class, 'busquedaAjaxArtDeportAccesorio']);
+    Route::get('/calzado', [ArtDeportController::class, 'busquedaAjaxArtDeportCalzado']);
 
     // Ropa deportiva
     Route::get('/admin/ropa-deportiva', [AdminController::class, 'IndexRopaDeportiva'])->name('nuevo_ropa');
@@ -42,4 +48,10 @@ Route::middleware(['auth'])->group(function(){
     // Admines
     Route::get('/admines', [AdminController::class, 'VerAdmines'])->name('admins');
     Route::put('/habilitar-admin/{usuario}', [AdminController::class, 'HabilitarAdmin'])->name('habilitar_admin');
+
+
+    // Ventas
+    Route::prefix('admin')->group(function(){
+        Route::resource('ventas-realizadas', VentaController::class);
+    });
 });

@@ -47,8 +47,8 @@
         <x-nav-admin/>
         
         <!-- Sección principal -->
-        <div class="section-principal d-flex " style="justify-content: space-between;" id="seccion-recontraprincipal">
-            <section class="flex" style="padding-top: 5px; justify-content: center;" >
+        <div class="section-principal " id="seccion-recontraprincipal">
+            <section class="flex" style="padding-top: 5px; justify-content:space-between" >
                 @yield('section-principal')
             </section>
         </div>
@@ -87,6 +87,8 @@
 
         <script src="{{ asset('assets/js/scrollreveal.js')}}"></script>
         <script src="{{ asset('assets/js/admin.js') }}" ></script>
+        <script src="{{ asset('assets/js/Descuentos.js') }}" ></script>
+        <script src="{{ asset('assets/js/ArticulosDeportivos.js') }}" ></script>
         <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

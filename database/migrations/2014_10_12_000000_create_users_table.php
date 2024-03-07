@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('administrator')->default(false);
+            $table->boolean('super_administrator')->default(false);
             $table->string('foto',1000)->nullable();
             $table->rememberToken();
             $table->timestamps();

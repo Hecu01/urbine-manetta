@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\DB;
 class BusquedaController extends Controller
 {
     public function buscar(Request $request){
-        // $idResultados = Articulo::where('nombre', 'LIKE', "%$query%")->get();
-        // $consultarTalles=DB::statement('SELECT articulos.id,articulos.nombre, articulos.precio,  calzados.calzado as calzado_disponible FROM articulos join articulo_calzado on articulos.id = articulo_calzado.articulo_id join calzados on articulo_calzado.calzado_id = calzados.id');
-        // SELECT articulos.id,articulos.nombre, articulos.precio,  calzados.calzado as calzado_disponible FROM articulos join articulo_calzado on articulos.id = articulo_calzado.articulo_id join calzados on articulo_calzado.calzado_id = calzados.id;
         
         $query = $request->input('articulo-buscado');
         $resultados = Articulo::where('nombre', 'LIKE', "%$query%")->get();
