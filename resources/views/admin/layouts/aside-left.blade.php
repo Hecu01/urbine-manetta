@@ -1,12 +1,12 @@
 <aside  id="left-aside" class="left-aside bg-slate-100 rounded-xl  w-fit"  >
-    <a href="{{ route('ir_admin') }}" style="color: currentColor; text-decoration:none; ">
+    <a href="{{ route('ir_admin') }}" style="color: currentColor; text-decoration:none; " draggable="false">
 
         <div class="foto-local-y-admin">
             <div class="local rounded-xl">
-                <img src="{{ asset('assets/img/local.jpg')}}" class="rounded-xl" alt="" style="width: 100%;">
+                <img src="{{ asset('assets/img/local.jpg')}}" class="rounded-xl" alt="" style="width: 100%;" draggable="false">
             </div>
             <div id="foto-admin">
-                <img src="{{ url('usuario/' . Auth::user()->foto) }}" alt="">
+                <img src="{{ url('usuario/' . Auth::user()->foto) }}" alt="" draggable="false">
             </div>
         </div>
         <div class="mas-informacion">

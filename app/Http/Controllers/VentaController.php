@@ -22,10 +22,11 @@ class VentaController extends Controller
     {
         $articulos = Articulo::orderBy('nombre', 'asc')->get();
         $deportes = Deporte::orderBy('deporte', 'asc')->get();
+        $usuarios = User::where('administrator', false)->get();
 
         $user = Auth::user();
         $title = "Sportivo - Ventas";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Ventas', compact('title', 'articulos','deportes'));
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Ventas', compact('title', 'articulos','deportes', 'usuarios'));
 
     }
 
