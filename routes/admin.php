@@ -52,6 +52,6 @@ Route::middleware(['auth'])->group(function(){
 
     // Ventas
     Route::prefix('admin')->group(function(){
-        Route::resource('ventas-realizadas', VentaController::class);
+        Route::resource('ventas', VentaController::class);
     });
 });

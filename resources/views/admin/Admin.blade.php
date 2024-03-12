@@ -21,7 +21,7 @@
                 </div>
             </a>
             <!-- Ventas realizadas -->
-            <a href="{{ route('ventas-realizadas.index') }}" class="text-white no-underline article0 article2">
+            <a href="{{ route('ventas.index') }}" class="text-white no-underline article0 article2">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-chart-line"></i>

@@ -34,24 +34,31 @@
 
     <div class="" >
       <div class="">
-        <div class="flex">
-
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1" style="font-size:1.2em">
-              Cliente registrado
-            </label>
-          </div>
-          <div class="form-check mx-5">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-            <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.2em">
-              Cliente registrado no
-            </label>
-          </div>
-        </div>
-      
+        
         {{-- Cliente registrado formulario --}}
-        <form action="" class="  border  pt-2" style="margin: 0px 30px">
+        <form method="POST" class="  border  p-2" style="margin: 0px 30px" action="{{ route('ventas.store') }}" id="salesForm">
+          @csrf
+          <div class="flex">
+  
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="flexRadioDefault1">
+              <label class="form-check-label" for="flexRadioDefault1" style="font-size:1.2em">
+                Cliente registrado
+              </label>
+            </div>
+            <div class="form-check mx-5">
+              <input class="form-check-input" type="radio" id="flexRadioDefault2" checked>
+              <label class="form-check-label" for="flexRadioDefault2" style="font-size:1.2em">
+                Cliente registrado no
+              </label>
+            </div>
+            <div class="col-2 mb-2">
+              <select  id="" class="form-select ">
+                <option value="0" selected>Pago presencial</option>
+                <option value="1">Pago online</option>
+              </select>
+            </div>
+          </div>
           <div class="flex">
             <div class="left">
               <div class="">
@@ -64,7 +71,9 @@
                 </select>
               </div>
               <div class=" p-1 mt-1 ">
-                {{-- <label for="browser">Choose your browser from the list:</label>
+                {{-- PUEDE SERVIR PARA MAS ADELANTE
+                  
+                  <label for="browser">Choose your browser from the list:</label>
                 <input list="browsers" id="browser" name="browser" class="form-control">
                 <datalist id="browsers" style="background: #ec0c0c">
                   <option value="Chrome">
@@ -80,14 +89,16 @@
                   @foreach ($articulos as $articulo)
                     @if($articulo->tipo_producto == "calzado")
                       @foreach ($articulo->calzados as $calzado)
-                        <option value="{{$calzado->id}}" data-precio="{{$calzado->pivot->precio}}">{{$articulo->nombre}} - {{$articulo->marca}} - Calzado n°{{$calzado->calzado}}</option>
+                        <option value="{{$calzado->id}}" data-id="{{$calzado->id}}"  data-precio="{{$calzado->pivot->precio}}">{{$articulo->nombre}} - {{$articulo->marca}} - Calzado n°{{$calzado->calzado}}</option>
                       @endforeach
                       
                     @else
-                      <option value="{{$articulo->id}}" data-precio="{{$articulo->precio}}">{{$articulo->nombre}}</option>
+                      <option value="{{$articulo->id}}" data-id="{{ $articulo->id }}" data-precio="{{$articulo->precio}}">{{$articulo->nombre}}</option>
 
                     @endif
                   @endforeach
+                  {{-- ID ARTICULOS --}}
+                  <input type="text" id="id_articulo" hidden>
 
                 </select>
                 <div class="col-12 flex justify-between mt-2 mb-4">
@@ -109,6 +120,7 @@
                     </style>
                   </div>
                 </div>
+                
                 <div class="grid">
                   <button type="button" class="btn btn-primary mx-1" id="boton-aniadir">Añadir</button>
                 </div>
@@ -137,10 +149,17 @@
 
           <div class=" mt-5">
             <div class="right">
+              {{-- Total a pagar --}}
               <h2>TOTAL A PAGAR: $ <span id="total-a-pagar"></span></h2>
+              {{-- Input para la db --}}
+              <input type="text" id="total-hidden" name="total" value=""hidden>
+
             </div>
+
             <div class="left">
-              <button class="btn btn-success">VENDER</button>
+              {{-- Toda la venta en la línea 158 --}}
+              <input type="text" name="ventasArray" id="ventasArrayInput" hidden>
+              <button class="btn btn-success" type="submit">VENDER</button>
             </div>
 
           </div>

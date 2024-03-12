@@ -4,8 +4,11 @@ $(document).ready(function() {
     $("#articulo").change(function() {
         // Obtener el precio del artículo seleccionado
         var precio = $(this).find("option:selected").data("precio");
+        var id_articulo = $(this).find("option:selected").data("id");
+
         // Actualizar el valor del input de precio unitario
         $("#precio_unitario").val(precio);
+        $("#id_articulo").val(id_articulo);
  
     });
 
@@ -14,6 +17,8 @@ $(document).ready(function() {
 
     // Evento de clic en el botón "Añadir"
     $(".btn-primary").click(function() {
+
+        var id_articulo = parseFloat($("#id_articulo").val());
         var precio_unitario = parseFloat($("#precio_unitario").val());
         var unidades = parseFloat($(".form-control[name='unidades']").val());
     
@@ -32,11 +37,11 @@ $(document).ready(function() {
             // Agregar los datos a la tabla y al array
             if (articulo && unidades) {
                 ventasArray.push({
+                    id_articulo: id_articulo,
                     precio_unitario: precio_unitario,
                     importe: importe,
                     articulo: articulo,
                     unidades: unidades
-
                 });
                 console.log(ventasArray);
                 // Actualizar total a pagar
@@ -52,7 +57,8 @@ $(document).ready(function() {
                     "<td><button class='btn btn-danger btn-sm eliminar'> <i class='fa-solid fa-trash'></i> </button></td>" +
                     "</tr>"
                 );
-    
+                // Suponiendo que tengas el array ventasArray
+                $('#ventasArrayInput').val(JSON.stringify(ventasArray));
                 // Limpiar campos después de agregar la venta
                 $("#unidades").val('1')
                 $(".form-select[name='articulo']").val('');
@@ -72,7 +78,9 @@ $(document).ready(function() {
         $(this).closest('tr').remove();
         // Actualizar total a pagar
         actualizarTotal();
+
     });
+
 
     // Función para actualizar el total a pagar
     function actualizarTotal() {
@@ -80,9 +88,19 @@ $(document).ready(function() {
         for (var i = 0; i < ventasArray.length; i++) {
             total += ventasArray[i].importe;
         }
-        $('#total-a-pagar').text(total.toFixed(2)); // Mostrar total con dos decimales
+        var formattedTotal = total.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        $('#total-a-pagar').text(formattedTotal); // Mostrar total con separadores de miles y decimales
+        // Suponiendo que tengas el array ventasArray
+        $('#ventasArrayInput').val(JSON.stringify(ventasArray));
         console.log('total actualizado')
         console.log(total);
     }
+    // Cuando se actualice el total a pagar
+    $('#total-a-pagar').bind('DOMSubtreeModified', function() {
+        var total = $('#total-a-pagar').text();
+        $('#total-hidden').val(total);
+    });
+
+    
 
 });
