@@ -14,7 +14,6 @@ class Articulo extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id',
         'nombre', 
         'genero', 
         'precio', 

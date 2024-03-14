@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Calzado;
 use App\Models\Articulo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Venta extends Model
 {
-
-    
     use HasFactory;
     protected $fillable = [
         'user_id',
@@ -34,4 +33,12 @@ class Venta extends Model
     {
         return $this->belongsToMany(Articulo::class, 'venta_articulo')->withPivot('cantidad', 'precio_unitario');
     }
+    
+    // Relación con los productos de calzado vendidos en esta venta
+    public function calzados()
+    {
+        return $this->belongsToMany(Calzado::class, 'venta_articulo', 'venta_id', 'articulo_id')
+        ->withPivot('cantidad', 'precio_unitario');
+    }
+
 }

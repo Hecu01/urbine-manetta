@@ -4,11 +4,13 @@ $(document).ready(function() {
     $("#articulo").change(function() {
         // Obtener el precio del artículo seleccionado
         var precio = $(this).find("option:selected").data("precio");
-        var id_articulo = $(this).find("option:selected").data("id");
+        var articulo_id = $(this).find("option:selected").data("id");
+        var tipoProducto = $(this).find("option:selected").data("tipoproducto");
 
         // Actualizar el valor del input de precio unitario
         $("#precio_unitario").val(precio);
-        $("#id_articulo").val(id_articulo);
+        $("#articulo_id").val(articulo_id);
+        $("#tipoProducto").val(tipoProducto);
  
     });
 
@@ -18,9 +20,11 @@ $(document).ready(function() {
     // Evento de clic en el botón "Añadir"
     $(".btn-primary").click(function() {
 
-        var id_articulo = parseFloat($("#id_articulo").val());
+        var articulo_id = parseFloat($("#articulo_id").val());
         var precio_unitario = parseFloat($("#precio_unitario").val());
         var unidades = parseFloat($(".form-control[name='unidades']").val());
+        var tipoProducto = $("#tipoProducto").val();
+
     
         // Verificar si los valores son numéricos
         if (!isNaN(precio_unitario) && !isNaN(unidades)) {
@@ -37,11 +41,12 @@ $(document).ready(function() {
             // Agregar los datos a la tabla y al array
             if (articulo && unidades) {
                 ventasArray.push({
-                    id_articulo: id_articulo,
+                    articulo_id: articulo_id,
                     precio_unitario: precio_unitario,
                     importe: importe,
                     articulo: articulo,
-                    unidades: unidades
+                    unidades: unidades,
+                    tipoProducto: tipoProducto
                 });
                 console.log(ventasArray);
                 // Actualizar total a pagar
@@ -81,7 +86,6 @@ $(document).ready(function() {
 
     });
 
-
     // Función para actualizar el total a pagar
     function actualizarTotal() {
         var total = 0;
@@ -100,7 +104,4 @@ $(document).ready(function() {
         var total = $('#total-a-pagar').text();
         $('#total-hidden').val(total);
     });
-
-    
-
 });

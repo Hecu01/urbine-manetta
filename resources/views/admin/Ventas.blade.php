@@ -89,7 +89,7 @@
                   @foreach ($articulos as $articulo)
                     @if($articulo->tipo_producto == "calzado")
                       @foreach ($articulo->calzados as $calzado)
-                        <option value="{{$calzado->id}}" data-id="{{$calzado->id}}"  data-precio="{{$calzado->pivot->precio}}">{{$articulo->nombre}} - {{$articulo->marca}} - Calzado n°{{$calzado->calzado}}</option>
+                        <option value="{{$calzado->id}}" data-id="{{$calzado->id}}" data-tipoproducto="{{ $articulo->tipo_producto }}" data-precio="{{$calzado->pivot->precio}}">{{$articulo->nombre}} - {{$articulo->marca}} - Calzado n°{{$calzado->calzado}}</option>
                       @endforeach
                       
                     @else
@@ -98,7 +98,10 @@
                     @endif
                   @endforeach
                   {{-- ID ARTICULOS --}}
-                  <input type="text" id="id_articulo" hidden>
+                  <input type="text" id="articulo_id" hidden>
+
+                  {{-- Tipo artículo --}}
+                  <input type="text" id="tipoProducto" hidden>
 
                 </select>
                 <div class="col-12 flex justify-between mt-2 mb-4">

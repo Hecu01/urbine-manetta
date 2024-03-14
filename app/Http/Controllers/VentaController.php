@@ -76,23 +76,30 @@ class VentaController extends Controller
             // 'apellido' => $apellido,
             // 'dni' => $dni,
         ]);
+
       
+        // Iterar sobre cada elemento del array de ventas
         foreach ($ventasArray as $venta) {
+            // Verificar el tipo de artículo
+            if ($venta['tipoProducto'] == 'calzado') {
+                $calzadoId = $venta['articulo_id']; // Obtén el ID del artículo del formulario
 
-            $ventaNueva->articulos()->attach([
-                'articulo_id' => $venta['id_articulo'],
-                'cantidad' => $venta['unidades'],
-                'precio_unitario' => $venta['precio_unitario']
-            ]);
-            
-            
+                // Adjunta el calzado a la venta utilizando la relación correcta
+                $ventaNueva->calzados()->attach($calzadoId, [
+                    'cantidad' => $venta['unidades'],
+                    'precio_unitario' => $venta['precio_unitario']
+                ]);
 
+            } else {
+                // Si no es un calzado, puedes manejarlo de otra manera, por ejemplo:
+                // Agregar lógica para manejar otros tipos de artículos, como 'A', 'B', etc.
+                $ventaNueva->articulos()->attach($venta['articulo_id'], [
+                    'cantidad' => $venta['unidades'],
+                    'precio_unitario' => $venta['precio_unitario']
+                ]);
+            }
         }
 
-
-
-
-        
         // Redirigir a una ruta específica o devolver una respuesta si es necesario
         return redirect()->route('ventas.index');
     }
