@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Talle;
 use App\Models\Calzado;
 use App\Models\Deporte;
-use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Articulo;
 use App\Models\Descuento;

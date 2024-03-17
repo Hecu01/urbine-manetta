@@ -25,7 +25,7 @@ class ArtDeportController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('images'); 
-                $product->images()->create(['path' => $path]);
+                // $product->images()->create(['path' => $path]);
             }
         }
     

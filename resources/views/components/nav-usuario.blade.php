@@ -7,7 +7,7 @@
     
     // Obtener categorías únicas
     $categorias = Deporte::distinct()->pluck('categoria_deporte');
-
+    $deportes= Deporte::all();
     // Cargar los deportes por categoría
     $deportesPorCategoria = [];
     foreach ($categorias as $categoria) {
@@ -211,23 +211,78 @@
             </a>
             
             <div class="absolute bg-blue-500 text-white boton-categoria" id="contenedor-hombres" style="left: 0; width:100%; z-index:2; display:none; min-height:200px; height:auto;">
-                <ul>
-                    <li><a href="" class="text-white avl">Canilleras</a></li>
-                    <li><a href=""class="text-white avl">Zapatillas</a></li>
-                    <li><a href="" class="text-white avl">Botines</a></li>
-                    <li><a href="" class="text-white avl">Zapatillas para correr</a></li>
-                    <li><a href="" class="text-white avl">Botas de fútbol</a></li>
-                    <li><a href="" class="text-white avl">Zapatos de baloncesto</a></li>
-                    <li><a href="" class="text-white avl">Zapatillas de tenis</a></li>
-                    <style>
-                        .avl{
-                            text-decoration: none
-                        }
-                    </style>
-                    
-                    
-                    
-                </ul>
+                <div class="flex">
+                    <div class="">
+                        <h2>Ropa</h2>
+                        <ul>
+                            @foreach ($deportes as $deporteee)
+                                <li>
+                                    <a href="#" class="text-white avl" onclick="buscarArticulo(this)">
+                                        {{ trim($deporteee->deporte) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        
+                            {{-- <li><a href=""class="text-white avl">Zapatillas</a></li>
+                            <li><a href="" class="text-white avl">Botines</a></li>
+                            <li><a href="" class="text-white avl">Zapatillas para correr</a></li>
+                            <li><a href="" class="text-white avl">Botas de fútbol</a></li>
+                            <li><a href="" class="text-white avl">Zapatos de baloncesto</a></li>
+                            <li><a href="" class="text-white avl">Zapatillas de tenis</a></li> --}}
+                            <style>
+                                .avl{
+                                    text-decoration: none
+                                }
+                            </style>
+                            
+                            
+                            
+                        </ul>
+
+                    </div>
+                    <div class="">
+                        <h2>Ropa</h2>
+                        <ul>
+                            <li><a href="" class="text-white avl">Canilleras</a></li>
+                            <li><a href=""class="text-white avl">Zapatillas</a></li>
+                            <li><a href="" class="text-white avl">Botines</a></li>
+                            <li><a href="" class="text-white avl">Zapatillas para correr</a></li>
+                            <li><a href="" class="text-white avl">Botas de fútbol</a></li>
+                            <li><a href="" class="text-white avl">Zapatos de baloncesto</a></li>
+                            <li><a href="" class="text-white avl">Zapatillas de tenis</a></li>
+                            <style>
+                                .avl{
+                                    text-decoration: none
+                                }
+                            </style>
+                            
+                            
+                            
+                        </ul>
+
+                    </div>
+                    <div class="">
+                        <h2>Ropa</h2>
+                        <ul>
+                            <li><a href="" class="text-white avl">Canilleras</a></li>
+                            <li><a href=""class="text-white avl">Zapatillas</a></li>
+                            <li><a href="" class="text-white avl">Botines</a></li>
+                            <li><a href="" class="text-white avl">Zapatillas para correr</a></li>
+                            <li><a href="" class="text-white avl">Botas de fútbol</a></li>
+                            <li><a href="" class="text-white avl">Zapatos de baloncesto</a></li>
+                            <li><a href="" class="text-white avl">Zapatillas de tenis</a></li>
+                            <style>
+                                .avl{
+                                    text-decoration: none
+                                }
+                            </style>
+                            
+                            
+                            
+                        </ul>
+
+                    </div>
+                </div>
             </div>
         </div>
     
@@ -328,3 +383,10 @@
         </div>
     </div>
 </nav>
+<script>
+    function buscarArticulo(elemento) {
+        var texto = elemento.textContent || elemento.innerText;
+        var url = 'http://127.0.0.1:8000/buscar?articulo-buscado=' + encodeURIComponent(texto);
+        window.location.href = url;
+    }
+</script>
