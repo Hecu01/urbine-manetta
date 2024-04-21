@@ -16,10 +16,13 @@ class AdminDefault extends Seeder
     {
         User::create([
             'name' => 'admin',
+            'lastname' => 'admin',
+            'dni' => '12345678',
             'email' => 'admin@admin.com',
             'password' => bcrypt('20406080'),
             'foto' => 'admin.jpg',
             'administrator' => true,
+            'super_administrator' => true,
         ]);
     }
 }

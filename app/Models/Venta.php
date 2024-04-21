@@ -34,11 +34,17 @@ class Venta extends Model
         return $this->belongsToMany(Articulo::class, 'venta_articulo')->withPivot('cantidad', 'precio_unitario');
     }
     
-    // Relación con los productos de calzado vendidos en esta venta
-    public function calzados()
-    {
-        return $this->belongsToMany(Calzado::class, 'venta_articulo', 'venta_id', 'articulo_id')
-        ->withPivot('cantidad', 'precio_unitario');
-    }
+    // // Relación con los productos de calzado vendidos en esta venta
+    // public function calzados()
+    // {
+    //     return $this->belongsToMany(Articulo::class, 'venta_articulo', 'venta_id', 'articulo_id')
+    //     ->withPivot('stocks', 'cantidad') // Incluir las columnas pivot talle y cantidad
+    //     ->withTimestamps();    
+    // }
 
+    public function articulosCalzados()
+    {
+        return $this->articulos()->where('tipo_producto', 'calzado');
+    }
+    
 }

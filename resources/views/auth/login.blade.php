@@ -63,8 +63,8 @@
                                 <div class="col-md-9 ">
 
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control   @error('email') is-invalid @enderror" id="floatingInput" placeholder="name@example.com" required autocomplete="email" autofocus name="email">
-                                        <label for="floatingInput">Correo electrónico</label>
+                                        <input type="email" class="form-control   @error('email') is-invalid @enderror" id="email" placeholder="name@example.com" required autocomplete="email" autofocus name="email">
+                                        <label for="email">Correo electrónico</label>
                                     </div>
     
     
@@ -82,8 +82,8 @@
                                 <div class="col-md-9 ">
 
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" id="floatingPassword" placeholder="Password">
-                                        <label for="floatingPassword">Contraseña</label>
+                                        <input type="password" class="form-control" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" id="password" placeholder="Password">
+                                        <label for="password">Contraseña</label>
                                     </div>
         
                                     @error('password')

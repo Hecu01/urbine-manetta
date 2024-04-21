@@ -114,7 +114,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sportivo - Register</title>
+    <title>Sportivo - Registro</title>
 </head>
 <body>
     <div class="flex justify-content-center  my-2">
@@ -128,7 +128,7 @@
                 </div>
 
 
-                <div class="card-body pb-0">
+                <div class="card-body pb-0" style="max-width: 400px">
                     <form method="POST"  action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
@@ -153,9 +153,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row ">
-                            <div class="flex justify-center">
-                                <div class="col-md-9 ">
+                        <div class="row flex justify-center">
+                            <div class="flex justify-center col-md-4">
+                                <div class="col-md-12 ">
 
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control   @error('nombre') is-invalid @enderror" id="floatingInput" placeholder="name@example.com"  name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -164,6 +164,39 @@
     
     
                                     @error('nombre')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>Las credenciales están incorrectas</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="flex justify-center col-md-5" >
+                                <div class="col-md-12">
+
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control   @error('apellido') is-invalid @enderror" id="apellido" placeholder="name@example.com"  name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
+                                        <label for="apellido">Apellido</label>
+                                    </div>
+    
+    
+                                    @error('apellido')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>Las credenciales están incorrectas</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="flex justify-center">
+                                <div class="col-md-9 ">
+
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control @error('dni') is-invalid @enderror" id="dni" placeholder="name@example.com"  name="dni" value="{{ old('dni') }}" required autocomplete="dni" autofocus>
+                                        <label for="dni">DNI (sin puntos)</label>
+                                    </div>
+    
+                                    @error('dni')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>Las credenciales están incorrectas</strong>
                                         </span>

@@ -18,7 +18,7 @@ $(document).ready(function() {
     var sumatoria = 0;
 
     // Evento de clic en el botón "Añadir"
-    $(".btn-primary").click(function() {
+    $("#aniadir_a_la_cuenta").click(function() {
 
         var articulo_id = parseFloat($("#articulo_id").val());
         var precio_unitario = parseFloat($("#precio_unitario").val());

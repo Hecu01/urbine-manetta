@@ -24,7 +24,6 @@ class VentaController extends Controller
         $articulos = Articulo::orderBy('nombre', 'asc')->get();
         $deportes = Deporte::orderBy('deporte', 'asc')->get();
         $usuarios = User::where('administrator', false)->get();
-
         $user = Auth::user();
         $title = "Sportivo - Ventas";
         return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Ventas', compact('title', 'articulos','deportes', 'usuarios'));
@@ -45,13 +44,12 @@ class VentaController extends Controller
     public function store(Request $request)
     {
         $id_cliente = $request->cliente;
-
+        $ventaNueva = New Venta;
         if(!isset($id_cliente)){
             $nombre = $request->nombre;
             $apellido = $request->apellido;
             $dni = $request->dni;
         }
-
         // Obtener el array enviado desde el formulario
         $ventasArray = json_decode($request->input('ventasArray'), true);
         
@@ -77,31 +75,42 @@ class VentaController extends Controller
             // 'dni' => $dni,
         ]);
 
+
       
         // Iterar sobre cada elemento del array de ventas
         foreach ($ventasArray as $venta) {
+            // Obtener el artículo correspondiente
+            $articulo = Articulo::find($venta['articulo_id']);
+            $calzado = Calzado::find($venta['articulo_id']);
+
             // Verificar el tipo de artículo
             if ($venta['tipoProducto'] == 'calzado') {
-                $calzadoId = $venta['articulo_id']; // Obtén el ID del artículo del formulario
-
-                // Adjunta el calzado a la venta utilizando la relación correcta
-                $ventaNueva->calzados()->attach($calzadoId, [
+                
+                // Si el artículo es un calzado, asociarlo a la venta de calzados
+                // $calzado = $articulo->calzados()->first(); // Suponiendo que la relación se llama "calzados" y obtenemos el primer calzado asociado
+                // dd($calzado);
+                $ventaNueva->articulos()->attach($articulo->id, [
                     'cantidad' => $venta['unidades'],
                     'precio_unitario' => $venta['precio_unitario']
                 ]);
-
             } else {
-                // Si no es un calzado, puedes manejarlo de otra manera, por ejemplo:
-                // Agregar lógica para manejar otros tipos de artículos, como 'A', 'B', etc.
-                $ventaNueva->articulos()->attach($venta['articulo_id'], [
+                // Si no es un calzado, asociarlo a la venta de otros artículos
+                $ventaNueva->articulos()->attach($articulo->id, [
                     'cantidad' => $venta['unidades'],
                     'precio_unitario' => $venta['precio_unitario']
                 ]);
+
+                // Calcular el nuevo stock
+                $nuevoStock = $articulo->stock - $venta['unidades'];
+
+                // Actualizar el stock del artículo
+                $articulo->update(['stock' => $nuevoStock]);
             }
         }
 
+
         // Redirigir a una ruta específica o devolver una respuesta si es necesario
-        return redirect()->route('ventas.index');
+        return redirect()->route('ventas.index')->with('');
     }
 
     /**

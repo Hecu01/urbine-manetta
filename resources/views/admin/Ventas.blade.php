@@ -83,13 +83,15 @@
                   <option value="Opera">
                 </datalist> --}}
                 <label for="">Articulo</label><br>
+
                 <select name="articulo" id="articulo" class="form-select">
                   <option value="" selected hidden>Seleccione artículo o ropa</option>
 
                   @foreach ($articulos as $articulo)
                     @if($articulo->tipo_producto == "calzado")
                       @foreach ($articulo->calzados as $calzado)
-                        <option value="{{$calzado->id}}" data-id="{{$calzado->id}}" data-tipoproducto="{{ $articulo->tipo_producto }}" data-precio="{{$calzado->pivot->precio}}">{{$articulo->nombre}} - {{$articulo->marca}} - Calzado n°{{$calzado->calzado}}</option>
+
+                        <option value="{{$calzado->id}}" data-id="{{$articulo->id}}" data-tipoproducto="{{ $articulo->tipo_producto }}" data-precio="{{$calzado->pivot->precio}}">{{$articulo->nombre}} - {{$articulo->marca}} - Calzado n°{{$calzado->calzado}}</option>
                       @endforeach
                       
                     @else
@@ -125,7 +127,7 @@
                 </div>
                 
                 <div class="grid">
-                  <button type="button" class="btn btn-primary mx-1" id="boton-aniadir">Añadir</button>
+                  <button type="button" class="btn btn-primary mx-1" id="aniadir_a_la_cuenta">Añadir</button>
                 </div>
               </div>
             </div>

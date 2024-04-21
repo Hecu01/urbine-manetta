@@ -14,7 +14,7 @@ class Calzado extends Model
 
     public function articulos()
     {
-        return $this->belongsToMany(Articulo::class)->withPivot('stocks');
-        return $this->belongsToMany(Articulo::class)->withPivot('precio');
+        return $this->belongsToMany(Articulo::class)->withPivot('stocks', 'precio');
     }
+
 }

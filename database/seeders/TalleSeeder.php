@@ -32,8 +32,6 @@ class TalleSeeder extends Seeder
                 'talle_ropa' => $talles[$i] ,
                 'largo_cm' => $largo_mujer[$i],
                 'ancho_cm' => $ancho_mujer[$i],
-                'genero' => 'femenino',
-                'cintura_para' => 'arriba',
             ]); 
         }
 
@@ -43,8 +41,6 @@ class TalleSeeder extends Seeder
                 'talle_ropa' => $talles[$i] ,
                 'largo_cm' => $largo_hombre[$i],
                 'ancho_cm' => $ancho_hombre[$i],
-                'genero' => 'masculino',
-                'cintura_para' => 'arriba',
             ]); 
         }
         // CREAMOS TALLES MUJERES ABAJO
@@ -53,8 +49,6 @@ class TalleSeeder extends Seeder
                 'talle_ropa' => $tallesPantalones[$i] ,
                 'largo_cm' => 0,
                 'ancho_cm' => 0,
-                'genero' => 'femenino',
-                'cintura_para' => 'abajo',
             ]); 
         }
         // CREAMOS TALLES VARONES ABAJO
@@ -63,8 +57,6 @@ class TalleSeeder extends Seeder
                 'talle_ropa' => $tallesPantalones[$i] ,
                 'largo_cm' => 0,
                 'ancho_cm' => 0,
-                'genero' => 'masculino',
-                'cintura_para' => 'abajo',
             ]); 
         }
     }

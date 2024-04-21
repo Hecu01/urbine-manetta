@@ -17,6 +17,7 @@ use App\Http\Controllers\UsuarioController;
 |
 */
 // página de inicio
+// Route::group()
 Route::get('/', [TiendaController::class, 'home'])->name('home');
 Route::get('/home', [TiendaController::class, 'home'])->name('pagina_inicio');
 Route::get('/pagos', [TiendaController::class, 'pago'])->name('pago');
@@ -45,9 +46,7 @@ Route::group([], __DIR__ . '/admin.php');
 
 
 
-/*
-|-------------------- IGNORAR --------------------
-*/
+/* |-------------------- IGNORAR --------------------| */
 Route::get('producto/{filename}', function ($filename){
     $path = storage_path('productos/' . $filename);
     if (!File::exists($path)) {
@@ -70,8 +69,4 @@ Route::get('usuario/{filename}', function ($filename1){
     $response->header("Content-Type", $type);
     return $response;
 });
-/*
-|-------------------- IGNORAR --------------------
-*/
-
 Auth::routes();

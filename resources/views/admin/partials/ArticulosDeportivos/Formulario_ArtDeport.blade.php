@@ -78,7 +78,7 @@
                     </select>
                 </div>
                 <div  style="width:50px; margin-top:29px">
-                    <button class="btn btn-primary" style="width: 100%" type="button" onclick="agregarDeporte()">+</button>
+                    <button class="btn btn-primary" style="width: 100%" type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
                 </div>
             </div>
             <div class="col-md-12 flex justify-between mt-2" style="align-content: center">
