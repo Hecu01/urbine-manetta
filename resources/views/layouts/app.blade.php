@@ -52,8 +52,7 @@
     </head>
     <body class="theme-light">
 
-        
-        <!-- Si es admin, podrá acceder al crud, sino, no. -->
+        <!-- Navegacion -->
         @guest 
             <x-nav-usuario/>
         @else    
@@ -74,18 +73,13 @@
         <!--Footer-->
         <x-footer/>
 
-
+        <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
         <script src="{{ asset('assets/js/scrollreveal.js')}}"></script>
-        
         <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
         <script src="{{ asset('assets/js/main.js')}}"></script>
         <script src="{{ asset('assets/js/Nav-Usuario.js')}}"></script>
-
         {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
-
     </body>
     
 </html>

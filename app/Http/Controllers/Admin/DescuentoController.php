@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+
+use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Talle;
@@ -8,21 +11,21 @@ use App\Models\Calzado;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Descuento;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class DescuentoController extends Controller
 {
     // Index
-    public function descuentos(){
+    public function index(){
         $articulos = Articulo::all();
         $descuentos = Descuento::all();
         $descuentosActivos = Descuento::all()->count();
         
         $user = Auth::user();
         $title = "Sportivo - Descuentos";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Descuentos', compact('title', 'articulos', 'descuentosActivos', 'descuentos'));
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.descuentos.index', compact('title', 'articulos', 'descuentosActivos', 'descuentos'));
     }
     /* Búsqueda AJAX accesorio */
     public function buscarArtParaDescuento(Request $request) {
@@ -71,7 +74,7 @@ class DescuentoController extends Controller
         $calzados = Calzado::all();        
         $title = "Aplicando descuento";
 
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.descuento.AplicarDescuento', compact('articulo', 'calzados', 'title'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.descuentos.AplicarDescuento', compact('articulo', 'calzados', 'title'));
     }
 
     /* Nuevo descuento */

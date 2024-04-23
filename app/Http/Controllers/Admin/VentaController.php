@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
 
 use App\Models\User;
 use App\Models\Talle;
@@ -13,12 +14,13 @@ use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class VentaController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
+     */ 
     public function index()
     {
         $articulos = Articulo::orderBy('nombre', 'asc')->get();
@@ -26,8 +28,7 @@ class VentaController extends Controller
         $usuarios = User::where('administrator', false)->get();
         $user = Auth::user();
         $title = "Sportivo - Ventas";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Ventas', compact('title', 'articulos','deportes', 'usuarios'));
-
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ventas.index', compact('title', 'articulos','deportes', 'usuarios'));
     }
 
     /**
@@ -108,14 +109,13 @@ class VentaController extends Controller
             }
         }
 
-
         // Redirigir a una ruta específica o devolver una respuesta si es necesario
         return redirect()->route('ventas.index')->with('');
     }
 
     /**
      * Display the specified resource.
-     */
+    */
     public function show(string $id)
     {
         //

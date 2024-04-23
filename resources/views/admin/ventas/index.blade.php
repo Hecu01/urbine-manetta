@@ -71,17 +71,7 @@
                 </select>
               </div>
               <div class=" p-1 mt-1 ">
-                {{-- PUEDE SERVIR PARA MAS ADELANTE
-                  
-                  <label for="browser">Choose your browser from the list:</label>
-                <input list="browsers" id="browser" name="browser" class="form-control">
-                <datalist id="browsers" style="background: #ec0c0c">
-                  <option value="Chrome">
-                  <option value="Firefox">
-                  <option value="Edge">
-                  <option value="Safari">
-                  <option value="Opera">
-                </datalist> --}}
+
                 <label for="">Articulo</label><br>
 
                 <select name="articulo" id="articulo" class="form-select">

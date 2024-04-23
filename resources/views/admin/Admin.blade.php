@@ -119,7 +119,7 @@
                 </div>
             </a>
             
-            <a href="{{ route('admins') }}" class="text-white no-underline article0 bg-purple-500 border-purple-500">
+            <a href="{{ route('AdminesActivos.index') }}" class="text-white no-underline article0 bg-purple-500 border-purple-500">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-screwdriver-wrench"></i>

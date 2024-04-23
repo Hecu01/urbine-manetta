@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Talle;
@@ -11,6 +11,7 @@ use App\Models\Descuento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
@@ -42,15 +43,6 @@ class AdminController extends Controller
         return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ClientesActivos', compact('title'));
         
     }
-
-    /*
-    |------------------------------------------------------------------------
-    | Página Ventas realizadas
-    |------------------------------------------------------------------------
-    */
-    public function ventas(){
-    }
-
     /*
     |------------------------------------------------------------------------
     | Página Dietas y Suplementos
@@ -84,27 +76,6 @@ class AdminController extends Controller
         $user = Auth::user();
         $title = "Compras pendientes";
         return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ComprasPendientesOnline', compact('title'));
-    }
-
-    /*
-    |------------------------------------------------------------------------
-    | Controladores de Admines
-    |------------------------------------------------------------------------
-    */
-    public function VerAdmines(){ 
-        $user = Auth::user();
-        $usuarios = User::where('administrator', false)->get();
-        $title = "Sportivo - Admines";
-
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.AdminesActivos', compact('title', 'usuarios'));
-    }
-
-    public function HabilitarAdmin(Request $request, $id) {
-        $usuario = User::findOrFail($id);
-        $cambioValor = 1;
-        $usuario->administrator = $cambioValor;
-        $usuario->save();
-        return redirect()->route('admins');
     }
 
     /*

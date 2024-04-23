@@ -49,7 +49,7 @@
                                                 <td> {{ $usuario->email }} </td>
                                                 <td>
                                                     
-                                                    <form action="{{ route('habilitar_admin', $usuario->id) }}" method="POST">
+                                                    <form action="{{ route('AdminesActivos.update', $usuario->id) }}" method="POST">
     
                                                         @csrf
                                                         @method('PUT')

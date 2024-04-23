@@ -1,11 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TiendaController;
-use App\Http\Controllers\BusquedaController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\BusquedaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,6 @@ use App\Http\Controllers\UsuarioController;
 |
 */
 // página de inicio
-// Route::group()
 Route::get('/', [TiendaController::class, 'home'])->name('home');
 Route::get('/home', [TiendaController::class, 'home'])->name('pagina_inicio');
 Route::get('/pagos', [TiendaController::class, 'pago'])->name('pago');

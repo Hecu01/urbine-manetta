@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
 
 
 use App\Models\User;
@@ -12,6 +13,7 @@ use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class ArtDeportController extends Controller
 {
