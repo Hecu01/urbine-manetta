@@ -1,11 +1,12 @@
 #footer-admin{
     background-color: #0080db;
     color: #fff;
-
+    min-height: 350px;
     .informacion-footer{
         width: 300px; 
         margin: 10px;
         margin-left: 30px;
+        flex-wrap: wrap;
         // Logo y nombre
         .logo-y-nombre{
             display: flex;
@@ -28,6 +29,56 @@
                 text-decoration: underline;
             }
         }
+        div ul li a{
+            text-decoration: none;
+        }
+        .redes-sociales ul {
+            
+            margin: 0;
+            padding: 0;
+            li{
+                margin: 10px 0px;
+                width: fit-content;
+                :hover{
+                    text-shadow: 1px 1px 1px #000;
+                }
+                a{
+                    display: flex;
+                    align-items: center;
+                    font-size: 1.1em;
+   
+                    i{
+                        font-size: 1.5rem;
+                        padding-right: 5px;
+                    }
 
+                }   
+            }
+        }
+        .preguntas-frecuentes{
+            ol{
+                list-style: decimal;
+                li{
+                    width: fit-content;
+                    :hover{
+                        text-shadow: 1px 1px 1px #000;
+                    }
+                    a{
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+        .utilidades{
+            ul{
+                margin: 0;
+                padding: 0;
+                li{
+                    a{
+
+                    }
+                }
+            }
+        }
     }
 }

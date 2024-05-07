@@ -130,7 +130,7 @@
             </div>
 
         </div>
-        <div class="center pl-5">
+        {{-- <div class="center pl-5">
 
             <!-- Logo y nombre -->
             <div class="logo-y-nombre ">
@@ -144,7 +144,7 @@
                     Sportivo
                 </a>
             </div>
-        </div>
+        </div> --}}
         <div class="right d-flex">
 
 

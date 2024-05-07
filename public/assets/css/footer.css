@@ -1,11 +1,13 @@
 #footer-admin {
   background-color: #0080db;
   color: #fff;
+  min-height: 350px;
 }
 #footer-admin .informacion-footer {
   width: 300px;
   margin: 10px;
   margin-left: 30px;
+  flex-wrap: wrap;
 }
 #footer-admin .informacion-footer .logo-y-nombre {
   display: flex;
@@ -25,4 +27,45 @@
   font-size: 2.4em;
   text-shadow: 0px 0px 1px #fff;
   text-decoration: underline;
+}
+#footer-admin .informacion-footer div ul li a {
+  text-decoration: none;
+}
+#footer-admin .informacion-footer .redes-sociales ul {
+  margin: 0;
+  padding: 0;
+}
+#footer-admin .informacion-footer .redes-sociales ul li {
+  margin: 10px 0px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#footer-admin .informacion-footer .redes-sociales ul li :hover {
+  text-shadow: 1px 1px 1px #000;
+}
+#footer-admin .informacion-footer .redes-sociales ul li a {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+}
+#footer-admin .informacion-footer .redes-sociales ul li a i {
+  font-size: 1.5rem;
+  padding-right: 5px;
+}
+#footer-admin .informacion-footer .preguntas-frecuentes ol {
+  list-style: decimal;
+}
+#footer-admin .informacion-footer .preguntas-frecuentes ol li {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#footer-admin .informacion-footer .preguntas-frecuentes ol li :hover {
+  text-shadow: 1px 1px 1px #000;
+}
+#footer-admin .informacion-footer .preguntas-frecuentes ol li a {
+  text-decoration: none;
+}
+#footer-admin .informacion-footer .utilidades ul {
+  margin: 0;
+  padding: 0;
 }/*# sourceMappingURL=footer.css.map */

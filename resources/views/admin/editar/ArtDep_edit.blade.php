@@ -257,7 +257,7 @@
   </article>
 
 
-
+{{-- 
     <script>
         // // Mostrar u ocultar el campo de opciones de calzado según el tipo seleccionado
         // document.querySelector('select[name="tipoProducto"]').addEventListener('change', function() {
@@ -306,7 +306,7 @@
                 reader.readAsDataURL(file);
             }
         }
-    </script>
+    </script> --}}
 
 
 

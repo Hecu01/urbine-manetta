@@ -15,8 +15,7 @@ input[type=number] {
 
     .contenedor{
         background: url('../img/fondo-2.jpg') no-repeat center/cover;
-        height: 500px; 
-        display:grid;
+        height: 550px; 
         align-items: center;
         .mensaje-bienvenida{
             color: #fff;
@@ -24,7 +23,7 @@ input[type=number] {
             padding: 10px;
             background: #00000059;
             box-shadow: 5px 5px 1px #000;
-            margin-left: 6em;
+            margin-left: 7em;
             width: max-content;
             text-align: center;
             font-weight: 900;
@@ -39,11 +38,57 @@ input[type=number] {
         }
 
     }
+    #contenedor-img-sportivo{
+        margin-right: 6em;
+        position: relative;
+
+
+        
+        img{
+            width: 310px;
+            height: 310px;
+            border-radius: 100%;
+            margin-top: 10px;
+            margin: 5px;
+            filter:drop-shadow(0px 0px 3px #fff);
+
+        }
+        .img::before {
+            content: "";
+            position: absolute;
+            top: -17.5px;
+            left: -17.5px;
+            width: calc(100% + 35px);
+            height: calc(100% + 35px);
+            filter: drop-shadow(0px 0px 3px #000);
+            border-radius: 100%;
+            border: 20px dashed rgb(255, 255, 255); /* Color y grosor del borde de puntos */
+            animation: rotateBorder 13s linear infinite; /* Velocidad de rotación de los puntos */
+        }
+    }
+
+    @keyframes rotateBorder {
+        to {
+          transform: rotate(360deg);
+        }
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
     .brand{
         background: $color-primario;
         height: 180px;
         border: 1px solid #fff;
-        margin-bottom: 30px;
+        margin: 10px 0px;
         display: flex; 
         align-items: center; 
         padding-left: 10px; 
