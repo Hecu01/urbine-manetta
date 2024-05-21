@@ -53,16 +53,8 @@
     <body class="theme-light">
 
         <!-- Navegacion -->
-        @guest 
-            <x-nav-usuario/>
-        @else    
-            @if (Auth::user()->administrator == false)
-                <x-nav-usuario/>
-            @else
-                <x-nav-admin/>
-            @endif
-        @endguest 
-
+        <x-nav-usuario/>
+    
         <!-- Sección principal -->
         <div class="">
             <section>

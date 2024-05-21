@@ -4,6 +4,12 @@
 
         <div class="w-fit">
             @include('admin.layouts.aside-left')
+            <div class="flex justify-center my-3">
+                <a href="{{ route('ir_admin') }}" id="boton-regresar-atras" class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
+                  <i class="fa-solid fa-circle-arrow-left"></i> Atrás
+                </a>
+          
+            </div>
         </div>
      
         <div class="mx-10 mt-4" style="">

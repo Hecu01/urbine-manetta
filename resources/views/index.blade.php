@@ -19,16 +19,25 @@
 
         </div>
         @guest        
-            <div class="brand" >
-                <div class="">
-                    <span>Si ves esto, es porque está en etapa de desarollo</span>
-                    <h4>Inicia sesión y registrate, así podés comprar y agregar comentarios sobre nuestros productos</h4>
-                    <button class="btn btn-secondary">
-                        Entrar
-                    </button>
-                    <button class="btn btn-secondary">
-                        Registrarse
-                    </button>
+            <div class="container-fluid bg-blue-600 py-5 px-2 my-2 flex justify-between ">
+
+                <div class="div-left" >
+                    <div class="text-white  ">
+                        <h5 class="uppercase mb-2">
+                            <strong>
+                                EN SPORTIVO ESTÁ TODO LO QUE NECESITÁS
+                            </strong>
+                        </h5>
+                        <h4 class="">Inicia sesión o registrate  así podés  comprar <br>   y agregar comentarios a nuestros productos</h4>
+                        <div class=" mt-3 flex">
+    
+                            <a href="#" class="block text-white no-underline rounded-lg py-2 text-center px-3 bg-red-500 hover:scale-105">Entrar</a>
+                            <a href="#" class="block text-white no-underline rounded-lg py-2 mx-2  text-center px-3 bg-red-500 hover:scale-105">Registrarse</a>
+                        </div>
+    
+    
+                    </div>
+    
                 </div>
 
             </div>

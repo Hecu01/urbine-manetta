@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.plantilla_admin')
 @section('section-principal')
 
     <div class="section-principal d-flex " style="justify-content: space-between;" id="seccion-recontraprincipal">
@@ -52,7 +52,7 @@
             
             
             <!-- Artículos deportivos -->
-            <a href="{{ route('nuevo_articulo') }}" class="text-white no-underline article0 article4">
+            <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline article0 article4">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-football"></i>

@@ -261,6 +261,15 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
         </div>
+        @guest 
+        @else    
+            @if (Auth::user()->administrator == true)
+                <div class="" >
+    
+                    <a href="{{ route('ir_admin') }}" class="btn btn-danger btn-sm">ADMINISTRACIÓN</a>
+                </div>
+            @endif
+        @endguest 
 
 
         <div>
@@ -446,7 +455,10 @@
             </form>
         </div>
     </div>
+
 </nav>
+
+
 <script>
     function buscarArticulo(elemento) {
         var texto = elemento.textContent || elemento.innerText;

@@ -9,7 +9,7 @@
   <div class="w-fit">
 
     <article class="article0    px-2 bg-green-500 "  >
-      <a href="{{ route('nuevo_articulo') }}" class="text-white no-underline">
+      <a href="{{ route('ventas.index') }}" class="text-white no-underline">
         <div class="top">
           <span>
             <i class="fa-solid fa-chart-line"></i>

@@ -37,13 +37,11 @@ Route::middleware(['auth'])->group(function(){
     // Articulos deportivos
     Route::controller(ArtDeportController::class)->group(function(){
 
-        Route::get('/admin/articulo-deportivo', 'IndexArticuloDeportivo')->name('nuevo_articulo');
-        Route::post('/admin/articulo-deportivo', 'agregar_articulo_deportivo')->name('añadir_articulo');
-        Route::delete('/admin/articulo-deportivo/{id}','eliminar_articulo')->name('eliminar_articulo');
-        Route::get('/admin/articulo-deportivo/editar/{id}', 'EditArtDeport')->name('EditarArtDep');
-        Route::put('/articulos/{id}', 'actualizarArtDeport')->name('articulos.actualizar');
-        Route::get('/accesorio', 'busquedaAjaxArtDeportAccesorio');
-        Route::get('/calzado', 'busquedaAjaxArtDeportCalzado');
+        // Route::post('/admin/articulo-deportivo', 'agregar_articulo_deportivo')->name('añadir_articulo');
+        // Route::get('/admin/articulo-deportivo/editar/{id}', 'EditArtDeport')->name('EditarArtDep');
+        // Route::put('/articulos/{id}', 'actualizarArtDeport')->name('articulos.actualizar');
+        // Route::get('/accesorio', 'busquedaAjaxArtDeportAccesorio');
+        // Route::get('/calzado', 'busquedaAjaxArtDeportCalzado');
     });
 
     // Ropa deportiva
@@ -53,9 +51,16 @@ Route::middleware(['auth'])->group(function(){
     // Admines
     Route::get('/admines', [AdminController::class, 'VerAdmines'])->name('admins');
 
-    // Ventas
     Route::prefix('admin')->group(function(){
+        // Articulos Deportivos
+        Route::resource('articulos-deportivos', ArtDeportController::class);
+        Route::delete('/articulo-deportivo/{id}', [ArtDeportController::class, 'destroy']);
+
+        
+        // Ventas
         Route::resource('ventas', VentaController::class);
+        
+        // Los admines
         Route::resource('AdminesActivos', AdminesActivosController::class);
         Route::put('/habilitar-admin/{usuario}', [AdminesActivosController::class, 'HabilitarAdmin'])->name('habilitar_admin');
     });

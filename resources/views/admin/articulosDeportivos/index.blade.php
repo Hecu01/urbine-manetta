@@ -1,3 +1,6 @@
+
+{{-- Index artículos deportivos --}}
+
 @extends('admin.layouts.plantilla_admin')
 @section('section-principal')
 
@@ -10,12 +13,6 @@
 
     </div>
   </div>
- 
-
-
-
-
-
 
   @if (session('mensaje'))
     @include('admin.partials.MsjDelSistema.ArtAgregConExito') 
@@ -65,21 +62,21 @@
       <div class="tab-content" id="myTabContent">
           
         <div class="tab-pane fade show active" id="accesorios-pane" role="tabpanel" aria-labelledby="accesorios" tabindex="0" style="min-height:500px;overflow-x:visible">
-          @include('admin.partials.ArticulosDeportivos.TablaAccesorios_ArtDeport')
+          @include('admin.articulosDeportivos.partials.TablaAccesorios_ArtDeport')
           <div class="flex justify-center">
             {{ $articulos->links('pagination::bootstrap-4') }}
           </div>
         </div>
 
         <div class="tab-pane fade " id="calzados-pane" role="tabpanel" aria-labelledby="calzado" tabindex="0" style="min-height:500px;overflow-x:visible">
-          @include('admin.partials.ArticulosDeportivos.TablaCalzados_ArtDeport')
+          @include('admin.articulosDeportivos.partials.TablaCalzados_ArtDeport')
           <div class="flex justify-center">
             {{ $articulos->links('pagination::bootstrap-4') }}
           </div>
           
         </div>
         <div class="tab-pane fade " id="formulario-pane" role="tabpanel" aria-labelledby="formulario" tabindex="0">
-          @include('admin.partials.ArticulosDeportivos.Formulario_ArtDeport')
+          @include('admin.articulosDeportivos.partials.Formulario_ArtDeport')
 
           
         </div>
@@ -94,7 +91,7 @@
             
   <!-- Artículos deportivos -->
   <article class="article0 article4   px-2"  id="redirigirBoton">
-    <a href="{{ route('nuevo_articulo') }}" class="text-white no-underline">
+    <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
       <div class="top">
         <span>
           <i class="fa-solid fa-football"></i>

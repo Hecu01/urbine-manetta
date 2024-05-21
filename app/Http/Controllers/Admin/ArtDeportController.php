@@ -17,9 +17,11 @@ use App\Http\Controllers\Controller;
 
 class ArtDeportController extends Controller
 {
-
-    /* Página principal */
-    public function IndexArticuloDeportivo(Request $request){
+    /* Página inicio *
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
         $artDeportivos = Articulo::where('id_categoria', '1')->count();
         $deportes = Deporte::orderBy('deporte', 'asc')->get();
         $title="Sportivo - Articulos Deportivos";
@@ -37,7 +39,8 @@ class ArtDeportController extends Controller
         $articulos = Articulo::paginate(6);
 
         // Si no es admin, redirija a la página de inicio
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ArticulosDeportivos', compact('categorias', 'articulos', 'calzados', 'artDeportivos', 'title','deportes'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.articulosDeportivos.index', compact('categorias', 'articulos', 'calzados', 'artDeportivos', 'title','deportes'));
+
     }
 
     /* Búsqueda AJAX accesorio */
@@ -68,33 +71,19 @@ class ArtDeportController extends Controller
         
         return response()->json($results2);
     }
-
-    /* Editar articulo deportivo */
-    public function EditArtDeport($id){
-        $articulo = Articulo::findOrFail($id);
-        $calzados = Calzado::all();
-        $title = "Editando artículo";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.editar.ArtDep_edit', compact('articulo', 'calzados', 'title'));
+    /* *
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
-    /* Eliminar artículo deportivo */
-    public function eliminar_articulo($id){
-        $articulo = Articulo::find($id); 
-        if($articulo){
-            $articulo->delete();
-            // Después de eliminar el artículo exitosamente
-            Session::flash('eliminado', true);
-        }
-        // Obtiene la URL anterior con la pestaña actual como fragmento
-        $url = url()->previous() . '#' . request()->input('nav-link'); // 'tab' es el nombre del campo que almacena el ID de la pestaña
-        // Redirige al usuario a la URL anterior con el fragmento
-        return redirect($url);
-    }
-    
-
-    /* Nuevo artículo deportivo */
-    public function agregar_articulo_deportivo(Request $request){
-
+    /* Crear artículo deportivo *
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         if($request->hasFile('foto')){
             $file = $request->file('foto');
             $carpetaDestino = storage_path('productos');
@@ -172,11 +161,34 @@ class ArtDeportController extends Controller
         }
         // Después de agregar el artículo exitosamente
         Session::flash('mensaje', true);
-        return redirect()->route('nuevo_articulo');
+        return redirect()->route('articulos-deportivos.index');
     }
 
-    /* Actualizar articulo deportivo */
-    public function actualizarArtDeport(Request $request, $id){
+    /* Mostrar artículo deportivo *
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /* Editar artículo deportivo *
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $articulo = Articulo::findOrFail($id);
+        $deportes = Deporte::orderBy('deporte', 'asc')->get();
+        $calzados = Calzado::all();
+        $title = "Editando artículo";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.articulosDeportivos.edit', compact('articulo', 'calzados', 'title', 'deportes'));
+    }
+
+    /* Actualizar artículo deportivo *
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
         $articulo = Articulo::findOrFail($id);
         $tipoProducto = $request->input('tipoProducto');
         if($tipoProducto == "calzado"){
@@ -217,10 +229,66 @@ class ArtDeportController extends Controller
                     }
                 }
             }
+
+
+
+
+            
         }
 
+        // Etiquetas
+        // Recuperar los IDs de deportes seleccionados
+        $deporteIds = $request->input('deporte_ids', []);
+        $deportes = $request->input('deportes', []);
+
+        // // Crear un array para sincronizar la relación
+        // $syncData = [];
+        // foreach ($deporteIds as $deporteId) {
+        //     $selected = in_array($deporteId, $deportesSeleccionados);
+        //     $syncData[$deporteId] = ['deporte_id' => $selected];
+        // }
+
+        // // Sincronizar la relación muchos a muchos con los datos actualizados
+        // $articulo->deportes()->sync($syncData);
 
 
+
+        foreach ($articulo->deportes as $deporte) {
+            // Verifica si el calzado existe en la solicitud y si su checkbox está marcado
+            $indice = array_search($deporte->id, $deporteIds);
+            $checkbox_checked = $indice !== false && isset($deportes[$indice]);
+
+            // Si el calzado existe pero su checkbox está desmarcado, elimínalo de la tabla pivot
+            if (!$checkbox_checked) {
+                $articulo->deportes()->detach($deporte->id);
+            }
+        }
+
+        foreach ($deportes as $indice => $deporte) {
+            // $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0;
+            // $precio = isset($precios[$indice]) ? $precios[$indice] : 0;
+
+            // Busca el ID del calzado
+            $deporteId = Deporte::where('deporte', $deporte)->value('id');
+                        
+            // Crea un arreglo con los datos del calzado
+            // $datosDeporte = ['stocks' => $stock, 'precio' => $precio];
+
+            // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
+            if (!$deporteId) {
+                $nuevoDeporte = Calzado::create(['deporte' => $deporte]);
+                $articulo->deportes()->syncWithoutDetaching($nuevoDeporte->id);
+            } else {
+                // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
+                if (isset($deporteIds[$indice])) {
+                    $articulo->deportes()->syncWithoutDetaching($deporteId);
+                }
+            }
+        }
+      
+
+
+        // Actualización datos de tabla articulos
         $articulo->update([
             'nombre' => $request->nombre_producto,
             'genero' => $request->genero,
@@ -232,9 +300,24 @@ class ArtDeportController extends Controller
             'color' => $request->color,
         ]);
         
-        // Resto de la lógica para procesar el formulario...
-
+        // Una vez finalizado, el redireccionamiento
         return redirect()->back()->with('success', 'Calzados actualizados correctamente.');
     }
 
+    /* Eliminar artículo deportivo *
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $articulo = Articulo::find($id); 
+        if($articulo){
+            $articulo->delete();
+            // Después de eliminar el artículo exitosamente
+            Session::flash('eliminado', true);
+        }
+        // Obtiene la URL anterior con la pestaña actual como fragmento
+        $url = url()->previous() . '#' . request()->input('nav-link'); // 'tab' es el nombre del campo que almacena el ID de la pestaña
+        // Redirige al usuario a la URL anterior con el fragmento
+        return redirect($url);
+    }
 }

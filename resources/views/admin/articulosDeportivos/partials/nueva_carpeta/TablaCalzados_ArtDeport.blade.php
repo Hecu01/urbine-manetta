@@ -45,7 +45,7 @@
                 </td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <a href="{{ route('EditarArtDep', $articulo->id) }}" class="btn btn-success btn-sm" title="Editar">
+                        <a href="{{ route('articulos-deportivos.edit', $articulo->id) }}" class="btn btn-success btn-sm" title="Editar">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $articulo->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar"><i class="fa-solid fa-trash"></i></button>

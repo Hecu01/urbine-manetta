@@ -1,4 +1,5 @@
-@extends('admin.layouts.plantilla_admin')
+@extends('layouts.app')
+
 @section('section-principal')
 
     <div class="w-fit">
