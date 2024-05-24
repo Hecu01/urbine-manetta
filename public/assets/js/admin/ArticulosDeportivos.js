@@ -1,4 +1,34 @@
 $(document).ready(function(){
+    
+    // Sportivo - Artículos Deportivos (edit)
+
+    // dar un mensaje de que es normal el sólo lectura
+     $("#stock-calzados").on("click", function() {
+        // evalua si está en solo lectura
+        if($(this).prop('readonly')){
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["error"]("No se puede editar, es la sumatoria de todos los calzados.", "Información");
+        }
+    });
+
+
     /* 
     |
     |--------------------------------------------------------------------------------
@@ -6,52 +36,8 @@ $(document).ready(function(){
     |--------------------------------------------------------------------------------
     |
     */ 
-    /* Editar articulos deportivos */
-    $('#seleccion-tipo-producto').change(function () {
-        var opcionSeleccionada = $(this).val();
-        if (opcionSeleccionada === 'calzado') {
-            // valor true
-        
-            // muestra el btn agregar calzados
-            $('#addCalzados').show();
-
-            // activa sólo lectura el stock principal 
-            $("#stock_input").prop('readonly', true).val('');
-            $("#stock_input").addClass('estilo-readonly');
-
-            // dar un mensaje de que es normal el sólo lectura
-            $("#stock_input").on("click", function() {
-                // evalua si está en solo lectura
-                if($(this).prop('readonly')){
-    
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-center",
-                        "preventDuplicates": true,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    toastr["info"]("El campo STOCK es la sumatoria de todos los calzados, no se puede editar", "Información");
-                }
-            });
 
 
-        } else {
-            $('#addCalzados').hide();
-            $("#stock_input").prop('readonly', false).val('');
-            $("#stock_input").removeClass('estilo-readonly');
-        }
-    });
     /* Checkbox calzados y stock en modal calzados */
     var checkboxes = $('input[type="checkbox"][name^="talles"]');
 
@@ -100,8 +86,13 @@ $(document).ready(function(){
                 suma += parseFloat(this.value);
             }
         });
+
+        // Formulario normal
         $("#stock_input").val(suma);
-        $("#stock_input_ropa").val(suma);
+        // Formulario edit
+        $("#stock-calzados").val(suma);
+        
+        // $("#stock_input_ropa").val(suma);
     });
 
 
@@ -257,7 +248,6 @@ $(document).ready(function(){
     });
 
 
-
     // Calzados niños y adultos
     $('#publico-dirigido').change(function () {
         var opcion_elegida = $(this).val();
@@ -286,7 +276,7 @@ $(document).ready(function(){
     });
     // Formulario 
     // Selecciona el tipo de producto
-    $('#SelectTypeProduct').change(function () {
+    $('.SelectTypeProduct').change(function () {
         var selectedOption = $(this).val();
         if (selectedOption === 'calzado') {
             // valor true
@@ -295,12 +285,13 @@ $(document).ready(function(){
             $('#agregar-calzados').show();
 
             // activa sólo lectura el stock principal 
-            $("#stock_input").prop('readonly', true).val('');
-            $("#stock_input").addClass('estilo-readonly');
+            $(".stock_input").prop('readonly', true).val('');
+            $(".stock_input").addClass('estilo-readonly');
 
             // dar un mensaje de que es normal el sólo lectura
-            $("#stock_input").on("click", function() {
+            $(".stock_input").on("click", function() {
                 // evalua si está en solo lectura
+                alert('Mensaje');
                 if($(this).prop('readonly')){
     
                     toastr.options = {
@@ -327,8 +318,8 @@ $(document).ready(function(){
 
         } else {
             $('#agregar-calzados').hide();
-            $("#stock_input").prop('readonly', false).val('');
-            $("#stock_input").removeClass('estilo-readonly');
+            $(".stock_input").prop('readonly', false).val('');
+            $(".stock_input").removeClass('estilo-readonly');
             $(".input-suma").val('');
         }
 

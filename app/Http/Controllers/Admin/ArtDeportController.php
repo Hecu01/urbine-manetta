@@ -226,6 +226,7 @@ class ArtDeportController extends Controller
                     // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
                     if (isset($calzadoIds[$indice])) {
                         $articulo->calzados()->syncWithoutDetaching([$calzadoId => $datosCalzado]);
+                        
                     }
                 }
             }
@@ -236,55 +237,7 @@ class ArtDeportController extends Controller
             
         }
 
-        // Etiquetas
-        // Recuperar los IDs de deportes seleccionados
-        $deporteIds = $request->input('deporte_ids', []);
-        $deportes = $request->input('deportes', []);
-
-        // // Crear un array para sincronizar la relación
-        // $syncData = [];
-        // foreach ($deporteIds as $deporteId) {
-        //     $selected = in_array($deporteId, $deportesSeleccionados);
-        //     $syncData[$deporteId] = ['deporte_id' => $selected];
-        // }
-
-        // // Sincronizar la relación muchos a muchos con los datos actualizados
-        // $articulo->deportes()->sync($syncData);
-
-
-
-        foreach ($articulo->deportes as $deporte) {
-            // Verifica si el calzado existe en la solicitud y si su checkbox está marcado
-            $indice = array_search($deporte->id, $deporteIds);
-            $checkbox_checked = $indice !== false && isset($deportes[$indice]);
-
-            // Si el calzado existe pero su checkbox está desmarcado, elimínalo de la tabla pivot
-            if (!$checkbox_checked) {
-                $articulo->deportes()->detach($deporte->id);
-            }
-        }
-
-        foreach ($deportes as $indice => $deporte) {
-            // $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0;
-            // $precio = isset($precios[$indice]) ? $precios[$indice] : 0;
-
-            // Busca el ID del calzado
-            $deporteId = Deporte::where('deporte', $deporte)->value('id');
-                        
-            // Crea un arreglo con los datos del calzado
-            // $datosDeporte = ['stocks' => $stock, 'precio' => $precio];
-
-            // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
-            if (!$deporteId) {
-                $nuevoDeporte = Calzado::create(['deporte' => $deporte]);
-                $articulo->deportes()->syncWithoutDetaching($nuevoDeporte->id);
-            } else {
-                // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
-                if (isset($deporteIds[$indice])) {
-                    $articulo->deportes()->syncWithoutDetaching($deporteId);
-                }
-            }
-        }
+      
       
 
 
@@ -298,7 +251,11 @@ class ArtDeportController extends Controller
             'descripcion' => $request->descripcion,
             'stock' => $request->stock,
             'color' => $request->color,
+            'precio' => $request->precio,
         ]);
+        
+        // Mensaje de actualización exitosa
+        Session::flash('mensaje', true);
         
         // Una vez finalizado, el redireccionamiento
         return redirect()->back()->with('success', 'Calzados actualizados correctamente.');

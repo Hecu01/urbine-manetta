@@ -53,7 +53,7 @@
                 <div class="col-md-5">
                     <label for="inputState" class="form-label " >Tipo de producto</label>
                     <div class="input-group d-flex" >
-                        <select name="tipoProducto" id="SelectTypeProduct" class="form-select" required >
+                        <select name="tipoProducto" class="form-select SelectTypeProduct" required >
                             <option value="" selected hidden></option>
                             <option value="calzado">Calzado</option>
                             <option value="accesorio">Accesorio</option>
@@ -71,7 +71,7 @@
                 <div class="col-md-10">
                     <label for="deporte" class="form-label">Etiquetas de deportes</label>
                     <select name="select_deportes" id="deporte" class="form-select">
-                        <option value="" selected hidden> Agrega etiqueta/s</option>
+                        <option value="" selected hidden> Agregá los deportes relacionados</option>
                         @foreach ($deportes as $deporte)
                             <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
                         @endforeach
@@ -127,8 +127,8 @@
 
 
                     <div class="col-md-5">
-                        <label for="stock_input" class="form-label">Stock</label>
-                        <input type="text" name="stock" placeholder="cantidad"  class="form-control total" id="stock_input" required>
+                        <label for="stock_input_lb" class="form-label">Stock</label>
+                        <input type="text" name="stock" placeholder="cantidad"  class="form-control total stock_input" id="stock_input_lb" required>
                         
 
                     </div>

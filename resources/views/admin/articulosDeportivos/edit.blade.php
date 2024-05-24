@@ -1,5 +1,11 @@
 @extends('admin.layouts.plantilla_admin')
 @section('section-principal')
+    {{-- Mensaje de actualización --}}
+    @if (session('mensaje'))
+        @include('admin.partials.MsjDelSistema.ArtActualizado') 
+    @endif 
+
+    {{-- Aside izquierdo --}}
     <div class="w-fit">
         @include('admin.layouts.aside-left')
 
@@ -15,7 +21,7 @@
     </div>
 
 
-    <div class="estilos-crear-articulos-ropa">
+    <div class="estilos-crear-articulos-ropa mt-2">
 
         <div class="estilos-crear-articulos-ropa2">
             <!-- Formulario actualizar -->
@@ -94,7 +100,7 @@
                             <div class="col-md-5">
                                 <label for="inputState" class="form-label " >Tipo de producto</label>
                                 <div class="input-group d-flex" >
-                                    <select name="tipoProducto" id="seleccion-tipo-producto" class="form-select">
+                                    <select name="tipoProducto" id="" class="form-select SelectTypeProduct">
 
                                         @if ($articulo->tipo_producto == 'calzado')
                                             <option value="{{ $articulo->tipo_producto }}" selected>Calzado (Original)
@@ -177,11 +183,12 @@
 
 
                                 <div class="col-md-5">
-                                    <label for="stock_input" class="form-label">Stock</label>
                                     @if($articulo->tipo_producto == 'calzado')
-                                        <input type="text" readonly  name="stock" placeholder="cantidad"  class="form-control estilo-readonly total" id="stock_input" required value={{$articulo->stock}}>
+                                        <label for="stock-calzados" class="form-label">Stock</label>
+                                        <input type="text" readonly  name="stock" placeholder="cantidad" class="form-control estilo-readonly total stock_input " id="stock-calzados"  required value={{$articulo->stock}} >
                                     @else
-                                        <input type="text"  name="stock" placeholder="cantidad"  class="form-control  total" id="stock_input" required value={{$articulo->stock}} >
+                                        <label for="stock-accesorios" class="form-label">Stock</label>
+                                        <input type="text"  name="stock" placeholder="cantidad"  class="form-control total " id="stock-accesorios" required value={{$articulo->stock}} >
                                     @endif
                                     
 
@@ -216,12 +223,10 @@
                         <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
                         <div class="input-group">
                             <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);" id="signo-peso" >$</span>
-                            <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="precioFinal"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required value={{$articulo->precio}}>
+                            <input type="text" name="precio" onwheel="preventScroll(event)"  class="form-control" id="precioFinal"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required value={{$articulo->precio}}>
                         </div>
                     </div>
                 </div>
-
-
 
                 <style>
                     input:disabled {
