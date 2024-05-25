@@ -127,9 +127,8 @@
 
 
                     <div class="col-md-5">
-                        <label for="stock_input_lb" class="form-label">Stock</label>
-                        <input type="text" name="stock" placeholder="cantidad"  class="form-control total stock_input" id="stock_input_lb" required>
-                        
+                        <label for="stock_input" class="form-label">Stock</label>
+                        <input type="text" name="stock" placeholder="cantidad"  class="form-control total stock_input" id="stock_input" required>
 
                     </div>
 

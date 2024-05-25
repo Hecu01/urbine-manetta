@@ -27,7 +27,7 @@
                                     {{-- deporte existente --}}
                                     <input type="hidden" name="deporte_ids[]" value="{{ $deporteAsociado->id }}">
                                     <input type="checkbox" checked name="deportes[]" id="deporte-{{ $deporteAsociado->id }}" value="{{ $deporteAsociado->id }}" class="form-check-input">
-                                    <label for="deporte-{{ $deporteAsociado->id }}" class="mx-1">N° {{ $deporteAsociado->deporte }}</label>
+                                    <label for="deporte-{{ $deporteAsociado->id }}" class="mx-1">{{ $deporteAsociado->deporte }}</label>
                                 @else
                                     {{-- deporte no existente --}}
                                     <input type="hidden" name="deporte_ids[]" value="{{ $deporte->id }}">

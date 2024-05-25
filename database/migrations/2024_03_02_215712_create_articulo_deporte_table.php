@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('articulo_id');
             $table->unsignedBigInteger('deporte_id');
-            $table->integer('cantidad');
             $table->decimal('descuento_porcentaje', 8, 2)->default(0); // Columna para el descuento
             $table->timestamps();
     

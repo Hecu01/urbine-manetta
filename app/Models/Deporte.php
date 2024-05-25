@@ -14,6 +14,6 @@ class Deporte extends Model
     // Define la relación con Articulo
     public function articulos()
     {
-        return $this->belongsToMany(Articulo::class)->withPivot('cantidad');
+        return $this->belongsToMany(Articulo::class);
     }
 }

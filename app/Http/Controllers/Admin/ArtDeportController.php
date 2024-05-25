@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
-class ArtDeportController extends Controller
-{
+class ArtDeportController extends Controller{
     /* Página inicio *
      * Display a listing of the resource.
      */
@@ -82,8 +81,8 @@ class ArtDeportController extends Controller
     /* Crear artículo deportivo *
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        // Path para guardar la imagen en storage
         if($request->hasFile('foto')){
             $file = $request->file('foto');
             $carpetaDestino = storage_path('productos');
@@ -91,6 +90,7 @@ class ArtDeportController extends Controller
             $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
         }
 
+        // Crear artículo nuevo
         $articuloNuevo = Articulo::create([
             'nombre' =>  $request->nombre_producto,
             'genero' => $request->genero,
@@ -105,8 +105,8 @@ class ArtDeportController extends Controller
             'foto' => $filename
         ]);
 
-
-        $idsDeportes = $request->input('etiquetas'); // Obtener el array de valores desde el formulario
+        // Obtener el array de valores desde el formulario
+        $idsDeportes = $request->input('etiquetas'); 
 
         // Convertir el array en una cadena de texto separada por comas
         $idsDeportesString = implode(',', $idsDeportes);
@@ -125,7 +125,7 @@ class ArtDeportController extends Controller
             $deporte = Deporte::find($idDeporte);
             if ($deporte) {
                 // Realiza alguna operación con $deporte
-                $articuloNuevo->deportes()->attach($deporte->id, ['cantidad' => $cantidad]);
+                $articuloNuevo->deportes()->attach($deporte->id);
 
             }
         }
@@ -142,6 +142,7 @@ class ArtDeportController extends Controller
             $stocks = $request->input('stocks');    
             $calzadoIds = $request->input('calzado_ids'); // Acceder al array
             $precios = $request->input('precios');
+
             // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
             foreach ($calzados as $indice => $calzado) {
     
@@ -191,12 +192,16 @@ class ArtDeportController extends Controller
     {
         $articulo = Articulo::findOrFail($id);
         $tipoProducto = $request->input('tipoProducto');
+        
+        // Tipo de producto "Calzado" toma en en cuenta el sig. código.
         if($tipoProducto == "calzado"){
+
             // Obtén los datos del array de tallas y el array de stock
             $calzados = $request->input('calzados');       
             $stocks = $request->input('stocks');          
             $calzadoIds = $request->input('calzado_ids'); 
             $precios = $request->input('precios');
+            
             foreach ($articulo->calzados as $calzado) {
                 // Verifica si el calzado existe en la solicitud y si su checkbox está marcado
                 $indice = array_search($calzado->id, $calzadoIds);
@@ -231,16 +236,51 @@ class ArtDeportController extends Controller
                 }
             }
 
-
-
-
             
         }
 
-      
-      
+        // Si falla que muestre un error 404
+        // try{
+            // Obtén los datos del array de tallas y el array de stock
+            $deportes = $request->input('deportes');     
+            $deporteIds = $request->input('deporte_ids'); 
+            
+            foreach ($articulo->deportes as $deporte) {
+                // Verifica si el calzado existe en la solicitud y si su checkbox está marcado
+                $indice = array_search($deporte->id, $deporteIds);
+                $checkbox_checked = $indice !== false && isset($deportes[$indice]);
 
+                // Si el calzado existe pero su checkbox está desmarcado, elimínalo de la tabla pivot
+                if (!$checkbox_checked) {
+                    $articulo->deportes()->detach($deporte->id);
+                }
+            }
 
+            foreach ($deportes as $indice => $deporte) {
+
+                // Busca el ID del calzado
+                $deporteId = Deporte::where('deporte', $deporte)->value('id');
+                            
+
+                // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
+                if (!$deporteId) {
+                    $nuevoDeporte = Deporte::create(['deporte' => $deporte]);
+                    $articulo->deportes()->syncWithoutDetaching($nuevoDeporte->id);
+                } else {
+                    // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
+                    if (isset($deporteIds[$indice])) {
+                        $articulo->deportes()->syncWithoutDetaching($calzadoId);
+                        
+                    }
+                }
+            }
+        // } catch (\Exception $e) {
+        //     // Mostrar una página de error 404
+        //     return abort(404, 'Algo salió mal.');
+
+        // }
+        
+        
         // Actualización datos de tabla articulos
         $articulo->update([
             'nombre' => $request->nombre_producto,
