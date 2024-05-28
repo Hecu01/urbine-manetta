@@ -11,6 +11,25 @@
   display: flex;
   margin-bottom: 5px;
 }
+#navigator-usuario #top-navigator .usuario-logueado #contenedor-funciones-usuario .username {
+  color: #fff;
+  text-decoration: none;
+}
+#navigator-usuario #top-navigator .usuario-logueado #contenedor-funciones-usuario div a {
+  display: flex;
+  align-items: center;
+}
+#navigator-usuario #top-navigator .usuario-logueado #contenedor-funciones-usuario #funciones {
+  text-align: end;
+  margin-left: -37px;
+  background-color: #f43f5e;
+}
+#navigator-usuario #top-navigator .usuario-logueado #contenedor-funciones-usuario #funciones li a {
+  color: #ffffff;
+}
+#navigator-usuario #top-navigator .usuario-logueado #contenedor-funciones-usuario #funciones li :hover {
+  background: rgb(11, 122, 173);
+}
 #navigator-usuario #top-navigator .usuario-logueado .invitado {
   margin-right: -55px;
 }

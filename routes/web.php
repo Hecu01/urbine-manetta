@@ -16,27 +16,37 @@ use App\Http\Controllers\BusquedaController;
 | Curso: 3° Análisis de Sistemas
 |
 */
-// página de inicio
-Route::get('/', [TiendaController::class, 'home'])->name('home');
-Route::get('/home', [TiendaController::class, 'home'])->name('pagina_inicio');
-Route::get('/pagos', [TiendaController::class, 'pago'])->name('pago');
+// Index
+Route::controller(TiendaController::class)->group(function(){
+    Route::get('/', 'home')->name('home');
+    Route::get('/home', 'home')->name('pagina_inicio');
+    Route::get('/pagos', 'pago')->name('pago');
+});
 
 // Búsquedas
-Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
-Route::get('/detalles/{id}',[BusquedaController::class, 'verDetalles'])->name('detalles');
+Route::controller(BusquedaController::class)->group(function(){
+    Route::get('/buscar', 'buscar')->name('buscar');
+    Route::get('/detalles/{id}', 'verDetalles')->name('detalles');
+});
 
 // Rutas de usuarios
 Route::middleware(['auth'])->group(function(){
-    // Agregar domicilio
-    Route::get('/domicilios', [UsuarioController::class, 'domicilio'])->name('domicilio');
-    Route::post('/domicilios', [UsuarioController::class, 'agregar_domicilio'])->name('agregar_direccion');
     
     // Perfil
-    Route::get('/mi-perfil', [TiendaController::class, 'mi_perfil'])->name('mi_perfil');
+    Route::resource('mi-perfil', UsuarioController::class);
+
+    // Agregar domicilio
+    Route::controller(TiendaController::class)->group(function(){
+        Route::get('/domicilios',  'domicilio')->name('domicilio');
+        Route::post('/domicilios', 'agregar_domicilio')->name('agregar_direccion');
+    });
 
     // Agregar al carrito
-    Route::get('/carrito-de-compras', [CarritoController::class, 'mi_carrito'])->name('carrito.index');
-    Route::post('/carrito/añadir', [CarritoController::class, 'añadirAlCarrito'])->name('carrito.añadir');
+    Route::controller(CarritoController::class)->group(function(){
+        Route::get('/carrito-de-compras','mi_carrito')->name('carrito.index');
+        Route::post('/carrito/añadir', 'añadirAlCarrito')->name('carrito.añadir');
+    });
+
 });
 
 // Rutas que acceden los admins

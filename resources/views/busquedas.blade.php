@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('section-principal')
-    <div class="section" style=" background:none">
+    <div class="section" style=" background:none; height:400px">
     
         <div class=" py-2 text-4xl " style="background: #ffffff96; width:min:content; text-align:center">
             <h1>Búsqueda: <strong>{{ $query }}</strong></h1>
@@ -34,7 +34,7 @@
                 @endguest
                   <div class="flex font-sans ">
                       <div class="flex w-48 relative content-center">
-                        <img src="{{ url('producto/' . $resultado->foto) }}" alt="" class="absolute inset-0   object-cover w-full  m-auto" loading="lazy" />
+                        <img src="{{ url('producto/' . $resultado->foto) }}" alt="{{ $resultado->nombre }}" draggable="false" class="absolute inset-0   object-cover w-full  m-auto" loading="lazy" />
                       </div>
                       <div class="flex-auto p-6">
                         <div class="flex flex-wrap">
@@ -78,7 +78,9 @@
                           @if($resultado->tipo_producto == "calzado" && count($resultado->calzados) > 0)
                             <div class="bg-gray-100 my-2 w-min   hover:cursor ">
                               <div class="inline-block relative "  style="width:120px">
+                                
                                 <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer" id="talle">
+                                  <option value=""selected hidden>Elija talle</option>
                                     @foreach($resultado->calzados as $calzado)
                                       @if($calzado->pivot->stocks > 0)
                                         <option value="{{ $calzado->id }}" data-stock="{{ $calzado->pivot->stocks }}">Talle {{ $calzado->calzado }} </option>
@@ -89,9 +91,11 @@
                               </div>
                             </div>
                           @endif
-                          <div class="w-16 my-2 mx-3">
+                          <div class="w-fit my-2 mx-3">
   
                             <select id="unidades" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer">
+                              <option value=""selected hidden>Unidades</option>
+                              
                             </select>
                             
                           </div>
@@ -113,7 +117,7 @@
                               </button>
 
 
-                              <!-- Modal -->
+                              <!-- Modal - registrarse -->
                               <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">

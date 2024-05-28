@@ -15,6 +15,34 @@ $color-casi-negro:  #353535;
         .usuario-logueado{
             display: flex;
             margin-bottom: 5px;
+
+            #contenedor-funciones-usuario{
+                .username{
+                    color: #fff;
+                    text-decoration: none;
+                }
+                div{
+
+                    a{
+                        display:flex;
+                        align-items: center;
+                        
+                    }
+                }
+                #funciones{
+                    text-align:end; 
+                    margin-left: -37px;
+                    background-color: #f43f5e;
+                    li{
+                        a{
+                            color: #ffffff;
+                        }
+                        :hover{
+                            background: rgb(11, 122, 173);
+                        }
+                    }
+                }
+            }
             .invitado{
                 margin-right: -55px;
                 a{
@@ -106,11 +134,7 @@ $color-casi-negro:  #353535;
                 }
             }
         }
-        // .left{
-        //     .direccion{
-        //         margin-left: 20px;
-        //     }
-        // }
+
     }
     // Fondo blanco, ancor azules
     .bottom-nav{

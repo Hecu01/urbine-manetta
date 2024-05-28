@@ -10,17 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class tiendaController extends Controller
 {
-    // usuario
-    public function mi_perfil(){
-        $title = "Sportivo - Perfil";
-        $user = Auth::user();
-        return view('users.mi_perfil', compact('title', 'user'));
-    }
+
     // Página index
     public function home(){
         $title = "Sportivo - Inicio";
-
-
         return view('index', compact( 'title'));
     }
     public function pago(){

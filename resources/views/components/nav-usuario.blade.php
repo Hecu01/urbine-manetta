@@ -43,36 +43,36 @@
 
                 </div>
             @else
+
                 <!-- Usuario Logueado -->
                 <div class="usuario-logueado ">
 
-
-                    <li class="nav-item dropdown  " style="color: #fff; list-style: none; margin-top: -5px;">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
-                            style="color: #fff; height:20px; padding:3px;" role="button" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" v-pre>
-                            <span>
-                                <i class="fa-solid fa-user"></i>
-                            </span>
+                    <!-- Usuario -->
+                    <div class="dropdown" id="contenedor-funciones-usuario">
+                        <a href="#" class="dropdown-toggle username pt-1" data-bs-toggle="dropdown" aria-expanded="false">
                             Usuario: {{ Auth::user()->name }}
                         </a>
+                        <ul class="dropdown-menu w-16 " id="funciones">
+                            <li><a class="dropdown-item" href=" {{ route('mi-perfil.index') }} "><i class="fa-solid fa-user mx-1"></i> Mi perfil</a></li>
+                            <li> 
+                                <a class="dropdown-item" href="#" 
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa-solid fa-power-off mx-1"></i>
+                                    Cerrar sesión
+                                </a>
+    
+                                <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+    
 
-                        <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"
-                            aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Cerrar sesión
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
                     <!-- Notificaciones -->
                     <div class="dropdown">
                         <a href="#" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span style="margin-left: 10px;margin-top: 5px;">
+                            <span style="margin-left: 10px;">
                                 <i class="fa-regular fa-bell"></i>
                             </span>
                         </a>
@@ -93,7 +93,7 @@
                     <!-- Ayuda -->
                     <div class="dropdown">
                         <a href="#" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span style="margin-left: 10px;margin-top: 5px;">
+                            <span style="margin-left: 10px;">
                                 <i class="fa-regular fa-circle-question"></i>
                             </span>
                         </a>
@@ -107,27 +107,7 @@
 
                 </div>
             @endguest
-            <!-- Ayuda -->
-            <div class=" " style="margin-left:10px;">
 
-
-                <div class="dropdown ">
-                    <a href="#" style="color: currentcolor; text-decoration:none" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Ayuda
-                        <i class="fa-regular fa-circle-question"></i>
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li class="hover:bg-cyan-500"><a class="dropdown-item" href="#">¿Cómo comprar?</a></li>
-                        <li><a class="dropdown-item" href="#">¿Cómo canjear puntos?</a></li>
-                        <li><a class="dropdown-item" href="#">Manual de usuario</a></li>
-                    </ul>
-                </div>
-
-
-
-            </div>
 
         </div>
         {{-- <div class="center pl-5">
@@ -214,7 +194,7 @@
     </div>
     <div class="bottom-nav d-flex text-cyan-700 " >
 
-        <a class="nav-link text-cyan-700 font-serif text-lg mx-2" style="font-family:sans-serif; text-decoration:underline"  href="#" >
+        <a class="nav-link text-cyan-700 font-serif text-lg mx-2" style="font-family:sans-serif; text-decoration:underline"  href="{{ route('home') }}" >
             Inicio
         </a>
         <div class="nav-item dropdown">
@@ -222,7 +202,7 @@
               Hombre
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Hombre</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -233,7 +213,7 @@
               Mujer
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Mujer</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -244,7 +224,7 @@
               Niños
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Niños</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -255,7 +235,7 @@
               Deporte
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Deporte</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>

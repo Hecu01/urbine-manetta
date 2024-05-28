@@ -240,10 +240,11 @@ class ArtDeportController extends Controller{
         }
 
         // Si falla que muestre un error 404
-        // try{
+        try{
             // Obtén los datos del array de tallas y el array de stock
             $deportes = $request->input('deportes');     
             $deporteIds = $request->input('deporte_ids'); 
+            $verificacion = false;
             
             foreach ($articulo->deportes as $deporte) {
                 // Verifica si el calzado existe en la solicitud y si su checkbox está marcado
@@ -253,32 +254,37 @@ class ArtDeportController extends Controller{
                 // Si el calzado existe pero su checkbox está desmarcado, elimínalo de la tabla pivot
                 if (!$checkbox_checked) {
                     $articulo->deportes()->detach($deporte->id);
+                    $verificacion = true;
                 }
             }
+            
+            if (!is_null($deportes)){
 
-            foreach ($deportes as $indice => $deporte) {
-
-                // Busca el ID del calzado
-                $deporteId = Deporte::where('deporte', $deporte)->value('id');
+                foreach ($deportes as $indice => $deporte) {
+    
+                    // Busca el ID del calzado
+                    $deporteId = Deporte::where('deporte', $deporte)->value('id');
+                                
+    
+                    // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
+                    if (!$deporteId) {
+                        $nuevoDeporte = Deporte::create(['deporte' => $deporte]);
+                        $articulo->deportes()->syncWithoutDetaching($nuevoDeporte->id);
+                    } else {
+                        // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
+                        if (isset($deporteIds[$indice])) {
+                            $articulo->deportes()->syncWithoutDetaching($deporteId);
                             
-
-                // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
-                if (!$deporteId) {
-                    $nuevoDeporte = Deporte::create(['deporte' => $deporte]);
-                    $articulo->deportes()->syncWithoutDetaching($nuevoDeporte->id);
-                } else {
-                    // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
-                    if (isset($deporteIds[$indice])) {
-                        $articulo->deportes()->syncWithoutDetaching($calzadoId);
-                        
+                        }
                     }
                 }
             }
-        // } catch (\Exception $e) {
-        //     // Mostrar una página de error 404
-        //     return abort(404, 'Algo salió mal.');
 
-        // }
+        } catch (\Exception $e) {
+            // Mostrar una página de error 404
+            return abort(404, 'Algo salió mal.');
+
+        }
         
         
         // Actualización datos de tabla articulos
