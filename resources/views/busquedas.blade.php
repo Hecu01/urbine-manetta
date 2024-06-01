@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('section-principal')
-    <div class="section" style=" background:none; height:fit-content">
+    <div class="section" style=" background:none; min-height:600px">
     
         <div class=" py-2 text-4xl " style="background: #ffffff96; width:min:content; text-align:center">
             <h1>Búsqueda: <strong>{{ $query }}</strong></h1>

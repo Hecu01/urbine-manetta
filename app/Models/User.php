@@ -9,6 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\NotificacionBaseDeDatos;
 
 class User extends Authenticatable
 {
@@ -55,5 +56,20 @@ class User extends Authenticatable
     public function domicilio()
     {
         return $this->hasOne(Domicilio::class);
+    }
+
+    
+    public function enviarNotificacion()
+    {
+        $user = User::find(1); // Encuentra al usuario al que deseas enviar la notificación
+
+        $details = [
+            'message' => 'Tienes una nueva notificación!',
+            'url' => url('/notificaciones')
+        ];
+
+        $user->notify(new NotificacionBaseDeDatos($details));
+
+        return response()->json(['message' => 'Notificación enviada!']);
     }
 }
