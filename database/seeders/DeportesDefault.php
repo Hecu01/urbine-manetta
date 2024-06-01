@@ -15,9 +15,13 @@ class DeportesDefault extends Seeder
     {
         $deportes = [
             ['deporte' => 'Polo', 'categoria_deporte' => 'Deportes de campo'],
+            ['deporte' => 'Fútbol', 'categoria_deporte' => 'Deportes de campo'],
             ['deporte' => 'Fútbol 11', 'categoria_deporte' => 'Deportes de campo'],
+            ['deporte' => 'Baby futbol', 'categoria_deporte' => 'Deportes de campo'],
             ['deporte' => 'Futbol sala (futsal)', 'categoria_deporte' => 'Deportes de gimnasio'],
-            ['deporte' => 'Rugby 11 y 7', 'categoria_deporte' => 'Deportes de campo'],
+            ['deporte' => 'Rugby', 'categoria_deporte' => 'Deportes de campo'],
+            ['deporte' => 'Rugby 11', 'categoria_deporte' => 'Deportes de campo'],
+            ['deporte' => 'Rugby 7', 'categoria_deporte' => 'Deportes de campo'],
             ['deporte' => 'Voleyball', 'categoria_deporte' => 'Deportes cerrados'],
             ['deporte' => 'Voleyball playa', 'categoria_deporte' => 'Deportes cerrados'],
             ['deporte' => 'Handball', 'categoria_deporte' => 'Deportes de campo'],

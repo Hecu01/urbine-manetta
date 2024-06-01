@@ -11,11 +11,11 @@ El proyecto consiste en una tienda online ficticia llamada Sportivo. El objetivo
 - **Framework**: Laravel 10
 - **Lenguaje de Programación**: PHP 8.2+
 - **Base de Datos**: MySQL
-- **Frontend**: Blade Templates, HTML, CSS, JavaScript, TailwindCSS, Sass
+- **Frontend**: Blade Templates, HTML, CSS, JavaScript, Jquery, Bootstrap 5, TailwindCSS, SASS
 - **Control de Versiones**: Git
 - **Gestión de Dependencias**: Composer, NPM
 - **Servidor Web**: Apache / Nginx
-- **Herramientas Adicionales**: Node.js
+- **Herramientas Adicionales**: Node.js, vite
 
 ## Requisitos
 

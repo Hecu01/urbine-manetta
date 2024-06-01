@@ -65,15 +65,8 @@
 
             </div>
         @endguest
-        <div class="contenedor d-flex">
-            <div class="mensaje-bienvenida font-">
-                <h1>
-                    Sportivo<br>
-                    Tu tienda deportiva
-                </h1>
-                <h2>Compras online y en el local</h2>
-                {{-- <img src="{{ url('usuario/' . Auth::user()->foto) }}" alt=""> --}}
-            </div>
+        <div class=" " style="height: 550px">
+
 
         </div>
         

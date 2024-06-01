@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('section-principal')
-    <div class="section" style=" background:none; height:400px">
+    <div class="section" style=" background:none; height:fit-content">
     
         <div class=" py-2 text-4xl " style="background: #ffffff96; width:min:content; text-align:center">
             <h1>Búsqueda: <strong>{{ $query }}</strong></h1>
@@ -8,6 +8,12 @@
 
 
 
+        @if($contar < 1)
+          
+          <hr>
+          <h3 class="text-center">Porque buscaste {{ $query }}</h3>
+          <hr>
+        @endif
         <div class="contenedor-resultados gap-4 justify-center flex flex-wrap" >
             @foreach ($resultados as $resultado)     
               <div class="w-min bg-white shadow-lg  h-fit position-relative">
@@ -174,9 +180,7 @@
 
             @endforeach 
             @if($contar_resultados < 1)
-              <style>
 
-              </style>
               <p style="width:fit-content; background: #ffffff8a; padding:10px">No se ha encontrado nada </p>
             @endif
         </div>
