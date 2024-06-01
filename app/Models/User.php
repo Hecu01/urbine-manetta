@@ -57,4 +57,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Domicilio::class);
     }
+
+    
+    public function enviarNotificacion()
+    {
+        $user = User::find(1); // Encuentra al usuario al que deseas enviar la notificación
+
+        $details = [
+            'message' => 'Tienes una nueva notificación!',
+            'url' => url('/notificaciones')
+        ];
+
+        $user->notify(new NotificacionBaseDeDatos($details));
+
+        return response()->json(['message' => 'Notificación enviada!']);
+    }
 }

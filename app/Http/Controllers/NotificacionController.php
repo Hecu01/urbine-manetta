@@ -13,7 +13,15 @@ class NotificacionController extends Controller
     {
         //
     }
+    public function verNotificaciones()
+    {
+        $user = User::find(1); // Encuentra al usuario
 
+        $notificacionesNoLeidas = $user->unreadNotifications;
+        $notificacionesLeidas = $user->readNotifications;
+
+        return view('notificaciones', compact('notificacionesNoLeidas', 'notificacionesLeidas'));
+    }
     /**
      * Show the form for creating a new resource.
      */

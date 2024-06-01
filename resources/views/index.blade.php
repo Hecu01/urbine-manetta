@@ -19,9 +19,9 @@
 
         </div>
         @guest        
-            <div class="container-fluid bg-blue-600 py-5 px-2 my-2 flex justify-between ">
+            <div class="container-fluid banner bg-blue-600 py-5 px-2 my-2 flex justify-between items-center">
 
-                <div class="div-left" >
+                <div class="div-left ml-3" >
                     <div class="text-white  ">
                         <h5 class="uppercase mb-2">
                             <strong>
@@ -39,8 +39,13 @@
                     </div>
     
                 </div>
+                <div class="right-banner">
+                    <h1 class="title-right-banner">SPORTIVO E-COMMERCE</h1>
+                </div>
 
             </div>
+
+            {{-- BANNER LOGUEADO --}}
         @else
             <div class="container-fluid bg-blue-600 py-5 px-2 my-2 flex justify-between ">
 
@@ -63,17 +68,11 @@
 
                 </div>
 
+                
+
             </div>
         @endguest
-        <div class="contenedor d-flex">
-            <div class="mensaje-bienvenida font-">
-                <h1>
-                    Sportivo<br>
-                    Tu tienda deportiva
-                </h1>
-                <h2>Compras online y en el local</h2>
-                {{-- <img src="{{ url('usuario/' . Auth::user()->foto) }}" alt=""> --}}
-            </div>
+        <div class="" style="height: 550px">
 
         </div>
         

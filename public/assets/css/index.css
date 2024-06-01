@@ -64,6 +64,11 @@ input[type=number] {
     transform: rotate(360deg);
   }
 }
+.section-bienvenida .banner .right-banner .title-right-banner {
+  font-weight: bolder;
+  font-size: 4.5em;
+  color: #cbd5e1;
+}
 .section-bienvenida .brand {
   background: rgb(0, 128, 219);
   height: 180px;
