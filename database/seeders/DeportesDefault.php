@@ -46,13 +46,15 @@ class DeportesDefault extends Seeder
             ['deporte' => 'Patinaje Artístico', 'categoria_deporte' => 'Deportes cerrados'],
             ['deporte' => 'Patinaje sobre hielo', 'categoria_deporte' => 'Deportes cerrados'],
             ['deporte' => 'Atletismo', 'categoria_deporte' => 'Deportes cerrados'],
+            ['deporte' => 'Correr', 'categoria_deporte' => 'Otros'],
             ['deporte' => 'Ciclismo', 'categoria_deporte' => 'Deportes de calle'],
             ['deporte' => 'BXM', 'categoria_deporte' => 'Deportes de calle'],
-            ['deporte' => 'Surfing', 'categoria_deporte' => 'Otros'],
+            ['deporte' => 'Surf', 'categoria_deporte' => 'Otros'],
             ['deporte' => 'Esquí y Snowboard', 'categoria_deporte' => 'Otros'],
             
             // Artes marciales
             ['deporte' => 'Boxeo', 'categoria_deporte' => 'Artes marciales'],
+            ['deporte' => 'UFC', 'categoria_deporte' => 'Artes marciales'],
             ['deporte' => 'Hapkido', 'categoria_deporte' => 'Artes marciales'],
             ['deporte' => 'Taekwondo', 'categoria_deporte' => 'Artes marciales'],
             ['deporte' => 'Karate', 'categoria_deporte' => 'Artes marciales'],

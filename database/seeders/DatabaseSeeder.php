@@ -12,10 +12,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(CategoriasDefault::class);
-        $this->call(AdminDefault::class);
-        $this->call(CalzadosDefault::class);
-        $this->call(DeportesDefault::class);
+
+        $this->call([
+            CategoriasDefault::class,
+            AdminDefault::class,
+            CalzadosDefault::class,
+            DeportesDefault::class,
+            // Productos de prueba por defectos
+            ArticulosTableSeeder::class,
+            ArticuloCalzadoTableSeeder::class,
+            ArticuloDeporteTableSeeder::class,
+        ]);
+
+
         // $this->call(TalleSeeder::class);
     }
 }
