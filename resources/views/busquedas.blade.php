@@ -7,8 +7,20 @@
         </div>
 
         <section class="flex">
-          <aside class="col-3 bg-rose-500" style="height: 100vh">
+          <aside class="col-3 bg-slate-500" style="height: 100vh">
             <h1>FILTROS</h1>
+            <div class="flex">
+              <span>Precio:</span> 
+              <div class="mx-2">
+                <label for="desc">Mayor</label>
+                <input type="radio" name="precio" id="desc">
+              </div>
+  
+              <div class="">
+                <label for="asc">Menor</label>
+                <input type="radio" name="precio" id="asc">
+              </div>
+            </div>
           </aside>
           <div class="contenedor-resultados col-9 gap-4 justify-center flex flex-wrap" >
               @foreach ($resultados as $resultado)     
