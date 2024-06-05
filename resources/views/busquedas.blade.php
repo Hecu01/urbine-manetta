@@ -2,51 +2,78 @@
 @section('section-principal')
     <div class="section" style=" background:none; min-height:600px">
     
-        <div class=" py-2 text-4xl " style="background: #ffffff96; width:min:content; text-align:center">
-            <h1>Búsqueda: <strong>{{ $query }}</strong></h1>
-        </div>
+
 
         <section class="flex">
-          <aside class="col-3 bg-slate-500" style="height: 100vh">
-            <h1>FILTROS</h1>
-            <div class="flex">
-              <span>Precio:</span> 
-              <div class="mx-2">
-                <label for="desc">Mayor</label>
-                <input type="radio" name="precio" id="desc">
-              </div>
-  
-              <div class="">
-                <label for="asc">Menor</label>
-                <input type="radio" name="precio" id="asc">
-              </div>
+          <aside class="col-3 " style="height: 100vh; border-right:1px solid rgb(100,100,100,0.2)">
+            <div class="p-1 px-2">
+              <h1>FILTROS</h1>
+      
+              <form action="{{ url('/buscar') }}" method="GET" id="filterForm">
+                <input type="hidden" name="articulo-buscado" value="{{ $query }}">
+    
+                <div class="form-group">
+                    <h5>Ordenar por precio</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="orderDirection" id="orderAsc" value="asc" {{ $orderDirection == 'asc' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="orderAsc">
+                            Menor a Mayor
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="orderDirection" id="orderDesc" value="desc" {{ $orderDirection == 'desc' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="orderDesc">
+                            Mayor a Menor
+                        </label>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <h5>Filtrar por marca</h5>
+                    @foreach ($resultados as $articulo)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="brands[]" id="brand_{{ $articulo->marca }}" value="{{ $articulo->marca }}" {{ in_array($articulo->marca, $selectedBrands) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="brand_{{ $articulo->marca }}">
+                                {{ $articulo->marca }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+    
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+              </form>
             </div>
           </aside>
-          <div class="contenedor-resultados col-9 gap-4 justify-center flex flex-wrap" >
-              @foreach ($resultados as $resultado)     
-                <div class="w-min bg-white shadow-lg  h-fit position-relative">
-                  @if( isset($resultado->descuento) && $resultado->descuento->activo == true)
-                    <span class="bg-red-500 text-white" style="padding: 0px 3px ;font-size:13px;position:absolute; right:24px; top:76px; font-family:'Times New Roman', Times, serif">
-                      -{{ str_replace('.', ',', number_format($resultado->descuento->porcentaje, $resultado->descuento->porcentaje == round($resultado->descuento->porcentaje) ? 0 : 2)) }}% OFF
-  
-  
-                    </span>
-                  @endif
-                  
-                  @guest 
-                  @else
-                    @if (Auth::user()->administrator == true)
-                      <div class="position-absolute right-1 rounded-full flex">
-                        <div class="hover:scale-125">
+          <div class="col-9">
+
+            <div class=" py-2 text-4xl " style="background: #ffffff96; width:min:content; text-align:center">
+              <h1>Búsqueda: <strong>{{ $query }}</strong></h1>
+            </div>
+            <div class="contenedor-resultados  gap-4 justify-center flex flex-wrap" >
+                @foreach ($resultados as $resultado)     
+                  <div class="w-min bg-white shadow-lg  h-fit position-relative">
+                    @if( isset($resultado->descuento) && $resultado->descuento->activo == true)
+                      <span class="bg-red-500 text-white" style="padding: 0px 3px ;font-size:13px;position:absolute; right:24px; top:76px; font-family:'Times New Roman', Times, serif">
+                        -{{ str_replace('.', ',', number_format($resultado->descuento->porcentaje, $resultado->descuento->porcentaje == round($resultado->descuento->porcentaje) ? 0 : 2)) }}% OFF
     
-                          <a href="" class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline" title="Editar producto: ID {{$resultado->id}}">Editar <i class="fa-solid fa-pen"></i></a>
-                        </div>
-                        <div class="hover:scale-125">
-                          <a href="" class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline" title="Eliminar producto: ID {{$resultado->id}}">Eliminar <i class="fa-solid fa-trash"></i></a>
-                        </div>
-                      </div>  
+    
+                      </span>
                     @endif
-                  @endguest
+                    
+                    @guest 
+                    @else
+                      @if (Auth::user()->administrator == true)
+                        <div class="position-absolute right-1 rounded-full flex">
+                          <div class="hover:scale-125">
+      
+                            <a href="" class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline" title="Editar producto: ID {{$resultado->id}}">Editar <i class="fa-solid fa-pen"></i></a>
+                          </div>
+                          <div class="hover:scale-125">
+                            <a href="" class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline" title="Eliminar producto: ID {{$resultado->id}}">Eliminar <i class="fa-solid fa-trash"></i></a>
+                          </div>
+                        </div>  
+                      @endif
+                    @endguest
                     <div class="flex font-sans ">
                         <div class="flex w-48 relative content-center">
                           <img src="{{ url('producto/' . $resultado->foto) }}" alt="{{ $resultado->nombre }}" draggable="false" class="absolute inset-0   object-cover w-full  m-auto" loading="lazy" />
@@ -185,13 +212,14 @@
                           </p>
                         </div>
                     </div>
-                </div>
-  
-              @endforeach 
-              @if($contar_resultados < 1)
-  
-                <p style="width:fit-content; background: #ffffff8a; padding:10px">No se ha encontrado nada </p>
-              @endif
+                  </div>
+    
+                @endforeach 
+                @if($contar_resultados < 1)
+    
+                  <p style="width:fit-content; background: #ffffff8a; padding:10px">No se ha encontrado nada </p>
+                @endif
+            </div>
           </div>
         </section>
 
@@ -202,6 +230,14 @@
     
 
 
-
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          document.querySelectorAll('input[name="orderDirection"]').forEach(function(input) {
+              input.addEventListener('change', function() {
+                  document.getElementById('filterForm').submit(); // Enviar el formulario al cambiar la opción
+              });
+          });
+      });
+    </script>
 
 @endsection
