@@ -1,38 +1,11 @@
 $(document).ready(function(){
     
-    // Sportivo - Artículos Deportivos (edit)
-
-    // dar un mensaje de que es normal el sólo lectura
-     $("#stock-calzados").on("click", function() {
-        // evalua si está en solo lectura
-        if($(this).prop('readonly')){
-
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-bottom-center",
-                "preventDuplicates": true,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-            toastr["error"]("No se puede editar, es la sumatoria de todos los calzados.", "Información");
-        }
-    });
 
 
     /* 
     |
     |--------------------------------------------------------------------------------
-    | Sportivo - Artículos Deportivos
+    | Sportivo - Ropa deportiva
     |--------------------------------------------------------------------------------
     |
     */ 

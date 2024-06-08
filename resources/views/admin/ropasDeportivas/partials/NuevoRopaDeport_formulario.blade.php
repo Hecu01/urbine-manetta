@@ -1,4 +1,4 @@
-<form class="row g-3 p-3" action="{{ route('añadir_ropa')}}" method="POST" id="FormRopDeport" enctype="multipart/form-data">
+<form class="row g-3 p-3" action="{{ route('ropa-deportiva.store')}}" method="POST" id="FormRopDeport" enctype="multipart/form-data">
     @csrf
     <div class="col-md-12 flex ">
 
@@ -133,7 +133,7 @@
     </div>
 
     <!-- calzados disponibles (acá está el problema de array string conversion) (linea 120) -->
-    @include('admin.partials.RopaDeportiva.NuevoRopaDeport_modal')
+    @include('admin.ropasDeportivas.partials.NuevoRopaDeport_modal')
 
     <div class="col-12 d-flex " style="justify-content:space-between">
         <div class="col-md-3">

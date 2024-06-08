@@ -69,7 +69,7 @@
                         
             <!-- Ropa deportiva -->
 
-            <a href="{{ route('nuevo_ropa') }}" class="text-white no-underline  article0 article5">
+            <a href="{{ route('ropa-deportiva.index') }}" class="text-white no-underline  article0 article5">
                 <div class="top">
                     <span>
                         <i class="fa-solid fa-shirt"></i>
