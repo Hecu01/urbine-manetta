@@ -5,8 +5,44 @@
 
 
         <section class="flex">
-          <aside class="col-3 bg-rose-500" style="height: 100vh">
-            <h1>FILTROS</h1>
+          <aside class="col-3 " style="height: 100vh; border-right:1px solid rgb(100,100,100,0.2)">
+            <div class="p-1 px-2">
+              <h1>FILTROS</h1>
+      
+              <form action="{{ url('/buscar') }}" method="GET" id="filterForm">
+                <input type="hidden" name="articulo-buscado" value="{{ $query }}">
+    
+                <div class="form-group">
+                    <h5>Ordenar por precio</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="orderDirection" id="orderAsc" value="asc" {{ $orderDirection == 'asc' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="orderAsc">
+                            Menor a Mayor
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="orderDirection" id="orderDesc" value="desc" {{ $orderDirection == 'desc' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="orderDesc">
+                            Mayor a Menor
+                        </label>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <h5>Filtrar por marca</h5>
+                    @foreach ($resultados as $articulo)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="brands[]" id="brand_{{ $articulo->marca }}" value="{{ $articulo->marca }}" {{ in_array($articulo->marca, $selectedBrands) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="brand_{{ $articulo->marca }}">
+                                {{ $articulo->marca }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+    
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+              </form>
+            </div>
           </aside>
           <div class="contenedor-resultados col-9 gap-4 justify-center flex flex-wrap" >
               @foreach ($resultados as $resultado)     
@@ -383,3 +419,4 @@
       </div>
   </div>
 </div> --}}
+
