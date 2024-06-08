@@ -54,25 +54,19 @@
 
                             <div class="flex justify-center">
 
-                                
-                                {{-- <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="floatingInput" name="email"  required autocomplete="email" autofocus>
-                                    <label for="floatingInput">Correo electrónico</label>
-                                </div> --}}
 
                                 <div class="col-md-9 ">
 
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control   @error('email') is-invalid @enderror" id="email" placeholder="name@example.com" required autocomplete="email" autofocus name="email">
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="name@example.com" required autocomplete="email" autofocus name="email" value="{{ old('email') }}">
                                         <label for="email">Correo electrónico</label>
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                El correo o la contraseña están mal
+                                            </span>
+                                        @enderror
                                     </div>
-    
-    
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>El correo o la contraseña están mal</strong>
-                                        </span>
-                                    @enderror
+                                    
                                 </div>
                             </div>
                         </div>
@@ -82,15 +76,16 @@
                                 <div class="col-md-9 ">
 
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" id="password" placeholder="Password">
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autofocus autocomplete="current-password" id="password" placeholder="Password">
                                         <label for="password">Contraseña</label>
+                                        @error('password')
+                                            <div class="invalid-feedback" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
+                                    
         
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>El correo o la contraseña están mal</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
