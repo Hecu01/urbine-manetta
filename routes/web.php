@@ -31,14 +31,19 @@ Route::controller(BusquedaController::class)->group(function(){
 
 // Rutas de usuarios
 Route::middleware(['auth'])->group(function(){
-    
+
+    Route::controller(UsuarioController::class)->group(function(){
+        Route::get('/mi-primer-registro', 'bienvenida')->name('usuario-registrado');
+        Route::get('/domicilios',  'domicilio')->name('domicilio');
+        Route::post('/domicilios', 'agregar_domicilio')->name('agregar_direccion');
+    });
+
     // Perfil
     Route::resource('mi-perfil', UsuarioController::class);
 
     // Agregar domicilio
     Route::controller(TiendaController::class)->group(function(){
-        Route::get('/domicilios',  'domicilio')->name('domicilio');
-        Route::post('/domicilios', 'agregar_domicilio')->name('agregar_direccion');
+
     });
 
     // Agregar al carrito

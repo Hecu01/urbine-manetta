@@ -16,7 +16,7 @@ class RedirectIfNotAdmin
     public function handle($request, Closure $next)
     {
         if (Auth::check() && !Auth::user()->isAdmin()) {
-            return redirect('/home'); // Reemplaza '/ruta-de-redireccionamiento' con la ruta que desees.
+            return redirect('/mi-primer-registro'); // Reemplaza '/ruta-de-redireccionamiento' con la ruta que desees.
         }
 
         return $next($request);
