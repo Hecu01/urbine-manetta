@@ -15,21 +15,32 @@ class BusquedaController extends Controller
         $selectedBrands = $request->input('brands', []);
 
         $resultados = Articulo::where(function($q) use ($query) {
-                                    $q->where('nombre', 'LIKE', "%$query%")
-                                      ->orWhere('marca', 'LIKE', "%$query%");
-                                })
-                                ->when(!empty($selectedBrands), function ($q) use ($selectedBrands) {
-                                    $q->whereIn('marca', $selectedBrands);
-                                })
-                                ->orderBy('precio', $orderDirection)
-                                ->get();
+                        $q->where('nombre', 'LIKE', "%$query%")
+                        ->orWhere('marca', 'LIKE', "%$query%")
+                        ->orWhereHas('deportes', function($q) use ($query) {
+                            $q->where('deporte', 'LIKE', "%$query%");
+                        });
+                        })
+                        ->when(!empty($selectedBrands), function ($q) use ($selectedBrands) {
+                            $q->whereIn('marca', $selectedBrands);
+                        })
+                        ->with('descuento')
+                        ->get()
+                        ->sortBy(function($articulo) {
+                            $precioBase = $articulo->precio;
+                            $descuento = $articulo->descuento ? $articulo->descuento->plata_descuento : 0;
+                            return $precioBase - $descuento;
+                        });
+                        if ($orderDirection === 'desc') {
+                            $resultados = $resultados->reverse();
+                        }
 
         $contar_resultados = $resultados->count();
         $allBrands = Articulo::select('marca')->distinct()->get();
 
         return view('busquedas', compact('resultados', 'query', 'contar_resultados', 'orderDirection', 'selectedBrands', 'allBrands'));
     }
-    
+
     public function verDetalles($id){
         $elemento = Articulo::find($id);
         return view('detalles', ['elemento' => $elemento]);

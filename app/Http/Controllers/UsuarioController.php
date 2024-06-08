@@ -14,18 +14,17 @@ class UsuarioController extends Controller
 
  
 
-    public function domicilio(){
-        if(Auth::check()){
-            // Obtener el usuario actualmente autenticado
+    public function domicilio()
+    {
+        if (Auth::check()) {
             $user = Auth::user();
 
-            // Verificar si el usuario ya ha proporcionado sus datos de domicilio
-            if ($user->domicilio()) { // Suponiendo que tengas una relación o método para verificar si el usuario tiene una dirección
-                // Redirigir al usuario a una página diferente, como su perfil o algún otro lugar
-                return redirect()->back();
+            // Verificar si el usuario ya tiene datos de domicilio registrados
+            if ($user->domicilio) {
+                return redirect()->route('mi-perfil.index');
             }
-
         }
+
         return view('users.AddAddress');
     }
 

@@ -140,7 +140,7 @@
                     </span>
                     <span class="address">
 
-                        De la nación 356, San nicolás
+                        Gutemberg 7 Bis, San nicolás
                     </span>
 
                 </div>
@@ -387,32 +387,49 @@
             {{-- Logueado --}}
         @else
             <div class="dropdown " id="carrito-de-compras">
-                <a href="#"style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false"
+                <a href="#" class="btn btn-secondary" style="margin-top: -4px;  text-decoration: none" data-bs-toggle="dropdown" aria-expanded="false"
                     data-bs-toggle="modal" data-bs-target="#miModal">
-                    <span style="margin-left: 10px;margin-top: 5px;">
+                    <span style="">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </span>
+                    Carrito
+
+                    @php
+                        $cantCarrito = 0;
+                        foreach ($cartItems as $item){ 
+                            $cantCarrito = $cantCarrito + 1;
+                        }
+                    @endphp
+
+
+                    @if ($cantCarrito != 0)
+                        <span class="badge bg-danger">
+         
+                            {{ $cantCarrito }}
+                        </span>
+                    @endif
                 </a>
 
                 <ul class="dropdown-menu w-96 h-96 ">
                     @if ($contarItems > 0)
                         <h1 class="text-lg text-center ">Carrito de compras</h1>
                         @foreach ($cartItems as $item)
-                            <div class="flex">
-                                <div class="">
-                                    <img src="{{ $item['imagen'] }}" alt="">
-
+                            <div class="flex h-fit ">
+                                <div class="pb-2">
+                                    <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
+                                        height="100px">
                                 </div>
-                                <div>
-                                    <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="70px"
-                                        height="70px">
-                                    <p>ID: {{ $item['id'] }}</p>
-                                    <p>Nombre: {{ $item['name'] }}</p>
-                                    <p>Precio: {{ $item['price'] }}</p>
-                                    <p>Cantidad: {{ $item['quantity'] }}</p>
-                                    <hr>
+                                <div >
+                                    
+                                    <ul>
+                                        <li>{{ $item['name'] }}</li>
+                                        <li>Precio: $  {{number_format($item['price'], 0, ',','.') }} AR</li>
+                                        <li>Cantidad: {{ $item['quantity'] }}</li>
+                                        {{-- <li>talle: {{ $item['quantity'] }}</li> --}}
+                                    </ul>
                                 </div>
                             </div>
+                            <hr>
                         @endforeach
                     @else
                         <h1 class="text-lg text-center ">El carrito está vacío</h1>

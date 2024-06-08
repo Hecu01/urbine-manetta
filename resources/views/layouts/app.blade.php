@@ -34,6 +34,7 @@
         
         <!-- Scrollreveal -->
         <script src="https://unpkg.com/scrollreveal"></script>
+
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -44,6 +45,7 @@
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      
         {{-- Notificaciones Toastr --}}
         <link rel="stylesheet" href="{{ asset('plugins\toastr\toastr.min.css') }}">
         <title>{{ isset($title) ? $title : 'Sitio Web' }}</title>
@@ -66,12 +68,18 @@
         <x-footer/>
 
         <!-- Scripts -->
+        
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Incluir JS de Bootstrap y jQuery -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+
+
         <script src="{{ asset('assets/js/scrollreveal.js')}}"></script>
         <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
         <script src="{{ asset('assets/js/main.js')}}"></script>
         <script src="{{ asset('assets/js/Nav-Usuario.js')}}"></script>
-        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
     </body>
     
 </html>

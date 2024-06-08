@@ -26,7 +26,36 @@ class tiendaController extends Controller
         return view('hombres', compact('title', 'articulo'));
     }
 
+    public function domicilio(){
+        if(Auth::check()){
+            // Obtener el usuario actualmente autenticado
+            $user = Auth::user();
 
+            // Verificar si el usuario ya ha proporcionado sus datos de domicilio
+            if ($user->domicilio()) { // Suponiendo que tengas una relación o método para verificar si el usuario tiene una dirección
+                // Redirigir al usuario a una página diferente, como su perfil o algún otro lugar
+                return redirect()->back();
+            }
+
+        }
+        return view('users.AddAddress');
+    }
+
+    public function agregar_domicilio(Request $request){
+        // Crear o actualizar la dirección del usuario
+        $domicilio = Domicilio::updateOrCreate([
+            'user_id' => auth()->user()->id,
+            'calle' => $request->calle, 
+            'barrio' => $request->barrio, 
+            'departamento' => $request->dpto, 
+            'piso' => $request->piso, 
+            'ciudad' => $request->distrito, 
+            'codigo_postal' => $request->cod_postal 
+        ]);
+        
+        return redirect()->back()->with('mensaje', 'Dirección guardada exitosamente.');
+    }
+    
     // Función para agregar un producto al carrito
     public function addToCart(Request $request)
     {

@@ -31,7 +31,14 @@ $(document).ready(function() {
   |--------------------------------------------------------------------------------
   |
   */ 
-    
+  $('#imageModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Botón que activó el modal
+    var imageUrl = button.data('image'); // Extrae la información de los datos
+
+    var modal = $(this);
+    modal.find('.modal-body #modalImage').attr('src', imageUrl);
+  });  
+
   $('#talle').on('change', function () {
     var selectedTalle = $(this).find('option:selected');
     var maxStock = selectedTalle.data('stock');
