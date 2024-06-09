@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Talle;
 use App\Models\Calzado;
+use App\Models\Deporte;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Descuento;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; 
+use App\Http\Controllers\Controller; 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
@@ -50,8 +51,14 @@ class AdminController extends Controller
     */
     public function suplementos(){
         $user = Auth::user();
+        $deportes = Deporte::orderBy('deporte', 'asc')->get();
         $title = "Sportivo - Suplementos";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.SuplementosDieta', compact('title'));
+        $talles = Talle::all();
+        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
+        $articulos = Articulo::paginate(5);
+        $categorias = Categoria::all(); 
+
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.suplementosDieta.index', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
         
     }
 

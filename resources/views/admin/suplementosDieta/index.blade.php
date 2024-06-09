@@ -6,7 +6,7 @@
     <div class="w-fit">
       @include('admin.layouts.aside-left')
       <div class="flex justify-center mt-3">
-        <a href="{{ route('ir_admin') }}" id="boton-regresar-atras" class="bg-green-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
+        <a href="{{ route('ir_admin') }}" id="boton-regresar-atras" class="bg-blue-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
           <i class="fa-solid fa-circle-arrow-left"></i> Atrás
         </a>
   
@@ -14,16 +14,10 @@
    
     </div>
 
-    @if (session('mensaje'))
-        @include('admin.partials.MsjDelSistema.ArtAgregConExito') 
-    @endif 
-    @if (session('eliminado'))
-        @include('admin.partials.MsjDelSistema.ProductoEliminado') 
-    @endif 
     <section class="center-actions">
-        <div class=""style=" border:1px solid rgb(0,0,0,0.2)">
+        <div class=""style="max-width:800px; border:1px solid rgb(0,0,0,0.2)">
 
-            <form class="row g-3 p-3" action="{{ route('ropa-deportiva.store')}}" method="POST" id="formulario-ropa-deportiva" enctype="multipart/form-data">
+            <form class="row g-3 p-3" action="{{ route('articulos-deportivos.store')}}" method="POST" id="formulario-ropa-deportiva" enctype="multipart/form-data">
               @csrf
               <div class="col-md-12 flex ">
           
@@ -32,7 +26,7 @@
                       <div class="col-md-12">
           
                           <div class="col-md-12">
-                            <h1 class="text-white text-3xl shadow-1 border-1 bg-blue-500 w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo suplemento deportivo')">
+                              <h1 class="text-white text-3xl shadow-1 border-1 bg-blue-500 w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo suplemento deportivo')">
                                 <div class="flex items-center">
 
                                   Nuevo artículo 
@@ -72,8 +66,8 @@
                                   </select>
           
           
-                                  {{-- Categoria --> ropa deportiva --}}
-                                  <input type="text" name="categoria" id="" value="2" hidden>
+                                  {{-- Categoria --}}
+                                  <input type="text" name="categoria" id="" value="1" hidden>
                               </div>
                           </div>
                       </div>
@@ -125,7 +119,7 @@
                               </select>
                           </div>
                           <div  style="width:50px; margin-top:29px" id="contenedor-plus">
-                              <button class="py-2 px-3 btn btn-primary"  type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
+                              <button class="py-2 px-3 bg-blue-500 hover:bg-blue-600"  type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
                           </div>
                       </div>
                       <div class="col-md-12 flex justify-between mt-2" style="align-content: center">
@@ -165,7 +159,7 @@
                       <div class="col-md-12 flex justify-end my-3 "  style="margin-right: 50px" id="bottom-image">
                         <div style="margin-right: 90px">
 
-                            <label class=" text-white  bg-blue-500 hover:bg-blue-600" for="imageInput" >
+                            <label class=" text-white  bg-blue-500 hover:bg-green-600" for="imageInput" >
                                 <input type="file" name="foto" id="imageInput" multiple accept="image/*">
                                 Cargar fotos
                             </label>
@@ -174,11 +168,11 @@
           
                       
                       <div class="col-md-12 flex justify-end " >
-                          <div class="col-md-9 flex  items-center" style="border-top: 1px solid rgb(16, 18, 163)">
+                          <div class="col-md-9 flex  items-center" style="border-top: 1px solid rgb(43, 16, 163)">
           
                               <div class="col-md-5">
                                   <label for="stock_input" class="form-label">Stock</label>
-                                  <input type="text" name="stock" placeholder="cantidad"  class="form-control estilo-readonly total stock_input" id="stock_input_ropa" required>
+                                  <input type="text" name="stock" placeholder="cantidad"  class="form-control total stock_input" id="stock_input_ropa" required>
           
                               </div>
           
@@ -201,7 +195,7 @@
           
                 <div class="col-12 d-flex " style="justify-content:space-between">
                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-danger">Finalizar</button>
+                        <button type="submit" class="btn btn-danger">Sportivo!</button>
                     </div>
                     <div class="col-md-3 ">
                         <button  id="agregar-calzados"  type="button" class="bg-slate-600 rounded-full py-2 px-5 hover:cursor-pointer hover:scale-105  text-white "  data-bs-toggle="modal" data-bs-target="#modalTalles">Talles</button>
@@ -219,32 +213,7 @@
             </form> 
         </div>
     </section>
-    <div class="aside" style="width: 400px" >
-
-        <!-- Artículos deportivos -->
-        <article class="article0 px-2 bg-blue-500 hover:scale-105" >
-            <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
-              <div class="top">
-                <span>
-                    <i class="fa-solid fa-shirt"></i>
-                </span>
-                <span class="recuento">
-                  350
-                </span>
-              </div>
-              <div class="bottom">
-                <p>Ropas deportivas <br> disponibles</p>
-              </div>
-            </a>
-        </article>
-        <ul style="text-align: center; padding:0; margin:0; margin-top:20px;" id="nav-aside">
-            <li class="mb-4"><a href="#" class="bg-slate-600 px-8 py-2 text-white no-underline rounded-full hover:bg-slate-700">Crear nueva ropa</a></li>
-            <li class="mb-4"><a href="#" class="bg-blue-600 px-8 py-2 text-white no-underline rounded-full hover:bg-blue-700">Tabla de talles</a></li>
-            <li class="mb-4"><a href="#" class="bg-rose-600 px-8 py-2 text-white no-underline rounded-full hover:bg-rose-700">Tabla de artículos</a></li>
-        </ul>
-
-    </div>
-    
+  
   </main>
   
 

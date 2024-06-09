@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             AdminDefault::class,
             CalzadosDefault::class,
             DeportesDefault::class,
+            TalleSeeder::class,
+
             // Productos de prueba por defectos
             ArticulosTableSeeder::class,
             ArticuloCalzadoTableSeeder::class,

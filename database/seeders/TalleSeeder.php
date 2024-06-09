@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Talle;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TalleSeeder extends Seeder
 {
@@ -30,8 +30,10 @@ class TalleSeeder extends Seeder
         for($i = 0; $i < $qTalles; $i++){
             Talle::create([
                 'talle_ropa' => $talles[$i] ,
+                'genero' => 'femenino',
                 'largo_cm' => $largo_mujer[$i],
                 'ancho_cm' => $ancho_mujer[$i],
+                'cintura_para' => 'arriba',
             ]); 
         }
 
@@ -39,24 +41,30 @@ class TalleSeeder extends Seeder
         for($i = 0; $i < $qTalles; $i++){
             Talle::create([
                 'talle_ropa' => $talles[$i] ,
+                'genero' => 'masculino',
                 'largo_cm' => $largo_hombre[$i],
                 'ancho_cm' => $ancho_hombre[$i],
+                'cintura_para' => 'arriba',
             ]); 
         }
         // CREAMOS TALLES MUJERES ABAJO
         for($i = 0; $i < $qTallesPantalones; $i++){
             Talle::create([
                 'talle_ropa' => $tallesPantalones[$i] ,
+                'genero' => 'femenino',
                 'largo_cm' => 0,
                 'ancho_cm' => 0,
+                'cintura_para' => 'abajo',
             ]); 
         }
         // CREAMOS TALLES VARONES ABAJO
         for($i = 0; $i < $qTallesPantalones; $i++){
             Talle::create([
                 'talle_ropa' => $tallesPantalones[$i] ,
+                'genero' => 'masculino',
                 'largo_cm' => 0,
                 'ancho_cm' => 0,
+                'cintura_para' => 'abajo',
             ]); 
         }
     }

@@ -3,7 +3,7 @@ $(document).ready(function(){
     // Sportivo - Artículos Deportivos (edit)
 
     // dar un mensaje de que es normal el sólo lectura
-     $("#stock-calzados").on("click", function() {
+     $("#stock_input_ropa").on("click", function() {
         // evalua si está en solo lectura
         if($(this).prop('readonly')){
 
@@ -24,7 +24,7 @@ $(document).ready(function(){
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             }
-            toastr["error"]("No se puede editar, es la sumatoria de todos los calzados.", "Información");
+            toastr["error"]("No se puede editar, es la sumatoria de todos los talles.", "Información Sportivo");
         }
     });
 
@@ -79,9 +79,9 @@ $(document).ready(function(){
 
 
     // Sumatoria para el stock, en caso de calzados
-    $(".input-suma").on("input", function(){
+    $(".input-suma-ropa").on("input", function(){
         var suma = 0;
-        $(".input-suma").each(function(){
+        $(".input-suma-ropa").each(function(){
             if(!isNaN(this.value) && this.value.length != 0) {
                 suma += parseFloat(this.value);
             }
@@ -89,10 +89,6 @@ $(document).ready(function(){
 
         // Formulario normal
         $("#stock_input_ropa").val(suma);
-        // Formulario edit
-        $("#stock-calzados").val(suma);
-        
-        // $("#stock_input_ropa").val(suma);
     });
 
    

@@ -93,6 +93,7 @@
         <script src="{{ asset('assets/js/admin/Descuentos.js') }}" ></script>
         <script src="{{ asset('assets/js/admin/Ventas.js') }}" ></script>
         <script src="{{ asset('assets/js/admin/ArticulosDeportivos.js') }}" ></script>
+        <script src="{{ asset('assets/js/admin/RopasDeportivas.js') }}" ></script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
