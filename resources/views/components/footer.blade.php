@@ -39,7 +39,7 @@
         <div class="utilidades" >
             <h1 class="text-2xl "> Otras acciones</h1>
             <ul class="" style="width: 300px">
-                <li><a class="text-white" href="">Solicitar descuento especial</a></li>
+                <li><a class="text-white" href=" {{route('descuento-usuario')}} ">Solicitar descuento especial</a></li>
                 <li><a class="text-white"href="">Acceder a un reembolso</a></li>
                 <li><a class="text-white" href="">Manual de usuario </a></li>
                 <li><a class="text-white" href="">Tabla de talles</a></li>

@@ -31,11 +31,18 @@ Route::controller(BusquedaController::class)->group(function(){
 
 // Rutas de usuarios
 Route::middleware(['auth'])->group(function(){
-
-    Route::controller(UsuarioController::class)->group(function(){
-        Route::get('/mi-primer-registro', 'bienvenida')->name('usuario-registrado');
-        Route::get('/domicilios',  'domicilio')->name('domicilio');
-        Route::post('/domicilios', 'agregar_domicilio')->name('agregar_direccion');
+    Route::prefix('usuario')->group(function(){
+        Route::controller(UsuarioController::class)->group(function(){
+            // Descuento especial
+            Route::get('/solicito-mi-descuento', 'descuentoUsuario')->name('descuento-usuario');
+            Route::post('/solicito-mi-descuento', 'storeDescuentoEspecial')->name('store-descuento-usuario');
+    
+            // Route::get('/mi-primer-registro', 'bienvenida')->name('usuario-registrado');
+    
+            // Brindar domicilios
+            Route::get('/domicilios',  'domicilio')->name('domicilio');
+            Route::post('/domicilios', 'agregar_domicilio')->name('agregar_direccion');
+        });
     });
 
     // Perfil
@@ -72,8 +79,22 @@ Route::get('producto/{filename}', function ($filename){
     $response->header("Content-Type", $type);
     return $response;
 });
+
 Route::get('usuario/{filename}', function ($filename1){
     $path = storage_path('usuarios/' . $filename1);
+    if (!File::exists($path)) {
+        abort(404);
+    }
+    $file = File::get($path);
+    $type = File::mimeType($path);
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    return $response;
+});
+
+
+Route::get('certificados/{filename}', function ($filename2){
+    $path = storage_path('certificados/' . $filename2);
     if (!File::exists($path)) {
         abort(404);
     }
