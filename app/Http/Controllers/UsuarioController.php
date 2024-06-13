@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Domicilio;
 use Illuminate\Http\Request;
+use App\Models\DescuentoUsuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
    
@@ -12,7 +13,45 @@ use Illuminate\Support\Facades\Auth;
 class UsuarioController extends Controller
 {
 
+    // Quiero mi descuento especial
+
+    public function descuentoUsuario()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            // Verificar si el usuario ya llenó el formulario
+            if ($user->descuentoUsuario) {
+                return redirect()->route('mi-perfil.index');
+            }
+        }
+
+        return view('users.descuentoEspecial');
+    }
  
+    public function storeDescuentoEspecial(Request $request)
+    {
+        // Path para guardar la imagen en storage
+        if($request->hasFile('foto')){
+            $file = $request->file('foto');
+            $carpetaDestino = storage_path('certificados');
+            $filename3 = $file->getClientOriginalName();
+            $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
+        }
+        // Crear o actualizar la dirección del usuario
+        $descuentoEspecial = DescuentoUsuario::updateOrCreate([
+            'user_id' => auth()->user()->id,
+            'profesion_usuario' => $request->profesion,
+            'descuento_activo' => false, 
+            'porcentaje_descuento' => 0,
+            'motivo_descuento' => $request->motivo,
+            'foto_certificado' => $filename3
+        ]);
+
+        return redirect()->back()->with('mensaje', 'Descuento solicitado!');
+    }
+
+    // Voy a brindar mis datos de domicilio
 
     public function domicilio()
     {
