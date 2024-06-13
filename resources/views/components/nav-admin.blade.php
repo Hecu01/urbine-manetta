@@ -26,18 +26,28 @@
                 <div class="usuario-logueado false hover:scale-105 ">
 
 
-                    <div class="dropdown ">
-                        <a href="#"style="color: #fff; text-decoration:none" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Usuarios
-                            <i class="fa-solid fa-user"></i>
+ 
+                    <!-- Usuario -->
+                    <div class="dropdown" id="contenedor-funciones-usuario">
+                        <a href="#" class="dropdown-toggle username pt-1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Usuario: {{ Auth::user()->name }}
                         </a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('login') }}">Entrar</a></li>
-                            <li><a class="dropdown-item" href="{{ route('register') }}">Registrarse</a></li>
+                        <ul class="dropdown-menu w-16 " id="funciones">
+                            <li><a class="dropdown-item" href=" {{ route('mi-perfil.index') }} "><i class="fa-solid fa-user mx-1"></i> Mi perfil</a></li>
+                            <li> 
+                                <a class="dropdown-item" href="#" 
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa-solid fa-power-off mx-1"></i>
+                                    Cerrar sesión
+                                </a>
+    
+                                <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
                         </ul>
                     </div>
+    
 
 
 
@@ -146,7 +156,7 @@
                     </span>
                     <span class="address">
 
-                        De la nación 356, San nicolás
+                        Gutemberg 7 bis, San nicolás
                     </span>
 
                 </div>

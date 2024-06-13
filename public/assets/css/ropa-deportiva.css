@@ -1,4 +1,14 @@
 @charset "UTF-8";
+.center-index {
+  display: flex;
+  flex-wrap: wrap;
+}
+.center-index article {
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 5px 10px;
+}
+
 .principal-main-ropa-deportiva {
   display: flex;
   justify-content: space-between;

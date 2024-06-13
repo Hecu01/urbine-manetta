@@ -36,19 +36,20 @@
             </a>
             
             <!-- Sumplementos y dieta -->
-            <a href="{{ route('suplementos') }}" class="text-white no-underline article0 article3">
+            <a href="{{ route('ropa-deportiva.index') }}" class="text-white no-underline  article0 article3">
                 <div class="top">
                     <span>
-                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-shirt"></i>
                     </span>
                     <span class="recuento">
-                        0
+                        {{ $ropaDeportivas }}
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Sumplementos y dieta</p>
+                    <p>Ropa deportiva</p>
                 </div>
             </a>
+
             
             
             <!-- Artículos deportivos -->
@@ -68,24 +69,24 @@
             
                         
             <!-- Ropa deportiva -->
-
-            <a href="{{ route('ropa-deportiva.index') }}" class="text-white no-underline  article0 article5">
+            <a href="{{ route('suplementos') }}" class="text-white no-underline article0 article5">
                 <div class="top">
                     <span>
-                        <i class="fa-solid fa-shirt"></i>
+                        <i class="fa-solid fa-heart"></i>
                     </span>
                     <span class="recuento">
-                        {{ $ropaDeportivas }}
+                        0
                     </span>
                 </div>
                 <div class="bottom">
-                    <p>Ropa deportiva</p>
+                    <p>Sumplementos y dieta</p>
                 </div>
             </a>
 
+
             
             <!-- Reposición de mercadería -->
-            <a href="{{ route('mercaderia') }}" class="text-white no-underline article0 article6">
+            <a href="{{ route('mercaderia') }}" class="text-white no-underline article0 bg-yellow-500">
 
                 <div class="top">
                     <span>

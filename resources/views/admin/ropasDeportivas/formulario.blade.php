@@ -6,7 +6,7 @@
     <div class="w-fit">
       @include('admin.layouts.aside-left')
       <div class="flex justify-center mt-3">
-        <a href="{{ route('ir_admin') }}" id="boton-regresar-atras" class="bg-green-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
+        <a href="{{ route('ir_admin') }}" id="boton-regresar-atras" class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
           <i class="fa-solid fa-circle-arrow-left"></i> Atrás
         </a>
   
@@ -14,10 +14,16 @@
    
     </div>
 
+    @if (session('mensaje'))
+        @include('admin.partials.MsjDelSistema.ArtAgregConExito') 
+    @endif 
+    @if (session('eliminado'))
+        @include('admin.partials.MsjDelSistema.ProductoEliminado') 
+    @endif 
     <section class="center-actions">
-        <div class=""style="max-width:800px; border:1px solid rgb(0,0,0,0.2)">
+        <div class=""style=" border:1px solid rgb(0,0,0,0.2)">
 
-            <form class="row g-3 p-3" action="{{ route('articulos-deportivos.store')}}" method="POST" id="formulario-ropa-deportiva" enctype="multipart/form-data">
+            <form class="row g-3 p-3" action="{{ route('ropa-deportiva.store')}}" method="POST" id="formulario-ropa-deportiva" enctype="multipart/form-data">
               @csrf
               <div class="col-md-12 flex ">
           
@@ -26,28 +32,29 @@
                       <div class="col-md-12">
           
                           <div class="col-md-12">
-                              <h1 class="text-white text-3xl shadow-1 border-1 bg-green-500 w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo suplemento deportivo')">
+                            <h1 class="text-white text-3xl shadow-1 border-1 bg-blue-500 w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo suplemento deportivo')">
                                 <div class="flex items-center">
 
-                                  Suplementos y dieta 
-                                  <span class="ml-2">
-                                    <svg height="45px" width="45px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#B29A7E;" d="M256,141.954c-6.189,0-11.207-5.016-11.207-11.207C244.793,58.653,303.446,0,375.541,0 c6.189,0,11.207,5.016,11.207,11.207s-5.018,11.207-11.207,11.207c-59.736,0-108.334,48.598-108.334,108.334 C267.207,136.938,262.189,141.954,256,141.954z"></path> <path style="fill:#E07188;" d="M345.655,108.55c-33.08,0-63.871,9.78-89.655,26.595c-25.785-16.815-56.576-26.595-89.655-26.595 c-90.778,0-164.368,73.591-164.368,164.368C1.976,392.459,61.746,512,166.345,512c33.08,0,63.871-9.78,89.655-26.595 C281.785,502.22,312.576,512,345.655,512c104.598,0,164.368-119.541,164.368-239.081C510.024,182.14,436.435,108.55,345.655,108.55z "></path> <path style="fill:#DC4161;" d="M345.655,108.55c-15.525,0-30.537,2.179-44.774,6.204c68.962,19.531,119.487,82.946,119.487,158.164 c0,102.443-43.9,204.878-122.289,232.085c15.059,4.549,31.031,6.996,47.576,6.996c104.598,0,164.368-119.541,164.368-239.081 C510.024,182.14,436.435,108.55,345.655,108.55z"></path> <path style="fill:#95D5A7;" d="M133.471,12.918c0,67.67,54.859,122.529,122.529,122.529C256,67.775,201.143,12.918,133.471,12.918z"></path> <path style="fill:#80CB93;" d="M210.836,126.815c13.98,5.548,29.208,8.631,45.164,8.631c0-67.67-54.859-122.529-122.529-122.529 c0,2.905,0.137,5.777,0.336,8.631C176.573,38.522,207.495,78.855,210.836,126.815z"></path> </g></svg>                                  </span>
+                                  Nuevo artículo 
+                                  <span>
+                                    <svg fill="#ffffff" style="width: 50px" viewBox="-1 0 19 19" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m15.867 7.593-1.534.967a.544.544 0 0 1-.698-.118l-.762-.957v7.256a.476.476 0 0 1-.475.475h-7.79a.476.476 0 0 1-.475-.475V7.477l-.769.965a.544.544 0 0 1-.697.118l-1.535-.967a.387.387 0 0 1-.083-.607l2.245-2.492a2.814 2.814 0 0 1 2.092-.932h.935a2.374 2.374 0 0 0 4.364 0h.934a2.816 2.816 0 0 1 2.093.933l2.24 2.49a.388.388 0 0 1-.085.608z"></path></g></svg>
+                                  </span>
                                 </div>
                               </h1>
                           </div>
           
                           <div class="col-md-12">
                               
-                              <label for="inputEmail4" class="form-label">Titulo producto</label>
-                              <input type="text" name="nombre_producto"  class="form-control" placeholder="Inserte un titulo bonito al producto" required>
+                              <label for="nombre-ropa" class="form-label">Titulo producto</label>
+                              <input type="text" name="nombre_producto"  class="form-control" placeholder="Inserte un titulo bonito al producto" required id="nombre-ropa">
                           </div>
           
                           <div class="col-md-12 flex mt-1 justify-between my-1">
           
                               <div class="col-md-5 ">
-                              <label for="inputEmail4" class="form-label">Genero del producto</label>
+                              <label for="genero-ropa" class="form-label">Genero del producto</label>
                               
-                              <select name="genero" id="" class="form-select" required>
+                              <select name="genero" id="genero-ropa" class="form-select" required>
                                   <option value="" selected hidden>Elija una opción</option>
                                   <option value="M">Masculino</option>
                                   <option value="F">Femenino</option>
@@ -55,7 +62,7 @@
                               </select>
                               </div>
                               <div class="col-md-6">
-                                  <label for="inputEmail4" class="form-label">Público dirigido</label>
+                                  <label for="publico-dirigido" class="form-label">Público dirigido</label>
                                   
                                   <select name="publico_dirigido" id="publico-dirigido" class="form-select" required>
                                       <option value="" selected hidden></option>
@@ -65,8 +72,8 @@
                                   </select>
           
           
-                                  {{-- Categoria --}}
-                                  <input type="text" name="categoria" id="" value="1" hidden>
+                                  {{-- Categoria --> ropa deportiva --}}
+                                  <input type="text" name="categoria" id="" value="2" hidden>
                               </div>
                           </div>
                       </div>
@@ -77,9 +84,9 @@
           
           
                           <div class="col-md-5">
-                              <label for="inputState" class="form-label " >Tipo de producto</label>
+                              <label for="tipo-ropa" class="form-label " >Tipo de producto</label>
                               <div class="input-group d-flex" >
-                                  <select name="tipoProducto" class="form-select SelectTypeProduct" required >
+                                  <select name="tipoProducto" id="tipo-ropa" class="form-select SelectTypeProduct" required >
                                       <option value="" selected hidden></option>
                                       <option value="">Calzas térmicas</option>
                                       <option value="">Camisetas técnicas</option>
@@ -102,8 +109,8 @@
                               </div>
                           </div>
                           <div class="col-md-6">
-                              <label for="inputAddress" class="form-label">Marca</label>
-                              <input type="text" name="marca" class="form-control" id="inputAddress" required placeholder="Adidas, nike, otro">
+                              <label for="marca-ropa" class="form-label">Marca</label>
+                              <input type="text" name="marca" class="form-control" id="marca-ropa" required placeholder="Adidas, nike, otro">
                           </div>
                       </div>
                       <!-- Sección de las etiquetas -->
@@ -111,14 +118,14 @@
                           <div class="col-md-10">
                               <label for="deporte" class="form-label">Etiquetas de deportes</label>
                               <select name="select_deportes" id="deporte" class="form-select">
-                                  <option value="" selected hidden> Agregá los deportes relacionados</option>
-                                  @foreach ($deportes as $deporte)
-                                      <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
-                                  @endforeach
+                                    <option value="" selected hidden> Agregá los deportes relacionados</option>
+                                    @foreach ($deportes as $deporte)
+                                        <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
+                                    @endforeach
                               </select>
                           </div>
                           <div  style="width:50px; margin-top:29px" id="contenedor-plus">
-                              <button class="py-2 px-3 bg-green-500 hover:bg-green-600"  type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
+                              <button class="py-2 px-3 btn btn-primary"  type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
                           </div>
                       </div>
                       <div class="col-md-12 flex justify-between mt-2" style="align-content: center">
@@ -158,7 +165,7 @@
                       <div class="col-md-12 flex justify-end my-3 "  style="margin-right: 50px" id="bottom-image">
                         <div style="margin-right: 90px">
 
-                            <label class=" text-white  bg-green-500 hover:bg-green-600" for="imageInput" >
+                            <label class=" text-white  bg-blue-500 hover:bg-blue-600" for="imageInput" >
                                 <input type="file" name="foto" id="imageInput" multiple accept="image/*">
                                 Cargar fotos
                             </label>
@@ -167,17 +174,17 @@
           
                       
                       <div class="col-md-12 flex justify-end " >
-                          <div class="col-md-9 flex  items-center" style="border-top: 1px solid rgb(16, 163, 28)">
+                          <div class="col-md-9 flex  items-center" style="border-top: 1px solid rgb(16, 18, 163)">
           
                               <div class="col-md-5">
-                                  <label for="stock_input" class="form-label">Stock</label>
-                                  <input type="text" name="stock" placeholder="cantidad"  class="form-control total stock_input" id="stock_input_ropa" required>
+                                  <label for="stock_input_ropa" class="form-label">Stock</label>
+                                  <input type="text" name="stock" placeholder="cantidad"  class="form-control estilo-readonly total stock_input" id="stock_input_ropa" required>
           
                               </div>
           
                               <div class="ml-5 p-1 p-1">
-                                  <label for="inputCity" class="form-label">Color</label>
-                                  <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required>
+                                  <label for="color-ropa" class="form-label">Color</label>
+                                  <input type="text" name="color" id="color-ropa" class="form-control" placeholder="Rojo, fuxia, amarillo..." required>
           
                               </div>
                               
@@ -186,23 +193,23 @@
                   </div>
           
           
-                </div>
-            
-                <div id="contenedor-modal-talles">
-                    @include('admin.ropasDeportivas.partials.modal')
-                </div>
+              </div>
+          
+              <div id="contenedor-modal-talles">
+                  @include('admin.ropasDeportivas.partials.modal')
+              </div>
           
                 <div class="col-12 d-flex " style="justify-content:space-between">
                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-success">Cargar a Sportivo</button>
+                        <button type="submit" class="btn btn-primary" id="cargar-ropa" >Finalizar</button>
                     </div>
-                    <div class="col-md-3">
-                        <button  id="agregar-calzados"  type="button" class="bg-slate-600 rounded-full py-2 px-2 hover:cursor-pointer hover:scale-105  text-white "  data-bs-toggle="modal" data-bs-target="#modalTalles">Indicaciones (opcional)</button>
+                    <div class="col-md-3 ">
+                        <button  id="agregar-calzados"  type="button" class="bg-slate-600 rounded-full py-2 px-5 hover:cursor-pointer hover:scale-105  text-white "  data-bs-toggle="modal" data-bs-target="#modalTalles">Talles</button>
                     </div>
                     <div class="col-md-3 d-flex">
                         <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
                         <div class="input-group">
-                            <span class="input-group-text " style="border:1px solid rgba(16, 163, 72, 0.377);" id="signo-peso" >$</span>
+                            <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);" id="signo-peso" >$</span>
                             <input type="text" name="precio"onwheel="preventScroll(event)"  class="form-control" id="precioFinal"  aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
                         </div>
                     </div>
@@ -212,13 +219,17 @@
             </form> 
         </div>
     </section>
-  
+    <div class="aside " >
+        @include('admin.ropasDeportivas.partials.right')
+    </div>
+    
   </main>
   
 
 
 
   <script>
+
     function formatNumber(input) {
       // Eliminar caracteres no numéricos
       var num = input.value.replace(/[^0-9]/g, '');

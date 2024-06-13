@@ -48,9 +48,13 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('admin')->group(function(){
 
         // Ropa deportiva
+
         Route::resource('ropa-deportiva', RopaDepController::class);
-        Route::controller(RopaDepController::class)->group(function(){
-            Route::get('hola','hola')->name('ropa-deportiva.hola');
+
+        Route::controller(RopaDepController::class)->group(function() {
+            Route::get('/ropa-deportiva-tabla','tabla')->name('ropa-deportiva.tabla');
+            Route::get('/ropa-deportiva-tablaTalles','tablaTalles')->name('ropa-deportiva.tabla-talles');
+            Route::get('/ropa-deportiva-formulario','formulario')->name('ropa-deportiva.formulario');
         });
 
         // Articulos Deportivos
