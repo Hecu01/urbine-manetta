@@ -7,15 +7,15 @@ use App\Http\Controllers\Admin\RopaDepController;
 use App\Http\Controllers\Admin\ArtDeportController;
 use App\Http\Controllers\Admin\DescuentoController;
 use App\Http\Controllers\Admin\AdminesActivosController;
+use App\Http\Controllers\Admin\ClientesActivosController;
 
 // Rutas que acceden los admins
 Route::middleware(['auth'])->group(function(){
     // Inicio admin
     Route::get('/admin', [AdminController::class, 'admin'])->name('ir_admin');
 
-    // Clientes
-    Route::get('/admin/clientes-activos', [AdminController::class, 'clientes'])->name('clientes');
-    
+
+
     // Suplementos y Dieta
     Route::get('/admin/suplementos-y-dieta', [AdminController::class, 'suplementos'])->name('suplementos');
     
@@ -46,6 +46,23 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/admines', [AdminController::class, 'VerAdmines'])->name('admins');
     
     Route::prefix('admin')->group(function(){
+        // Clientes activos
+        Route::resource('clientes-activos', ClientesActivosController::class);
+        Route::controller(ClientesActivosController::class)->group(function(){
+            Route::get('/solicitudes-descuentos-especiales', 'pagDescuentosEspeciales')->name('RouteDescuentosEspeciales');
+            Route::get('/porcentaje-descuentos-especiales', 'porcentajeDescuentos')->name('RoutePorcentajeDescEspeciales');
+
+            Route::get('/pagina-asignar-descuento/{id}', 'pagAsignarDescuento')->name('pagAsignarDescuento');
+
+
+            Route::put('/aceptar-descuento-especial/{id}', 'aceptarDescuento')->name('AceptarDescuentoEspecial');
+            Route::put('/rechazar-descuento-especial/{id}', 'rechazarDescuento')->name('RechazarDescuentoEspecial');
+
+            Route::put('/hab-inhab-descuento-especial/{id}', 'habilitarInhabilitarDescuento')->name('HabilitarInhabilitarDescuento');
+
+            Route::put('/asignar-porcentaje-descuento/{id}', 'adjuntarDescuento')->name('adjuntarDescuento');
+        });
+
 
         // Ropa deportiva
 

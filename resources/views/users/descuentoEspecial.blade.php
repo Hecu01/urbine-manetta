@@ -1,71 +1,101 @@
 @extends('layouts.app')
 
 @section('section-principal')  
-    <div class=""style="min-height:500px">
-        <h1>Pagina descuento especial</h1>
-        @if (session('mensaje'))
-            <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
-                <strong>Atención!</strong> {{ session('mensaje') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    @if (Auth::user()->descuentoUsuario)
+        <div class=" p-4"style="min-height:500px;  ">
+            <h1>¡Gracias por llenar el formulario!</h1>
+            <h1>Ya solicitaste el descuento especial</h1>
+            <hr style="max-width: 570px">
+            <div class="flex items-center" >
+
+                <div class=" mx-4" >
+                    <h3>Tu certificado</h3>
+                    <img  src="{{ url('certificados/' .  Auth::user()->descuentoUsuario->foto_certificado) }}" alt="Foto certificado de {{ Auth::user()->name }}" draggable="false"  loading="lazy" style="border: 1px solid #0000003a; width: 150px"/>
+                </div>
+                <ul>
+                    <li><strong>Profesion</strong>: {{ Auth::user()->descuentoUsuario->profesion_usuario}}</li>
+                    <li style="margin-top: 5px"><strong>Motivo</strong>: {{ Auth::user()->descuentoUsuario->motivo_descuento}}</li>
+                    <hr>
+                    <li class="flex items-center  ">
+                        <strong>Estado del descuento</strong>: 
+                        <div style="font-size: .9em" class="rounded-full text-white {{ Auth::user()->descuentoUsuario->descuento_activo ? 'bg-green-500' : 'bg-cyan-500'}}  p-1 flex mx-2">{{ Auth::user()->descuentoUsuario->descuento_activo ? 'Aprobado' : 'En evaluación'}}</div>
+                    </li>
+                    @if(Auth::user()->descuentoUsuario->descuento_activo)
+                        <li>
+                            <strong>Porcentaje:</strong> {{ Auth::user()->descuentoUsuario->porcentaje_descuento }}% de descuento
+                        </li>
+                    @endif
+                </ul>
+                
             </div>
-        @endif 
-        <div class="m-4 p-2" style="width: 500px; border: 1px solid rgb(0,0,0,0.2)">
+        </div> 
+    @else
+        <div class=""style="min-height:500px">
+            <h1>Pagina descuento especial</h1>
+            @if (session('mensaje'))
+                <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
+                    <strong>Atención!</strong> {{ session('mensaje') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif 
+            <div class="m-4 p-2" style="width: 500px; border: 1px solid rgb(0,0,0,0.2)">
 
-            <form method="POST" action="{{ route('store-descuento-usuario') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="row ">
+                <form method="POST" action="{{ route('store-descuento-usuario') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row ">
 
-                    <div class="container d-flex justify-content-center shadow-sm border-2 my-2" style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff">
-                        <!-- Carrusel para previsualizar imágenes -->
-                        <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"  data-bs-interval="3000">
-                            <div class="carousel-inner " id="imagePreviewInner"  style="height: 100%">
-                                <!-- Las imágenes previsualizadas se mostrarán aquí -->
+                        <div class="container d-flex justify-content-center shadow-sm border-2 my-2" style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff">
+                            <!-- Carrusel para previsualizar imágenes -->
+                            <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"  data-bs-interval="3000">
+                                <div class="carousel-inner " id="imagePreviewInner"  style="height: 100%">
+                                    <!-- Las imágenes previsualizadas se mostrarán aquí -->
+                                </div>
+
                             </div>
-
+                        </div>
+            
+                    </div>
+                    <div class="flex justify-center mb-3">
+                        <label class="bg-blue-500 py-2 px-4 text-white hover:bg-blue-600" style="cursor: pointer" for="imageInput" >
+                            <input type="file" name="foto" id="imageInput" multiple accept="image/*">
+                            Cargar certificado
+                        </label>
+                    </div>
+                    <div class="row mb-3">
+                    <label for="profesion" class="col-sm-2 col-form-label">Profesion</label>
+                    <div class="col-sm-10">
+                        <select name="profesion" id="profesion" class="form-select">
+                            <option value="Personal Trainer">Personal Trainer</option>
+                            <option value="Profesor de Ed. Física">Profesor de Ed. Física</option>
+                            <option value="Maestro Kickboxing">Maestro Kickboxing</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="row mb-3">
+                    <label for="motivo" class="col-sm-2 col-form-label">Motivo</label>
+                    <div class="col-sm-10">
+                        <textarea name="motivo" class="form-control" id="motivo" cols="30" placeholder="Explicá por qué te correspondería un descuento especial, explayate lo que necesites. " rows="3"></textarea>
+                    </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                    <div class="col-sm-10 offset-sm-2">
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Acepto términos de contrato
+                        </label>
                         </div>
                     </div>
-        
-                </div>
-                <div class="flex justify-center mb-3">
-                    <label class="bg-blue-500 py-2 px-4 text-white hover:bg-blue-600" style="cursor: pointer" for="imageInput" >
-                        <input type="file" name="foto" id="imageInput" multiple accept="image/*">
-                        Cargar certificado
-                    </label>
-                </div>
-                <div class="row mb-3">
-                  <label for="profesion" class="col-sm-2 col-form-label">Profesion</label>
-                  <div class="col-sm-10">
-                    <select name="profesion" id="profesion" class="form-select">
-                        <option value="Personal Trainer">Personal Trainer</option>
-                        <option value="Profesor de Ed. Física">Profesor de Ed. Física</option>
-                        <option value="Maestro Kickboxing">Maestro Kickboxing</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="motivo" class="col-sm-2 col-form-label">Motivo</label>
-                  <div class="col-sm-10">
-                    <textarea name="motivo" class="form-control" id="motivo" cols="30" placeholder="Explicá por qué te correspondería un descuento especial, explayate lo que necesites. " rows="3"></textarea>
-                  </div>
-                </div>
-                
-                <div class="row mb-3">
-                  <div class="col-sm-10 offset-sm-2">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="gridCheck1">
-                      <label class="form-check-label" for="gridCheck1">
-                        Acepto términos de contrato
-                      </label>
                     </div>
-                  </div>
-                </div>
-                <div class="grid mb-2">
-                    
-                    <button type="submit" class="btn btn-primary">Enviar Formulario</button>
-                </div>
-            </form>
+                    <div class="grid mb-2">
+                        
+                        <button type="submit" class="btn btn-primary">Enviar Formulario</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    @endif
 
     <script>
 

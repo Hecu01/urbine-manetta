@@ -17,15 +17,6 @@ class UsuarioController extends Controller
 
     public function descuentoUsuario()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            // Verificar si el usuario ya llenó el formulario
-            if ($user->descuentoUsuario) {
-                return redirect()->route('mi-perfil.index');
-            }
-        }
-
         return view('users.descuentoEspecial');
     }
  

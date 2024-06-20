@@ -81,21 +81,21 @@
                               <div class="input-group d-flex" >
                                   <select name="tipoProducto" class="form-select SelectTypeProduct" required >
                                       <option value="" selected hidden></option>
-                                      <option value="">Calzas térmicas</option>
-                                      <option value="">Camisetas técnicas</option>
-                                      <option value="">Chalecos</option>
-                                      <option value="">Chaquetas cortaviento</option>
-                                      <option value="">Leggings</option>
-                                      <option value="">Mallas</option>
-                                      <option value="">Musculosa</option>
-                                      <option value="">Pantalones de chándal</option>
-                                      <option value="">Remeras</option>
-                                      <option value="">Ropa de ciclismo</option>
-                                      <option value="">Shorts de running</option>
-                                      <option value="">Sujetadores deportivos</option>
-                                      <option value="">Top deportivo</option>
-                                      <option value="">Trajes de baño</option>
-                                      <option value="">Uniformes de equipo</option>
+                                      <option value="Calzas térmicas">Calzas térmicas</option>
+                                      <option value="Camisetas técnicas">Camisetas técnicas</option>
+                                      <option value="Chalecos">Chalecos</option>
+                                      <option value="Chaquetas cortaviento">Chaquetas cortaviento</option>
+                                      <option value="Leggings">Leggings</option>
+                                      <option value="Mallas">Mallas</option>
+                                      <option value="Musculosa">Musculosa</option>
+                                      <option value="Pantalones de chándal">Pantalones de chándal</option>
+                                      <option value="Remeras">Remeras</option>
+                                      <option value="Ropa de ciclismo">Ropa de ciclismo</option>
+                                      <option value="Shorts de running">Shorts de running</option>
+                                      <option value="Sujetadores deportivos">Sujetadores deportivos</option>
+                                      <option value="Top deportivo">Top deportivo</option>
+                                      <option value="Trajes de baño">Trajes de baño</option>
+                                      <option value="Uniformes de equipo">Uniformes de equipo</option>
       
                                   </select>   
 
@@ -106,21 +106,21 @@
                               <input type="text" name="marca" class="form-control" id="inputAddress" required placeholder="Adidas, nike, otro">
                           </div>
                       </div>
-                      <!-- Sección de las etiquetas -->
-                      <div class="col-md-12 flex justify-between my-1" style="align-content: center; ">
-                          <div class="col-md-10">
-                              <label for="deporte" class="form-label">Etiquetas de deportes</label>
-                              <select name="select_deportes" id="deporte" class="form-select">
-                                  <option value="" selected hidden> Agregá los deportes relacionados</option>
-                                  @foreach ($deportes as $deporte)
-                                      <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
-                                  @endforeach
-                              </select>
-                          </div>
-                          <div  style="width:50px; margin-top:29px" id="contenedor-plus">
-                              <button class="py-2 px-3 bg-green-500 hover:bg-green-600"  type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
-                          </div>
-                      </div>
+                        <!-- Sección de las etiquetas -->
+                        <div class="col-md-12 flex justify-between my-1" style="align-content: center; ">
+                            <div class="col-md-10">
+                                <label for="deporte" class="form-label">Etiquetas de deportes</label>
+                                <select name="select_deportes" id="deporte" class="form-select">
+                                    <option value="" selected hidden> Agregá los deportes relacionados</option>
+                                    @foreach ($deportes as $deporte)
+                                        <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div  style="width:50px; margin-top:29px" id="contenedor-plus">
+                                <button class="py-2 px-3 bg-green-500 hover:bg-green-600"  type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
+                            </div>
+                        </div>
                       <div class="col-md-12 flex justify-between mt-2" style="align-content: center">
                           <div id="etiquetas-container" class="etiquetas-container">
                               <!-- Aquí se agregarán las etiquetas dinámicamente -->

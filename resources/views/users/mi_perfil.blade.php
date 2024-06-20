@@ -10,15 +10,20 @@
         <div class="">
           <h2>Datos Personales</h2>
           <ul style="font-size: 1.3em; margin:0; padding:0">
-            <li><strong style="font-weight: 600">Nombre</strong>: {{ $user->name }} </li>
+            <li><strong style="font-weight: 600">{{ $user->administrator ? 'Admin' : 'Usuario' }}</strong>: {{ $user->name }} {{ $user->lastname }} </li>
             <li><strong>Correo</strong>: {{ $user->email }} </li>
+            @if(isset(Auth::user()->descuentoUsuario->descuento_activo) == true)
+              <li class="bg-rose-500 text-white px-1 w-fit  ">
+                <strong style="font-weight: 600">Profesion</strong>: 
+                {{ $user->descuentoUsuario->profesion_usuario}}</li>
+            @endif
             @if(isset($user->domicilio))
-              <li><strong style="font-weight: semibold">Calle</strong>: {{ $user->domicilio->calle }} </li>
+              <li class=""><strong style="font-weight: semibold">Calle</strong>: {{ $user->domicilio->calle }} </li>
               <li><strong style="font-weight: 600">Barrio</strong>: {{ $user->domicilio->barrio }} </li>
               <li><strong style="font-weight: 600">Ciudad</strong>: {{ $user->domicilio->ciudad }} </li>
               <li><strong style="font-weight: 600">Codigo postal</strong>: {{ $user->domicilio->codigo_postal }} </li>
             @else
-              <a href="{{ route('domicilio') }}" class="btn btn-primary">Cargar datos domicilio</a>
+              <a href="{{ route('domicilio') }}" class="btn btn-primary mt-1">Cargar datos domicilio</a>
             @endif
 
           </ul>
@@ -38,6 +43,14 @@
               <strong style="font-weight: 600">Rol</strong>: 
               {{ $user->administrator ? 'Admin' : 'Usuario' }}  
             </li>
+
+            @if(isset(Auth::user()->descuentoUsuario->descuento_activo) == true)
+              <li class="bg-rose-500 text-white px-1 w-fit">
+                <strong style="font-weight: 600">Descuento especial</strong>: 
+                {{ $user->descuentoUsuario->porcentaje_descuento}}%  
+              </li>
+            @endif
+
             <li>
               <strong style="font-weight: 600">Compras</strong>: 
               13
