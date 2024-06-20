@@ -30,29 +30,8 @@ class RopaDepController extends Controller
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ropasDeportivas.index', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
  
     }
-
-    public function formulario(){
-        // Importamos modelos 
-        $talles = Talle::all();
-        $deportes = Deporte::orderBy('deporte', 'asc')->get();
-        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
-        $articulos = Articulo::paginate(5);
-        $categorias = Categoria::all(); 
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ropasDeportivas.formulario', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
-
-
-    }
-    
-    public function tabla(){
-        // Importamos modelos 
-        $talles = Talle::all();
-        $deportes = Deporte::orderBy('deporte', 'asc')->get();
-        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
-        $categorias = Categoria::all(); 
-        $articulos = Articulo::where('id_categoria', '2')->paginate(5);
-
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ropasDeportivas.tabla', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
-    
+    public function hola(){
+        return view('admin.ropasDeportivas.hola');
     }
 
     /**

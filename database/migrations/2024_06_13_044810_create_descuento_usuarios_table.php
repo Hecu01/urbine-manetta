@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('foto_certificado',1000)->nullable();
             $table->integer('porcentaje_descuento')->nullable();
             $table->boolean('descuento_activo')->deafult(false);
-            $table->boolean('aceptado')->nullable();
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

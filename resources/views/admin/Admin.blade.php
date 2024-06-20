@@ -3,84 +3,84 @@
 
     @include('admin.layouts.aside-left')
 
-        <section class="row" style="padding-top: 5px; justify-content: center;" >
-            <!-- Clientes activos -->
-            
-            <a href="{{ route('clientes-activos.index') }}" class="text-white no-underline article0 article1">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-user-plus"></i>
-                    </span>
-                    <span class="recuento">
-                        0
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Clientes activos</p>
-                </div>
-            </a>
-            <!-- Ventas realizadas -->
-            <a href="{{ route('ventas.index') }}" class="text-white no-underline article0 article2">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-chart-line"></i>
-                    </span>
-                    <span class="recuento">
-                        0
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Ventas realizadas</p>
-                </div>
-            </a>
-            
-            <!-- Sumplementos y dieta -->
-            <a href="{{ route('ropa-deportiva.index') }}" class="text-white no-underline  article0 article3">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-shirt"></i>
-                    </span>
-                    <span class="recuento">
-                        {{ $ropaDeportivas }}
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Ropa deportiva</p>
-                </div>
-            </a>
+    <section class="row" style="padding-top: 5px; justify-content: center;" >
+        <!-- Clientes activos -->
+        
+        <a href="{{ route('clientes') }}" class="text-white no-underline article0 article1">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-user-plus"></i>
+                </span>
+                <span class="recuento">
+                    0
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Clientes activos</p>
+            </div>
+        </a>
+        <!-- Ventas realizadas -->
+        <a href="{{ route('ventas.index') }}" class="text-white no-underline article0 article2">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-chart-line"></i>
+                </span>
+                <span class="recuento">
+                    0
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Ventas realizadas</p>
+            </div>
+        </a>
+        
+        <!-- Sumplementos y dieta -->
+        <a href="{{ route('suplementos') }}" class="text-white no-underline article0 article3">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+                <span class="recuento">
+                    0
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Sumplementos y dieta</p>
+            </div>
+        </a>
+        
+        
+        <!-- Artículos deportivos -->
+        <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline article0 article4">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-football"></i>
+                </span>
+                <span class="recuento">
+                    {{ $artDeportivos }}
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Artículos deportivos</p>
+            </div>
+        </a>
+        
+                    
+        <!-- Ropa deportiva -->
 
-            
-            
-            <!-- Artículos deportivos -->
-            <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline article0 article4">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-football"></i>
-                    </span>
-                    <span class="recuento">
-                        {{ $artDeportivos }}
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Artículos deportivos</p>
-                </div>
-            </a>
-            
-                        
-            <!-- Ropa deportiva -->
-            <a href="{{ route('suplementos') }}" class="text-white no-underline article0 article5">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-heart"></i>
-                    </span>
-                    <span class="recuento">
-                        0
-                    </span>
-                </div>
-                <div class="bottom">
-                    <p>Sumplementos y dieta</p>
-                </div>
-            </a>
+        <a href="{{ route('ropa-deportiva.index') }}" class="text-white no-underline  article0 article5">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-shirt"></i>
+                </span>
+                <span class="recuento">
+                    {{ $ropaDeportivas }}
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Ropa deportiva</p>
+            </div>
+        </a>
 
         
         <!-- Reposición de mercadería -->

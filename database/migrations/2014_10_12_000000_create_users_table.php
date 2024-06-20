@@ -28,7 +28,7 @@ return new class extends Migration
             $table->boolean('super_administrator')->default(false);
 
             // Data Sportivo
-            $table->decimal('money', 15, 2)->default(0)->nullable(); // Ajusta los valores según tus necesidades
+            $table->decimal('dinero_en_cuenta', 8, 2)->nullable();
             $table->integer('puntos_sportivo')->nullable();
             $table->integer('compras_realizadas')->nullable();
 
