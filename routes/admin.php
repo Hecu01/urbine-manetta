@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RopaDepController;
 use App\Http\Controllers\Admin\ArtDeportController;
 use App\Http\Controllers\Admin\DescuentoController;
 use App\Http\Controllers\Admin\AdminesActivosController;
+use App\Http\Controllers\Admin\ReponerMercaderiaController;
 
 // Rutas que acceden los admins
 Route::middleware(['auth'])->group(function(){
@@ -19,8 +20,6 @@ Route::middleware(['auth'])->group(function(){
     // Suplementos y Dieta
     Route::get('/admin/suplementos-y-dieta', [AdminController::class, 'suplementos'])->name('suplementos');
     
-    // Reposición de mercadería
-    Route::get('/admin/reposicion-mercaderia', [AdminController::class, 'mercaderia'])->name('mercaderia');
     
     // Compras pendientes online
     Route::get('/admin/compras-pendientes-online', [AdminController::class, 'compras_online'])->name('compras_online');
@@ -59,9 +58,17 @@ Route::middleware(['auth'])->group(function(){
         
         // Ventas
         Route::resource('ventas', VentaController::class);
+
+        // Reposicion de mercadería -- resource
+        Route::resource('reposicion-mercaderia', ReponerMercaderiaController::class);
         
         // Los admines
         Route::resource('AdminesActivos', AdminesActivosController::class);
         Route::put('/habilitar-admin/{usuario}', [AdminesActivosController::class, 'HabilitarAdmin'])->name('habilitar_admin');
+    });
+
+    // Reposicion de mercaderia
+    Route::controller(ReponerMercaderiaController::class)->group(function(){
+        Route::get('/admin/reponer-mercaderia-articulos', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
     });
 });
