@@ -62,17 +62,7 @@ class AdminController extends Controller
         
     }
 
-    /*
-    |------------------------------------------------------------------------
-    | Página Mercadería
-    |------------------------------------------------------------------------
-    */
-    public function mercaderia(){
-        $user = Auth::user();
-        $title = "Sportivo - Mercadería";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ReposicionMercaderia', compact('title'));
-        
-    }
+
 
     /*
     |------------------------------------------------------------------------
