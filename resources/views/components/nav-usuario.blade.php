@@ -23,10 +23,11 @@
         <div class="left flex">
             @guest
                 <!-- Usuario no logueado -->
-                <div class="usuario-logueado false hover:scale-105 ">
+                <div class="usuario-logueado false  ">
 
-
-                    <div class="dropdown ">
+                    <a href="{{ route('login') }}" class="text-white hover:scale-105 no-underline mx-1">Entrar</a>
+                    <a href="{{ route('register') }}" class="text-white hover:scale-105 no-underline mx-2">Registrarse</a>
+                    {{-- <div class="dropdown ">
                         <a href="#"style="color: #fff; text-decoration:none" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Usuarios
@@ -37,7 +38,7 @@
                             <li><a class="dropdown-item" href="{{ route('login') }}">Entrar</a></li>
                             <li><a class="dropdown-item" href="{{ route('register') }}">Registrarse</a></li>
                         </ul>
-                    </div>
+                    </div> --}}
 
 
 

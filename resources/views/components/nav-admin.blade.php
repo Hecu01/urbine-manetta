@@ -22,53 +22,31 @@
     <div class="container-fluid" id="top-navigator">
         <div class="left flex">
             @guest
-                <!-- Usuario no logueado -->
-                <div class="usuario-logueado false hover:scale-105 ">
-
-
-                    <div class="dropdown ">
-                        <a href="#"style="color: #fff; text-decoration:none" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Usuarios
-                            <i class="fa-solid fa-user"></i>
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('login') }}">Entrar</a></li>
-                            <li><a class="dropdown-item" href="{{ route('register') }}">Registrarse</a></li>
-                        </ul>
-                    </div>
-
-
-
-                </div>
             @else
                 <!-- Usuario Logueado -->
                 <div class="usuario-logueado ">
 
 
-                    <li class="nav-item dropdown  " style="color: #fff; list-style: none; margin-top: -5px;">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
-                            style="color: #fff; height:20px; padding:3px;" role="button" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" v-pre>
-                            <span>
-                                <i class="fa-solid fa-user"></i>
-                            </span>
+                    <!-- Usuario -->
+                    <div class="dropdown" id="contenedor-funciones-usuario">
+                        <a href="#" class="dropdown-toggle username pt-1" data-bs-toggle="dropdown" aria-expanded="false">
                             Usuario: {{ Auth::user()->name }}
                         </a>
+                        <ul class="dropdown-menu w-16 " id="funciones">
+                            <li><a class="dropdown-item" href=" {{ route('mi-perfil.index') }} "><i class="fa-solid fa-user mx-1"></i> Mi perfil</a></li>
+                            <li> 
+                                <a class="dropdown-item" href="#" 
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa-solid fa-power-off mx-1"></i>
+                                    Cerrar sesión
+                                </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" style="margin-top: 15px;"
-                            aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Cerrar sesión
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
+                                <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                     <!-- Notificaciones -->
                     <div class="dropdown">
                         <a href="#" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
@@ -146,7 +124,7 @@
                     </span>
                     <span class="address">
 
-                        De la nación 356, San nicolás
+                        Gutemberg 7 bis, San nicolás
                     </span>
 
                 </div>
