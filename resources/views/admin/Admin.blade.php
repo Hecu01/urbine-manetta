@@ -6,7 +6,7 @@
     <section class="row" style="padding-top: 5px; justify-content: center;" >
         <!-- Clientes activos -->
         
-        <a href="{{ route('clientes') }}" class="text-white no-underline article0 article1">
+        <a href="{{ route('clientes-activos.index') }}" class="text-white no-underline article0 article1">
             <div class="top">
                 <span>
                     <i class="fa-solid fa-user-plus"></i>
