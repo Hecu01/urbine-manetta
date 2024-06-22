@@ -28,6 +28,9 @@ class User extends Authenticatable
         'email',
         'password',
         'foto',
+        'dinero_en_cuenta',
+        'puntos_sportivo',
+        'compras_realizadas',
     ];
 
     /**

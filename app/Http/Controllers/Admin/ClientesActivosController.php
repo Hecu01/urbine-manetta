@@ -15,7 +15,7 @@ class ClientesActivosController extends Controller
     /* Index */
     public function index()
     {
-        $title = "Sportivo - Clientes Activos";
+        $title = "Admin - Clientes Activos";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.index', compact('title'));
     }
     /**
@@ -65,21 +65,56 @@ class ClientesActivosController extends Controller
     {
         //
     }
+    /* Tabla de clientes activos */
+    public function tablaClientesActivos()
+    {
+        $title = "Admin - Tabla Clientes Activos";
+        $usuarios = User::where('administrator', false)->get();
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.Clientes.index', compact('title', 'usuarios'));
+    }
+    /* index cargar saldo */
+    public function pagCargarSaldo()
+    {
+        $title = "Admin - Saldos";
+        $usuarios = User::where('administrator', false)->get();
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.Saldos.index', compact('title', 'usuarios'));
+    }
+
+    /* Pagina de usuario - cargar saldo */
+    public function asigarSaldoUsuario($id)
+    {
+        $user = User::findOrFail($id);
+        $title = "Admin - Cargar saldo";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.Saldos.CargarSaldo', compact('title', 'user'));
+    }
+
+    // Cargar virtual de saldo
+    public function carga_virtual_saldo(Request $request, string $id){
+        $cargaSaldo = User::findOrFail($id);
+        $cargaSaldo->update([
+            'dinero_en_cuenta' => $request->plata,
+        ]);
+        // Una vez finalizado, el redireccionamiento
+        return redirect()->back()->with('success', 'Carga de saldo realizada');
+    }
+    
+
     /* Asignar porcentaje descuentos */
     public function porcentajeDescuentos()
     {
-        $title = "Sportivo - Porcentaje descuentos";
+        $title = "Admin - Porcentaje descuentos";
         $usuarios = User::where('administrator', false)->get();
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.PorcentajeDescuentos', compact('title', 'usuarios'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.DescuentoEspecial.PorcentajeDescuentos', compact('title', 'usuarios'));
     }
     /* Página aceptar o rechazar descuentos */
     public function pagDescuentosEspeciales()
     {
-        $title = "Sportivo - Descuentos Especiales";
+        $title = "Admin - Descuentos Especiales";
         $usuarios = User::where('administrator', false)->get();
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.Habilitar&InhabilitarDescuento', compact('title', 'usuarios'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.DescuentoEspecial.Habilitar&InhabilitarDescuento', compact('title', 'usuarios'));
     }
     
+
     // Aceptar descuento especial
     public function habilitarInhabilitarDescuento($id)
     {
@@ -119,8 +154,8 @@ class ClientesActivosController extends Controller
     // Pág. asignar descuento
     public function pagAsignarDescuento($id){
         $DescuentoUsuario = DescuentoUsuario::findOrFail($id);
-        $title = "Sportivo - Descuento porcentaje";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.PaginaAsignarDescuento', compact('title', 'DescuentoUsuario'));
+        $title = "Admin - Descuento porcentaje";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.DescuentoEspecial.PaginaAsignarDescuento', compact('title', 'DescuentoUsuario'));
 
     }
     // Pág. asignar descuento

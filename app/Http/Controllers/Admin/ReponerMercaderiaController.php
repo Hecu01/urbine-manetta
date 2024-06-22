@@ -20,15 +20,24 @@ class ReponerMercaderiaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $title = "Sportivo - Mercadería";
+        $title = "Admin - Mercadería";
         return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.index', compact('title'));
     }
 
     public function indexSoliciarArtDeport(){
         $user = Auth::user();
         $artDeportivos = Articulo::where('id_categoria', '1')->orderBy('stock', 'asc')->get();
-        $title = "Sportivo - Solicitar art deport";
+        $title = "Admin - Solicitar art deport";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.SolicitarArticulosDeportivos', compact('title', 'artDeportivos'));
+    }
+
+
+    
+    public function solicitarMercaderiaArtDeport($id){
+        $user = Auth::user();
+        $artDeportivos = Articulo::findOrFail($id);
+        $title = "Admin - ID Articulo Deportivo";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ID_ArticuloDeportivo', compact('title', 'artDeportivos'));
     }
 
     /**

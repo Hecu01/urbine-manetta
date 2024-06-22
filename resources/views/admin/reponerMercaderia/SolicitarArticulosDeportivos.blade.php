@@ -31,7 +31,10 @@
                         <td>{{ $artDeportivo->nombre }}</td>
                         <td>{{ $artDeportivo->marca }}</td>
                         <td class="{{ $artDeportivo->stock < 20 ? 'text-rose-500' :'' }}">{{ $artDeportivo->stock }}</td>
-                        <td><a href="" class="btn btn-success btn-sm">Solicitar</a></td>
+                        <td>
+                            <a href="{{ route('solicitarMercaderiaArtDeport', $artDeportivo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
+
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

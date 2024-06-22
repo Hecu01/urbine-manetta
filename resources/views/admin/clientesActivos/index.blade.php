@@ -14,13 +14,19 @@
   </div>
   <section>
     <div class="my-1">
-      <a class="btn btn-primary" href=" {{ route('RouteDescuentosEspeciales') }} ">Habilitar/Inhabilitar descuento</a>
+      <a class="btn btn-primary" href=" {{ route('tablaClientesActivos') }} ">Tabla clientes Activos</a>
+    </div>
+    <div class="my-1" >
+      <button class="btn btn-danger"  disabled >Consultas y reclamos</button>
+    </div>
+    <div class="my-1">
+      <a class="btn btn-info" href=" {{ route('RouteDescuentosEspeciales') }} ">Habilitar/Inhabilitar descuento</a>
     </div>
     <div class="my-1">
       <a class="btn btn-secondary" href=" {{ route('RoutePorcentajeDescEspeciales') }} ">Asignar % de descuento</a>
     </div>
     <div class="my-1">
-      <a class="btn btn-success" href=" {{ route('RoutePorcentajeDescEspeciales') }} ">Cargar saldo</a>
+      <a class="btn btn-success" href=" {{ route('RouteCargarSaldo') }} ">Cargar saldo</a>
     </div>
   </section>
 

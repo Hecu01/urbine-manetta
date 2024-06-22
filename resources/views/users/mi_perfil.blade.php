@@ -9,7 +9,7 @@
       <div class="flex col-9" style="justify-content: space-between">
         <div class="">
           <h2>Datos Personales</h2>
-          <ul style="font-size: 1.3em; margin:0; padding:0">
+          <ul style="font-size: 1.2em; margin:0; padding:0">
             <li><strong style="font-weight: 600">{{ $user->administrator ? 'Admin' : 'Usuario' }}</strong>: {{ $user->name }} {{ $user->lastname }} </li>
             <li><strong>Correo</strong>: {{ $user->email }} </li>
             @if(isset(Auth::user()->descuentoUsuario->descuento_activo) == true)
@@ -18,8 +18,8 @@
                 {{ $user->descuentoUsuario->profesion_usuario}}</li>
             @endif
             @if(isset($user->domicilio))
-              <li class=""><strong style="font-weight: semibold">Calle</strong>: {{ $user->domicilio->calle }} </li>
-              <li><strong style="font-weight: 600">Barrio</strong>: {{ $user->domicilio->barrio }} </li>
+              <li class="text-capitalize"><strong style="font-weight: semibold " >Calle</strong>: {{ $user->domicilio->calle }} </li>
+              <li class="text-capitalize"><strong style="font-weight: 600">Barrio</strong>: {{ $user->domicilio->barrio }} </li>
               <li><strong style="font-weight: 600">Ciudad</strong>: {{ $user->domicilio->ciudad }} </li>
               <li><strong style="font-weight: 600">Codigo postal</strong>: {{ $user->domicilio->codigo_postal }} </li>
             @else
@@ -30,7 +30,7 @@
         </div>
         <div class="" style="margin-right:50px">
           <h2>Datos sportivo</h2>
-          <ul style="font-size: 1.3em; margin:0; padding:0">
+          <ul style="font-size: 1.2em; margin:0; padding:0">
             <li>
               <strong style="font-weight: 600">Se unió a Sportivo</strong>: 
               {{ $user->created_at->format('d/m/Y') }}  
@@ -53,13 +53,17 @@
 
             <li>
               <strong style="font-weight: 600">Compras</strong>: 
-              13
+              {{$user->compras_realizadas == null ? '0' : $user->compras_realizadas }}
             </li>
-
+            <li >
+              <strong style="font-weight: 600; ">Dinero</strong>: 
+              $ {{ number_format($user->dinero_en_cuenta, 0, ',', '.')}}
+            </li>
             <li class="text-yellow-500">
               <strong style="font-weight: 600; ">Puntos</strong>: 
-              600
+              {{$user->puntos == null ? '0' : $user->puntos }}
             </li>
+
           </ul>
         </div>
       </div>

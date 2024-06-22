@@ -47,18 +47,27 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('admin')->group(function(){
         // Clientes activos
         Route::resource('clientes-activos', ClientesActivosController::class);
+
+        /* Clientes activos gropo de páginas */
         Route::controller(ClientesActivosController::class)->group(function(){
+
+            // Clientes activos 
+            Route::get('/tabla-clientes-activos', 'tablaClientesActivos')->name('tablaClientesActivos');
+
+            
+            // Páginas de carga de saldo
+            Route::get('/cargar-saldo', 'pagCargarSaldo')->name('RouteCargarSaldo');
+            Route::get('/cargar-saldo/{id}', 'asigarSaldoUsuario')->name('asigarSaldoUsuario');
+            Route::put('/carga-virtual-saldo/{id}', 'carga_virtual_saldo')->name('carga_virtual_saldo');
+            
+            
+            // Páginas del descuento especial
             Route::get('/solicitudes-descuentos-especiales', 'pagDescuentosEspeciales')->name('RouteDescuentosEspeciales');
             Route::get('/porcentaje-descuentos-especiales', 'porcentajeDescuentos')->name('RoutePorcentajeDescEspeciales');
-
             Route::get('/pagina-asignar-descuento/{id}', 'pagAsignarDescuento')->name('pagAsignarDescuento');
-
-
             Route::put('/aceptar-descuento-especial/{id}', 'aceptarDescuento')->name('AceptarDescuentoEspecial');
             Route::put('/rechazar-descuento-especial/{id}', 'rechazarDescuento')->name('RechazarDescuentoEspecial');
-
             Route::put('/hab-inhab-descuento-especial/{id}', 'habilitarInhabilitarDescuento')->name('HabilitarInhabilitarDescuento');
-
             Route::put('/asignar-porcentaje-descuento/{id}', 'adjuntarDescuento')->name('adjuntarDescuento');
         });
 
@@ -82,14 +91,16 @@ Route::middleware(['auth'])->group(function(){
 
         // Reposicion de mercadería -- resource
         Route::resource('reposicion-mercaderia', ReponerMercaderiaController::class);
+        Route::controller(ReponerMercaderiaController::class)->group(function(){
+            Route::get('/reponer-mercaderia-art-deport', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
+            Route::get('/reponer-mercaderia-art-deport/{id}', 'solicitarMercaderiaArtDeport')->name('solicitarMercaderiaArtDeport');
+
+        });
         
         // Los admines
         Route::resource('AdminesActivos', AdminesActivosController::class);
         Route::put('/habilitar-admin/{usuario}', [AdminesActivosController::class, 'HabilitarAdmin'])->name('habilitar_admin');
     });
 
-    // Reposicion de mercaderia
-    Route::controller(ReponerMercaderiaController::class)->group(function(){
-        Route::get('/admin/reponer-mercaderia-articulos', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
-    });
+
 });
