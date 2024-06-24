@@ -15,15 +15,15 @@
 
     <div class="m-2" style="height: 500px; display:flex; flex-direction:column">
         <h3>Solicitar reposicion de mercaderia</h3>
-        <a href="#" class="btn btn-primary">Solicitar mercadería Ropa Deportiva</a>
-        <a href="{{ route('solicitar-art-deport-index') }}" class="btn btn-info my-2">Solicitar mercadería Articulos deportivos</a>
-        <a href="#" class="btn btn-success">Solicitar mercadería Suplementos deportivos</a>
+        <a href="{{ route('solicitar-art-deport-index') }}" class="btn btn-primary ">Solicitar mercadería Articulos deportivos</a>
+        <button class="btn btn-info my-2" disabled>Solicitar mercadería Ropa Deportiva</button>
+        <button class="btn btn-success" disabled>Solicitar mercadería Suplementos deportivos</button>
         
         <h3 class="mt-3">Gestionar reposicion de merderia</h3>
 
-        <a href="#" class="btn btn-primary ">Tabla de pedido de Ropa deportiva</a>
-        <a href="{{ route('solicitar-art-deport-index') }}" class="btn btn-info my-2">Tabla de pedido de Articulos deportivos</a>
-        <a href="#" class="btn btn-success">Tabla de pedidode Suplementos deportivos</a>
+        <button class="btn btn-primary " disabled>Tabla de pedido de Ropa deportiva</button>
+        <button disabled class="btn btn-info my-2">Tabla de pedido de Articulos deportivos</button>
+        <button class="btn btn-success" disabled>Tabla de pedidode Suplementos deportivos</button>
     </div>
     <div class="">
         <h1>aside</h1>

@@ -13,32 +13,38 @@
     </div>
     <div class="">
         <h1>Solicitar mercadería de articulos deportivos</h1>
-        <table class=" table-bordered text-center" id="table-art-deport-solicitar">
-            <thead>
-                <th>Id</th>
-                <th>IMG</th>
-                <th>Articulo</th>
-                <th>Marca</th>
-                <th>Stock <br> Actual</th>
-                <th>Solicitar <br> Mercaderia</th>
-            </thead>
-            <tbody>
-                @foreach ($artDeportivos as $artDeportivo)
+        <div class="table-container">
+            <table class="table-bordered text-center fixed-columns" id="table-art-deport-solicitar">
+                <thead>
                     <tr>
-                        <td>{{ $artDeportivo->id }}</td>
-                        <td > <img style="margin: auto" src="{{ url('producto/'. $artDeportivo->foto) }}" alt="{{ $artDeportivo->nombre }}" width="50px" height="50px"> </td>
-
-                        <td>{{ $artDeportivo->nombre }}</td>
-                        <td>{{ $artDeportivo->marca }}</td>
-                        <td class="{{ $artDeportivo->stock < 20 ? 'text-rose-500' :'' }}">{{ $artDeportivo->stock }}</td>
-                        <td>
-                            <a href="{{ route('solicitarMercaderiaArtDeport', $artDeportivo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
-
-                        </td>
+                        <th class="fixed-column">ID</th>
+                        <th class="fixed-column">IMG</th>
+                        <th>Articulo</th>
+                        <th>Marca</th>
+                        <th>Tipo <br> producto</th>
+                        <th>Stock <br> Actual</th>
+                        <th>Solicitar <br> Mercaderia</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($artDeportivos as $artDeportivo)
+                        <tr>
+                            <td class="fixed-column">{{ $artDeportivo->id }}</td>
+                            <td class="fixed-column">
+                                <img style="margin: auto" src="{{ url('producto/'. $artDeportivo->foto) }}" alt="{{ $artDeportivo->nombre }}" width="50px" height="50px">
+                            </td>
+                            <td>{{ $artDeportivo->nombre }}</td>
+                            <td>{{ $artDeportivo->marca }}</td>
+                            <td>{{ $artDeportivo->tipo_producto }}</td>
+                            <td class="{{ $artDeportivo->stock < 20 ? 'text-rose-500' : '' }}">{{ $artDeportivo->stock }}</td>
+                            <td>
+                                <a href="{{ route('solicitarMercaderiaArtDeport', $artDeportivo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="">
@@ -49,6 +55,10 @@
     #table-art-deport-solicitar {
         width: 680px
     }
+    .fixed-columns th {
+        background-color: #f2f2f2;
+    }
+
 </style>
 @endsection
 
