@@ -84,7 +84,7 @@
 
         
         <!-- Reposición de mercadería -->
-        <a href="{{ route('reposicion-mercaderia.index') }}" class="text-white no-underline article0 article6">
+        <a href="{{ route('reposicion-mercaderia.index') }}" class="text-white no-underline article0 bg-yellow-500">
 
             <div class="top">
                 <span>

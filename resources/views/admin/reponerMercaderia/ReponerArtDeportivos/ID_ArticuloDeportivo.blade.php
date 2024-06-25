@@ -13,7 +13,12 @@
     </div>
     <div class="">
         <h1>Solicitar reposicion del articulo</h1>
-
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
+                <strong>Atención!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif 
         @if($artDeportivos->tipo_producto == "accesorio")
             <div class="flex justify-between">
                 <ul>
@@ -26,15 +31,14 @@
 
                 </div>
             </div>
-            <form method="POST" action="{{ route('adjuntarDescuento', $artDeportivos->id) }}" class="w-max border p-1">
+            <form method="POST" action="{{ route('reponer_mercaderia_artDeport', $artDeportivos->id) }}" class="w-max border p-1">
                 @csrf
-                @method('PUT')
                 {{-- <input type="hidden" name="descuentoId" value="{{ $DescuentoUsuario->id }}"> --}}
                 <div class="flex mb-3">
                     <label for="" class="text-xl mx-2" style="">Solicitar</label>
                     <div class="input-group  ">
                         <span class="input-group-text">unidades</span>
-                        <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="porcentaje_descuento" style="width:70px" id="precio-descontando">
+                        <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="unidades_reposicion" style="width:70px" id="precio-descontando">
                     </div>
                 </div>
                 <div class="">
@@ -44,7 +48,7 @@
                 </div>
             
                 <div class="flex justify-center">
-                    <button type="submit" class="btn btn-warning">Pedir</button>
+                    <button type="submit" class="btn btn-warning">Solicitar</button>
                 </div>
             </form>
         @else

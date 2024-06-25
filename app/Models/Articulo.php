@@ -7,6 +7,7 @@ use App\Models\Venta;
 use App\Models\Calzado;
 use App\Models\Deporte;
 use App\Models\Descuento;
+use App\Models\ReposicionMercaderia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -50,5 +51,13 @@ class Articulo extends Model
     public function ventas()
     {
         return $this->belongsToMany(Venta::class, 'venta_articulo')->withPivot('cantidad', 'precio_unitario');
+    }
+
+    // Relación con ReposicionMercaderia
+    public function reposiciones()
+    {
+        return $this->belongsToMany(ReposicionMercaderia::class, 'articulo_reposicion_mercaderias')
+                    ->withPivot('cantidad', 'talla_id', 'calzado_id')
+                    ->withTimestamps();
     }
 }

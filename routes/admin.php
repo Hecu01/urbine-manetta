@@ -95,6 +95,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/reponer-mercaderia-art-deport', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
             Route::get('/reponer-mercaderia-art-deport/{id}', 'solicitarMercaderiaArtDeport')->name('solicitarMercaderiaArtDeport');
 
+            Route::post('/reponer-mercaderia-art-deport/{id}', 'enviarSolicitudReponerArtDeport')->name('reponer_mercaderia_artDeport');
+
         });
         
         // Los admines

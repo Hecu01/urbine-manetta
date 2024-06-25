@@ -26,7 +26,22 @@
         <button class="btn btn-success" disabled>Tabla de pedidode Suplementos deportivos</button>
     </div>
     <div class="">
-        <h1>aside</h1>
+        <!-- Artículos deportivos -->
+        <article class="article0 bg-yellow-500   px-2"  id="redirigirBoton">
+            <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-truck"></i>
+                </span>
+                <span class="recuento">
+                    6
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Reposicino mercaderia <br> pendientes</p>
+            </div>
+            </a>
+        </article>
     </div>
 @endsection
 

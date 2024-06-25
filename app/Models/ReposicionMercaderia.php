@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ReposicionMercaderia extends Model
 {
     use HasFactory;
+    protected $fillable = ['articulo_id', 'reposicion_mercaderia_id', 'cantidad', 'talla_id', 'calzado_id'];
+
     // Relación con Talla
     public function talla()
     {
@@ -20,5 +22,13 @@ class ReposicionMercaderia extends Model
     public function calzado()
     {
         return $this->belongsTo(Calzado::class);
+    }
+
+    // Relación con ArticuloStockRequest
+    public function articulos()
+    {
+        return $this->belongsToMany(Articulo::class, 'articulo_reposicion_mercaderias')
+                    ->withPivot('cantidad', 'talla_id', 'calzado_id')
+                    ->withTimestamps();
     }
 }

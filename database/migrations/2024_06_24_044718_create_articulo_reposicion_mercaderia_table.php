@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('talla_id')->nullable(); // talla si es ropa deportiva       
             $table->unsignedBigInteger('calzado_id')->nullable(); // calzado si es un botín o zapatilla (por ejemplo)
             $table->integer('cantidad');
-            $table->timestamps();
 
             // Claves foráneas
             $table->foreign('articulo_id')->references('id')->on('articulos')->onDelete('cascade');
