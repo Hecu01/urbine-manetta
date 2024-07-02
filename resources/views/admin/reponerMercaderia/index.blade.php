@@ -21,8 +21,8 @@
         
         <h3 class="mt-3">Gestionar reposicion de merderia</h3>
 
-        <button class="btn btn-primary " disabled>Tabla de pedido de Ropa deportiva</button>
-        <button disabled class="btn btn-info my-2">Tabla de pedido de Articulos deportivos</button>
+        <a href="{{ route('pagAceptarRechazarMercaderia') }}" class="btn btn-primary">Tabla de pedido de Articulos deportivos</a>
+        <button class="btn btn-info my-2" disabled>Tabla de pedido de Ropa deportiva</button>
         <button class="btn btn-success" disabled>Tabla de pedidode Suplementos deportivos</button>
     </div>
     <div class="">

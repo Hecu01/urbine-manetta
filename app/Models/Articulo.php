@@ -56,7 +56,7 @@ class Articulo extends Model
     // Relación con ReposicionMercaderia
     public function reposiciones()
     {
-        return $this->belongsToMany(ReposicionMercaderia::class, 'articulo_reposicion_mercaderias')
+        return $this->belongsToMany(ReposicionMercaderia::class, 'articulo_reposicion_mercaderia')
                     ->withPivot('cantidad', 'talla_id', 'calzado_id')
                     ->withTimestamps();
     }

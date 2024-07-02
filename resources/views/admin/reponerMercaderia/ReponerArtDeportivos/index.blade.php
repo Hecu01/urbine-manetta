@@ -37,11 +37,23 @@
                             <td>{{ $artDeportivo->marca }}</td>
                             <td>{{ $artDeportivo->tipo_producto }}</td>
                             <td class="{{ $artDeportivo->stock < 20 ? 'text-rose-500' : '' }}">{{ $artDeportivo->stock }}</td>
-                            <td>
-                                <a href="{{ route('solicitarMercaderiaArtDeport', $artDeportivo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
-                            </td>
+                    
+                            @php
+                                $reposicionPendiente = $artDeportivo->reposiciones->firstWhere('estado', 'pendiente');
+                            @endphp
+                    
+                            @if($reposicionPendiente)
+                                <td>
+                                    <button class="btn btn-warning btn-sm" disabled>Solicitado</button>
+                                </td>
+                            @else
+                                <td>
+                                    <a href="{{ route('solicitarMercaderiaArtDeport', $artDeportivo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
+                
                 </tbody>
             </table>
         </div>

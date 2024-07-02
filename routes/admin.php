@@ -92,11 +92,23 @@ Route::middleware(['auth'])->group(function(){
         // Reposicion de mercadería -- resource
         Route::resource('reposicion-mercaderia', ReponerMercaderiaController::class);
         Route::controller(ReponerMercaderiaController::class)->group(function(){
+
+            // Página index - arts deportivos
             Route::get('/reponer-mercaderia-art-deport', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
+
+            // Pagina para solicitar articulos deportivos
+            Route::get('/aceptar-rechazar-articulos-deportivos', 'pagAceptarRechazarMercaderia')->name('pagAceptarRechazarMercaderia');
+            
+            // id de art deportivo
             Route::get('/reponer-mercaderia-art-deport/{id}', 'solicitarMercaderiaArtDeport')->name('solicitarMercaderiaArtDeport');
-
+            
+            // peticion al servidor
             Route::post('/reponer-mercaderia-art-deport/{id}', 'enviarSolicitudReponerArtDeport')->name('reponer_mercaderia_artDeport');
-
+            
+            // aceptar pedido
+            Route::post('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
+            Route::post('/articulos/rechazar/{id}', 'rechazarPedido')->name('articulos.rechazar');
+            Route::delete('/articulos/eliminar/{id}', 'eliminarPedido')->name('articulos.eliminar');
         });
         
         // Los admines

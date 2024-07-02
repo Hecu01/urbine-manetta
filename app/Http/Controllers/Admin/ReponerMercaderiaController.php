@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Models\User;
+use App\Models\Calzado;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
@@ -28,9 +29,22 @@ class ReponerMercaderiaController extends Controller
     // index reponer - articulos deportivo
     public function indexSoliciarArtDeport(){
         $user = Auth::user();
-        $artDeportivos = Articulo::where('id_categoria', '1')->orderBy('stock', 'asc')->get();
+        // $artDeportivos = ReposicionMercaderia::with(['articulos' => function ($query) {
+        //     $query->orderBy('stock', 'asc');
+        // }])->whereHas('articulos', function ($query) {
+        //     $query->where('id_categoria', '1');
+        // })->get();
+        $artDeportivos = Articulo::where('id_categoria', '1')->orderBy('stock', 'asc')->with('reposiciones')->get();
         $title = "Admin - Solicitar art deport";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.index', compact('title', 'artDeportivos'));
+    }
+    // Pagina donde se acepta o rechaza la reposicion de la mercaderia
+    public function pagAceptarRechazarMercaderia(){
+        $user = Auth::user();
+        $artDeportivos = ReposicionMercaderia::with('articulos')->get();
+        $contarReposiciones = ReposicionMercaderia::count();
+        $title = "Aceptar o rechazar stock";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.TablaReponerArtDeport', compact('title', 'artDeportivos','contarReposiciones'));
     }
 
 
@@ -38,31 +52,76 @@ class ReponerMercaderiaController extends Controller
     public function solicitarMercaderiaArtDeport($id){
         $user = Auth::user();
         $artDeportivos = Articulo::findOrFail($id);
+        $calzados = Calzado::all();
         $title = "Admin - ID Articulo Deportivo";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.ID_ArticuloDeportivo', compact('title', 'artDeportivos'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.ID_ArticuloDeportivo', compact('title', 'artDeportivos','calzados'));
     }
 
     // Solicitud enviada a la db - articulo deportivo
     public function enviarSolicitudReponerArtDeport(Request $request){
+
+        $unidades = $request->input('unidades_reposicion'); // Stock a solicitar
+        $tipo_producto = $request->input('tipo_producto'); // Variable tipo producto
+        $id_artDeport = $request->input('id_artDeport'); // Variable tipo producto
+        
+        // Creamos la nueva reposicion, agregamos estado pendiente
         $reposicion = ReposicionMercaderia::create([
             'estado' => 'pendiente',
         ]);
 
+        // Hacemos un if logico entre un producto array o no
+        if($tipo_producto == 'No calzado'){
+            
+            $reposicion->articulos()->attach(['id' => $id_artDeport], ['cantidad' => $unidades]);
 
-        foreach ($request->articulos as $articulo) {
-            $reposicion->articulos()->attach($articulo['id'], [
-                'cantidad' => $articulo['cantidad'],
-                'talla_id' => $articulo['talla_id'] ?? null,
-                'calzado_id' => $articulo['calzado_id'] ?? null,
-            ]);
+        } else{
+
+            foreach ($request->articulos as $articulo) {
+                $reposicion->articulos()->attach($articulo['id'], [
+                    'cantidad' => $unidades,
+                    'talla_id' => $articulo['talla_id'] ?? null,
+                    'calzado_id' => $articulo['calzado_id'] ?? null,
+                ]);
+            }
         }
-        return redirect()->route('solicitarMercaderiaArtDeport')->with('success', 'Solicitud de reposición creada.');
+        return redirect()->back()->with('success', 'Solicitud de reposición creada.');
 
 
     }
 
+    // aceptar pedido
+    public function aceptarPedido(Request $request, $id)
+    {
+        // Encuentra la relación pivot específica y actualiza el estado
+        $artDeportivo = ReposicionMercaderia::with('articulos')->find($id);
+    
+        if ($artDeportivo) {
+            // Incrementar el stock de cada artículo en la relación pivot
+            foreach ($artDeportivo->articulos as $articulo) {
+                $articulo->stock += $articulo->pivot->cantidad;
+                $articulo->save();
+            }
+    
+            $artDeportivo->estado = 'Finalizado'; // Actualiza el estado según tu lógica
+            $artDeportivo->save();
+    
+            return redirect()->back()->with('success', 'Pedido aceptado y stock actualizado correctamente.');
+        }
+    
+        return redirect()->back()->with('danger', 'Pedido no encontrado.');
+    }
 
+    // aceptar pedido
+    public function eliminarPedido(Request $request, $id)
+    {
+        // Encuentra la relación pivot específica y actualiza el estado
+        $artDeportivo = ReposicionMercaderia::find($id);
+        $artDeportivo->delete(); // Actualiza el estado según tu lógica
 
+        return redirect()->back()->with('danger', 'Pedido eliminado exitosamente');
+    }
+    
+    
     /**
      * Show the form for creating a new resource.
      */
