@@ -55,34 +55,45 @@
             </form>
         @else
             <p class="bg-rose-500 text-white text-center">Página en desarrollo</p>
-            @foreach ($calzados as $calzado)
-                @php
-                    $calzadoAsociado = $artDeportivos->calzados->firstWhere('pivot.calzado_id',
-                        $calzado->id,
-                    );
-                @endphp
+            <div class="flex justify-between">
+                <ul>
+                    <li><strong>Usuario ID: </strong>{{ $artDeportivos->id }}</li>
+                    <li><strong>Nombre: </strong>{{ $artDeportivos->nombre }}</li>
+                    <li><strong>Stock: </strong>{{ $artDeportivos->stock }}</li>
+                </ul>
+                <div class="">
+                    <img style="margin: auto" src="{{ url('producto/'. $artDeportivos->foto) }}" alt="{{ $artDeportivos->nombre }}" width="100px" height="100px">
 
-                <div class="mx-3 my-1">
-                    @if ($calzadoAsociado)
-                        {{-- Calzado existente --}}
-                        <input type="hidden" name="calzado_ids[]" value="{{ $calzadoAsociado->id }}">
-
-                        <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">Talle N° {{ $calzadoAsociado->calzado }}</label>
-                        {{-- <select name="stocks[]" id="stock-{{ $calzadoAsociado->id }}" class="border-1  border-cyan-600/[0.5] text-small input-suma p-0 px-2" style="width:70px;height:30px;">
-                            @foreach ($stockOptions as $stockOption)
-                                <option value="{{ $stockOption }}" {{ $calzadoAsociado->pivot->stocks == $stockOption ? 'selected' : '' }}>
-                                    {{ $stockOption }}
-                                    {{ $calzadoAsociado->pivot->stocks == $stockOption ? ' (*)' : '' }}
-                                </option>
-                            @endforeach
-                        </select> --}}
-                        <input type="text" name="" disabled id="stock-{{ $calzadoAsociado->id }}" class=" text-small my-1 input-suma p-0 px-2" style="width:30px;height:28px;" value="{{ $calzadoAsociado->pivot->stocks }}">
-                        <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">unidades disponibles || solicitar</label>
-                        <input type="text" name="stock_solicitado_uno_a_muchos"  id="stock-{{ $calzadoAsociado->id }}" class="border-1  border-cyan-600/[0.5] text-small my-1 input-suma p-0 px-2" style="width:30px;height:28px;" value="0">
-                    
-                    @endif
                 </div>
-            @endforeach
+            </div>
+            <form method="POST" action="{{ route('reponer_mercaderia_artDeport', $artDeportivos->id) }}" class="w-max  p-1">
+                @csrf
+                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="id_artDeport" style="width:70px" value="{{ $artDeportivos->id }}" hidden>
+
+                @foreach ($calzados as $calzado)
+                    @php
+                        $calzadoAsociado = $artDeportivos->calzados->firstWhere('pivot.calzado_id',$calzado->id);
+                    @endphp
+    
+                    <div class="mx-3 my-1">
+                        @if ($calzadoAsociado)
+                            {{-- Calzado existente --}}
+                            <input type="hidden" name="art_id_muchos_a_muchos[]" value="{{ $calzadoAsociado->id }}">
+                            <input type="hidden" name="muchos_a_muchos_bool" value="true">
+                                
+                            <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">Talle N° {{ $calzadoAsociado->calzado }}</label>
+                            
+                            <input type="text" disabled id="stock-{{ $calzadoAsociado->id }}" class=" text-small my-1 input-suma p-0 px-2" style="width:30px;height:28px;" value="{{ $calzadoAsociado->pivot->stocks }}">
+
+                            <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">unidades disponibles || solicitar</label>
+
+                            <input type="text" name="stock_solicitado_muchos_a_muchos[]"  id="stock-{{ $calzadoAsociado->id }}" class="border-1  border-cyan-600/[0.5] text-small my-1 input-suma p-0 px-2" style="width:30px;height:28px;" value="0">
+                        
+                        @endif
+                    </div>
+                @endforeach
+                <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
+            </form>
         @endif
     </div>
 

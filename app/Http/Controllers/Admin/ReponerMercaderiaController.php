@@ -63,26 +63,26 @@ class ReponerMercaderiaController extends Controller
         $unidades = $request->input('unidades_reposicion'); // Stock a solicitar
         $tipo_producto = $request->input('tipo_producto'); // Variable tipo producto
         $id_artDeport = $request->input('id_artDeport'); // Variable tipo producto
+        $relacionMuchos = $request->input('muchos_a_muchos_bool'); // Booleano muchos a muchos
+        $stockMuchos = $request->input('stock_solicitado_muchos_a_muchos');
+        $idMuchos = $request->input('art_id_muchos_a_muchos');
         
         // Creamos la nueva reposicion, agregamos estado pendiente
         $reposicion = ReposicionMercaderia::create([
             'estado' => 'pendiente',
         ]);
 
+        /* id 	articulo_id 	reposicion_mercaderia_id 	talla_id 	calzado_id 	cantidad  */
         // Hacemos un if logico entre un producto array o no
-        if($tipo_producto == 'No calzado'){
+        if($relacionMuchos == 'true'){
+            // Camino sobre relacion de muchos a muchos
+            dd($idMuchos);
             
-            $reposicion->articulos()->attach(['id' => $id_artDeport], ['cantidad' => $unidades]);
 
         } else{
+            // Por aca si no es relacion de muchos a muchos
+            $reposicion->articulos()->attach(['id' => $id_artDeport], ['cantidad' => $unidades]);
 
-            foreach ($request->articulos as $articulo) {
-                $reposicion->articulos()->attach($articulo['id'], [
-                    'cantidad' => $unidades,
-                    'talla_id' => $articulo['talla_id'] ?? null,
-                    'calzado_id' => $articulo['calzado_id'] ?? null,
-                ]);
-            }
         }
         return redirect()->back()->with('success', 'Solicitud de reposición creada.');
 
