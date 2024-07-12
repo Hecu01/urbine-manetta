@@ -7,13 +7,13 @@
         <section class="flex">
           <aside class="col-3 " style="height: 100vh; border-right:1px solid rgb(100,100,100,0.2)">
             <div class="p-1 px-2">
-              <h1>FILTROS</h1>
+              <h5 class="font-bold">FILTROS</h5>
       
               <form action="{{ url('/buscar') }}" method="GET" id="filterForm">
                 <input type="hidden" name="articulo-buscado" value="{{ $query }}">
     
                 <div class="form-group">
-                    <h5>Ordenar por precio</h5>
+                    <span class="font-semibold">Ordenar por precio</span>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="orderDirection" id="orderAsc" value="asc" {{ $orderDirection == 'asc' ? 'checked' : '' }}>
                         <label class="form-check-label" for="orderAsc">
@@ -22,14 +22,14 @@
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="orderDirection" id="orderDesc" value="desc" {{ $orderDirection == 'desc' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="orderDesc">
+                        <label class="form-check-label " for="orderDesc">
                             Mayor a Menor
                         </label>
                     </div>
                 </div>
     
                 <div class="form-group">
-                    <h5>Filtrar por marca</h5>
+                    <span class="font-semibold">Filtrar por marca</span>
                     @foreach ($resultados as $articulo)
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="brands[]" id="brand_{{ $articulo->marca }}" value="{{ $articulo->marca }}" {{ in_array($articulo->marca, $selectedBrands) ? 'checked' : '' }}>

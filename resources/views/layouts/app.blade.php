@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/nav-admin.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/nav-usuario.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/principal.css') }}">
         
         <!-- Scrollreveal -->
         <script src="https://unpkg.com/scrollreveal"></script>

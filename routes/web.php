@@ -58,7 +58,6 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/carrito-de-compras','mi_carrito')->name('carrito.index');
         Route::post('/carrito/añadir', 'añadirAlCarrito')->name('carrito.añadir');
     });
-
 });
 
 // Rutas que acceden los admins
@@ -104,4 +103,6 @@ Route::get('certificados/{filename}', function ($filename2){
     $response->header("Content-Type", $type);
     return $response;
 });
+
+
 Auth::routes();

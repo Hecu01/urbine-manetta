@@ -1,0 +1,172 @@
+/* .dropdown:hover>.dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown>.dropdown-toggle:active { */
+    /*Without this, clicking will make it sticky*/
+      /* pointer-events: none;
+  }
+
+   */
+
+   /* Movimiento campana de notificaciones */
+   @keyframes shake {
+    0%{
+      transform: rotate(35deg);
+    }
+    12.5%{
+      transform: rotate(-30deg);
+    }
+    25%{
+      transform: rotate(25deg);
+    }
+    37.5%{
+      transform: rotate(-20deg);
+    }
+    50%{
+      transform: rotate(15deg);
+    }
+    62.5%{
+      transform: rotate(-10deg);
+    }
+    75%{
+      transform: rotate(5deg);
+    }
+    100%{
+      transform: rotate(0deg);
+    }
+  }
+  
+  .notificacion:hover .fa-bell {
+    animation: shake 1.25s;
+    transform-origin: center top;
+  }
+  
+
+
+
+/* Imagenes sliders */
+
+.slider {
+  margin: 2em auto;
+  max-width: 130em;
+}
+
+.slide_viewer {
+  height: 40em;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide_group {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.slide {
+  display: none;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.slide:first-child {
+  display: block;
+}
+
+.slide:nth-of-type(1) {
+  background: #D7A151;
+}
+
+.slide:nth-of-type(2) {
+  background: #F4E4CD;
+}
+
+.slide:nth-of-type(3) {
+  background: #C75534;
+}
+
+.slide:nth-of-type(4) {
+  background: #D1D1D4;
+}
+
+.slide_buttons {
+  left: 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  z-index: 1;
+}
+
+a.slide_btn {
+  color: #474544;
+  font-size: 35px;
+  margin: 0 0.175em;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  text-decoration: none;
+}
+
+.slide_btn.active, .slide_btn:hover {
+  color: #428CC6;
+  cursor: pointer;
+}
+
+.directional_nav {
+  height: 4.5em;
+  margin: 0 auto;
+  max-width: 130em;
+  position: relative;
+}
+
+.previous_btn {
+  left: 30px;
+  margin: auto;
+  position: absolute;
+}
+
+.next_btn {
+  right: 30px;
+  margin: auto;
+  position: absolute;
+}
+
+.previous_btn, .next_btn {
+  cursor: pointer;
+  height: 65px;
+  opacity: 0.5;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  width: 65px;
+  z-index: 2;
+}
+
+.previous_btn:hover, .next_btn:hover {
+  opacity: 1;
+}
+
+@media only screen and (max-width: 767px) {
+  .previous_btn,
+  .next_btn {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1600px) {
+  .previous_btn,
+  .next_btn {
+    width: 50px;
+    /* transform: translateY(50%); */
+  }
+
+  .slide_viewer{
+    height: 37em;
+  }
+}

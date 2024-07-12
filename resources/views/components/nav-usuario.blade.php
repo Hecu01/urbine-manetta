@@ -18,15 +18,17 @@
 
 @endphp
 <!-- Si es usuarioooo (no accedera al crud) -->
-<nav class="navbar   " id="navigator-usuario" style="position: relative">
+<nav class="navbar bg-white" id="navigator-usuario" style="position: relative">
     <div class="container-fluid" id="top-navigator">
         <div class="left flex">
             @guest
                 <!-- Usuario no logueado -->
-                <div class="usuario-logueado false  ">
-
-                    <a href="{{ route('login') }}" class="text-white hover:scale-105 no-underline mx-1">Entrar</a>
-                    <a href="{{ route('register') }}" class="text-white hover:scale-105 no-underline mx-2">Registrarse</a>
+                <div class="w-32 mb-1 mr-3" >
+                    <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
+                </div>
+                <div class="usuario-logueado false items-center">
+                    <a href="{{ route('login') }}" class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Entrar</a>
+                    <a href="{{ route('register') }}" class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Registrarse</a>
                     {{-- <div class="dropdown ">
                         <a href="#"style="color: #fff; text-decoration:none" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -46,54 +48,64 @@
             @else
 
                 <!-- Usuario Logueado -->
-                <div class="usuario-logueado ">
+                <div class="usuario-logueado items-center">
 
                     <!-- Usuario -->
-                    <div class="dropdown" id="contenedor-funciones-usuario">
-                        <a href="#" class="dropdown-toggle username pt-1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="w-32 mr-3">
+                        <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div class="dropdown " id="contenedor-funciones-usuario">
+                        <a href="#" class="dropdown-toggle username font-custom-roboto text-black p-1 text-base" data-bs-toggle="dropdown" aria-expanded="false">
                             Usuario: {{ Auth::user()->name }}
                         </a>
-                        <ul class="dropdown-menu w-16 " id="funciones">
+                        <ul class="dropdown-menu w-16" id="funciones">
                             <li><a class="dropdown-item" href=" {{ route('mi-perfil.index') }} "><i class="fa-solid fa-user mx-1"></i> Mi perfil</a></li>
-                            <li> 
-                                <a class="dropdown-item" href="#" 
+                            <li>
+                                <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa-solid fa-power-off mx-1"></i>
                                     Cerrar sesión
                                 </a>
-    
+                
                                 <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </li>
                         </ul>
                     </div>
-    
-
+                
                     <!-- Notificaciones -->
                     <div class="dropdown">
-                        <a href="#" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span style="margin-left: 10px;">
-                                <i class="fa-regular fa-bell"></i>
+                        <a href="#" class="font-custom-roboto text-black flex items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="notificacion" style="margin-left: 10px;">
+                                <i class="fa-solid fa-bell text-xl hover:text-gray-500"></i>
                             </span>
                         </a>
-                        <ul class="dropdown-menu w-96 h-64">
-                            <div class="h-100 " id="notificaciones-container">
+                        <ul class="dropdown-menu absolute left-0 mt-1 w-96 h-64 hidden">
+                            <div class="h-full" id="notificaciones-container">
                                 <div class="top">
-                                    <h1 class="text-lg text-center border-b uppercase py-1">No hay notificaciones nuevas
-                                    </h1>
+                                    <h1 class="text-lg text-center border-b uppercase py-1">No hay notificaciones nuevas</h1>
                                 </div>
                                 <div class="no-notificaciones flex content-center justify-center mt-5 opacity-50 scale-105">
                                     <img src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
                                 </div>
                             </div>
-
                         </ul>
                     </div>
+                
+                    {{-- <div class="dropdown">
+                        <a href="#" class="font-custom-roboto text-black" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span style="margin-left: 10px;">
+                                <i class="fa-solid fa-bell text-xl hover:text-gray-500" ></i>
+                            </span>
+                        </a>
+
+                        
+                    </div> --}}
 
                     <!-- Ayuda -->
                     <div class="dropdown">
-                        <a href="#" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" style="color: black" data-bs-toggle="dropdown" aria-expanded="false">
                             <span style="margin-left: 10px;">
                                 <i class="fa-regular fa-circle-question"></i>
                             </span>
@@ -135,7 +147,7 @@
 
 
                 <!-- Direccion -->
-                <div class="direccion mt-1">
+                <div class="direccion mt-1 text-black">
                     <span class="svg-home">
                         <i class="fa-solid fa-house"></i>
                     </span>
@@ -155,7 +167,7 @@
                             <img src="{{ asset('assets/img/español.jpg') }}" alt="" class="w-8 mx-1">
                         </span>
                     </a>
-                    <ul class="dropdown-menu w-16" id="dropdown-idiomas" style="text-align:end; margin-left: -20px">
+                    <ul class="dropdown-menu w-16 mt-0" id="dropdown-idiomas" style="text-align:end; margin-left: -20px">
                         <li>
                             <a class="dropdown-item h-8 flex items-center" style="color:#fff" href="#">Español
                                 <span class="mx-1  ">
@@ -189,18 +201,15 @@
 
             </div>
         </div>
-
-
-
     </div>
-    <div class="bottom-nav d-flex text-cyan-700 " >
+    <div class="bottom-nav d-flex text-black font-custom-roboto text-base font-bold absolute bg-transparent pb-4 md:text-xs md:relative md:m-2" >
 
-        <a class="nav-link text-cyan-700 font-serif text-lg mx-2" style="font-family:sans-serif; text-decoration:underline"  href="{{ route('home') }}" >
-            Inicio
+        <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="{{ route('home') }}" >
+            INICIO
         </a>
         <div class="nav-item dropdown">
-            <a class="nav-link text-cyan-700 font-serif text-lg mx-2" style="font-family:sans-serif; text-decoration:underline"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Hombre
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              HOMBRE
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">Hombre</a></li>
@@ -210,8 +219,8 @@
             </ul>
         </div>
         <div class="nav-item dropdown">
-            <a class="nav-link text-cyan-700 font-serif text-lg mx-2" style="font-family:sans-serif; text-decoration:underline"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Mujer
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              MUJER
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">Mujer</a></li>
@@ -221,8 +230,8 @@
             </ul>
         </div>
         <div class="nav-item dropdown">
-            <a class="nav-link text-cyan-700 font-serif text-lg mx-2" style="font-family:sans-serif; text-decoration:underline"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Niños
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              NIÑOS
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">Niños</a></li>
@@ -232,8 +241,8 @@
             </ul>
         </div>
         <div class="nav-item dropdown">
-            <a class="nav-link text-cyan-700 font-serif text-lg mx-2" style="font-family:sans-serif; text-decoration:underline"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Deporte
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              DEPORTE
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">Deporte</a></li>
@@ -242,15 +251,15 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
         </div>
-        @guest 
-        @else    
+        @guest
+        @else
             @if (Auth::user()->administrator == true)
                 <div class="" >
-    
+
                     <a href="{{ route('ir_admin') }}" class="btn btn-danger btn-sm">ADMINISTRACIÓN</a>
                 </div>
             @endif
-        @endguest 
+        @endguest
 
 
         <div>
@@ -338,8 +347,8 @@
 
         {{-- @foreach ($deportesPorCategoria as $categoria => $deportes)
                 {{-- <a href="" >
-                    {{ $categoria }}       
-                </a> 
+                    {{ $categoria }}
+                </a>
                 <ul >
                     @foreach ($deportes as $deporte)
                         <li>{{ $deporte->nombre }}</li>
@@ -349,13 +358,13 @@
 
 
     </div>
-    <div class="bottom-bottom-nav">
+    <div class="bottom-bottom-nav bg-slate-200 p-2">
 
         {{-- Invitado --}}
         @guest
 
             <div class="dropdown " id="carrito-de-compras">
-                <button style="color: #fff" data-bs-toggle="modal" data-bs-target="#miModal" type="button">
+                <button style="color: black;" data-bs-toggle="modal" data-bs-target="#miModal" type="button">
                     <span style="margin-left: 10px;margin-top: 5px;">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </span>
@@ -397,7 +406,7 @@
 
                     @php
                         $cantCarrito = 0;
-                        foreach ($cartItems as $item){ 
+                        foreach ($cartItems as $item){
                             $cantCarrito = $cantCarrito + 1;
                         }
                     @endphp
@@ -405,7 +414,7 @@
 
                     @if ($cantCarrito != 0)
                         <span class="badge bg-danger">
-         
+
                             {{ $cantCarrito }}
                         </span>
                     @endif
@@ -421,7 +430,7 @@
                                         height="100px">
                                 </div>
                                 <div >
-                                    
+
                                     <ul>
                                         <li>{{ $item['name'] }}</li>
                                         <li>Precio: $  {{number_format($item['price'], 0, ',','.') }} AR</li>
@@ -437,7 +446,7 @@
                     @endif
 
                     {{-- <li>
-                        <a class="dropdown-item dropdown" href="#">Español</a>                
+                        <a class="dropdown-item dropdown" href="#">Español</a>
                     </li> --}}
 
                 </ul>
@@ -448,7 +457,7 @@
             <form class="d-flex" action="{{ route('buscar') }}" method="GET">
                 <input class="form-control me-2 " type="search" required name="articulo-buscado"
                     placeholder="Buscá lo que necesitás acá" aria-label="Search">
-                <button class="btn btn-danger" type="submit"> <span><i
+                <button class="btn bg-black text-white" type="submit"> <span><i
                             class="fa-solid fa-magnifying-glass"></i></span></button>
             </form>
         </div>
@@ -463,4 +472,18 @@
         var url = 'http://127.0.0.1:8000/buscar?articulo-buscado=' + encodeURIComponent(texto);
         window.location.href = url;
     }
+
+    var notificaciones   = 0;
+		var notificacion     = document.querySelector("button");
+		var campana          = document.querySelector(".notificacion");
+		notificacion.onclick = function() {
+			notificaciones++;
+			campana.classList.add("show-count");
+			campana.classList.add("notify");
+			campana.setAttribute("data-count", notificaciones);
+		}
+
+		campana.addEventListener("animationend", function() {
+			campana.classList.remove("notify");
+		})
 </script>
