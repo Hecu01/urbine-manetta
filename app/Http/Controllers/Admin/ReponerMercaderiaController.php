@@ -41,7 +41,7 @@ class ReponerMercaderiaController extends Controller
     // Pagina donde se acepta o rechaza la reposicion de la mercaderia
     public function pagAceptarRechazarMercaderia(){
         $user = Auth::user();
-        $artDeportivos = ReposicionMercaderia::with('articulos')->get();
+        $artDeportivos = ReposicionMercaderia::with('articulos.calzados')->get();
         $contarReposiciones = ReposicionMercaderia::count();
         $title = "Aceptar o rechazar stock";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.TablaReponerArtDeport', compact('title', 'artDeportivos','contarReposiciones'));
@@ -72,16 +72,41 @@ class ReponerMercaderiaController extends Controller
             'estado' => 'pendiente',
         ]);
 
-        /* id 	articulo_id 	reposicion_mercaderia_id 	talla_id 	calzado_id 	cantidad  */
+
         // Hacemos un if logico entre un producto array o no
         if($relacionMuchos == 'true'){
+
             // Camino sobre relacion de muchos a muchos
-            dd($idMuchos);
+            foreach($idMuchos as $indice => $idMucho){
+                $stock = $stockMuchos[$indice];
+                $idCalzado = $idMuchos[$indice];
+                $idRopa = $idMuchos[$indice];
+
+                // Verificamos si se solicito stock                
+                if($stock > 0){
+
+                    // if entre calzado y ropa
+                    if($tipo_producto == "calzado"){
+                        $reposicion->articulos()->attach($id_artDeport, [
+                            'cantidad' => $stock,
+                            'calzado_id' => $idCalzado  // Aquí usas el $idCalzado dinámico
+                        ]);
+                    }else{
+                        $reposicion->articulos()->attach($id_artDeport, [
+                            'cantidad' => $stock,
+                            'talla_id' => $idRopa, // Puedes llenar esto según tu lógica
+                        ]);
+                    }
+                }
+            }
             
 
         } else{
             // Por aca si no es relacion de muchos a muchos
-            $reposicion->articulos()->attach(['id' => $id_artDeport], ['cantidad' => $unidades]);
+            $reposicion->articulos()->attach(
+                ['id' => $id_artDeport],
+                ['cantidad' => $unidades]
+            );
 
         }
         return redirect()->back()->with('success', 'Solicitud de reposición creada.');

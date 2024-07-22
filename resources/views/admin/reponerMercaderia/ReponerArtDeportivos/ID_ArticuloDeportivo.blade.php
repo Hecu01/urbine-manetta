@@ -69,6 +69,7 @@
             <form method="POST" action="{{ route('reponer_mercaderia_artDeport', $artDeportivos->id) }}" class="w-max  p-1">
                 @csrf
                 <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="id_artDeport" style="width:70px" value="{{ $artDeportivos->id }}" hidden>
+                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="tipo_producto" style="width:70px" value="calzado" hidden>
 
                 @foreach ($calzados as $calzado)
                     @php

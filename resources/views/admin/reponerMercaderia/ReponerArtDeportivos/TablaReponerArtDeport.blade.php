@@ -32,74 +32,83 @@
         @endif 
         <table class="table table-bordered text-center" id="resultsTable" style="min-width: 700px">
           <thead style="text-transform: uppercase; text-align:center" class="table-dark">
-            <th>Id</th>
-            <th>Foto</th>
-            <th style="max-width: 150px">Nombre</th>
-            <th>Cantidad <br> solicitada</th>
-            <th>Estado</th>
-            <th>Accion</th>
-
-          </thead>
-          <tbody  id="tabla-articulos-deportivos">
-            @foreach ($artDeportivos as $artDeportivo)
               <tr>
-                @foreach ($artDeportivo->articulos as $articulo)
-                  <td> {{ isset($articulo->id) ? $articulo->id : '' }}</td>
-                  <td> 
-                    <img draggable="false" src="{{ url('producto/'. $articulo->foto) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px"> </td>
-                  </td>
-                  <td> {{ isset($articulo->nombre) ? $articulo->nombre : '' }}</td>
-                  <td> {{ isset($articulo->pivot->cantidad) ? $articulo->pivot->cantidad : '' }}</td>
-                  <td class="flex items-center justify-center ">
-                    <div class="{{$artDeportivo->estado == 'Finalizado' ? 'bg-green-500' :  'bg-rose-500'}} text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
-                      {{$artDeportivo->estado}}
-                    </div>
-                  </td>
-                  @if($artDeportivo->estado == "pendiente")
-                    <td class=" " style="font-size: .8em" id="acciones">
-                      <form action="{{ route('articulos.aceptar', $artDeportivo->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
-                      </form>
-                      <form action="{{ route('articulos.rechazar', $artDeportivo->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
-                      </form>
-                    </td>
-                  @else
-                    <td>
-                      
-                      <form action="{{ route('articulos.eliminar', $artDeportivo->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
-                      </form>
-                    </td>
-                  @endif
-
-                @endforeach
-
-                {{-- @php
-                  $reposicionPendiente = $artDeportivo->firstWhere('estado', 'finalizado') || $artDeportivo->firstWhere('estado', 'cancelado');
-                @endphp
-        
-                @if($reposicionPendiente)
-                  <td>
-                    
-                    <form action="{{ route('articulos.eliminar', $artDeportivo->id) }}" method="POST" class="d-inline">
-                      {{ $artDeportivo->id }}
-                      @csrf
-                      <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
-                    </form>
-                  </td>
-                @endif --}}
-
-
+                  <th>Id</th>
+                  <th>Foto</th>
+                  <th style="width: 100px">Nombre</th>
+                  <th style="width: 150px">Cantidad <br> solicitada</th>
+                  <th>Estado</th>
+                  <th>Accion</th>
               </tr>
-            @endforeach
+          </thead>
+          <tbody id="tabla-articulos-deportivos">
+            @foreach ($artDeportivos as $artDeportivo)
+    
+                {{-- Declaramos las variables necesarias --}}
+                @php 
+                  $id = $artDeportivo->id;
+                  $estado = $artDeportivo->estado;
+                @endphp
+    
+                {{-- Contamos cuántas veces aparece en la tabla pivot --}}
+                @foreach ($artDeportivo->articulos as $articulo)
+                  @php 
+                    $stockArray = [];
+                    $calzadoIdArray = [];
+                    $numeroCalzadoArray = [];
+                    $foto = $articulo->foto;
+                    $nombre = $articulo->nombre;
 
+                  @endphp
+                    @foreach ($articulo->calzados as $calzado)
+                        @php 
+                            $stockArray[] = $calzado->pivot->stocks;
+                            $calzadoIdArray[] = $calzado->id;
+                            $numeroCalzadoArray[] = $calzado->calzado; // Aquí accedes al número del calzado
+                            @endphp
+                    @endforeach
+                @endforeach
+    
+                <tr>
+                    <td>{{ $id }}</td>
+                    <td>
+                        <img draggable="false" src="{{ url('producto/'. $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
+                    </td>
+                    <td>{{ $nombre }}</td>
+                    <td>
+                        {{-- Calzado: <br> {{ json_encode($calzadoIdArray) }} <br> --}}
+                        Número: <br> {{ json_encode($numeroCalzadoArray) }} <br>
+                        Stock: <br> {{ json_encode($stockArray) }}
+                    </td>
+                    <td class="flex items-center justify-center ">
+                        <div class="{{ $estado == 'Finalizado' ? 'bg-green-500' : 'bg-rose-500' }} text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
+                            {{ $estado }}
+                        </div>
+                    </td>
+                    <td class=" " style="font-size: .8em" id="acciones">
+                      @if($estado == "pendiente")
+                        <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline">
+                          @csrf
+                          <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
+                        </form>
+                        <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline">
+                          @csrf
+                          <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
+                        </form>
+                      @else
+                        <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
+                        </form>
+                      @endif
+                    </td>
+                </tr>
+            @endforeach
+            
           </tbody>
         </table>
+      
         @if($contarReposiciones === 0)
           <h2 class="text-blue-500 text-center">Vaya vaya... parece que no hay pedidos de reposicion pendientes</h2>
         @endif
@@ -152,4 +161,3 @@
     }
   </script>
 @endsection
-
