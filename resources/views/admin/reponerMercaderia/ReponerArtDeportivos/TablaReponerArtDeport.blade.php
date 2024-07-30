@@ -36,77 +36,82 @@
                   <th>Id</th>
                   <th>Foto</th>
                   <th style="width: 100px">Nombre</th>
-                  <th style="width: 150px">Cantidad <br> solicitada</th>
+                  <th style="width: 150px">Pedido</th>
                   <th>Estado</th>
                   <th>Accion</th>
               </tr>
           </thead>
           <tbody id="tabla-articulos-deportivos">
             @foreach ($artDeportivos as $artDeportivo)
-    
-                {{-- Declaramos las variables necesarias --}}
-                @php 
-                  $id = $artDeportivo->id;
-                  $estado = $artDeportivo->estado;
-                @endphp
-    
-                {{-- Contamos cuántas veces aparece en la tabla pivot --}}
-                @foreach ($artDeportivo->articulos as $articulo)
-                  @php 
+                @php
+                    $id = $artDeportivo->id;
+                    $estado = $artDeportivo->estado;
+                    $foto = '';
+                    $nombre = '';
                     $stockArray = [];
-                    $calzadoIdArray = [];
-                    $numeroCalzadoArray = [];
+
+                @endphp
+        
+                @foreach($artDeportivo->articulos as $articulo)
+
+                  @php
                     $foto = $articulo->foto;
                     $nombre = $articulo->nombre;
-
+                    $stock = $articulo->pivot->cantidad;
+                    $calzadoIdArray = [];
+                    $numeroCalzadoArray = [];
+                    foreach ($articulo->calzados as $calzado) {
+                      $calzadoIdArray[] = $calzado->id;
+                      $numeroCalzadoArray[] = $calzado->calzado; // Aquí accedes al número del calzado
+                    }
+                    $stockArray[] = $articulo->pivot->cantidad;
                   @endphp
-                    @foreach ($articulo->calzados as $calzado)
-                        @php 
-                            $stockArray[] = $calzado->pivot->stocks;
-                            $calzadoIdArray[] = $calzado->id;
-                            $numeroCalzadoArray[] = $calzado->calzado; // Aquí accedes al número del calzado
-                            @endphp
-                    @endforeach
+
                 @endforeach
-    
+        
                 <tr>
                     <td>{{ $id }}</td>
                     <td>
-                        <img draggable="false" src="{{ url('producto/'. $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
+                        <img draggable="false" src="{{ url('producto/' . $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
                     </td>
                     <td>{{ $nombre }}</td>
-                    <td>
-                        {{-- Calzado: <br> {{ json_encode($calzadoIdArray) }} <br> --}}
-                        Número: <br> {{ json_encode($numeroCalzadoArray) }} <br>
-                        Stock: <br> {{ json_encode($stockArray) }}
+                    <td style="justify-content: center; align-items: center">
+                        <div>
+                            @if(empty($calzadoIdArray))
+                                <strong>Unidades:</strong> <br> {{ $stock ?? '' }}
+                            @else
+                                <strong>Talles:</strong> <br> {{ json_encode($numeroCalzadoArray) }} <br>
+                                <strong>Unidades:</strong> <br> {{ json_encode($stockArray) }} <br>
+                            @endif
+                        </div>
                     </td>
-                    <td class="flex items-center justify-center ">
+                    <td class="flex items-center justify-center">
                         <div class="{{ $estado == 'Finalizado' ? 'bg-green-500' : 'bg-rose-500' }} text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
                             {{ $estado }}
                         </div>
                     </td>
                     <td class=" " style="font-size: .8em" id="acciones">
-                      @if($estado == "pendiente")
-                        <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline">
-                          @csrf
-                          <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
-                        </form>
-                        <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline">
-                          @csrf
-                          <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
-                        </form>
-                      @else
-                        <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
-                        </form>
-                      @endif
+                        @if($estado == "pendiente")
+                            <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
+                            </form>
+                            <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
+                            </form>
+                        @else
+                            <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach
-            
           </tbody>
+        
         </table>
       
         @if($contarReposiciones === 0)

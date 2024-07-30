@@ -8,6 +8,8 @@ use App\Models\Calzado;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\ReposicionMercaderia;
 use Illuminate\Support\Facades\Auth; 
@@ -35,7 +37,7 @@ class ReponerMercaderiaController extends Controller
         //     $query->where('id_categoria', '1');
         // })->get();
         $artDeportivos = Articulo::where('id_categoria', '1')->orderBy('stock', 'asc')->with('reposiciones')->get();
-        $title = "Admin - Solicitar art deport";
+        $title = "Admin - Solicitar articulo deportivo";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.index', compact('title', 'artDeportivos'));
     }
     // Pagina donde se acepta o rechaza la reposicion de la mercaderia
@@ -43,7 +45,7 @@ class ReponerMercaderiaController extends Controller
         $user = Auth::user();
         $artDeportivos = ReposicionMercaderia::with('articulos.calzados')->get();
         $contarReposiciones = ReposicionMercaderia::count();
-        $title = "Aceptar o rechazar stock";
+        $title = "Admin - Aceptar o rechazar mercaderia";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.TablaReponerArtDeport', compact('title', 'artDeportivos','contarReposiciones'));
     }
 
@@ -114,27 +116,60 @@ class ReponerMercaderiaController extends Controller
 
     }
 
-    // aceptar pedido
+
     public function aceptarPedido(Request $request, $id)
     {
-        // Encuentra la relación pivot específica y actualiza el estado
-        $artDeportivo = ReposicionMercaderia::with('articulos')->find($id);
-    
+        $artDeportivo = ReposicionMercaderia::with(['articulos.calzados', 'articulos.talles'])->find($id);
+
         if ($artDeportivo) {
-            // Incrementar el stock de cada artículo en la relación pivot
+            $stockIncrementArray = [];
+            $talleIdArray = [];
+            $talleStockIncrementArray = [];
+
+            $stockPrincipal = 0;
             foreach ($artDeportivo->articulos as $articulo) {
-                $articulo->stock += $articulo->pivot->cantidad;
-                $articulo->save();
+                // Incrementar stock del artículo si no tiene relación de muchos a muchos
+                if ($articulo->calzados->isEmpty() && $articulo->talles->isEmpty()) {
+                    $articulo->stock += intval($articulo->pivot->cantidad);
+                } else {
+                    $calzadoIdArray = [];
+                    // Preparar arrays para calzados
+                    foreach ($articulo->calzados as $calzado) {
+                        $calzadoIdArray[] = $calzado->id;
+                    }
+                    $stockIncrementArray[] = intval($articulo->pivot->cantidad);
+                    $stockPrincipal += intval($articulo->pivot->cantidad);
+                    $articulo->stock += $stockPrincipal; 
+
+
+                }
             }
+            $articulo->save();
+            // Incrementar stock de calzados
+            if (!$articulo->calzados->isEmpty() && !$articulo->talles->isEmpty()) {
+                foreach ($calzadoIdArray as $index => $calzadoId) {
+                    DB::table('articulo_calzado')
+                        ->where('calzado_id', $calzadoId)
+                        ->increment('stocks', $stockIncrementArray[$index]);
     
-            $artDeportivo->estado = 'Finalizado'; // Actualiza el estado según tu lógica
+                }
+            }
+
+
+            $artDeportivo->estado = 'Finalizado';
             $artDeportivo->save();
-    
+
             return redirect()->back()->with('success', 'Pedido aceptado y stock actualizado correctamente.');
         }
-    
+
         return redirect()->back()->with('danger', 'Pedido no encontrado.');
     }
+
+    
+
+
+
+
 
     // aceptar pedido
     public function eliminarPedido(Request $request, $id)

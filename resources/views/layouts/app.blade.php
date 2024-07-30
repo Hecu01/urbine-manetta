@@ -48,7 +48,7 @@
       
         {{-- Notificaciones Toastr --}}
         <link rel="stylesheet" href="{{ asset('plugins\toastr\toastr.min.css') }}">
-        <title>{{ isset($title) ? $title : 'Sitio Web' }}</title>
+        <title>{{ isset($title) ? $title : 'Sportivo' }}</title>
 
 
     </head>

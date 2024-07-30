@@ -1,6 +1,10 @@
 @extends('admin.layouts.plantilla_admin')
 
 @section('section-principal')
+    {{-- ¿Existe el pedido de reposicion? --}}
+    @php
+        $reposicionPendiente = $artDeportivos->reposiciones->firstWhere('estado', 'pendiente');
+    @endphp
 
     <div class="w-fit mb-5">
         @include('admin.layouts.aside-left')
@@ -50,7 +54,11 @@
                 </div>
             
                 <div class="flex justify-center">
-                    <button type="submit" class="btn btn-warning">Solicitar</button>
+                    @if($reposicionPendiente)
+                        <button type="submit" class="btn btn-warning" disabled>Solicitado</button>
+                    @else
+                        <button type="submit" class="btn btn-warning">Solicitar</button>
+                    @endif
                 </div>
             </form>
         @else
@@ -84,16 +92,24 @@
                                 
                             <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">Talle N° {{ $calzadoAsociado->calzado }}</label>
                             
-                            <input type="text" disabled id="stock-{{ $calzadoAsociado->id }}" class=" text-small my-1 input-suma p-0 px-2" style="width:30px;height:28px;" value="{{ $calzadoAsociado->pivot->stocks }}">
+                            <input type="text" disabled id="stock-{{ $calzadoAsociado->id }}" class=" text-small my-1 input-suma p-0 px-2" style="width:50px;height:28px;" value="{{ $calzadoAsociado->pivot->stocks }}">
 
-                            <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">unidades disponibles || solicitar</label>
+                            <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">unidades disponibles || --> solicitar</label>
 
-                            <input type="text" name="stock_solicitado_muchos_a_muchos[]"  id="stock-{{ $calzadoAsociado->id }}" class="border-1  border-cyan-600/[0.5] text-small my-1 input-suma p-0 px-2" style="width:30px;height:28px;" value="0">
+                            <input type="text" name="stock_solicitado_muchos_a_muchos[]"  id="stock-{{ $calzadoAsociado->id }}" class="border-1  border-cyan-600/[0.5] text-small my-1 input-suma p-0 px-2" style="width:50px;height:28px;" >
                         
                         @endif
                     </div>
                 @endforeach
-                <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
+
+
+
+                @if($reposicionPendiente)
+                    <button class="btn btn-success btn-lg mt-2" type="submit" disabled>Encargado</button>
+                
+                @else
+                    <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
+                @endif
             </form>
         @endif
     </div>
