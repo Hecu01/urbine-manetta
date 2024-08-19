@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function(){
             Route::post('/reponer-mercaderia-art-deport/{id}', 'enviarSolicitudReponerArtDeport')->name('reponer_mercaderia_artDeport');
             
             // aceptar pedido
-            Route::post('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
+            Route::put('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
             Route::post('/articulos/rechazar/{id}', 'rechazarPedido')->name('articulos.rechazar');
             Route::delete('/articulos/eliminar/{id}', 'eliminarPedido')->name('articulos.eliminar');
         });

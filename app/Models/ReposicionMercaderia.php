@@ -13,13 +13,13 @@ class ReposicionMercaderia extends Model
     protected $fillable = ['estado'];
 
     // Relación con Talla
-    public function talla()
+    public function talles()
     {
         return $this->belongsTo(Talle::class);
     }
 
     // Relación con Calzado
-    public function calzado()
+    public function calzados()
     {
         return $this->belongsTo(Calzado::class);
     }
@@ -28,7 +28,7 @@ class ReposicionMercaderia extends Model
     public function articulos()
     {
         return $this->belongsToMany(Articulo::class, 'articulo_reposicion_mercaderia')
-                    ->withPivot('cantidad', 'talla_id', 'calzado_id')
+                    ->withPivot('cantidad', 'talla_id', 'calzado_id', 'valor_calzado_talle')
                     ->withTimestamps();
     }
 }

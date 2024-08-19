@@ -61,7 +61,7 @@
 
     <div class="">
         <!-- Artículos deportivos -->
-        <article class="article0 bg-yellow-500   px-2"  id="redirigirBoton">
+        <article class="article0 bg-blue-500   px-2">
             <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
             <div class="top">
                 <span>
@@ -72,7 +72,7 @@
                 </span>
             </div>
             <div class="bottom">
-                <p>Reposicino mercaderia <br> pendientes</p>
+                <p>Reposición mercaderia <br> pendientes</p>
             </div>
             </a>
         </article>

@@ -17,7 +17,7 @@
   <section class="center-actions " style="max-width: 800px">
 
       <div class="">
-        <h1>Tabla de pedidos solicitados</h1>
+        <h1 class="font-bold text-center">Tabla de pedidos solicitados</h1>
         @if (session('success'))
           <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
             <strong>Atención!</strong> {{ session('success') }}
@@ -49,6 +49,7 @@
                     $foto = '';
                     $nombre = '';
                     $stockArray = [];
+                    $numeroCalzadoArray = [];
 
                 @endphp
         
@@ -59,11 +60,11 @@
                     $nombre = $articulo->nombre;
                     $stock = $articulo->pivot->cantidad;
                     $calzadoIdArray = [];
-                    $numeroCalzadoArray = [];
                     foreach ($articulo->calzados as $calzado) {
                       $calzadoIdArray[] = $calzado->id;
-                      $numeroCalzadoArray[] = $calzado->calzado; // Aquí accedes al número del calzado
                     }
+                    $numeroCalzadoArray[] = $articulo->pivot->valor_calzado_talle; // Aquí accedes al número del calzado
+
                     $stockArray[] = $articulo->pivot->cantidad;
                   @endphp
 
@@ -86,26 +87,47 @@
                         </div>
                     </td>
                     <td class="flex items-center justify-center">
-                        <div class="{{ $estado == 'Finalizado' ? 'bg-green-500' : 'bg-rose-500' }} text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
-                            {{ $estado }}
-                        </div>
+                      @switch($estado)
+                          @case('Finalizado')
+                            <div class="bg-green-500 text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
+                              {{ $estado }}
+                            </div>
+                            @break
+
+                          @case('Pendiente')
+                            <div class="bg-yellow-500 text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
+                              {{ $estado }}
+                            </div>
+                            @break
+
+                          @case('Cancelado')
+                            <div class="bg-rose-500 text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
+                              {{ $estado }}
+                            </div>
+                            @break
+
+                          @default
+                              
+                      @endswitch
+
                     </td>
                     <td class=" " style="font-size: .8em" id="acciones">
                         @if($estado == "pendiente")
-                            <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
-                            </form>
-                            <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
-                            </form>
+                          <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline">
+                            @method('PUT')
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
+                          </form>
+                          <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
+                          </form>
                         @else
-                            <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
-                            </form>
+                          <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
+                          </form>
                         @endif
                     </td>
                 </tr>
@@ -133,7 +155,7 @@
           </span>
         </div>
         <div class="bottom">
-          <p>Reposicino mercaderia <br> pendientes</p>
+          <p>Reposición mercaderia <br> pendientes</p>
         </div>
       </a>
     </article>

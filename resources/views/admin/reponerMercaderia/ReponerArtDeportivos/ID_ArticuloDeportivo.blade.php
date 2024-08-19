@@ -62,7 +62,6 @@
                 </div>
             </form>
         @else
-            <p class="bg-rose-500 text-white text-center">Página en desarrollo</p>
             <div class="flex justify-between">
                 <ul>
                     <li><strong>Usuario ID: </strong>{{ $artDeportivos->id }}</li>
@@ -88,6 +87,7 @@
                         @if ($calzadoAsociado)
                             {{-- Calzado existente --}}
                             <input type="hidden" name="art_id_muchos_a_muchos[]" value="{{ $calzadoAsociado->id }}">
+                            <input type="hidden" name="valorCalzadoTalle[]" value="{{ $calzadoAsociado->calzado }}">
                             <input type="hidden" name="muchos_a_muchos_bool" value="true">
                                 
                             <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">Talle N° {{ $calzadoAsociado->calzado }}</label>
@@ -106,7 +106,9 @@
 
                 @if($reposicionPendiente)
                     <button class="btn btn-success btn-lg mt-2" type="submit" disabled>Encargado</button>
-                
+                    <div class="d-grid mt-4">
+                        <a class="btn btn-primary" href="{{ route('pagAceptarRechazarMercaderia') }}">TABLA DE PEDIDOS</a>
+                    </div>
                 @else
                     <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
                 @endif
@@ -115,30 +117,24 @@
     </div>
 
     <!-- Artículos deportivos -->
-    <div class="">
-        <article class="article0 bg-yellow-500   px-2"  id="redirigirBoton">
-            <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
-                <div class="top">
-                    <span>
-                        <i class="fa-solid fa-truck"></i>
-                    </span>
-                    <span class="recuento">
-                        6
-                    </span>
-                    </div>
-                    <div class="bottom">
-                        <p>Reposicino mercaderia <br> pendientes</p>
-                    </div>
+    <article class="article0 bg-yellow-500   px-2"  id="redirigirBoton">
+        <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-truck"></i>
+                </span>
+                <span class="recuento">
+                    6
+                </span>
                 </div>
-            </a>
-        </article>
-  </div>
+                <div class="bottom">
+                    <p>Reposicino mercaderia <br> pendientes</p>
+                </div>
+            </div>
+        </a>
+    </article>
     
-<style>
-    #table-art-deport-solicitar {
-        width: 680px
-    }
-</style>
+>
 @endsection
 
 

@@ -68,6 +68,8 @@ class ReponerMercaderiaController extends Controller
         $relacionMuchos = $request->input('muchos_a_muchos_bool'); // Booleano muchos a muchos
         $stockMuchos = $request->input('stock_solicitado_muchos_a_muchos');
         $idMuchos = $request->input('art_id_muchos_a_muchos');
+        $valorCalzadoTalles = $request->input('valorCalzadoTalle');
+        // dd($valorCalzadoTalle);
         
         // Creamos la nueva reposicion, agregamos estado pendiente
         $reposicion = ReposicionMercaderia::create([
@@ -83,6 +85,7 @@ class ReponerMercaderiaController extends Controller
                 $stock = $stockMuchos[$indice];
                 $idCalzado = $idMuchos[$indice];
                 $idRopa = $idMuchos[$indice];
+                $valorCalzadoTalle = $valorCalzadoTalles[$indice];
 
                 // Verificamos si se solicito stock                
                 if($stock > 0){
@@ -91,12 +94,14 @@ class ReponerMercaderiaController extends Controller
                     if($tipo_producto == "calzado"){
                         $reposicion->articulos()->attach($id_artDeport, [
                             'cantidad' => $stock,
-                            'calzado_id' => $idCalzado  // Aquí usas el $idCalzado dinámico
+                            'calzado_id' => $idCalzado,  // Aquí usas el $idCalzado dinámico
+                            'valor_calzado_talle' => $valorCalzadoTalle  
                         ]);
                     }else{
                         $reposicion->articulos()->attach($id_artDeport, [
                             'cantidad' => $stock,
                             'talla_id' => $idRopa, // Puedes llenar esto según tu lógica
+                            'valor_calzado_talle' => $valorCalzadoTalle  
                         ]);
                     }
                 }
@@ -125,18 +130,14 @@ class ReponerMercaderiaController extends Controller
             $stockIncrementArray = [];
             $talleIdArray = [];
             $talleStockIncrementArray = [];
-
             $stockPrincipal = 0;
             foreach ($artDeportivo->articulos as $articulo) {
                 // Incrementar stock del artículo si no tiene relación de muchos a muchos
                 if ($articulo->calzados->isEmpty() && $articulo->talles->isEmpty()) {
                     $articulo->stock += intval($articulo->pivot->cantidad);
                 } else {
-                    $calzadoIdArray = [];
-                    // Preparar arrays para calzados
-                    foreach ($articulo->calzados as $calzado) {
-                        $calzadoIdArray[] = $calzado->id;
-                    }
+                    
+                    $calzadoIdArray[] = intval($articulo->pivot->calzado_id);
                     $stockIncrementArray[] = intval($articulo->pivot->cantidad);
                     $stockPrincipal += intval($articulo->pivot->cantidad);
                     $articulo->stock += $stockPrincipal; 
@@ -145,8 +146,9 @@ class ReponerMercaderiaController extends Controller
                 }
             }
             $articulo->save();
+            // dd($calzadoIdArray);
             // Incrementar stock de calzados
-            if (!$articulo->calzados->isEmpty() && !$articulo->talles->isEmpty()) {
+            if (!$articulo->calzados->isEmpty() || !$articulo->talles->isEmpty()) {
                 foreach ($calzadoIdArray as $index => $calzadoId) {
                     DB::table('articulo_calzado')
                         ->where('calzado_id', $calzadoId)
@@ -171,12 +173,21 @@ class ReponerMercaderiaController extends Controller
 
 
 
-    // aceptar pedido
+    // rechazar pedido
+    public function rechazarPedido(Request $request, $id)
+    {
+        // Encuentra la relación pivot específica y actualiza el estado
+        $artDeportivo = ReposicionMercaderia::find($id);
+        $artDeportivo->estado = "Cancelado";
+        $artDeportivo->save(); 
+
+        return redirect()->back()->with('danger', 'Pedido cancelado exitosamente');
+    }
     public function eliminarPedido(Request $request, $id)
     {
         // Encuentra la relación pivot específica y actualiza el estado
         $artDeportivo = ReposicionMercaderia::find($id);
-        $artDeportivo->delete(); // Actualiza el estado según tu lógica
+        $artDeportivo->delete(); 
 
         return redirect()->back()->with('danger', 'Pedido eliminado exitosamente');
     }
