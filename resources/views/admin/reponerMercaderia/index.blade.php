@@ -1,7 +1,7 @@
 @extends('admin.layouts.plantilla_admin')
 
 @section('section-principal')
-    <div class="" style="border-right: 1px solid rgb(0,0,0,0.3); margin-top:-5px; padding-right:10px">
+    <div class="" style="border-right: 2px solid rgb(0,0,0,0.3); margin-top:-5px; padding-right:10px">
 
         <div class="w-fit ">
             @include('admin.layouts.aside-left')
@@ -15,8 +15,8 @@
     </div>
  
 
-    <div class="m-2" style="height: 500px; display:flex; flex-direction:column" >
-        <h3 class="font-bold text-2xl text-center uppercase">Reposicion de la mercaderia</h3>
+    <div class="m-2" style="height: auto; display:flex; flex-direction:column; padding-bottom:20px" >
+        <h3 class=" text-3xl text-center uppercase" style="font-weight: 600; margin-top: -5px ">Reposición de la mercaderia</h3>
         <div class="flex">
 
             <div class="">
@@ -27,10 +27,10 @@
                             <i class="fa-solid fa-football"></i>
                         </span>
                         <span class="recuento">
-                            6
+                            <i class="fa-solid fa-up-long" style="font-size: 1em"></i>
                         </span>
                     </div>
-                    <div class="bottom">
+                    <div class="bottom " style="font-size: 1.055em">
                         <p>Solicitar mercadería <br> Articulos deportivos</p>
                     </div>
                     </a>
@@ -39,36 +39,36 @@
             
             <div class="">
                 <article class="article0 bg-cyan-500   px-2 hover:scale-105"  >
-                    <a href="{{ route('solicitar-art-deport-index') }}" class="text-white no-underline">
+                    <a href="{{ route('solicitar-rop-deport-index') }}" class="text-white no-underline">
                     <div class="top">
                         <span>
                             <i class="fa-solid fa-shirt"></i>
 
                         </span>
                         <span class="recuento">
-                            6
+                            <i class="fa-solid fa-up-long" style="font-size: 1em"></i>
                         </span>
                     </div>
-                    <div class="bottom">
+                    <div class="bottom " style="font-size: 1.055em">
                         <p>Solicitar mercadería <br> Ropa Deportiva</p>
                     </div>
                     </a>
                 </article>
             </div>
             <div class="">
-                <article class="article0 bg-green-500   px-2 hover:scale-105"  >
-                    <a href="{{ route('solicitar-art-deport-index') }}" class="text-white no-underline">
+                <article class="article0 bg-green-500   px-2 hover:scale-105">
+                    <a href="{{ route('solicitar-sup-diet-index') }}" class="text-white no-underline">
                     <div class="top">
                         <span>
                             <i class="fa-solid fa-heart"></i> 
 
                         </span>
                         <span class="recuento">
-                            6
+                            <i class="fa-solid fa-up-long" style="font-size: 1em"></i>
                         </span>
                     </div>
-                    <div class="bottom">
-                        <p>Solicitar mercadería <br> Suplementos deportivos</p>
+                    <div class="bottom " style="font-size: 1.055em">
+                        <p>Solicitar mercadería <br> Suplementos y dieta</p>
                     </div>
                     </a>
                 </article>
@@ -82,17 +82,17 @@
 
             <div class="">
                 <article class="article0 bg-blue-600   px-2 hover:scale-105"  >
-                    <a href="{{ route('pagAceptarRechazarMercaderia') }}" class="text-white no-underline">
+                    <a href="{{ route('tablaArticulosDeportivos') }}" class="text-white no-underline">
                     <div class="top">
-                        <span class="flex items-center ">
+                        <span >
                             <i class="fa-solid fa-table mr-1"></i>
-                            <i class="fa-solid fa-football" style="font-size: 1.5rem"></i>
+                            <i class="fa-solid fa-football" ></i>
                         </span>
                         <span class="recuento">
-                            6
+                            {{ $repPendArtDeport }}
                         </span>
                     </div>
-                    <div class="bottom">
+                    <div class="bottom " style="font-size: 1.055em">
                         <p>Tabla de pedido <br> Articulos deportivos</p>
                     </div>
                     </a>
@@ -100,8 +100,8 @@
             </div>
             
             <div class="">
-                <article class="article0 bg-cyan-600   px-2 hover:scale-105"  >
-                    <a href="{{ route('solicitar-art-deport-index') }}" class="text-white no-underline">
+                <article class="article0 bg-cyan-600 px-2 hover:scale-105">
+                    <a href="{{ route('tablaRopasDeportivas') }}" class="text-white no-underline">
                     <div class="top">
                         <span>
                             <i class="fa-solid fa-table mr-1"></i>
@@ -109,18 +109,18 @@
 
                         </span>
                         <span class="recuento">
-                            6
+                            0
                         </span>
                     </div>
-                    <div class="bottom">
+                    <div class="bottom " style="font-size: 1.055em">
                         <p>Tabla de pedido <br> Ropa Deportiva</p>
                     </div>
                     </a>
                 </article>
             </div>
             <div class="">
-                <article class="article0 bg-green-600   px-2 hover:scale-105"  >
-                    <a href="{{ route('solicitar-art-deport-index') }}" class="text-white no-underline">
+                <article class="article0 bg-green-600 px-2 hover:scale-105" >
+                    <a href="{{ route('tablaSupDieta') }}" class="text-white no-underline">
                     <div class="top">
                         <span>
                             <i class="fa-solid fa-table mr-1"></i>
@@ -128,11 +128,11 @@
 
                         </span>
                         <span class="recuento">
-                            6
+                            0
                         </span>
                     </div>
-                    <div class="bottom">
-                        <p>Tabla de pedido <br> Suplementos deportivos</p>
+                    <div class="bottom " style="font-size: 1.055em">
+                        <p>Tabla de pedido <br> Suplementos y dieta</p>
                     </div>
                     </a>
                 </article>
@@ -141,22 +141,9 @@
     </div>
 
     <!-- card reponer mercaderias -->
-    <div class="" style="border-left: 1px solid rgb(0,0,0,0.3); margin-top:-5px">
-        <article class="article0 bg-yellow-500   px-2"  >
-            <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
-            <div class="top">
-                <span>
-                    <i class="fa-solid fa-truck"></i>
-                </span>
-                <span class="recuento">
-                    6
-                </span>
-            </div>
-            <div class="bottom">
-                <p>Reposición mercaderia <br> pendientes</p>
-            </div>
-            </a>
-        </article>
+    <div class="" style="border-left: 2px solid rgb(0,0,0,0.3); margin-top:-5px">
+        
+        @include('admin.reponerMercaderia.partials.CardReposicion')
     </div>
 @endsection
 

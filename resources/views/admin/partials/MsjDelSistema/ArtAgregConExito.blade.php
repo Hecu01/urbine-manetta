@@ -8,7 +8,7 @@
                     <h2 class="mb-1 uppercase" style="font-size: 3em;">Sportivo</h2>
                 </div>
                 <div class="p-3 center text-center border-t" style="position: relative;">
-                    <p class="mb-2" style="font-size: 2em;">¡Artículo agregado con éxito!</p>
+                    <p class="mb-2" style="font-size: 2em;">¡{{ session('success') }}!</p>
                     <span>
                         <i class="fa-solid fa-circle-check text-[#22c55e]" style="font-size:2.5em"></i>
                     </span>

@@ -93,19 +93,26 @@ Route::middleware(['auth'])->group(function(){
         Route::resource('reposicion-mercaderia', ReponerMercaderiaController::class);
         Route::controller(ReponerMercaderiaController::class)->group(function(){
 
-            // Página index - arts deportivos
-            Route::get('/reponer-mercaderia-art-deport', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
+            // Articulos deportivos
+            Route::get('/reposicion/articulos-deportivos', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
+            Route::get('/reposicion/tabla/articulos-deportivos', 'tablaArticulosDeportivos')->name('tablaArticulosDeportivos');
+            
+            // Ropas deportivas
+            Route::get('/reposicion/ropa-deportivas', 'indexSoliciarRopDeport')->name('solicitar-rop-deport-index');
+            Route::get('/reposicion/tabla/ropas-deportivas', 'tablaRopasDeportivas')->name('tablaRopasDeportivas');
+            
+            // Suplementos y dieta
+            Route::get('/reposicion/suplementos-y-dieta', 'indexSoliciarSupDieta')->name('solicitar-sup-diet-index');
+            Route::get('/reposicion/tabla/suplementos-dieta', 'tablaSupDieta')->name('tablaSupDieta');
 
-            // Pagina para solicitar articulos deportivos
-            Route::get('/aceptar-rechazar-articulos-deportivos', 'pagAceptarRechazarMercaderia')->name('pagAceptarRechazarMercaderia');
+
+            // Id del producto a reponer
+            Route::get('/reponer-mercaderia/{id}', 'solicitarMercaderia')->name('solicitarMercaderia');
             
-            // id de art deportivo
-            Route::get('/reponer-mercaderia-art-deport/{id}', 'solicitarMercaderiaArtDeport')->name('solicitarMercaderiaArtDeport');
+            // Peticion al servidor
+            Route::post('/reponer-mercaderia/{id}', 'enviarSolicitudReponerMercaderia')->name('reponer_mercaderia');
             
-            // peticion al servidor
-            Route::post('/reponer-mercaderia-art-deport/{id}', 'enviarSolicitudReponerArtDeport')->name('reponer_mercaderia_artDeport');
-            
-            // aceptar pedido
+            // Aceptar pedido
             Route::put('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
             Route::post('/articulos/rechazar/{id}', 'rechazarPedido')->name('articulos.rechazar');
             Route::delete('/articulos/eliminar/{id}', 'eliminarPedido')->name('articulos.eliminar');

@@ -3,7 +3,7 @@
 @section('section-principal')
     {{-- ¿Existe el pedido de reposicion? --}}
     @php
-        $reposicionPendiente = $artDeportivos->reposiciones->firstWhere('estado', 'pendiente');
+        $reposicionPendiente = $artDeportivos->reposiciones->firstWhere('estado', 'Pendiente');
     @endphp
 
     <div class="w-fit mb-5">
@@ -18,10 +18,7 @@
     <div class="">
         <h1>Solicitar reposicion del articulo</h1>
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
-                <strong>Atención!</strong> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            @include('admin.partials.MsjDelSistema.ArtAgregConExito') 
         @endif 
         @if($artDeportivos->tipo_producto == "accesorio")
             <div class="flex justify-between">
@@ -35,10 +32,12 @@
 
                 </div>
             </div>
-            <form method="POST" action="{{ route('reponer_mercaderia_artDeport', $artDeportivos->id) }}" class="w-max border p-1">
+            <form method="POST" action="{{ route('reponer_mercaderia', $artDeportivos->id) }}" class="w-max border p-1">
                 @csrf
                 {{-- <input type="hidden" name="descuentoId" value="{{ $DescuentoUsuario->id }}"> --}}
                 <div class="flex mb-3">
+                    <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="id_categoria" style="width:70px" value="{{ $artDeportivos->id_categoria }}" hidden>
+
                     <label for="" class="text-xl mx-2" style="">Solicitar</label>
                     <div class="input-group  ">
                         <span class="input-group-text">unidades</span>
@@ -73,9 +72,12 @@
 
                 </div>
             </div>
-            <form method="POST" action="{{ route('reponer_mercaderia_artDeport', $artDeportivos->id) }}" class="w-max  p-1">
+            <form method="POST" action="{{ route('reponer_mercaderia', $artDeportivos->id) }}" class="w-max  p-1">
                 @csrf
+                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="id_categoria" style="width:70px" value="{{ $artDeportivos->id_categoria }}" hidden>
+
                 <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="id_artDeport" style="width:70px" value="{{ $artDeportivos->id }}" hidden>
+
                 <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="tipo_producto" style="width:70px" value="calzado" hidden>
 
                 @foreach ($calzados as $calzado)
@@ -107,7 +109,7 @@
                 @if($reposicionPendiente)
                     <button class="btn btn-success btn-lg mt-2" type="submit" disabled>Encargado</button>
                     <div class="d-grid mt-4">
-                        <a class="btn btn-primary" href="{{ route('pagAceptarRechazarMercaderia') }}">TABLA DE PEDIDOS</a>
+                        <a class="btn btn-primary" href="{{ route('tablaArticulosDeportivos') }}">TABLA DE PEDIDOS</a>
                     </div>
                 @else
                     <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
@@ -116,25 +118,10 @@
         @endif
     </div>
 
-    <!-- Artículos deportivos -->
-    <article class="article0 bg-yellow-500   px-2"  id="redirigirBoton">
-        <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
-            <div class="top">
-                <span>
-                    <i class="fa-solid fa-truck"></i>
-                </span>
-                <span class="recuento">
-                    6
-                </span>
-                </div>
-                <div class="bottom">
-                    <p>Reposicino mercaderia <br> pendientes</p>
-                </div>
-            </div>
-        </a>
-    </article>
+    <!-- card reponer mercaderias -->
+    @include('admin.reponerMercaderia.partials.CardReposicion')
     
->
+
 @endsection
 
 

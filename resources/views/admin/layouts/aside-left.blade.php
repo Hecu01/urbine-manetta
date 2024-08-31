@@ -15,7 +15,7 @@
             <h3 class="text-3xl">Sportivo</h3>
             <ul style="margin: 3px 0px 0px 10px;padding:0">
                 <li><i class="fa-solid fa-screwdriver-wrench"></i> Admin: <strong class="capitalize">{{ Auth::user()->name }}</strong></li>
-                <li style><i class="fa-solid fa-location-dot"></i> De la nación 356, San Nicolás, Buenos Aires</li>
+                <li style><i class="fa-solid fa-location-dot"></i> Gutemberg 7 bis, San Nicolás.</li>
             </ul>
         </div>
     </a>

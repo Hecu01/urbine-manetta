@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="">
-        <h1>Solicitar mercadería de articulos deportivos</h1>
+        <h1>Solicitar mercadería de Suplementos y Dieta</h1>
         <div class="table-container">
             <table class="table-bordered text-center fixed-columns" id="table-art-deport-solicitar">
                 <thead>
@@ -27,19 +27,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($artDeportivos as $artDeportivo)
+                    @foreach ($articulos as $articulo)
                         <tr>
-                            <td class="fixed-column">{{ $artDeportivo->id }}</td>
+                            <td class="fixed-column">{{ $articulo->id }}</td>
                             <td class="fixed-column">
-                                <img style="margin: auto" src="{{ url('producto/'. $artDeportivo->foto) }}" alt="{{ $artDeportivo->nombre }}" width="50px" height="50px">
+                                <img style="margin: auto" src="{{ url('producto/'. $articulo->foto) }}" alt="{{ $articulo->nombre }}" width="50px" height="50px">
                             </td>
-                            <td>{{ $artDeportivo->nombre }}</td>
-                            <td>{{ $artDeportivo->marca }}</td>
-                            <td>{{ $artDeportivo->tipo_producto }}</td>
-                            <td class="{{ $artDeportivo->stock < 20 ? 'text-rose-500' : '' }}">{{ $artDeportivo->stock }}</td>
+                            <td>{{ $articulo->nombre }}</td>
+                            <td>{{ $articulo->marca }}</td>
+                            <td>{{ $articulo->tipo_producto }}</td>
+                            <td class="{{ $articulo->stock < 20 ? 'text-rose-500' : '' }}">{{ $articulo->stock }}</td>
                     
                             @php
-                                $reposicionPendiente = $artDeportivo->reposiciones->firstWhere('estado', 'Pendiente');
+                                $reposicionPendiente = $articulo->reposiciones->firstWhere('estado', 'Pendiente');
                             @endphp
                     
                             @if($reposicionPendiente)
@@ -48,7 +48,7 @@
                                 </td>
                             @else
                                 <td>
-                                    <a href="{{ route('solicitarMercaderia', $artDeportivo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
+                                    <a href="{{ route('solicitarMercaderia', $articulo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
                                 </td>
                             @endif
                         </tr>

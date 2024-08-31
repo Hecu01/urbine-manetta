@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ReposicionMercaderia extends Model
 {
     use HasFactory;
-    protected $fillable = ['estado'];
+    protected $fillable = ['estado', 'id_categoria'];
 
     // Relación con Talla
     public function talles()

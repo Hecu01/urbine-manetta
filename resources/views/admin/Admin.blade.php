@@ -41,7 +41,7 @@
                     <i class="fa-solid fa-heart"></i>
                 </span>
                 <span class="recuento">
-                    0
+                    {{ $suplementos }}
                 </span>
             </div>
             <div class="bottom">
@@ -57,7 +57,7 @@
                     <i class="fa-solid fa-football"></i>
                 </span>
                 <span class="recuento">
-                    {{ $artDeportivos }}
+                    {{ $articulos }}
                 </span>
             </div>
             <div class="bottom">
@@ -74,7 +74,7 @@
                     <i class="fa-solid fa-shirt"></i>
                 </span>
                 <span class="recuento">
-                    {{ $ropaDeportivas }}
+                    {{ $ropas }}
                 </span>
             </div>
             <div class="bottom">
@@ -91,7 +91,7 @@
                     <i class="fa-solid fa-truck"></i>
                 </span>
                 <span class="recuento">
-                    0
+                    {{ $reposicionesPendientes }}
                 </span>
             </div>
             <div class="bottom">

@@ -17,7 +17,8 @@
   <section class="center-actions " style="max-width: 800px">
 
       <div class="">
-        <h1 class="font-bold text-center">Tabla de pedidos solicitados</h1>
+        {{-- <h1 class="font-bold text-center">Tabla de pedidos solicitados</h1> --}}
+        <h1 class="font-bold text-center">Tabla Ropas</h1>
         @if (session('success'))
           <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
             <strong>Atención!</strong> {{ session('success') }}
@@ -42,10 +43,10 @@
               </tr>
           </thead>
           <tbody id="tabla-articulos-deportivos">
-            @foreach ($artDeportivos as $artDeportivo)
+            @foreach ($reposiciones as $reposicion)
                 @php
-                    $id = $artDeportivo->id;
-                    $estado = $artDeportivo->estado;
+                    $id = $reposicion->id;
+                    $estado = $reposicion->estado;
                     $foto = '';
                     $nombre = '';
                     $stockArray = [];
@@ -53,7 +54,7 @@
 
                 @endphp
         
-                @foreach($artDeportivo->articulos as $articulo)
+                @foreach($reposicion->articulos as $articulo)
 
                   @php
                     $foto = $articulo->foto;
@@ -112,18 +113,18 @@
 
                     </td>
                     <td class=" " style="font-size: .8em" id="acciones">
-                        @if($estado == "pendiente")
-                          <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline">
+                        @if($estado == "Pendiente")
+                          <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline" id="formAceptar">
                             @method('PUT')
                             @csrf
                             <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
                           </form>
-                          <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline">
+                          <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline" id="formCancelar">
                             @csrf
                             <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
                           </form>
                         @else
-                          <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline">
+                          <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline" id="formEliminar">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
@@ -136,30 +137,14 @@
         
         </table>
       
-        @if($contarReposiciones === 0)
+        @if($reposicionesPendientes === 0)
           <h2 class="text-blue-500 text-center">Vaya vaya... parece que no hay pedidos de reposicion pendientes</h2>
         @endif
       </div>
   </section>
 
-  <!-- Artículos deportivos -->
-  <div class="">
-    <article class="article0 bg-yellow-500   px-2"  id="redirigirBoton">
-      <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
-        <div class="top">
-          <span>
-            <i class="fa-solid fa-truck"></i>
-          </span>
-          <span class="recuento">
-            6
-          </span>
-        </div>
-        <div class="bottom">
-          <p>Reposición mercaderia <br> pendientes</p>
-        </div>
-      </a>
-    </article>
-  </div>
+  <!-- card reponer mercaderias -->
+  @include('admin.reponerMercaderia.partials.CardReposicion')
     
   
 
