@@ -50,9 +50,9 @@ class ReponerMercaderiaController extends Controller
     public function tablaArticulosDeportivos(){
         $user = Auth::user();
         $artDeportivos = ReposicionMercaderia::where('id_categoria', '1')
-                                            ->with('articulos.calzados')
-                                            ->orderBy('id', 'desc')
-                                            ->get();
+                                              ->with('articulos.calzados')
+                                              ->orderBy('id', 'desc')
+                                              ->get();
         $reposicionesPendientes = ReposicionMercaderia::count();
         $title = "Admin - Aceptar o rechazar mercaderia";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.tabla', compact('title', 'artDeportivos','reposicionesPendientes'));
