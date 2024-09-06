@@ -102,7 +102,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/reposicion/tabla/ropas-deportivas', 'tablaRopasDeportivas')->name('tablaRopasDeportivas');
             
             // Suplementos y dieta
-            Route::get('/reposicion/suplementos-y-dieta', 'indexSoliciarSupDieta')->name(' ');
+            Route::get('/reposicion/suplementos-y-dieta', 'indexSoliciarSupDieta')->name('solicitar-sup-diet-index');
             Route::get('/reposicion/tabla/suplementos-dieta', 'tablaSupDieta')->name('tablaSupDieta');
 
 
