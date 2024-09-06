@@ -57,18 +57,7 @@ class AdminController extends Controller
     | Página Dietas y Suplementos
     |------------------------------------------------------------------------
     */
-    public function suplementos(){
-        $user = Auth::user();
-        $deportes = Deporte::orderBy('deporte', 'asc')->get();
-        $title = "Sportivo - Suplementos";
-        $talles = Talle::all();
-        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
-        $articulos = Articulo::paginate(5);
-        $categorias = Categoria::all(); 
-
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.suplementosDieta.index', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
-        
-    }
+    
 
 
 

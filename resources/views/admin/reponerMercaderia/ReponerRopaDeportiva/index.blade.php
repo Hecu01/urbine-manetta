@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="">
-        <h1>Solicitar mercadería de ropa deportiva</h1>
+        <h1 class="font-semibold text-center">Tabla de ropa deportiva</h1>
         <div class="table-container">
             <table class="table-bordered text-center fixed-columns" id="table-art-deport-solicitar">
                 <thead>

@@ -2,19 +2,19 @@
 
 @section('section-principal')
 
-    <div class="w-fit mb-5">
-        @include('admin.layouts.aside-left')
-        <div class="flex justify-center mt-3">
+  <div class="w-fit mb-5">
+      @include('admin.layouts.aside-left')
+      <div class="flex justify-center mt-3">
         <a href="{{ route('reposicion-mercaderia.index') }}" id="boton-regresar-atras" class="bg-blue-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
             <i class="fa-solid fa-circle-arrow-left"></i> Atrás
         </a>
 
-        </div>
-  
-    </div>
+      </div>
+
+  </div>
 
 
-  <section class="center-actions " style="max-width: 800px">
+  <section class="center-actions " style="max-width: 800px; min-height:450px">
 
       <div class="">
         <h1 class="font-bold text-center">Tabla de pedidos solicitados</h1>
@@ -143,8 +143,9 @@
   </section>
 
   <!-- card reponer mercaderias -->
+
   @include('admin.reponerMercaderia.partials.CardReposicion')
-    
+
   
 
 

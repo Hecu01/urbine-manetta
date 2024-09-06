@@ -5,6 +5,7 @@
                 <!-- Logo y nombre -->
                 <div class="logo-y-nombre">
                     <div class="imagen-logo mr-1">
+
                         <img src="{{asset('assets/img/logo.png')}} " alt="" draggable="false" style="min-width: 100px">
                     </div>
                     <span >

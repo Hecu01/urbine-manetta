@@ -35,7 +35,7 @@
         </a>
         
         <!-- Sumplementos y dieta -->
-        <a href="{{ route('suplementos') }}" class="text-white no-underline article0 article3">
+        <a href="{{ route('suplementos-dieta.index') }}" class="text-white no-underline article0 article3">
             <div class="top">
                 <span>
                     <i class="fa-solid fa-heart"></i>
@@ -154,6 +154,5 @@
             transform: scale(1.1);
         }
     </style>
-    
 
 @endsection

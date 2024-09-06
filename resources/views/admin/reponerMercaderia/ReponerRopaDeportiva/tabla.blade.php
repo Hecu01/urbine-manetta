@@ -60,9 +60,9 @@
                     $foto = $articulo->foto;
                     $nombre = $articulo->nombre;
                     $stock = $articulo->pivot->cantidad;
-                    $calzadoIdArray = [];
-                    foreach ($articulo->calzados as $calzado) {
-                      $calzadoIdArray[] = $calzado->id;
+                    $talleIdArray = [];
+                    foreach ($articulo->talles as $talle) {
+                      $talleIdArray[] = $talle->id;
                     }
                     $numeroCalzadoArray[] = $articulo->pivot->valor_calzado_talle; // Aquí accedes al número del calzado
 
@@ -79,7 +79,7 @@
                     <td>{{ $nombre }}</td>
                     <td style="justify-content: center; align-items: center">
                         <div>
-                            @if(empty($calzadoIdArray))
+                            @if(empty($talleIdArray))
                                 <strong>Unidades:</strong> <br> {{ $stock ?? '' }}
                             @else
                                 <strong>Talles:</strong> <br> {{ json_encode($numeroCalzadoArray) }} <br>

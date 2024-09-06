@@ -25,7 +25,7 @@ class ReponerMercaderiaController extends Controller
     public function index(){
         $user = Auth::user();
         $title = "Admin - Mercadería";
-        $reposicionesPendientes = ReposicionMercaderia::count();
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
         $repPendArtDeport = ReposicionMercaderia::where('id_categoria', '1')->count();
         return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.index', compact('title', 'reposicionesPendientes','repPendArtDeport'));
     }
@@ -39,10 +39,10 @@ class ReponerMercaderiaController extends Controller
     // Index 
     public function indexSoliciarArtDeport(){
         $user = Auth::user();
-        $reposicionesPendientes = ReposicionMercaderia::count();
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
 
         $artDeportivos = Articulo::where('id_categoria', '1')->orderBy('stock', 'asc')->with('reposiciones')->get();
-        $title = "Admin - Solicitar articulo deportivo";
+        $title = "Solicitar articulos deportivos";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.index', compact('title', 'artDeportivos', 'reposicionesPendientes'));
     }
 
@@ -53,11 +53,12 @@ class ReponerMercaderiaController extends Controller
                                               ->with('articulos.calzados')
                                               ->orderBy('id', 'desc')
                                               ->get();
-        $reposicionesPendientes = ReposicionMercaderia::count();
-        $title = "Admin - Aceptar o rechazar mercaderia";
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
+        $title = "Tabla reposicion de ropas deportivas";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.tabla', compact('title', 'artDeportivos','reposicionesPendientes'));
     }
 
+    
     /*
     |--------------------------------------------------------------------------
     | Reposicion de Ropas deportivas
@@ -68,7 +69,7 @@ class ReponerMercaderiaController extends Controller
     // Index 
     public function indexSoliciarRopDeport(){
         $user = Auth::user();
-        $reposicionesPendientes = ReposicionMercaderia::count();
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
 
         $articulos = Articulo::where('id_categoria', '2')->orderBy('stock', 'asc')->with('reposiciones')->get();
         $title = "Solicitar ropas deportivas";
@@ -79,8 +80,8 @@ class ReponerMercaderiaController extends Controller
     public function tablaRopasDeportivas(){
         $user = Auth::user();
         $reposiciones = ReposicionMercaderia::where('id_categoria', '2')->with('articulos.talles')->get();
-        $reposicionesPendientes = ReposicionMercaderia::count();
-        $title = "Admin - Aceptar o rechazar mercaderia";
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
+        $title = "Tabla reposicion de ropas deportivas";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerRopaDeportiva.tabla', compact('title', 'reposiciones','reposicionesPendientes'));
     }
 
@@ -95,7 +96,7 @@ class ReponerMercaderiaController extends Controller
     // Index 
     public function indexSoliciarSupDieta(){
         $user = Auth::user();
-        $reposicionesPendientes = ReposicionMercaderia::count();
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
 
         $articulos = Articulo::where('id_categoria', '3')
                                   ->orderBy('stock', 'asc')
@@ -109,22 +110,22 @@ class ReponerMercaderiaController extends Controller
     public function tablaSupDieta(){
         $user = Auth::user();
         $artDeportivos = ReposicionMercaderia::where('id_categoria', '3')->with('articulos')->get();
-        $reposicionesPendientes = ReposicionMercaderia::count();
-        $title = "Admin - Aceptar o rechazar mercaderia";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.tabla', compact('title', 'artDeportivos','reposicionesPendientes'));
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->where('id_categoria', 3)->count();
+        $title = "Tabla reposicion de Suplementos y dieta";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerSuplemYDieta.tabla', compact('title', 'artDeportivos','reposicionesPendientes'));
     }
     
 
     // Pagina para reponer por id
     public function solicitarMercaderia($id){
         $user = Auth::user();
-        $artDeportivos = Articulo::findOrFail($id);
+        $articulos = Articulo::findOrFail($id);
         $calzados = Calzado::all();
         $talles = Talle::all();
-        $reposicionesPendientes = ReposicionMercaderia::count();
+        $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
 
-        $title = "Admin - ID Articulo Deportivo";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ID_Articulo', compact('title', 'artDeportivos','calzados','reposicionesPendientes'));
+        $title = "ID reposicion mercaderia";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ID_Articulo', compact('title', 'articulos','calzados','reposicionesPendientes','talles'));
     }
 
     // Solicitud enviada a la Database
@@ -198,15 +199,15 @@ class ReponerMercaderiaController extends Controller
 
         if ($artDeportivo) {
             $stockIncrementArray = [];
-            $talleIdArray = [];
             $talleStockIncrementArray = [];
             $stockPrincipal = 0;
+
             foreach ($artDeportivo->articulos as $articulo) {
                 // Incrementar stock del artículo si no tiene relación de muchos a muchos
                 if ($articulo->calzados->isEmpty() && $articulo->talles->isEmpty()) {
                     $articulo->stock += intval($articulo->pivot->cantidad);
                 } else {
-                    
+                    $tallaIdArray[] = intval($articulo->pivot->talla_id);
                     $calzadoIdArray[] = intval($articulo->pivot->calzado_id);
                     $stockIncrementArray[] = intval($articulo->pivot->cantidad);
                     $stockPrincipal += intval($articulo->pivot->cantidad);
@@ -216,15 +217,29 @@ class ReponerMercaderiaController extends Controller
                 }
             }
             $articulo->save();
-            // dd($calzadoIdArray);
-            // Incrementar stock de calzados
+
+
+            // Incrementar stock de calzados o tallas ropa
             if (!$articulo->calzados->isEmpty() || !$articulo->talles->isEmpty()) {
-                foreach ($calzadoIdArray as $index => $calzadoId) {
-                    DB::table('articulo_calzado')
-                        ->where('calzado_id', $calzadoId)
-                        ->increment('stocks', $stockIncrementArray[$index]);
-    
+                // es calzado
+                if($articulo->id_categoria == 1){
+
+                    foreach ($calzadoIdArray as $index => $calzadoId) {
+                        DB::table('articulo_calzado')
+                            ->where('calzado_id', $calzadoId)
+                            ->increment('stocks', $stockIncrementArray[$index]);
+        
+                    }
+                }else{
+
+                    foreach ($tallaIdArray as $index => $tallaId) {
+                        DB::table('articulo_talle')
+                            ->where('talle_id', $tallaId)
+                            ->increment('stocks', $stockIncrementArray[$index]);
+        
+                    }
                 }
+
             }
 
 

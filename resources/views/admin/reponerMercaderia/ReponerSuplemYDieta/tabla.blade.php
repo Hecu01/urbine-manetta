@@ -18,7 +18,7 @@
 
       <div class="">
         {{-- <h1 class="font-bold text-center">Tabla de pedidos solicitados</h1> --}}
-        <h1 class="font-bold text-center">Tabla Suplementos</h1>
+        <h1 class="font-bold text-center">Tabla de reposición de Suplementos y Dieta</h1>
         @if (session('success'))
           <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
             <strong>Atención!</strong> {{ session('success') }}
@@ -132,13 +132,21 @@
                         @endif
                     </td>
                 </tr>
+
             @endforeach
           </tbody>
         
         </table>
+
       
         @if($reposicionesPendientes === 0)
-          <h2 class="text-blue-500 text-center">Vaya vaya... parece que no hay pedidos de reposicion pendientes</h2>
+          <h2 class="text-blue-500 text-center">Vaya vaya... parece que no hay <br>pedidos de reposicion pendientes... </h2>
+          <p class="text-blue-500 text-center text-xl">
+            <a href="{{ route('solicitar-sup-diet-index') }}">
+              Solicitar más 
+            </a>
+          </p>
+          
         @endif
       </div>
   </section>
