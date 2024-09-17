@@ -1,0 +1,130 @@
+@import 'https://fonts.googleapis.com/css?family=Lato:300,400,700';
+
+/* Panel de filtros */
+.panel {
+  position: absolute;
+  left: -220px; 
+  width: 280px; 
+  box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+  height: auto; 
+  overflow: hidden; 
+  transition: left 0.3s ease; /* Animación para el movimiento del panel */
+  /* z-index: 1; */
+  /* position: fixed; */
+}
+
+/* Botón del menú */
+.panel > .menu-button {
+  width: 64px; 
+  height: 100%; 
+  float: right;
+  background: linear-gradient(0deg, #bb006a 0%, #e22232 100%);
+  position: absolute; /* Posiciona el botón dentro del panel */
+  top: 0; 
+  right: 0; 
+  cursor: pointer;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  display: flex; /* Usa flexbox para centrar el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  box-sizing: border-box; /* Incluye padding en el tamaño total */
+}
+
+/* Estilo del enlace dentro del botón del menú */
+.panel > .menu-button a {
+  display: block;
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: 300;
+  text-decoration: none;
+  transform: rotate(-90deg); /* Rotar el texto */
+}
+
+/* Flecha dentro del botón del menú */
+.arrow {
+  position: absolute;
+  top: 50%;
+  left: 112%;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid white;
+  border-right: 2px solid white;
+  transform: rotate(135deg);
+  transition: transform .3s linear;
+}
+
+.arrow.open {
+  transform: rotate(315deg);
+  transition: transform .3s linear;
+}
+
+/* Formulario dentro del panel */
+form {
+  width: 100%; /* Asegura que el formulario ocupe todo el ancho disponible dentro del panel */
+  padding: 2%; /* Padding interno del formulario */
+  margin-left: 2%; /* Elimina margen adicional alrededor del formulario */
+  border: 1px solid #ddd; /* Borde opcional para el formulario */
+  border-radius: 4px; /* Bordes redondeados opcionales */
+  background-color: #f9f9f9; /* Color de fondo opcional para el formulario */
+  box-sizing: border-box;
+  margin-left: 2%;
+  padding: 2%;
+}
+
+
+/* Espaciado dentro del formulario */
+.form-group {
+  margin-bottom: 10px; /* Espaciado entre los grupos de formulario */
+}
+
+.form-check {
+  margin-bottom: 5px; /* Espaciado entre los elementos de la lista de verificación */
+}
+
+ul.models {
+  width: 196px;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+ul.models > li {
+  background: #f2f2f2;
+  color: #5f5f71;
+  height: 96px;
+}
+
+ul.models > li > a {
+  display: block;
+  text-align: center;
+  line-height: 96px;
+  text-decoration: none;
+  color: #5f5f71;
+  font-weight: 400;
+}
+
+ul.models > li > a:hover {
+  background: #d5d5d5;
+  transition: border-width .3s linear, text-indent .3s linear;
+  text-indent: 3px;
+  border-width: 0 0 0 3px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom, #e22232, #bb006a) 1 100%;
+}
+
+ul.models > li a.active {
+  background: #e0e0e0;
+  transition: border-width .3s linear, text-indent .3s linear;
+  text-indent: 3px;
+  border-width: 0 0 0 3px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom, #e22232, #bb006a) 1 100%;
+}
+
+ul.models > li > a > img {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  vertical-align: middle;
+}

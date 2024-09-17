@@ -30,6 +30,13 @@ module.exports = {
           dark: '#333333',  // color para el modo oscuro
         },
       },
+      width: {
+        '196px': '196px',
+        '260px': '260px',
+      },
+      lineHeight: {
+        '3.5': '96px',
+      }
     },
   },
   plugins: [

@@ -358,7 +358,7 @@
 
 
     </div>
-    <div class="bottom-bottom-nav bg-slate-200 p-2">
+    <div class="bottom-bottom-nav bg-slate-200 p-2 mt-4">
 
         {{-- Invitado --}}
         @guest
