@@ -2,12 +2,13 @@
 @section('section-principal')
     <div class="section" style=" background:none; min-height:600px">
 
-
+        {{-- <x-orden /> --}}
 
         <section class="flex">
-            <aside class="col-2 "
-                style="height:100vh;display: flex; flex-direction: column border-right:1px solid rgb(100,100,100,0.2)">
-                <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :allBrands="$allBrands" :selectedGeneros="$selectedGeneros"  :allGeneros="$allGeneros" />
+
+            <aside class="col-2">
+                <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :allBrands="$allBrands"
+                    :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros" />
             </aside>
             <div class="contenedor-resultados col-9 justify-center flex flex-wrap">
                 @foreach ($resultados as $resultado)
@@ -238,7 +239,7 @@
             document.querySelectorAll('input[name="orderDirection"]').forEach(function(input) {
                 input.addEventListener('change', function() {
                     document.getElementById('filterForm')
-                .submit(); // Enviar el formulario al cambiar la opción
+                        .submit(); // Enviar el formulario al cambiar la opción
                 });
             });
         });
