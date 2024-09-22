@@ -28,6 +28,8 @@ return new class extends Migration
             // otros campos importantes
             $table->integer('unidades'); // Campo para el total de unidades vendidas
             $table->decimal('total', 10, 2); // Campo para el total de la venta
+            $table->boolean('compra_online')->nullable(); // Si compró el cliente
+            $table->boolean('entregado')->nullable(); // Si compró el cliente
             $table->string('payment_method')->nullable(); // Método de pago
             $table->string('invoice_number')->nullable(); // Número de factura
             $table->text('observacion')->nullable(); // Notas o comentarios
