@@ -10,8 +10,9 @@ use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Descuento;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller; 
+use App\Models\ReposicionMercaderia;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller; 
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -22,14 +23,21 @@ class AdminController extends Controller
     |------------------------------------------------------------------------
     */
     public function admin(){
+        // Autenticación
         $user = Auth::user();
-        $artDeportivos = Articulo::where('id_categoria', '1')->count();
-        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
+
+        // Recuento para las cards
+        $articulos = Articulo::where('id_categoria', '1')->count();
+        $ropas = Articulo::where('id_categoria', '2')->count();
+        $suplementos = Articulo::where('id_categoria', '3')->count();
         $adminesActivos = User::where('administrator', true)->count();
-        $descuentosActivos = Descuento::all()->count();
+        $descuentosActivos = Descuento::count();
+        $reposicionesPendientes = ReposicionMercaderia::count();
+        $clientes = User::where('administrator', false)->count();
+
 
         $title = "Sportivo - Admin";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'artDeportivos', 'adminesActivos', 'ropaDeportivas', 'descuentosActivos'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'articulos', 'adminesActivos', 'ropas', 'descuentosActivos','reposicionesPendientes','suplementos','clientes'));
 
     }
     
@@ -41,7 +49,7 @@ class AdminController extends Controller
     public function clientes(){
         $user = Auth::user();
         $title = "Sportivo - Clientes";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ClientesActivos', compact('title'));
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ClientesActivos', compact('title','clientes'));
         
     }
     /*
@@ -49,18 +57,7 @@ class AdminController extends Controller
     | Página Dietas y Suplementos
     |------------------------------------------------------------------------
     */
-    public function suplementos(){
-        $user = Auth::user();
-        $deportes = Deporte::orderBy('deporte', 'asc')->get();
-        $title = "Sportivo - Suplementos";
-        $talles = Talle::all();
-        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
-        $articulos = Articulo::paginate(5);
-        $categorias = Categoria::all(); 
-
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.suplementosDieta.index', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
-        
-    }
+    
 
 
 

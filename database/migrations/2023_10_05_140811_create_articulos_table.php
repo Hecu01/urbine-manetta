@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('articulos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable();
-            $table->string('talle')->nullable();
             $table->string('genero')->nullable();
             $table->decimal('precio', 8, 2)->nullable();
             $table->string('marca')->nullable();

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('reposicion_mercaderias', function (Blueprint $table) {
             $table->id();
-            $table->string('estado')->default('pendiente'); // estados: pendiente, aceptada, rechazada
+            $table->string('estado')->default('Pendiente'); // estados: pendiente, aceptada, cancelado
+            $table->foreignId('id_categoria')->nullable()->constrained('categorias')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

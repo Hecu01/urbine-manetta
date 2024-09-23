@@ -9,18 +9,14 @@ use App\Http\Controllers\Admin\DescuentoController;
 use App\Http\Controllers\Admin\AdminesActivosController;
 use App\Http\Controllers\Admin\ClientesActivosController;
 use App\Http\Controllers\Admin\ReponerMercaderiaController;
+use App\Http\Controllers\Admin\SuplemDietaController;
 
 // Rutas que acceden los admins
 Route::middleware(['auth'])->group(function(){
+    
     // Inicio admin
     Route::get('/admin', [AdminController::class, 'admin'])->name('ir_admin');
 
-
-
-    // Suplementos y Dieta
-    Route::get('/admin/suplementos-y-dieta', [AdminController::class, 'suplementos'])->name('suplementos');
-    
-    
     // Compras pendientes online
     Route::get('/admin/compras-pendientes-online', [AdminController::class, 'compras_online'])->name('compras_online');
     
@@ -45,6 +41,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/admines', [AdminController::class, 'VerAdmines'])->name('admins');
     
     Route::prefix('admin')->group(function(){
+
+        // Suplmentos y dieta
+        Route::resource('suplementos-dieta', SuplemDietaController::class);
+        
         // Clientes activos
         Route::resource('clientes-activos', ClientesActivosController::class);
 
@@ -92,11 +92,30 @@ Route::middleware(['auth'])->group(function(){
         // Reposicion de mercadería -- resource
         Route::resource('reposicion-mercaderia', ReponerMercaderiaController::class);
         Route::controller(ReponerMercaderiaController::class)->group(function(){
-            Route::get('/reponer-mercaderia-art-deport', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
-            Route::get('/reponer-mercaderia-art-deport/{id}', 'solicitarMercaderiaArtDeport')->name('solicitarMercaderiaArtDeport');
 
-            Route::post('/reponer-mercaderia-art-deport/{id}', 'enviarSolicitudReponerArtDeport')->name('reponer_mercaderia_artDeport');
+            // Articulos deportivos
+            Route::get('/reposicion/articulos-deportivos', 'indexSoliciarArtDeport')->name('solicitar-art-deport-index');
+            Route::get('/reposicion/tabla/articulos-deportivos', 'tablaArticulosDeportivos')->name('tablaArticulosDeportivos');
+            
+            // Ropas deportivas
+            Route::get('/reposicion/ropa-deportivas', 'indexSoliciarRopDeport')->name('solicitar-rop-deport-index');
+            Route::get('/reposicion/tabla/ropas-deportivas', 'tablaRopasDeportivas')->name('tablaRopasDeportivas');
+            
+            // Suplementos y dieta
+            Route::get('/reposicion/suplementos-y-dieta', 'indexSoliciarSupDieta')->name('solicitar-sup-diet-index');
+            Route::get('/reposicion/tabla/suplementos-dieta', 'tablaSupDieta')->name('tablaSupDieta');
 
+
+            // Id del producto a reponer
+            Route::get('/reponer-mercaderia/{id}', 'solicitarMercaderia')->name('solicitarMercaderia');
+            
+            // Peticion al servidor
+            Route::post('/reponer-mercaderia/{id}', 'enviarSolicitudReponerMercaderia')->name('reponer_mercaderia');
+            
+            // Aceptar pedido
+            Route::put('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
+            Route::post('/articulos/rechazar/{id}', 'rechazarPedido')->name('articulos.rechazar');
+            Route::delete('/articulos/eliminar/{id}', 'eliminarPedido')->name('articulos.eliminar');
         });
         
         // Los admines

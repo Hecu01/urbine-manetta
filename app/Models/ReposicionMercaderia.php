@@ -6,20 +6,20 @@ use App\Models\Talle;
 use App\Models\Calzado;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Relations\Pivot; (IMPORT PIVOT ??)
+// use Illuminate\Database\Eloquent\Relations\Pivot; (hay que IMPORT PIVOT ??)
 class ReposicionMercaderia extends Model
 {
     use HasFactory;
-    protected $fillable = ['articulo_id', 'reposicion_mercaderia_id', 'cantidad', 'talla_id', 'calzado_id'];
+    protected $fillable = ['estado', 'id_categoria'];
 
     // Relación con Talla
-    public function talla()
+    public function talles()
     {
         return $this->belongsTo(Talle::class);
     }
 
     // Relación con Calzado
-    public function calzado()
+    public function calzados()
     {
         return $this->belongsTo(Calzado::class);
     }
@@ -27,8 +27,8 @@ class ReposicionMercaderia extends Model
     // Relación con ArticuloStockRequest
     public function articulos()
     {
-        return $this->belongsToMany(Articulo::class, 'articulo_reposicion_mercaderias')
-                    ->withPivot('cantidad', 'talla_id', 'calzado_id')
+        return $this->belongsToMany(Articulo::class, 'articulo_reposicion_mercaderia')
+                    ->withPivot('cantidad', 'talla_id', 'calzado_id', 'valor_calzado_talle')
                     ->withTimestamps();
     }
 }

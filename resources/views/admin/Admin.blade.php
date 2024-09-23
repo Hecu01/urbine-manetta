@@ -35,13 +35,13 @@
         </a>
         
         <!-- Sumplementos y dieta -->
-        <a href="{{ route('suplementos') }}" class="text-white no-underline article0 article3">
+        <a href="{{ route('suplementos-dieta.index') }}" class="text-white no-underline article0 article3">
             <div class="top">
                 <span>
                     <i class="fa-solid fa-heart"></i>
                 </span>
                 <span class="recuento">
-                    0
+                    {{ $suplementos }}
                 </span>
             </div>
             <div class="bottom">
@@ -57,7 +57,7 @@
                     <i class="fa-solid fa-football"></i>
                 </span>
                 <span class="recuento">
-                    {{ $artDeportivos }}
+                    {{ $articulos }}
                 </span>
             </div>
             <div class="bottom">
@@ -74,7 +74,7 @@
                     <i class="fa-solid fa-shirt"></i>
                 </span>
                 <span class="recuento">
-                    {{ $ropaDeportivas }}
+                    {{ $ropas }}
                 </span>
             </div>
             <div class="bottom">
@@ -91,7 +91,7 @@
                     <i class="fa-solid fa-truck"></i>
                 </span>
                 <span class="recuento">
-                    0
+                    {{ $reposicionesPendientes }}
                 </span>
             </div>
             <div class="bottom">
@@ -154,6 +154,5 @@
             transform: scale(1.1);
         }
     </style>
-    
 
 @endsection

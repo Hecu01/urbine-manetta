@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('reposicion_mercaderia_id'); // operacion de reposicion de mercaderia
             $table->unsignedBigInteger('talla_id')->nullable(); // talla si es ropa deportiva       
             $table->unsignedBigInteger('calzado_id')->nullable(); // calzado si es un botín o zapatilla (por ejemplo)
+            $table->string('valor_calzado_talle')->nullable(); 
             $table->integer('cantidad');
 
             // Claves foráneas

@@ -17,7 +17,7 @@
     <section class="center-actions">
         <div class=""style="max-width:800px; border:1px solid rgb(0,0,0,0.2)">
 
-            <form class="row g-3 p-3" action="{{ route('articulos-deportivos.store')}}" method="POST" id="formulario-ropa-deportiva" enctype="multipart/form-data">
+            <form class="row g-3 p-3" action="{{ route('suplementos-dieta.store')}}" method="POST" id="formulario" enctype="multipart/form-data">
               @csrf
               <div class="col-md-12 flex ">
           
@@ -29,10 +29,9 @@
                               <h1 class="text-white text-3xl shadow-1 border-1 bg-blue-500 w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo suplemento deportivo')">
                                 <div class="flex items-center">
 
-                                  Nuevo artículo 
+                                  Nuevo Suplem. y dieta 
                                   <span>
-                                    <svg fill="#ffffff" style="width: 50px" viewBox="-1 0 19 19" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m15.867 7.593-1.534.967a.544.544 0 0 1-.698-.118l-.762-.957v7.256a.476.476 0 0 1-.475.475h-7.79a.476.476 0 0 1-.475-.475V7.477l-.769.965a.544.544 0 0 1-.697.118l-1.535-.967a.387.387 0 0 1-.083-.607l2.245-2.492a2.814 2.814 0 0 1 2.092-.932h.935a2.374 2.374 0 0 0 4.364 0h.934a2.816 2.816 0 0 1 2.093.933l2.24 2.49a.388.388 0 0 1-.085.608z"></path></g></svg>
-                                  </span>
+                                    <i class="fa-solid fa-heart" style="font-size:1.1em; margin:5px 10px"></i>
                                 </div>
                               </h1>
                           </div>
@@ -66,8 +65,8 @@
                                   </select>
           
           
-                                  {{-- Categoria --}}
-                                  <input type="text" name="categoria" id="" value="1" hidden>
+                                  {{-- Categoria: Suplementos y dieta --}}
+                                  <input type="text" name="categoria" id="" value="3" hidden>
                               </div>
                           </div>
                       </div>
@@ -82,22 +81,8 @@
                               <div class="input-group d-flex" >
                                   <select name="tipoProducto" class="form-select SelectTypeProduct" required >
                                       <option value="" selected hidden></option>
-                                      <option value="">Calzas térmicas</option>
-                                      <option value="">Camisetas técnicas</option>
-                                      <option value="">Chalecos</option>
-                                      <option value="">Chaquetas cortaviento</option>
-                                      <option value="">Leggings</option>
-                                      <option value="">Mallas</option>
-                                      <option value="">Musculosa</option>
-                                      <option value="">Pantalones de chándal</option>
-                                      <option value="">Remeras</option>
-                                      <option value="">Ropa de ciclismo</option>
-                                      <option value="">Shorts de running</option>
-                                      <option value="">Sujetadores deportivos</option>
-                                      <option value="">Top deportivo</option>
-                                      <option value="">Trajes de baño</option>
-                                      <option value="">Uniformes de equipo</option>
-      
+                                      <option value="Suplemento">Suplemento</option>
+                                      <option value="Barra Energetica">Barra Energetica</option>
                                   </select>   
 
                               </div>
@@ -172,7 +157,7 @@
           
                               <div class="col-md-5">
                                   <label for="stock_input" class="form-label">Stock</label>
-                                  <input type="text" name="stock" placeholder="cantidad"  class="form-control total stock_input" id="stock_input_ropa" required>
+                                  <input type="text" name="stock" placeholder="cantidad"  class="form-control " " required>
           
                               </div>
           
@@ -189,17 +174,13 @@
           
               </div>
           
-              <div id="contenedor-modal-talles">
-                  @include('admin.ropasDeportivas.partials.modal')
-              </div>
+
           
                 <div class="col-12 d-flex " style="justify-content:space-between">
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-danger">Sportivo!</button>
                     </div>
-                    <div class="col-md-3 ">
-                        <button  id="agregar-calzados"  type="button" class="bg-slate-600 rounded-full py-2 px-5 hover:cursor-pointer hover:scale-105  text-white "  data-bs-toggle="modal" data-bs-target="#modalTalles">Talles</button>
-                    </div>
+
                     <div class="col-md-3 d-flex">
                         <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
                         <div class="input-group">

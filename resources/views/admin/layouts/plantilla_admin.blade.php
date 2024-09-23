@@ -41,7 +41,7 @@
             
             <script src="{{ asset('assets/js/admin/ArticulosDeportivos.js') }}" ></script> --}}
 
-        <title>{{ isset($title) ? $title : 'Sitio Web' }}</title>
+        <title>{{ isset($title) ? $title : 'Sportivo' }}</title>
     </head>
     <body >
 

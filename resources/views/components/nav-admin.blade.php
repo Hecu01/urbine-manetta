@@ -24,7 +24,7 @@
             @guest
             @else
                 <!-- Usuario Logueado -->
-                <div class="usuario-logueado ">
+                <div class="usuario-logueado mt-1">
 
 
                     <!-- Usuario -->
@@ -72,7 +72,7 @@
                 </div>
             @endguest
             <!-- Ayuda -->
-            <div class=" " style="margin-left:10px;">
+            <div class=" mt-1 " style="margin-left:10px;">
 
 
                 <div class="dropdown ">
@@ -94,21 +94,20 @@
             </div>
 
         </div>
-        {{-- <div class="center pl-5">
 
-            <!-- Logo y nombre -->
-            <div class="logo-y-nombre ">
-                <a href="{{ route('home') }}"
-                    class="flex items-center text-white decoration-none text-2xl hover:text-3xl">
+        <div class="flex center ml-5">
+            <div class="">
+                <div class="mx-2" style="">
+                    <img src="{{asset('assets/img/logo.png')}} " alt="logo sportivo" draggable="false" style="width: 55px; height:46.5px; border-radius: 100%;  box-shadow: 0px 0px 4px #fff">
+                </div>
 
-                    <div class="imagen-logo mx-1">
-                        <img src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
-                    </div>
-
-                    Sportivo
-                </a>
             </div>
-        </div> --}}
+            
+            <div class="">
+                <a href="{{ route('home') }}" class="btn btn-danger animated-btn" style="box-shadow: 0px 0px 1px #000000">IR A TIENDA SPORTIVO</a>
+            </div>
+        </div>
+
         <div class="right d-flex">
 
 
@@ -176,20 +175,6 @@
 
 
     </div>
-    <div class="bottom-nav d-flex text-cyan-700 " >
-
-
-        <div class="" >
-
-            <a href="{{ route('home') }}" class="btn btn-success btn-sm">TIENDA</a>
-            <a href="{{ route('ir_admin') }}" class="btn btn-danger btn-sm">ADMINISTRACIÓN</a>
-        </div>
-
-
-
-
-    </div>
-
 
 </nav>
 
@@ -201,3 +186,44 @@
         window.location.href = url;
     }
 </script>
+
+<style>
+    .animated-btn {
+        position: relative;
+        box-shadow: 0px 0px 1px #000000;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    .animated-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.4);
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+        transition: transform 0.5s ease;
+    }
+
+    .animated-btn {
+        animation: shadow-move 2s infinite linear;
+    }
+
+    @keyframes shadow-move {
+        0% {
+            box-shadow: 0px 0px 5px #ffffff;
+        }
+        50% {
+            box-shadow: 0px 0px 20px #ffffff;
+        }
+        100% {
+            box-shadow: 0px 0px 5px #ffffff;
+        }
+    }
+</style>
