@@ -19,6 +19,7 @@
   overflow: hidden; 
   transition: left 0.3s ease; /* Animación para el movimiento del panel */
   z-index: 1;
+  min-height: 150px;
   /* position: fixed; */
 }
 
@@ -79,6 +80,7 @@
   box-sizing: border-box;
   margin-left: 2%;
   padding: 2%;
+  min-height: inherit;
 }
 
 
