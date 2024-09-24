@@ -8,7 +8,7 @@
 
             <aside class="col-2">
                 <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :allBrands="$allBrands"
-                    :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros" />
+                    :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros"/>
             </aside>
             <div class="contenedor-resultados col-9 justify-center flex flex-wrap">
                 @foreach ($resultados as $resultado)

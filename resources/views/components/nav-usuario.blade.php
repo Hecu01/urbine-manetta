@@ -23,12 +23,14 @@
         <div class="left flex">
             @guest
                 <!-- Usuario no logueado -->
-                <div class="w-32 mb-1 mr-3" >
+                <div class="w-32 mb-1 mr-3">
                     <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
                 </div>
                 <div class="usuario-logueado false items-center">
-                    <a href="{{ route('login') }}" class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Entrar</a>
-                    <a href="{{ route('register') }}" class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Registrarse</a>
+                    <a href="{{ route('login') }}"
+                        class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Entrar</a>
+                    <a href="{{ route('register') }}"
+                        class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Registrarse</a>
                     {{-- <div class="dropdown ">
                         <a href="#"style="color: #fff; text-decoration:none" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -46,7 +48,6 @@
 
                 </div>
             @else
-
                 <!-- Usuario Logueado -->
                 <div class="usuario-logueado items-center">
 
@@ -55,28 +56,31 @@
                         <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div class="dropdown " id="contenedor-funciones-usuario">
-                        <a href="#" class="dropdown-toggle username font-custom-roboto text-black p-1 text-base" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle username font-custom-roboto text-black p-1 text-base"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Usuario: {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu w-16" id="funciones">
-                            <li><a class="dropdown-item" href=" {{ route('mi-perfil.index') }} "><i class="fa-solid fa-user mx-1"></i> Mi perfil</a></li>
+                            <li><a class="dropdown-item" href=" {{ route('mi-perfil.index') }} "><i
+                                        class="fa-solid fa-user mx-1"></i> Mi perfil</a></li>
                             <li>
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa-solid fa-power-off mx-1"></i>
                                     Cerrar sesión
                                 </a>
-                
+
                                 <form id="logout-form" action="{{ route('logout') }}"method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </li>
                         </ul>
                     </div>
-                
+
                     <!-- Notificaciones -->
                     <div class="dropdown">
-                        <a href="#" class="font-custom-roboto text-black flex items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="font-custom-roboto text-black flex items-center" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             <span class="notificacion" style="margin-left: 10px;">
                                 <i class="fa-solid fa-bell text-xl hover:text-gray-500"></i>
                             </span>
@@ -84,7 +88,8 @@
                         <ul class="dropdown-menu absolute left-0 mt-1 w-96 h-64 hidden">
                             <div class="h-full" id="notificaciones-container">
                                 <div class="top">
-                                    <h1 class="text-lg text-center border-b uppercase py-1">No hay notificaciones nuevas</h1>
+                                    <h1 class="text-lg text-center border-b uppercase py-1">No hay notificaciones nuevas
+                                    </h1>
                                 </div>
                                 <div class="no-notificaciones flex content-center justify-center mt-5 opacity-50 scale-105">
                                     <img src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
@@ -92,7 +97,7 @@
                             </div>
                         </ul>
                     </div>
-                
+
                     {{-- <div class="dropdown">
                         <a href="#" class="font-custom-roboto text-black" data-bs-toggle="dropdown" aria-expanded="false">
                             <span style="margin-left: 10px;">
@@ -167,7 +172,8 @@
                             <img src="{{ asset('assets/img/español.jpg') }}" alt="" class="w-8 mx-1">
                         </span>
                     </a>
-                    <ul class="dropdown-menu w-16 mt-0" id="dropdown-idiomas" style="text-align:end; margin-left: -20px">
+                    <ul class="dropdown-menu w-16 mt-0" id="dropdown-idiomas"
+                        style="text-align:end; margin-left: -20px">
                         <li>
                             <a class="dropdown-item h-8 flex items-center" style="color:#fff" href="#">Español
                                 <span class="mx-1  ">
@@ -202,59 +208,80 @@
             </div>
         </div>
     </div>
-    <div class="bottom-nav d-flex text-black font-custom-roboto text-base font-bold absolute bg-transparent pb-4 md:text-xs md:relative md:m-2" >
+    <div
+        class="bottom-nav d-flex text-black font-custom-roboto text-base font-bold absolute bg-transparent pb-4 md:text-xs md:relative md:m-2">
 
-        <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="{{ route('home') }}" >
+        <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4" href="{{ route('home') }}">
             INICIO
         </a>
         <div class="nav-item dropdown">
-            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              HOMBRE
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
+                href="{{ route('buscar', ['generos[]' => 'masculino']) }}" id="navbarDropdown" role="button"
+                {{-- data-bs-toggle="dropdown" 
+                aria-expanded="false" --}}>
+                HOMBRE
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Hombre</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="dropdown-item" href="{{ route('buscar', ['generos' => ['masculino']]) }}">Hombre</a>
+                </li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
         </div>
         <div class="nav-item dropdown">
-            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              MUJER
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
+                href="{{ route('buscar', ['generos[]' => 'femenino']) }}" id="navbarDropdown" role="button"
+                {{-- data-bs-toggle="dropdown" 
+                aria-expanded="false" --}}>
+                MUJER
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Mujer</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="dropdown-item" href="#">Mujer</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
+        <div class="nav-item dropdown">
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
+                href="{{ route('buscar', ['generos[]' => 'niños']) }}" id="navbarDropdown" role="button"
+                {{-- data-bs-toggle="dropdown" 
+                aria-expanded="false" --}}>
+                NIÑOS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Niños</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              NIÑOS
+                DEPORTE
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Niños</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                @foreach ($allDeportes as $deporte)
+                    <li>
+                        <a class="dropdown-item" href="{{ route('buscar', ['deporte' => $deporte]) }}">{{ $deporte }}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
-        <div class="nav-item dropdown">
-            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"  href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              DEPORTE
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Deporte</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-        </div>
+        
+        
+
         @guest
         @else
             @if (Auth::user()->administrator == true)
-                <div class="" >
+                <div class="">
 
                     <a href="{{ route('ir_admin') }}" class="btn btn-danger btn-sm">ADMINISTRACIÓN</a>
                 </div>
@@ -397,8 +424,8 @@
             {{-- Logueado --}}
         @else
             <div class="dropdown " id="carrito-de-compras">
-                <a href="#" class="btn btn-secondary" style="margin-top: -4px;  text-decoration: none" data-bs-toggle="dropdown" aria-expanded="false"
-                    data-bs-toggle="modal" data-bs-target="#miModal">
+                <a href="#" class="btn btn-secondary" style="margin-top: -4px;  text-decoration: none"
+                    data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#miModal">
                     <span style="">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </span>
@@ -406,7 +433,7 @@
 
                     @php
                         $cantCarrito = 0;
-                        foreach ($cartItems as $item){
+                        foreach ($cartItems as $item) {
                             $cantCarrito = $cantCarrito + 1;
                         }
                     @endphp
@@ -429,11 +456,11 @@
                                     <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
                                         height="100px">
                                 </div>
-                                <div >
+                                <div>
 
                                     <ul>
                                         <li>{{ $item['name'] }}</li>
-                                        <li>Precio: $  {{number_format($item['price'], 0, ',','.') }} AR</li>
+                                        <li>Precio: $ {{ number_format($item['price'], 0, ',', '.') }} AR</li>
                                         <li>Cantidad: {{ $item['quantity'] }}</li>
                                         {{-- <li>talle: {{ $item['quantity'] }}</li> --}}
                                     </ul>
@@ -473,17 +500,17 @@
         window.location.href = url;
     }
 
-    var notificaciones   = 0;
-		var notificacion     = document.querySelector("button");
-		var campana          = document.querySelector(".notificacion");
-		notificacion.onclick = function() {
-			notificaciones++;
-			campana.classList.add("show-count");
-			campana.classList.add("notify");
-			campana.setAttribute("data-count", notificaciones);
-		}
+    var notificaciones = 0;
+    var notificacion = document.querySelector("button");
+    var campana = document.querySelector(".notificacion");
+    notificacion.onclick = function() {
+        notificaciones++;
+        campana.classList.add("show-count");
+        campana.classList.add("notify");
+        campana.setAttribute("data-count", notificaciones);
+    }
 
-		campana.addEventListener("animationend", function() {
-			campana.classList.remove("notify");
-		})
+    campana.addEventListener("animationend", function() {
+        campana.classList.remove("notify");
+    })
 </script>
