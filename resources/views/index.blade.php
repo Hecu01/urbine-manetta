@@ -56,7 +56,7 @@
 
 
         @guest        
-            <div class="container-fluid banner bg-blue-600 py-5 px-2 my-2 flex justify-between items-center">
+            <div class="container-fluid banner py-5 px-2  flex justify-between items-center" style="background: #0080db">
 
                 <div class="div-left ml-3" >
                     <div class="text-white  ">
@@ -84,9 +84,9 @@
 
             {{-- BANNER LOGUEADO --}}
         @else
-            <div class="container-fluid bg-blue-600 py-5 px-2 my-2 flex justify-between ">
+            <div class="container-fluid banner py-5 px-2  flex justify-between items-center" style="background: #0080db">
 
-                <div class="div-left" >
+                <div class="div-left ml-3" >
                     <div class="text-white  ">
                         <h5 class="uppercase mb-2">
                             <strong>
@@ -96,15 +96,17 @@
                         <h4 class="">Ya iniciaste sesión. Ahora podés comprar <br>   y agregar comentarios a nuestros productos</h4>
                         <div class=" mt-3 flex">
 
-                            <a href=" {{ route('login') }} " class="block text-white no-underline rounded-lg py-2 text-center px-3 bg-red-500 hover:scale-105">Entraste</a>
-                            <a href="{{ route('register') }}" class="block text-white no-underline rounded-lg py-2 mx-2  text-center px-3 bg-red-500 hover:scale-105">Registrado</a>
+                            <a href=" {{ route('login') }} " class="block text-white no-underline rounded-lg py-2 text-center px-3 bg-red-500 hover:scale-105">Empezar a comprar</a>
+                            <a href=" {{ route('login') }} " class="block text-white no-underline rounded-lg py-2 mx-2 text-center px-3 bg-red-500 hover:scale-105">Descuentos</a>
                         </div>
 
 
                     </div>
 
                 </div>
-
+                <div class="right-banner">
+                    <h1 class="title-right-banner">SPORTIVO E-COMMERCE</h1>
+                </div>
                 
 
             </div>

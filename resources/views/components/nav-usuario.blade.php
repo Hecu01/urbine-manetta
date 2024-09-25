@@ -24,8 +24,9 @@
             @guest
                 <!-- Usuario no logueado -->
                 <div class="w-32 mb-1 mr-3" >
-                    <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
-                </div>
+                    <img src="{{  asset('assets/img/sportivo-logo.svg')}}" alt="Logo" class="w-full h-full object-contain">
+                </div> 
+
                 <div class="usuario-logueado false items-center">
                     <a href="{{ route('login') }}" class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Entrar</a>
                     <a href="{{ route('register') }}" class="text-black font-custom-roboto text-base font-bold hover:scale-110 no-underline mx-2">Registrarse</a>
@@ -52,7 +53,7 @@
 
                     <!-- Usuario -->
                     <div class="w-32 mr-3">
-                        <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
+                        <img src="{{ asset('assets/img/sportivo-logo.svg')}}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div class="dropdown " id="contenedor-funciones-usuario">
                         <a href="#" class="dropdown-toggle username font-custom-roboto text-black p-1 text-base" data-bs-toggle="dropdown" aria-expanded="false">
