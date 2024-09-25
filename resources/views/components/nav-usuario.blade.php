@@ -270,7 +270,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 @foreach ($allDeportes as $deporte)
                     <li>
-                        <a class="dropdown-item" href="{{ route('buscar', ['deporte' => $deporte]) }}">{{ $deporte }}</a>
+                        <a class="dropdown-item" href="{{ route('buscar', ['deportes' => $deporte]) }}">{{ $deporte }}</a>
                     </li>
                 @endforeach
             </ul>

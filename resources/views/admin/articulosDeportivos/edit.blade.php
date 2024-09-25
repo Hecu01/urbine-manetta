@@ -50,17 +50,17 @@
                                     <label for="inputEmail4" class="form-label">Genero del producto</label>
                                     
                                     <select name="genero" id="" class="form-select">
-                                        @if ($articulo->genero == 'M')
+                                        @if ($articulo->genero == 'Masculino')
                                             <option value="{{ $articulo->genero }}" selected>Masculino (original)</option>
-                                            <option value="F">Femenino</option>
-                                            <option value="U">Unisex</option>
-                                        @elseif($articulo->genero == 'F')
-                                            <option value="M">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                            <option value="Unisex">Unisex</option>
+                                        @elseif($articulo->genero == 'Femenino')
+                                            <option value="Masculino">Masculino</option>
                                             <option value="{{ $articulo->genero }}" selected>Femenino (Original)</option>
-                                            <option value="U">Unisex</option>
+                                            <option value="Unisex">Unisex</option>
                                         @else
-                                            <option value="M">Masculino</option>
-                                            <option value="F">Femenino</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
                                             <option value="{{ $articulo->genero }}" selected>Unisex (Original)</option>
                                         @endif
                                     </select>

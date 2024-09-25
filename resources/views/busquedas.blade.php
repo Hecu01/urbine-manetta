@@ -7,12 +7,12 @@
         <section class="flex">
 
             <aside class="col-2">
-                <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :allBrands="$allBrands"
+                <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :selectedDeporte="$selectedDeporte" :allBrands="$allBrands"
                     :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros"/>
             </aside>
-            <div class="contenedor-resultados col-9 justify-center flex flex-wrap">
+            <div class="contenedor-resultados col-8 justify-center flex flex-wrap">
                 @foreach ($resultados as $resultado)
-                    <div class="w-min bg-white shadow-lg  h-fit position-relative">
+                    <div class="w-min bg-white shadow-lg p-1 h-fit position-relative">
                         @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
                             <span class="bg-red-500 text-white"
                                 style="padding: 0px 3px ;font-size:13px;position:absolute; right:24px; top:76px; font-family:'Times New Roman', Times, serif">
