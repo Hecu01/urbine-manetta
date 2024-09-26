@@ -19,6 +19,14 @@ class BusquedaController extends Controller
         $selectedDeporte = $request->input('deportes', []); // Cambiado a 'deportes'
 
         // Si no es un array, conviértelo en uno
+        if (!is_array($selectedGeneros)) {
+            $selectedGeneros = [$selectedGeneros];
+        }
+        
+        if (!is_array($selectedBrands)) {
+            $selectedBrands = [$selectedBrands];
+        }
+
         if (!is_array($selectedDeporte)) {
             $selectedDeporte = [$selectedDeporte];
         }

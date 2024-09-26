@@ -10,9 +10,9 @@
                 <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :selectedDeporte="$selectedDeporte" :allBrands="$allBrands"
                     :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros"/>
             </aside>
-            <div class="contenedor-resultados col-8 justify-center flex flex-wrap">
+            <div class="contenedor-resultados col-8 flex flex-wrap gap-4">
                 @foreach ($resultados as $resultado)
-                    <div class="w-min bg-white shadow-lg p-1 h-fit position-relative">
+                    <div class="w-min bg-white shadow-lg p-3 h-fit position-relative">
                         @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
                             <span class="bg-red-500 text-white"
                                 style="padding: 0px 3px ;font-size:13px;position:absolute; right:24px; top:76px; font-family:'Times New Roman', Times, serif">
@@ -26,8 +26,8 @@
                         @guest
                         @else
                             @if (Auth::user()->administrator == true)
-                                <div class="position-absolute right-1 rounded-full flex">
-                                    <div class="hover:scale-125">
+                                <div class="position-absolute right-1 rounded-full flex m-1">
+                                    <div class="hover:scale-125 mr-1.5">
 
                                         <a href=""
                                             class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline"
@@ -43,7 +43,7 @@
                                 </div>
                             @endif
                         @endguest
-                        <div class="flex font-sans ">
+                        <div class="flex font-sans mt-3">
                             <div class="flex w-48 relative content-center">
                                 <img src="{{ url('producto/' . $resultado->foto) }}" alt="{{ $resultado->nombre }}"
                                     draggable="false" class="absolute inset-0   object-cover w-full  m-auto"

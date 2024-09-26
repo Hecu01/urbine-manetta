@@ -67,11 +67,10 @@
     <x-nav-usuario :allDeportes="$allDeportes ?? []" />
 
 
-
     <!-- Sección principal -->
     <div class="">
         <section>
-            @yield('section-principal')
+            @yield('section-principal') 
         </section>
     </div>
 

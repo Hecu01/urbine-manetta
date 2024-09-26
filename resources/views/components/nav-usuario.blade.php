@@ -216,13 +216,13 @@
         </a>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos[]' => 'masculino']) }}" id="navbarDropdown" role="button"
+                href="{{ route('buscar', ['generos' => ['masculino', 'unisex'], 'publico_dirigido' => ['adultos']]) }}" id="navbarDropdown" role="button"
                 {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 HOMBRE
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{ route('buscar', ['generos' => ['masculino']]) }}">Hombre</a>
+                <li><a class="dropdown-item" href="{{ route('buscar', ['generos' => ['masculino', 'unisex']]) }}">Hombre</a>
                 </li>
                 <li><a class="dropdown-item" href="#">Another action</a></li>
                 <li>
@@ -233,7 +233,7 @@
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos[]' => 'femenino']) }}" id="navbarDropdown" role="button"
+                href="{{ route('buscar', ['generos[]' => ['femenino', 'unisex']]) }}" id="navbarDropdown" role="button"
                 {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 MUJER
@@ -249,7 +249,7 @@
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos[]' => 'niños']) }}" id="navbarDropdown" role="button"
+                href="{{ route('buscar', ['generos' => ['niños', 'unisex'], 'publico_dirigido' => ['niños']]) }}" id="navbarDropdown" role="button"
                 {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 NIÑOS
