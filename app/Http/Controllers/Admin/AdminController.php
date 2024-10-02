@@ -12,7 +12,7 @@ use App\Models\Descuento;
 use Illuminate\Http\Request;
 use App\Models\ReposicionMercaderia;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -22,7 +22,8 @@ class AdminController extends Controller
     | Página Index del admin 
     |------------------------------------------------------------------------
     */
-    public function admin(){
+    public function admin()
+    {
         // Autenticación
         $user = Auth::user();
 
@@ -37,27 +38,26 @@ class AdminController extends Controller
 
 
         $title = "Sportivo - Admin";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'articulos', 'adminesActivos', 'ropas', 'descuentosActivos','reposicionesPendientes','suplementos','clientes'));
-
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'articulos', 'adminesActivos', 'ropas', 'descuentosActivos', 'reposicionesPendientes', 'suplementos', 'clientes'));
     }
-    
+
     /*
     |------------------------------------------------------------------------
     | Página Clientes Activos
     |------------------------------------------------------------------------
     */
-    public function clientes(){
+    public function clientes()
+    {
         $user = Auth::user();
         $title = "Sportivo - Clientes";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ClientesActivos', compact('title','clientes'));
-        
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ClientesActivos', compact('title', 'clientes'));
     }
     /*
     |------------------------------------------------------------------------
     | Página Dietas y Suplementos
     |------------------------------------------------------------------------
     */
-    
+
 
 
 
@@ -66,10 +66,11 @@ class AdminController extends Controller
     | Página Compras pendientes online
     |------------------------------------------------------------------------
     */
-    public function compras_online(){
+    public function compras_online()
+    {
         $user = Auth::user();
         $title = "Compras pendientes";
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ComprasPendientesOnline', compact('title'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ComprasPendientesOnline', compact('title'));
     }
 
     /*
@@ -77,18 +78,20 @@ class AdminController extends Controller
     | Controladores de Ropa deportiva
     |------------------------------------------------------------------------
     */
-    public function IndexRopaDeportiva(){
+    public function IndexRopaDeportiva()
+    {
         // Importamos modelos 
         $talles = Talle::all();
         $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
         $articulos = Articulo::paginate(5);
-        $categorias = Categoria::all(); 
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.RopasDeportivas', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias'));
+        $categorias = Categoria::all();
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.RopasDeportivas', compact('talles', 'ropaDeportivas', 'articulos', 'categorias'));
     }
 
-    public function añadir_ropa(Request $request){
+    public function añadir_ropa(Request $request)
+    {
 
-        if($request->hasFile('foto')){
+        if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $carpetaDestino = storage_path('productos');
             $filename = $file->getClientOriginalName();
@@ -98,7 +101,7 @@ class AdminController extends Controller
         $articuloNuevo = Articulo::create([
             'nombre' =>  $request->nombre_producto,
             'genero' => $request->genero,
-            'precio' => $request->precio,            
+            'precio' => $request->precio,
             'stock' => $request->stock,
             'descripcion' => $request->descripcion,
             'marca' => $request->marca,
@@ -121,15 +124,16 @@ class AdminController extends Controller
 
             if (isset($stocks[$indice]) > 0) {
                 // Obtén la instancia de talla existente
-                $talle = Talle::where('talle_ropa', $talle)->first(); 
+                $talle = Talle::where('talle_ropa', $talle)->first();
 
                 $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
 
                 // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
                 $articuloNuevo->talles()->attach($talle->id, ['stocks' => $stock]);
-
             }
         }
         return back()->with('mensaje', 'Artículo agregado con éxito.');
     }
+
+    
 }

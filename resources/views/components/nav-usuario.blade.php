@@ -17,6 +17,8 @@
     }
 
 @endphp
+
+
 <!-- Si es usuarioooo (no accedera al crud) -->
 <nav class="navbar bg-white" id="navigator-usuario" style="position: relative">
     <div class="container-fluid" id="top-navigator">
@@ -24,7 +26,7 @@
             @guest
                 <!-- Usuario no logueado -->
                 <div class="w-32 mb-1 mr-3">
-                    <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
+                    <img src="{{ asset('assets/img/sportivo-logo.svg') }}" alt="Logo" class="w-full h-full object-contain">
                 </div>
                 <div class="usuario-logueado false items-center">
                     <a href="{{ route('login') }}"
@@ -53,7 +55,7 @@
 
                     <!-- Usuario -->
                     <div class="w-32 mr-3">
-                        <img src="assets/img/sportivo-logo.svg" alt="Logo" class="w-full h-full object-contain">
+                        <img src="{{ asset('assets/img/sportivo-logo.svg') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div class="dropdown " id="contenedor-funciones-usuario">
                         <a href="#" class="dropdown-toggle username font-custom-roboto text-black p-1 text-base"

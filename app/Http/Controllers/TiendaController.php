@@ -7,6 +7,7 @@ use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
+use App\Models\Publicidad;
 
 class tiendaController extends Controller
 {
@@ -14,8 +15,14 @@ class tiendaController extends Controller
     // Página index
     public function home(){
         $title = "Sportivo - Inicio";
-        return view('index', compact( 'title'));
+
+        // Para obtener las publicidades
+        $publicidades = Publicidad::all(); 
+
+
+        return view('index', compact( 'title','publicidades'));
     }
+    
     public function pago(){
         $title = "Métodos de pago";
         return view('orders.payment', compact('title'));
