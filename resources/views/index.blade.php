@@ -19,46 +19,36 @@
 
         </div>
 
-        <div class="slider">
-            <div class="slide_viewer">
-                <div class="slide_group">
-                    @foreach ($publicidades as $publicidad)
-                        <div class="slide text-center content-center">
-                            <p>{{ $publicidad->foto }}</p> <!-- Muestra la URL de la imagen -->
-                            {{-- <img src="{{ asset('storage/publicidades/' . $publicidad->ruta) }}" alt="Publicidad"
-                                style="max-width: 100%; height: auto;"> --}}
-                            <img src="{{ asset('publicidades/' . $publicidad->foto) }}" alt="">
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div>
-                
-                @foreach ($publicidades as $publicidad)
-                    <div class="flex w-48 relative content-center">
-                        <a href="">
-                        <img src="{{ asset('storage/publicidades/' . $publicidad->foto) }}" alt="{{ $publicidad->id }}"
-                            draggable="false" class="absolute inset-0 object-cover w-full m-auto" loading="lazy" />
-                        </a>
+        @if ($publicidades->isNotEmpty())
+            <div class="slider">
+                <div class="slide_viewer">
+                    <div class="slide_group">
+                        @foreach ($publicidades as $publicidad)
+                            <div class="slide text-center content-center">
+                                <a href="{{ $publicidad->url }}">
+                                    <img src="{{ Storage::url($publicidad->foto) }}" alt="{{ $publicidad->nombre }}">
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
-            </div>
-
-            <div class="slide_buttons">
-            </div>
-
-            <div class="directional_nav">
-                <div class="previous_btn" title="Previous">
-                    <img src="assets/img/previous_btn.svg" alt="Previous">
                 </div>
-                <div class="next_btn" title="Next">
-                    <img src="assets/img/next_btn.svg" alt="Next">
-                </div>
-            </div><!-- End // .directional_nav -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        </div><!-- End // .slider -->
 
+                
+
+                <div class="slide_buttons">
+                </div>
+
+                <div class="directional_nav">
+                    <div class="previous_btn" title="Previous">
+                        <img src="assets/img/previous_btn.svg" alt="Previous">
+                    </div>
+                    <div class="next_btn" title="Next">
+                        <img src="assets/img/next_btn.svg" alt="Next">
+                    </div>
+                </div><!-- End // .directional_nav -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            </div><!-- End // .slider -->
+        @endif
 
 
 

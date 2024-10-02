@@ -30,95 +30,35 @@ class PublicidadController extends Controller
         return view('index', compact('publicidades')); // Asegúrate de que la ruta sea la correcta
     }
 
-
-    // public function subir(Request $request)
-    // {
-    //     // Validar que el archivo sea una imagen
-    //     $request->validate([
-    //         'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //     ]);
-
-    //     // Obtener el archivo de la imagen
-    //     $file = $request->file('imagen');
-
-    //     // Definir la carpeta de destino
-    //     $carpetaDestino = storage_path('/publicidades');
-
-    //     // Obtener el nombre original del archivo
-    //     $filename = $file->getClientOriginalName();
-
-    //     // Mover el archivo a la carpeta de destino
-    //     $uploadSuccess = $request->file('imagen')->move($carpetaDestino, $file->getClientOriginalName());
-
-    //     // Verificar si el archivo se subió correctamente
-    //     if (!$uploadSuccess) {
-    //         return back()->with('error', 'Error al subir la imagen');
-    //     }
-
-    //     // Crear una nueva entrada en la base de datos
-    //     $publicidad = new Publicidad();
-    //     $publicidad->ruta = $filename; // Almacenar solo la ruta relativa
-    //     $publicidad->save();
-
-    //     // Mensaje de actualización exitosa
-    //     Session::flash('mensaje', true);
-
-    //     return redirect()->route('index.publicidad')->with('success', 'Publicidad subida correctamente');
-    // }
-    // public function subir(Request $request)
-    // {
-    //     $request->validate([
-    //         'imagen' => 'required|image'
-    //     ]);
-
-    //     // Almacenar la imagen en una carpeta específica
-    //     $rutaImagen = $request->file('foto')->store('/publicidades');
-
-    //     // Guardar la ruta en la base de datos (sin la parte "public/")
-    //     $publicidad = new Publicidad();
-    //     $publicidad->foto = basename($rutaImagen);
-    //     $publicidad->save();
-
-    //     return redirect()->route('index.publicidad');
-    // }
-
     public function store(Request $request)
     {
+        // Validar la entrada
         $request->validate([
             'titulo' => 'required|string|max:255',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url' => 'required|url',
         ]);
 
-
-        // Path para guardar la imagen en storage
-        $filename = null; // Inicializa la variable para el nombre del archivo
+        // Guardar la imagen en la carpeta 'publicidades' dentro de 'storage/app/public'
         if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $carpetaDestino = storage_path('publicidades');
-            $filename = $file->getClientOriginalName();
-            $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
+            // Almacenar la imagen y obtener la ruta relativa
+            $rutaImagen = $request->file('foto')->store('publicidades', 'public');
 
+            // Crear nueva entrada en la base de datos
+            $publicidadNueva = new Publicidad();
+            $publicidadNueva->nombre = $request->titulo; // Asigna el título al campo 'nombre'
+            $publicidadNueva->foto = $rutaImagen; // Almacena la ruta de la imagen en el campo 'foto'
+            $publicidadNueva->url = $request->url; // Asigna la URL
+            $publicidadNueva->save(); // Guarda la publicidad en la base de datos
 
-            // Verifica si la imagen se subió correctamente
-            if (!$uploadSuccess) {
-                return back()->with('error', 'Error al subir la imagen');
-            }
+            // Mensaje de éxito
+            Session::flash('mensaje', 'Publicidad creada exitosamente.');
+            return redirect()->route('publicidad.index');
         }
 
-
-        // Crear nueva entrada en la base de datos
-        $publicidadNueva = new Publicidad();
-        $publicidadNueva->nombre = $request->titulo; // Asigna el título al campo 'nombre'
-        $publicidadNueva->foto = $filename; // Asigna la ruta de la imagen
-        $publicidadNueva->url = $request->url; // Asigna la URL
-        $publicidadNueva->save(); // Guarda la publicidad en la base de datos
-
-        // Mensaje de éxito
-        Session::flash('mensaje', 'Publicidad creada exitosamente.');
-        return redirect()->route('publicidad.index');
+        // Mensaje de error si no se subió la imagen
+        return back()->with('error', 'Error al subir la imagen.');
     }
-    
 
     public function destroy($id)
     {

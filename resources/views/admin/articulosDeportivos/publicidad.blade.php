@@ -14,13 +14,24 @@
             </div>
 
         </div>
-
         @if (session('mensaje'))
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                {{ session('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session('eliminado'))
+            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                {{ session('eliminado') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        {{-- @if (session('mensaje'))
             @include('admin.partials.MsjDelSistema.ArtAgregConExito')
         @endif
         @if (session('eliminado'))
             @include('admin.partials.MsjDelSistema.ProductoEliminado')
-        @endif
+        @endif --}}
 
         <section class="mb-2 mx-3">
             <div class=" py-4 border-y-2">
@@ -73,7 +84,7 @@
                         @foreach ($publicidades as $publicidad)
                             <tr class="text-center">
                                 <td class="border border-gray-300 px-4 py-2"> <img
-                                        src="{{ url('publicidades/' . $publicidad->foto) }}" alt="{{ $publicidad->nombre }}"
+                                        src="{{ Storage::url($publicidad->foto) }}" alt="{{ $publicidad->nombre }}"
                                         width="70px" height="70px"> </td>
                                 <td class="border border-gray-300 px-4 py-2">{{ $publicidad->id }}</td>
                                 <td class="border border-gray-300 px-4 py-2">{{ $publicidad->nombre }}</td>
@@ -96,32 +107,8 @@
                             </tr>
                         @endforeach
                     </tbody>
-
-
-
                 </table>
-                {{-- <div class="publicidad-list">
-                    <table>
-
-                    @foreach ($publicidades as $publicidad)
-                        <div>
-                            <img src="{{ $publicidad->foto }}" alt="{{ $publicidad->url }}">
-                            <!-- Botones para futuras funcionalidades -->
-                            <!-- Formulario de eliminación -->
-                            <form action="{{ route('publicidad.destroy', $publicidad->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700"
-                                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta publicidad?');">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    @endforeach
-                </div> --}}
             </div>
-
-
 
 
             <script>
