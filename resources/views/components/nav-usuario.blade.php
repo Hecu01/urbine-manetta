@@ -93,8 +93,8 @@
                                     <h1 class="text-lg text-center border-b uppercase py-1">No hay notificaciones nuevas
                                     </h1>
                                 </div>
-                                <div class="no-notificaciones flex content-center justify-center mt-5 opacity-50 scale-105">
-                                    <img src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
+                                <div class="no-notificaciones flex content-center justify-center mt-5 opacity-30 scale-105">
+                                    <img src="{{asset('assets/img/sportivo-logo.svg')}}" alt="" draggable="false" class="max-w-[50%] h-auto" style="max-height: 50%;">
                                 </div>
                             </div>
                         </ul>
