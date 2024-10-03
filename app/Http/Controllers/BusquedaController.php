@@ -17,6 +17,7 @@ class BusquedaController extends Controller
         $selectedGeneros = $request->input('generos', []);
         $selectedBrands = $request->input('brands', []);
         $selectedDeporte = $request->input('deportes', []); // Cambiado a 'deportes'
+        $selectedDirigidoA = $request->input('publico_dirigido', []);
 
         // Si no es un array, conviértelo en uno
         if (!is_array($selectedGeneros)) {
@@ -29,6 +30,10 @@ class BusquedaController extends Controller
 
         if (!is_array($selectedDeporte)) {
             $selectedDeporte = [$selectedDeporte];
+        }
+
+        if (!is_array($selectedDirigidoA)) {
+            $selectedDirigidoA = [$selectedDirigidoA]; 
         }
 
         // 1. Obtener todas las opciones de filtros (sin aplicar filtros de búsqueda)
@@ -61,6 +66,10 @@ class BusquedaController extends Controller
             });
         }
 
+        if (!empty($selectedDirigidoA)) {
+            $baseQuery->whereIn('dirigido_a', $selectedDirigidoA);
+        }
+
         // 4. Obtener los resultados filtrados con la relación 'descuento'
         $resultados = $baseQuery->with('descuento')->get();
 
@@ -80,6 +89,6 @@ class BusquedaController extends Controller
         $contar_resultados = $resultados->count();
 
         // 8. Retornar la vista con las variables necesarias
-        return view('busquedas', compact('resultados', 'query', 'contar_resultados', 'orderDirection', 'selectedBrands', 'selectedGeneros', 'selectedDeporte', 'allBrands', 'allGeneros', 'allDeportes'));
+        return view('busquedas', compact('resultados', 'query', 'contar_resultados', 'orderDirection', 'selectedBrands', 'selectedGeneros', 'selectedDeporte', 'selectedDirigidoA', 'allBrands', 'allGeneros', 'allDeportes'));
     }
 }

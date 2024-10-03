@@ -235,7 +235,7 @@
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos[]' => ['femenino', 'unisex']]) }}" id="navbarDropdown" role="button"
+                href="{{ route('buscar', ['generos[]' => ['femenino', 'unisex'] , 'publico_dirigido' => ['adultos']]) }}" id="navbarDropdown" role="button"
                 {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 MUJER

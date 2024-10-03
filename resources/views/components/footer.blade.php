@@ -1,4 +1,4 @@
-<footer class="navbar" id="footer-admin" style="">
+<footer class="navbar mt-3" id="footer-admin" style="">
     <div class="informacion-footer flex justify-between w-100" style="position: relative">
         <div class="w-64 mx-2">
             <div class="center">
@@ -6,7 +6,7 @@
                 <div class="logo-y-nombre">
                     <div class="imagen-logo mr-1">
 
-                        <img src="{{asset('assets/img/logo.png')}} " alt="" draggable="false" style="min-width: 100px">
+                        <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="" draggable="false" style="min-width: 100px">
                     </div>
                     <span >
                         Sportivo

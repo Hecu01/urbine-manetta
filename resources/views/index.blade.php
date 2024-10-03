@@ -84,7 +84,7 @@
 
             {{-- BANNER LOGUEADO --}}
         @else
-            <div class="container-fluid bg-blue-600 py-5 px-2 my-2 flex justify-between ">
+            {{-- <div class="container-fluid bg-blue-600 py-5 px-2 my-2 flex justify-between ">
 
                 <div class="div-left">
                     <div class="text-white  ">
@@ -110,7 +110,7 @@
 
 
 
-            </div>
+            </div> --}}
         @endguest
         {{-- <div class=" " style="height: 550px">
 
