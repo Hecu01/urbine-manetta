@@ -449,11 +449,11 @@
                     @endif
                 </a>
 
-                <ul class="dropdown-menu w-96 h-96 ">
+                <ul class="dropdown-menu w-96 h-96 overflow-y-auto">
                     @if ($contarItems > 0)
-                        <h1 class="text-lg text-center ">Carrito de compras</h1>
+                        <h1 class="text-lg text-center shadow-sm">Carrito de compras</h1>
                         @foreach ($cartItems as $item)
-                            <div class="flex h-fit ">
+                            <div class="flex h-fit m-1 mt-3 mx-3">
                                 <div class="pb-2">
                                     <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
                                         height="100px">
@@ -470,6 +470,7 @@
                             </div>
                             <hr>
                         @endforeach
+                        <a href="http://127.0.0.1:8000/carrito-de-compras#" class="no-underline text-black hover:bg-slate-200 p-1 px-3 rounded text-lg" style=" display: block; width: 100%; text-align: center;">Entrar al carrito</a>
                     @else
                         <h1 class="text-lg text-center ">El carrito está vacío</h1>
                     @endif
