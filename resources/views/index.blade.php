@@ -24,7 +24,7 @@
                 <div class="slide_viewer">
                     <div class="slide_group">
                         @foreach ($publicidades as $publicidad)
-                            <div class="slide text-center content-center">
+                            <div class="slide text-center content-center ml-10">
                                 <a href="{{ $publicidad->url }}">
                                     <img src="{{ Storage::url($publicidad->foto) }}" alt="{{ $publicidad->nombre }}">
                                 </a>
