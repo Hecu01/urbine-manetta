@@ -6,6 +6,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if (session('creado'))
+        <div class="alert alert-success">
+            {{ session('creado') }}
+        </div>
+    @endif
     <section class="section-bienvenida">
         <div class="contenedor d-flex">
             <div class="mensaje-bienvenida font-">
@@ -33,7 +38,7 @@
                     </div>
                 </div>
 
-                
+
 
                 <div class="slide_buttons">
                 </div>

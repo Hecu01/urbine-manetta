@@ -35,7 +35,7 @@
                         <p>$ {{ number_format($totalPrice, 0, ',', '.') }}</p>
                     </div>
                     <div class="mt-auto flex flex-col gap-2 pt-4">
-                        <a href="#"
+                        <a href="{{asset('pagos')}}"
                             class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900 no-underline">Pagar</a>
                     </div>
                 </div>
