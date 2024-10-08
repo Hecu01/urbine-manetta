@@ -36,7 +36,7 @@ class CarritoController extends Controller
                 return response()->json(['error' => 'Por favor, proporciona tu dirección antes de agregar al carrito.'], 400);
             }
             return redirect()->route('domicilio')->with('mensaje', 'Por favor, proporciona tu dirección antes de agregar al carrito.');
-        }
+        } else{ 
 
             $productoId = $request->input('producto_id');
             $nombre = $request->input('nombre');
@@ -95,5 +95,4 @@ class CarritoController extends Controller
     //         ]
     //     ]);
     // }
-
 }
