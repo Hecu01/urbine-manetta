@@ -6,68 +6,132 @@ use App\Models\Deporte;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Publicidad;
+use App\Models\Compra;
 
-class tiendaController extends Controller
+
+
+class TiendaController extends Controller
 {
 
     // Página index
-    public function home(){
+    public function home()
+    {
         $title = "Sportivo - Inicio";
 
         // Para obtener las publicidades
-        $publicidades = Publicidad::all(); 
+        $publicidades = Publicidad::all();
 
 
-        return view('index', compact( 'title','publicidades'));
+        return view('index', compact('title', 'publicidades'));
     }
-    
+
     // public function pago(){
     //     $title = "Métodos de pago";
     //     return view('orders.payment', compact('title'));
     // }
 
-    public function pago(){
+    public function pago()
+    {
         $title = "Métodos de pago";
         return view('orders.pago', compact('title'));
     }
 
     public function processPayment(Request $request)
     {
-        // dd($request->all());
-        // Validar los datos del formulario
+        // Validación
         $request->validate([
-            'cardNumber' => 'required|numeric',
-            'cardName' => 'required|string',
+            'cardNumber' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    // Eliminar los espacios en blanco
+                    $value = str_replace(' ', '', $value);
+
+                    // Verificar si el número tiene 16 dígitos
+                    if (strlen($value) != 16) {
+                        $fail('El número de tarjeta debe tener 16 dígitos.');
+                    }
+
+                    // Verificar si empieza con 4 o 5
+                    if (!preg_match('/^[4|5]/', $value)) {
+                        $fail('Número de tarjeta inválido.');
+                    }
+                },
+            ],
+            'cardName' => 'required|string|max:20',
             'cardExpiryMonth' => 'required',
             'cardExpiryYear' => 'required',
-            'cardCvv' => 'required|numeric|digits_between:3,4',
+            'cardCvv' => 'required|regex:/^\d{3}$/',
+        ], [
+            'cardNumber.required' => 'El número de tarjeta es obligatorio.',
+            'cardName.required' => 'El nombre y apellido son obligatorios.',
+            'cardExpiryMonth.required' => 'El mes de expiración es obligatorio.',
+            'cardExpiryYear.required' => 'El año de expiración es obligatorio.',
+            'cardCvv.required' => 'El CCV es obligatorio.',
+            'cardCvv.regex' => 'El CCV debe tener 3 dígitos.',
         ]);
 
-        // Aquí puedes procesar el pago con una API o servicio de pagos
+        // Calcular el total
+        $cart = session()->get('carrito');
+        $totalPrice = 0;
 
-        // return back()->with('success', 'Pago procesado con éxito');
-        // Redirecciona con un mensaje de éxito
-        return redirect()->route('index')->with('creado', 'Su compra ha sido realizada con éxito.');
+        if ($cart) {
+            foreach ($cart as $item) {
+                $totalPrice += $item['price'] * $item['quantity'];
+            }
+        }
+
+        // Guardar la compra por el id del usuario
+    $compra = Compra::create([
+        'total' => $totalPrice,
+        'fecha' => now(),
+        'user_id' => Auth::id(), 
+
+        // dd(Auth::id())
+    ]);
+
+        // dd($compra);
+
+        // Limpiar el carrito después de la compra
+        session()->forget('carrito');
+
+        return redirect()->route('home')->with('mensaje', 'Su compra ha sido realizada con éxito.');
     }
 
-    
-
     public function mostrarPago()
+    {
+        return view('orders.pago');
+    }
+
+    public function comprasRealizadas()
 {
-    return view('orders.pago');
+    if (!Auth::check()) {
+        return redirect()->route('home')->with('error', 'Por favor, inicie sesión para ver sus compras.');
+    }
+
+    // Obtener las compras del usuario autenticado junto con los artículos
+    $compras = Compra::with('articulos')->where('user_id', Auth::id())->get();
+
+    // Calcular el total de todas las compras (opcional si quieres mostrarlo)
+    $totalPrice = $compras->sum('total'); // Sumar el total de todas las compras
+
+    return view('users.comprasRealizadas', compact('compras', 'totalPrice'));
 }
 
 
-    public function hombres(){
+
+
+    public function hombres()
+    {
         $title = "Sportivo - hombres";
         $articulo = Articulo::where('genero', 'M')->get();
         return view('hombres', compact('title', 'articulo'));
     }
 
-    public function domicilio(){
-        if(Auth::check()){
+    public function domicilio()
+    {
+        if (Auth::check()) {
             // Obtener el usuario actualmente autenticado
             $user = Auth::user();
 
@@ -81,21 +145,22 @@ class tiendaController extends Controller
         return view('users.AddAddress');
     }
 
-    public function agregar_domicilio(Request $request){
+    public function agregar_domicilio(Request $request)
+    {
         // Crear o actualizar la dirección del usuario
         $domicilio = Domicilio::updateOrCreate([
             'user_id' => auth()->user()->id,
-            'calle' => $request->calle, 
-            'barrio' => $request->barrio, 
-            'departamento' => $request->dpto, 
-            'piso' => $request->piso, 
-            'ciudad' => $request->distrito, 
-            'codigo_postal' => $request->cod_postal 
+            'calle' => $request->calle,
+            'barrio' => $request->barrio,
+            'departamento' => $request->dpto,
+            'piso' => $request->piso,
+            'ciudad' => $request->distrito,
+            'codigo_postal' => $request->cod_postal
         ]);
-        
+
         return redirect()->back()->with('mensaje', 'Dirección guardada exitosamente.');
     }
-    
+
     // Función para agregar un producto al carrito
     public function addToCart(Request $request)
     {

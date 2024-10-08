@@ -1,20 +1,19 @@
 * {
 	box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 *:focus {
-  outline: 0;
+	outline: 0;
 }
 
 html {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
-	/* background-color: #ddeefc; */
-	background:linear-gradient(0deg, #bb006a 0%, #e22232 50%);
+	background: linear-gradient(0deg, #bb006a 0%, #e22232 50%);
 	font-family: 'Lato', sans-serif;
 }
 
@@ -87,15 +86,13 @@ body {
 
 .card .front-card .info-card-front .group-number-card .number-card,
 .card .front-card .info-card-front .group-name-card .name-card,
-.card .front-card .info-card-front .group-expiration-card, .expiration-card {
-	/* color: #ffffff; */
+.card .front-card .info-card-front .group-expiration-card,
+.expiration-card {
 	font-size: 22px;
-    margin-bottom: 4px;
-	text-transform: uppercase; 
-    text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.5);
-    color: #b0b0b0;
-  /* font-family: 'Droid Serif', serif; */
-  /* z-index: 4; */
+	margin-bottom: 4px;
+	text-transform: uppercase;
+	text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.3), 1px 1px 0px rgba(0, 0, 0, 0.5);
+	color: #b0b0b0;
 }
 
 .card .front-card .info-card-front .flexbox {
@@ -140,11 +137,11 @@ body {
 
 .card .back-card .info-card-back .group-firm-card .firm-card {
 	background-image: repeating-linear-gradient(
-											#87ceeb 0,
-											#87ceeb 5px,
-											#ffa500 5px,
-											#ffa500 10px
-										);
+		#87ceeb 0,
+		#87ceeb 5px,
+		#ffa500 5px,
+		#ffa500 10px
+	);
 	height: 40px;
 }
 
@@ -156,13 +153,13 @@ body {
 	text-transform: capitalize;
 }
 
-.firmaCard{
-    font-size: 6pt;
-    margin-top: 0.5rem;
+.firmaCard {
+	font-size: 6pt;
+	margin-top: 0.5rem;
 }
 
 .card .back-card .info-card-back .group-ccv-card {
-	width: 20%; 
+	width: 20%;
 }
 
 .card .back-card .info-card-back .group-ccv-card .ccv-card {
@@ -180,15 +177,15 @@ body {
 
 .container .card .back-card .link-bank-card {
 	color: #ffffff;
- 	font-size: 14px;
+	font-size: 14px;
 	text-decoration: none;
 }
 
-#form-card{
-    margin-top: 25px;
+#form-card {
+	margin-top: 1%;
 }
 
-/*  Contenedor botón abrir formulario */
+/* Contenedor botón abrir formulario */
 .ctn-btn .btn-open-form-card {
 	background-color: #2364d2;
 	border-radius: 100%;
@@ -203,7 +200,7 @@ body {
 	padding: 5px;
 	position: relative;
 	transition: background-color 0.3s ease-in-out,
-							transform 0.3s ease-in-out;
+		transform 0.3s ease-in-out;
 	width: 50px;
 	z-index: 4;
 }
@@ -252,8 +249,8 @@ body {
 	height: 50px;
 	padding: 5px 12px;
 	transition: border-color 0.3s ease-in-out,
-							box-shadow 0.3s ease-in-out,
-							outline 0.3s ease-in-out;
+		box-shadow 0.3s ease-in-out,
+		outline 0.3s ease-in-out;
 	width: 100%;
 }
 
@@ -314,84 +311,37 @@ body {
 
 .form-card .btn-send-form-card {
 	background: linear-gradient(rgb(253, 218, 134) 0px, rgb(225, 157, 60) 100%);
-	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-	border-radius: 2px;
-    border: 1px solid rgb(225, 157, 60);
-	color: #fff;
+	box-shadow: 0px 3px 7px rgba(255, 199, 129, 0.4);
+	color: #000;
 	cursor: pointer;
-	font-size: 22px;
-	padding: 10px;
-    transition: 0.75s ease border-color; 
+	font-size: 18px;
+	text-transform: uppercase;
 }
 
-.form-card .btn-send-form-card:hover{
-    background: linear-gradient(rgb(241, 181, 39) 0px, rgb(223, 132, 5) 100%);;
+.form-card .btn-send-form-card:hover {
+	background: linear-gradient(rgb(225, 157, 60) 0px, rgb(253, 218, 134) 100%);
 }
 
-
-.form-card .btn-send-form-card:focus,
-.form-card .btn-send-form-card:active {
-	background-color: #1850b1;
+/* Para en casos que los campos de la tarjeta estén vacíos */
+input.border-red,
+select.border-red {
+    border: 2px solid red;
 }
 
-@media screen and (max-width: 550px) {
-	.card > div {
-		min-height: 200px;
-		padding: 15px 15px;
-	}
-	
-	.card .front-card .logo-card {
-		position: absolute;
-		right: 10px;
-	}
-	
-	.card .front-card .logo-card img {
-		max-width: 75px
-	}
-	
-	.card .front-card .chip {
-		max-width: 35px;
-		margin-top: 10px;
-	}
-	
-	.card .front-card .info-card-front .label-card {
-		font-size: 14px;
-	}
-	
-	.card .front-card .info-card-front .group-number-card .number-card,
-	.card .front-card .info-card-front .group-name-card .name-card,
-	.card .front-card .info-card-front .group-expiration-card,
-	.expiration-card {
-		font-size: 18px;
-	}
-	
-	.card .back-card .legend-card,
-	.container .card .back-card .link-bank-card {
-		font-size: 10px;
-	}
-	
-	.card .back-card .magnetic-bar-card {
-		height: 30px;
-		top: 15px;
-	}
-	
-	.card .back-card .info-card-back {
-		margin-top: 40px;
-	}
-	
-	.card .back-card .info-card-back .group-firm-card .firm-card p {
-		line-height: 40px;
-	}
-	
-	.card .back-card .info-card-back p {
-    font-size: 13px;
-	}
-	
-	.form-card .flexbox {
-		flex-direction: column;
-	}
-	
-	.form-card select {
-		margin-bottom: 1rem;
-	}
+.error-message {
+	color: red; 
+	font-size: 12px; 
 }
+
+/* Mantener el borde rojo si hay un error y está en foco */
+.form-card input.border-red:focus {
+    border-color: red; /* Mantiene el borde rojo en foco */
+    box-shadow: none;  /* Opcional: puedes eliminar el efecto de sombra si prefieres */
+}
+
+/* Si quieres un borde azul para el enfoque en campos sin errores */
+.form-card input:focus {
+    border-color: #93bded; /* Color azul en foco */
+    box-shadow: 1px 7px 10px -5px rgba(90, 116, 148, 0.3); /* Efecto de sombra */
+}
+

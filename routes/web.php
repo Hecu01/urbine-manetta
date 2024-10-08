@@ -22,7 +22,14 @@ Route::controller(TiendaController::class)->group(function(){
     Route::get('/home', 'home')->name('pagina_inicio');
     Route::get('/pagos', 'pago')->name('pago');
     Route::post('/process-payment', 'processPayment')->name('processPayment');
+    // Route::get('/compras-realizadas', 'comprasRealizadas')->name('comprasRealizadas');
+    // Route::get('/compras-realizadas', 'comprasRealizadas')->name('compras.realizadas');
+
 });
+
+// Compras realizadas
+Route::get('/compras-realizadas', [TiendaController::class, 'comprasRealizadas'])->name('compras.realizadas');
+
 
 // Búsquedas
 Route::controller(BusquedaController::class)->group(function(){

@@ -97,37 +97,57 @@
     <!-- Contenedor botón abrir formulario -->
     <div class="ctn-btn">
         <button type="button" id="btn-open-form-card" class="btn-open-form-card">
-          <i class="fa-solid fa-plus"></i>
+            <i class="fa-solid fa-plus"></i>
         </button>
     </div>
 
     <!-- Formulario Tarjeta -->
-    
+
     {{-- <form action="javascript:void(0);" id="form-card" class="form-card active"> --}}
         <form action="{{ route('processPayment') }}" method="POST" id="form-card" class="form-card active">
+
             @csrf
+            <!-- Número de Tarjeta -->
             <div>
                 <label for="number-card-form">Número Tarjeta</label>
-                <input type="text" id="number-card-form" name="cardNumber" maxlength="19" autocomplete="off">
+                @if ($errors->has('cardNumber'))
+                    <div class="error-message">{{ $errors->first('cardNumber') }}</div>
+                @endif
+                <input type="text" id="number-card-form" name="cardNumber" maxlength="19" autocomplete="off"
+                       class="{{ $errors->has('cardNumber') ? 'border-red' : '' }}">
             </div>
         
+            <!-- Nombre en la tarjeta -->
             <div>
                 <label for="name-card-form">Nombre y Apellido</label>
-                <input type="text" id="name-card-form" name="cardName" maxlength="20" autocomplete="off">
+                @if ($errors->has('cardName'))
+                    <div class="error-message">{{ $errors->first('cardName') }}</div>
+                @endif
+                <input type="text" id="name-card-form" name="cardName" maxlength="20" autocomplete="off"
+                       class="{{ $errors->has('cardName') ? 'border-red' : '' }}">
             </div>
         
+            <!-- Fecha de expiración -->
             <div class="flexbox">
                 <div class="group-expiration-card-form">
                     <label for="mounth-expiration-card-form">Expiración</label>
                     <div class="flexbox">
                         <div class="group-select">
-                            <select id="mounth-expiration-card-form" name="cardExpiryMonth">
+                            @if ($errors->has('cardExpiryMonth'))
+                                <div class="error-message">{{ $errors->first('cardExpiryMonth') }}</div>
+                            @endif
+                            <select id="mounth-expiration-card-form" name="cardExpiryMonth"
+                                    class="{{ $errors->has('cardExpiryMonth') ? 'border-red' : '' }}">
                                 <option disabled="disabled" selected="selected">Mes</option>
                                 <!-- Opciones de mes -->
                             </select>
                         </div>
                         <div class="group-select">
-                            <select id="year-expiration-card-form" name="cardExpiryYear">
+                            @if ($errors->has('cardExpiryYear'))
+                                <div class="error-message">{{ $errors->first('cardExpiryYear') }}</div>
+                            @endif
+                            <select id="year-expiration-card-form" name="cardExpiryYear"
+                                    class="{{ $errors->has('cardExpiryYear') ? 'border-red' : '' }}">
                                 <option disabled="disabled" selected="selected">Año</option>
                                 <!-- Opciones de año -->
                             </select>
@@ -135,15 +155,21 @@
                     </div>
                 </div>
         
+                <!-- CCV -->
                 <div class="group-ccv-card-form">
                     <label for="ccv-card-form">CCV</label>
-                    <input type="text" id="ccv-card-form" name="cardCvv" maxlength="3" autocomplete="off">
+                    @if ($errors->has('cardCvv'))
+                        <div class="error-message">{{ $errors->first('cardCvv') }}</div>
+                    @endif
+                    <input type="text" id="ccv-card-form" name="cardCvv" maxlength="3" autocomplete="off"
+                           class="{{ $errors->has('cardCvv') ? 'border-red' : '' }}">
                 </div>
             </div>
         
             <button type="submit" class="btn-send-form-card">Enviar</button>
         </form>
-        
+
+
 </div>
 
 <script>

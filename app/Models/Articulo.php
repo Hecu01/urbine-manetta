@@ -24,7 +24,8 @@ class Articulo extends Model
         'id_categoria', 
         'foto', 
         'dirigido_a',
-        'tipo_producto'
+        'tipo_producto',
+        'compra_id',
     ];
 
     // Vincular los calzados
@@ -59,5 +60,10 @@ class Articulo extends Model
         return $this->belongsToMany(ReposicionMercaderia::class, 'articulo_reposicion_mercaderia')
                     ->withPivot('cantidad', 'talla_id', 'calzado_id')
                     ->withTimestamps();
+    }
+
+    public function compra()
+    {
+        return $this->belongsTo(Compra::class, 'compra_id'); 
     }
 }
