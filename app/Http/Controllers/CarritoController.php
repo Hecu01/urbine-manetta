@@ -18,8 +18,13 @@ class CarritoController extends Controller
         // Convierte el carrito en una colección para ser compatible con darryldecode/cart
         $cartItems = collect($carrito);
 
+        $totalPrice = 0;
+        foreach ($cartItems as $item) {
+            $totalPrice += $item['price'] * $item['quantity'];
+        }
+
         // Retornar la vista con el contenido del carrito
-        return view('users.MiCarrito', ['cartItems' => $cartItems]);
+        return view('users.MiCarrito', ['cartItems' => $cartItems, 'totalPrice' => $totalPrice]);
     }
 
     // Método para añadir un producto al carrito
@@ -33,36 +38,29 @@ class CarritoController extends Controller
             return redirect()->route('domicilio')->with('mensaje', 'Por favor, proporciona tu dirección antes de agregar al carrito.');
         }
 
-        $productoId = $request->input('producto_id');
-        $nombre = $request->input('nombre');
-        $precio = $request->input('precio');
-        $imagen = $request->input('imagen');
-        $cantidad = $request->input('cantidad', 1);
-        $descuento = $request->input('descuento', 0);
-
-
-        // Recupera el carrito de la sesión
-        $carrito = session()->get('carrito', []);
-
-        // Añade el producto al carrito
-        $carrito[] = [
-            'id' => $productoId,
-            'name' => $nombre,
-            'price' => $precio,
-            'quantity' => $cantidad,
-            'imagen' => $imagen,
-            'discount' => $descuento,
-        ];
-
-        // Guarda el carrito actualizado en la sesión
-        session()->put('carrito', $carrito);
-
-        // Respuesta para peticiones AJAX
-        if ($request->ajax()) {
-            return response()->json([
-                'message' => 'Producto añadido al carrito exitosamente',
-                'carrito' => $carrito,
-            ]);
+            $productoId = $request->input('producto_id');
+            $nombre = $request->input('nombre');
+            $precio = $request->input('precio');
+            $imagen = $request->input('imagen');
+            $cantidad = $request->input('cantidad', 1);
+    
+            // Recupera el carrito de la sesión
+            $carrito = session()->get('carrito', []);
+    
+            // Añade el producto al carrito
+            $carrito[] = [
+                'id' => $productoId,
+                'name' => $nombre,
+                'price' => $precio,
+                'quantity' => $cantidad,
+                'imagen' => $imagen,
+            ];
+    
+            // Guarda el carrito actualizado en la sesión
+            session()->put('carrito', $carrito);
+    
+            // Redirigir a la página del carrito
+            return redirect()->route('carrito.index');
         }
 
 
@@ -97,5 +95,5 @@ class CarritoController extends Controller
     //         ]
     //     ]);
     // }
-    
+
 }

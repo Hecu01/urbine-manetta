@@ -19,6 +19,8 @@
   overflow: hidden; 
   transition: left 0.3s ease; /* Animación para el movimiento del panel */
   z-index: 1;
+  min-height: 150px;
+  max-height: 75%;
   /* position: fixed; */
 }
 
@@ -77,8 +79,12 @@
   border-radius: 4px; /* Bordes redondeados opcionales */
   background-color: #f9f9f9; /* Color de fondo opcional para el formulario */
   box-sizing: border-box;
-  margin-left: 2%;
-  padding: 2%;
+  min-height: inherit;
+}
+
+.filterFor {
+  height: 65vh; /* Ajuste de altura dinámico */
+  overflow-y: auto; 
 }
 
 
@@ -136,4 +142,14 @@ ul.models > li > a > img {
   height: 80px;
   margin-right: 10px;
   vertical-align: middle;
+}
+
+.botones {
+  padding: 8px;
+  padding-left: 10%;
+  padding-top: 5%;
+}
+
+#clean {
+  margin-left: 5px;
 }

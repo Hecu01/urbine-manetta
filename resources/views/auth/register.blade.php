@@ -123,8 +123,8 @@
             <div class="card shadow-2xl ">
                 <div class=" flex items-center border pr-2">
 
-                    <img class="ml-3" src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
-                    <h1 class=" ml-2 px-4  underline">Registrarse</h1>
+                    <img class="m-2 opacity-90" src="{{asset('assets/img/sportivo-logo.svg')}}" style="width:130px" alt="" draggable="false">
+                    <h1 class="mx-2 mt-1 underline" style="text-underline-offset: 6px; font-size: 28pt">Registrarse</h1>
                 </div>
 
 

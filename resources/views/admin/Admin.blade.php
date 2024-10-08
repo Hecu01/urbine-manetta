@@ -117,6 +117,19 @@
                 </p>
             </div>
         </a>
+
+        <!-- Subir publicidad -->
+        <a href="{{ route('publicidad.index') }}" class="text-white no-underline article0 bg-purple-500">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-bullhorn"></i>
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Subir Publicidad</p>
+            </div>
+        </a>
+      
         
         <a href="{{ route('AdminesActivos.index') }}" class="text-white no-underline article0 bg-purple-500 border-purple-500">
             <div class="top">

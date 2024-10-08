@@ -7,6 +7,7 @@ use App\Models\Articulo;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
+use App\Models\Publicidad;
 
 class tiendaController extends Controller
 {
@@ -14,12 +15,51 @@ class tiendaController extends Controller
     // Página index
     public function home(){
         $title = "Sportivo - Inicio";
-        return view('index', compact( 'title'));
+
+        // Para obtener las publicidades
+        $publicidades = Publicidad::all(); 
+
+
+        return view('index', compact( 'title','publicidades'));
     }
+    
+    // public function pago(){
+    //     $title = "Métodos de pago";
+    //     return view('orders.payment', compact('title'));
+    // }
+
     public function pago(){
         $title = "Métodos de pago";
-        return view('orders.payment', compact('title'));
+        return view('orders.pago', compact('title'));
     }
+
+    public function processPayment(Request $request)
+    {
+        // dd($request->all());
+        // Validar los datos del formulario
+        $request->validate([
+            'cardNumber' => 'required|numeric',
+            'cardName' => 'required|string',
+            'cardExpiryMonth' => 'required',
+            'cardExpiryYear' => 'required',
+            'cardCvv' => 'required|numeric|digits_between:3,4',
+        ]);
+
+        // Aquí puedes procesar el pago con una API o servicio de pagos
+
+        // return back()->with('success', 'Pago procesado con éxito');
+        // Redirecciona con un mensaje de éxito
+        return redirect()->route('index')->with('creado', 'Su compra ha sido realizada con éxito.');
+    }
+
+    
+
+    public function mostrarPago()
+{
+    return view('orders.pago');
+}
+
+
     public function hombres(){
         $title = "Sportivo - hombres";
         $articulo = Articulo::where('genero', 'M')->get();

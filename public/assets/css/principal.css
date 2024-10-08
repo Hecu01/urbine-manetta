@@ -75,7 +75,13 @@
   display: block;
 }
 
-.slide:nth-of-type(1) {
+.slide img {
+  max-width: 100%; 
+  height: auto; 
+  object-fit: cover; /* Cubre el área del contenedor sin distorsionar la imagen */
+  display: block; /* Elimina espacio adicional debajo de la imagen */
+}
+/* .slide:nth-of-type(1) {
   background: #D7A151;
 }
 
@@ -89,7 +95,7 @@
 
 .slide:nth-of-type(4) {
   background: #D1D1D4;
-}
+} */
 
 .slide_buttons {
   left: 0;
@@ -118,8 +124,8 @@ a.slide_btn {
 
 .directional_nav {
   height: 4.5em;
-  margin: 0 auto;
-  max-width: 130em;
+  /* margin: 0 auto; */
+  /* max-width: 130em; */
   position: relative;
 }
 

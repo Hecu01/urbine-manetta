@@ -9,47 +9,54 @@
 
       <section class="flex">
 
-          <aside class="col-2">
-              <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :allBrands="$allBrands"
-                  :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros" />
-          </aside>
-          <div class="contenedor-resultados col-9 justify-center flex flex-wrap">
-            
-            <!-- Cada rectangulito -->
-            @foreach ($resultados as $resultado)
-              <div class="w-min bg-white shadow-lg  h-fit position-relative">
-                @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
-                  <span class="bg-red-500 text-white"
-                    style="padding: 0px 3px ;font-size:13px;position:absolute; right:24px; top:76px; font-family:'Times New Roman', Times, serif">
-                    -{{ str_replace('.', ',', number_format($resultado->descuento->porcentaje, $resultado->descuento->porcentaje == round($resultado->descuento->porcentaje) ? 0 : 2)) }}%
-                    OFF
+            <aside class="col-2">
+                <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :selectedDeporte="$selectedDeporte" :allBrands="$allBrands"
+                    :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros"/>
+            </aside>
+            <div class="contenedor-resultados col-8 flex flex-wrap gap-4">
+                @foreach ($resultados as $resultado)
+                    <div class="w-min bg-white shadow-lg p-3 h-fit position-relative">
+                        @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
+                            <span class="bg-red-500 text-white"
+                                style="padding: 0px 3px ;font-size:13px;position:absolute; right:24px; top:76px; font-family:'Times New Roman', Times, serif">
+                                -{{ str_replace('.', ',', number_format($resultado->descuento->porcentaje, $resultado->descuento->porcentaje == round($resultado->descuento->porcentaje) ? 0 : 2)) }}%
+                                OFF
 
 
                   </span>
                 @endif
 
-                @guest
-                @else
-                  @if (Auth::user()->administrator == true)
-                    <div class="position-absolute right-1 rounded-full flex">
-                      <div class="hover:scale-125">
-                        <a href="" class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline" title="Editar producto: ID {{ $resultado->id }}">Editar <i class="fa-solid fa-pen"></i></a>
-                      </div>
-                      <div class="hover:scale-125">
-                          <a href="" class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline" title="Eliminar producto: ID {{ $resultado->id }}">Eliminar <i class="fa-solid fa-trash"></i></a>
-                      </div>
-                    </div>
-                  @endif
-                @endguest
-                <div class="flex font-sans ">
-                  <div class="flex w-48 relative content-center">
-                    <img src="{{ url('producto/' . $resultado->foto) }}" alt="{{ $resultado->nombre }}" draggable="false" class="absolute inset-0   object-cover w-full  m-auto" loading="lazy" />
-                  </div>
-                  <div class="flex-auto p-6">
-                    <div class="flex flex-wrap">
-                      <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                        {{ $resultado->nombre }}
-                      </h1>
+                        @guest
+                        @else
+                            @if (Auth::user()->administrator == true)
+                                <div class="position-absolute right-1 rounded-full flex m-1">
+                                    <div class="hover:scale-125 mr-1.5">
+
+                                        <a href=""
+                                            class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline"
+                                            title="Editar producto: ID {{ $resultado->id }}">Editar <i
+                                                class="fa-solid fa-pen"></i></a>
+                                    </div>
+                                    <div class="hover:scale-125">
+                                        <a href=""
+                                            class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline"
+                                            title="Eliminar producto: ID {{ $resultado->id }}">Eliminar <i
+                                                class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </div>
+                            @endif
+                        @endguest
+                        <div class="flex font-sans mt-3">
+                            <div class="flex w-48 relative content-center">
+                                <img src="{{ url('producto/' . $resultado->foto) }}" alt="{{ $resultado->nombre }}"
+                                    draggable="false" class="absolute inset-0   object-cover w-full  m-auto"
+                                    loading="lazy" />
+                            </div>
+                            <div class="flex-auto p-6">
+                                <div class="flex flex-wrap">
+                                    <h1 class="flex-auto text-lg font-semibold text-slate-900">
+                                        {{ $resultado->nombre }}
+                                    </h1>
 
                       <!-- Lógica del descuento -->
                       @if (isset($resultado->descuento) && $resultado->descuento->activo == true)

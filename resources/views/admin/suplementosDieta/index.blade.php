@@ -49,9 +49,9 @@
                               
                               <select name="genero" id="" class="form-select" required>
                                   <option value="" selected hidden>Elija una opción</option>
-                                  <option value="M">Masculino</option>
-                                  <option value="F">Femenino</option>
-                                  <option value="U">Unisex</option>
+                                  <option value="Masculino">Masculino</option>
+                                  <option value="Femenino">Femenino</option>
+                                  <option value="Unisex">Unisex</option>
                               </select>
                               </div>
                               <div class="col-md-6">

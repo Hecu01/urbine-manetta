@@ -21,6 +21,7 @@ Route::controller(TiendaController::class)->group(function(){
     Route::get('/', 'home')->name('home');
     Route::get('/home', 'home')->name('pagina_inicio');
     Route::get('/pagos', 'pago')->name('pago');
+    Route::post('/process-payment', 'processPayment')->name('processPayment');
 });
 
 // Búsquedas

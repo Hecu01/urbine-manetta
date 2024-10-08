@@ -61,7 +61,7 @@
                                     </h1>
                                 </div>
                                 <div class="no-notificaciones flex content-center justify-center mt-5 opacity-50 scale-105">
-                                    <img src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
+                                    <img src="{{asset('assets/img/sportivo-logo.svg')}}" alt="" draggable="false" class="max-w-[50%] h-auto" style="max-height: 50%;">
                                 </div>
                             </div>
 
@@ -98,7 +98,7 @@
         <div class="flex center ml-5">
             <div class="">
                 <div class="mx-2" style="">
-                    <img src="{{asset('assets/img/logo.png')}} " alt="logo sportivo" draggable="false" style="width: 55px; height:46.5px; border-radius: 100%;  box-shadow: 0px 0px 4px #fff">
+                    <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="logo sportivo" draggable="false" class="p-1" style="background-color: white; width: 58px; height:49.5px; border-radius: 100%;  box-shadow: 0px 0px 4px #fff">
                 </div>
 
             </div>
