@@ -20,7 +20,7 @@
       </div>
     @endif 
     <a  style="font-size: 2em" href="">Pág. descuentos especiales</a>
-    <table class="table table-bordered" style="min-width: 700px">
+    <table class="table table-bordered" style="max-width: 700px">
         <thead class="cabecera-tabla">
             <th>Id</th>
             <th>Nombre</th>
@@ -32,7 +32,6 @@
         <tbody>
           @foreach ($usuarios as $usuario)
             @if($usuario->descuentoUsuario->aceptado === null )
-
               <tr>
                 <td>{{ $usuario->id }}</td>
                 <td>{{ $usuario->name }} {{ $usuario->lastname }}</td>

@@ -82,6 +82,7 @@
         <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
         <script src="{{ asset('assets/js/main.js')}}"></script>
         <script src="{{ asset('assets/js/Nav-Usuario.js')}}"></script>
+        <script src="{{ asset('assets/js/AniadirCarritoAjax.js')}}"></script>
     </body>
     
 </html>

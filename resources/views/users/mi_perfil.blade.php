@@ -12,11 +12,15 @@
           <ul style="font-size: 1.2em; margin:0; padding:0">
             <li><strong style="font-weight: 600">{{ $user->administrator ? 'Admin' : 'Usuario' }}</strong>: {{ $user->name }} {{ $user->lastname }} </li>
             <li><strong>Correo</strong>: {{ $user->email }} </li>
-            @if(isset(Auth::user()->descuentoUsuario->descuento_activo) == true)
-              <li class="bg-rose-500 text-white px-1 w-fit  ">
-                <strong style="font-weight: 600">Profesion</strong>: 
-                {{ $user->descuentoUsuario->profesion_usuario}}</li>
-            @endif
+            
+            @isset(Auth::user()->descuentoUsuario->descuento_activo)
+              @if(Auth::user()->descuentoUsuario->descuento_activo == true)
+                <li>
+                  <strong style="font-weight: 600">Profesion</strong>: 
+                  {{ $user->descuentoUsuario->profesion_usuario}}
+                </li>
+              @endif
+            @endisset
             @if(isset($user->domicilio))
               <li class="text-capitalize"><strong style="font-weight: semibold " >Calle</strong>: {{ $user->domicilio->calle }} </li>
               <li class="text-capitalize"><strong style="font-weight: 600">Barrio</strong>: {{ $user->domicilio->barrio }} </li>
@@ -44,12 +48,15 @@
               {{ $user->administrator ? 'Admin' : 'Usuario' }}  
             </li>
 
-            @if(isset(Auth::user()->descuentoUsuario->descuento_activo) == true)
-              <li class="bg-rose-500 text-white px-1 w-fit">
-                <strong style="font-weight: 600">Descuento especial</strong>: 
-                {{ $user->descuentoUsuario->porcentaje_descuento}}%  
-              </li>
-            @endif
+            @isset(Auth::user()->descuentoUsuario->descuento_activo)
+                
+              @if(Auth::user()->descuentoUsuario->descuento_activo == true)
+                <li class="bg-rose-500 text-white px-1 w-fit">
+                  <strong style="font-weight: 600">Descuento especial</strong>: 
+                  {{ $user->descuentoUsuario->porcentaje_descuento}}%  
+                </li>
+              @endif
+            @endisset
 
             <li>
               <strong style="font-weight: 600">Compras</strong>: 

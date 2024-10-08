@@ -27,7 +27,9 @@ class ReponerMercaderiaController extends Controller
         $title = "Admin - Mercadería";
         $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
         $repPendArtDeport = ReposicionMercaderia::where('id_categoria', '1')->count();
-        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.index', compact('title', 'reposicionesPendientes','repPendArtDeport'));
+        $repPendRopas = ReposicionMercaderia::where('id_categoria', '2')->count();
+        $repPendSupDiet = ReposicionMercaderia::where('id_categoria', '3')->count();
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.index', compact('title', 'reposicionesPendientes','repPendArtDeport', 'repPendSupDiet', 'repPendRopas'));
     }
 
     /*

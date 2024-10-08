@@ -109,7 +109,7 @@
 
                         </span>
                         <span class="recuento">
-                            0
+                            {{ $repPendRopas }}
                         </span>
                     </div>
                     <div class="bottom " style="font-size: 1.055em">
@@ -128,7 +128,7 @@
 
                         </span>
                         <span class="recuento">
-                            0
+                            {{ $repPendSupDiet }}
                         </span>
                     </div>
                     <div class="bottom " style="font-size: 1.055em">

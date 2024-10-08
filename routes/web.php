@@ -56,7 +56,8 @@ Route::middleware(['auth'])->group(function(){
     // Agregar al carrito
     Route::controller(CarritoController::class)->group(function(){
         Route::get('/carrito-de-compras','mi_carrito')->name('carrito.index');
-        Route::post('/carrito/añadir', 'añadirAlCarrito')->name('carrito.añadir');
+        Route::post('/carrito/añadir','añadirAlCarrito')->name('carrito.añadir');
+
     });
 });
 

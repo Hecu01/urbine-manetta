@@ -1,6 +1,8 @@
 @php
     use App\Models\Deporte;
+
     $carrito = session()->get('carrito', []);
+
     // Convierte el carrito en una colección para ser compatible con darryldecode/cart
     $cartItems = collect($carrito);
     $contarItems = collect($carrito)->count();
@@ -15,7 +17,6 @@
             ->orderBy('deporte', 'asc')
             ->get();
     }
-
 @endphp
 <!-- Si es usuarioooo (no accedera al crud) -->
 <nav class="navbar bg-white" id="navigator-usuario" style="position: relative">
@@ -124,21 +125,7 @@
 
 
         </div>
-        {{-- <div class="center pl-5">
 
-            <!-- Logo y nombre -->
-            <div class="logo-y-nombre ">
-                <a href="{{ route('home') }}"
-                    class="flex items-center text-white decoration-none text-2xl hover:text-3xl">
-
-                    <div class="imagen-logo mx-1">
-                        <img src="{{ asset('assets/img/logo.png') }}" alt="" draggable="false">
-                    </div>
-
-                    Sportivo
-                </a>
-            </div>
-        </div> --}}
         <div class="right d-flex">
 
 
@@ -282,12 +269,7 @@
                                 </li>
                             @endforeach
 
-                            {{-- <li><a href=""class="text-white avl">Zapatillas</a></li>
-                                <li><a href="" class="text-white avl">Botines</a></li>
-                                <li><a href="" class="text-white avl">Zapatillas para correr</a></li>
-                                <li><a href="" class="text-white avl">Botas de fútbol</a></li>
-                                <li><a href="" class="text-white avl">Zapatos de baloncesto</a></li>
-                                <li><a href="" class="text-white avl">Zapatillas de tenis</a></li> --}}
+                           
                             <style>
                                 .avl {
                                     text-decoration: none
@@ -345,17 +327,6 @@
             </div>
         </div>
 
-
-        {{-- @foreach ($deportesPorCategoria as $categoria => $deportes)
-                {{-- <a href="" >
-                    {{ $categoria }}
-                </a>
-                <ul >
-                    @foreach ($deportes as $deporte)
-                        <li>{{ $deporte->nombre }}</li>
-                    @endforeach
-                </ul>
-            @endforeach --}}
 
 
     </div>
@@ -421,34 +392,38 @@
                     @endif
                 </a>
 
-                <ul class="dropdown-menu w-96 h-96 ">
+                <ul class="dropdown-menu w-96 h-96 overflow-y-scroll" style="max-height: 24rem;overflow-y: auto; ">
                     @if ($contarItems > 0)
-                        <h1 class="text-lg text-center ">Carrito de compras</h1>
-                        @foreach ($cartItems as $item)
-                            <div class="flex h-fit ">
-                                <div class="pb-2">
-                                    <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
-                                        height="100px">
-                                </div>
-                                <div >
+                        <div class="flex justify-center items-center relative">
+                            <h1 class="text-lg text-center">
+                                <a href="{{ route('carrito.index') }}">
+                                    Carrito de compras
+                                </a>
+                            </h1>
+                        </div>
+                        <div class=""style="min-height: 12rem">
+                            @foreach ($cartItems as $item)
+                                <div class="flex h-fit">
 
-                                    <ul>
-                                        <li>{{ $item['name'] }}</li>
-                                        <li>Precio: $  {{number_format($item['price'], 0, ',','.') }} AR</li>
-                                        <li>Cantidad: {{ $item['quantity'] }}</li>
-                                        {{-- <li>talle: {{ $item['quantity'] }}</li> --}}
-                                    </ul>
+                                    <div class="pb-2">
+                                        <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px" height="100px">
+                                    </div>
+                                    <div>
+                                        <ul>
+                                            <li>{{ $item['name'] }}</li>
+                                            <li>Precio: ${{ number_format($item['price'], 0, ',', '.') }} AR</li>
+                                            <li>Cantidad: {{ $item['quantity'] }}</li>
+                                            {{-- <li>talle: {{ $item['quantity'] }}</li> --}}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr>
-                        @endforeach
+                                <hr>
+                            @endforeach
+                            <span class="text-center mx-1">Sportivo 2022 ©</span>
+                        </div>
                     @else
-                        <h1 class="text-lg text-center ">El carrito está vacío</h1>
+                        <h1 class="text-lg text-center">El carrito está vacío</h1>
                     @endif
-
-                    {{-- <li>
-                        <a class="dropdown-item dropdown" href="#">Español</a>
-                    </li> --}}
 
                 </ul>
             </div>
