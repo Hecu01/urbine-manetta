@@ -66,6 +66,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/carrito-de-compras','mi_carrito')->name('carrito.index');
         Route::post('/carrito/añadir','añadirAlCarrito')->name('carrito.añadir');
         Route::delete('/carrito/remove/{id}', 'remove')->name('cart.remove');
+        Route::patch('/carrito/update/{id}',  'update')->name('carrito.update');
 
     });
 });

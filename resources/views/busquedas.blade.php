@@ -283,11 +283,7 @@
           let carritoContent = '';
           response.carrito.forEach(function(item) {
             
-            const removeUrl = `/urbine-manetta/public/carrito/remove/${item.id}`; 
-            // Cambia esta URL (linea 285) según tu ruta de Laravel, yo por problemas técnicos de laravel, 
-            // tengo que incluir "public", pero en tu caso luchi creo que bastaria solo "/carrito/remove/${item.id}"", o 
-            // de prefijo "/urbine-manetta/carrito/remove/${item.id} "
-
+            const removeUrl = `/carrito/remove/${item.id}`;
             carritoContent += `
                   
 
@@ -301,11 +297,11 @@
                                 <li>${item.name}</li>
                                 <li>Precio: $${item.price.toLocaleString()}</li>
                                 <li>
-                                    Cantidad: ${item.quantity}
+                                    // Cantidad: ${item.quantity}
                                     <div class="mx-1 inline">
 
-                                        <button class="btn btn-success btn-sm" style="font-size: .67rem">+</button>
-                                        <button class="btn btn-danger btn-sm" style="font-size: .67rem">-</button>
+                                        // <button class="btn btn-success btn-sm" style="font-size: .67rem">+</button>
+                                        // <button class="btn btn-danger btn-sm" style="font-size: .67rem">-</button>
                                         
                                         <!-- Botón de Eliminar -->
                                         <form action="${removeUrl}"  method="POST">

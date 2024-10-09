@@ -20,7 +20,8 @@ class CarritoController extends Controller
         $cartItems = collect($carrito);
 
         foreach ($cartItems as $item){
-            $totalPrice += $item['price'];
+            // $totalPrice += $item['price'];
+            $totalPrice += $item['price'] * $item['quantity'];
 
         }
 
