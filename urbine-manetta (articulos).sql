@@ -3,11 +3,11 @@
 -- Volcado de datos para la tabla `articulos`
 --
 
-INSERT INTO `articulos` (`id`, `nombre`, `talle`, `genero`, `precio`, `marca`, `id_categoria`, `color`, `stock`, `descripcion`, `tipo_producto`, `dirigido_a`, `foto`, `descuento_id`, `created_at`, `updated_at`) VALUES
-(1, 'Pelota de Voley amarilla y azul', NULL, 'U', 13000.00, 'Gold', 1, 'Amarillo', 10, NULL, 'accesorio', 'ambos', 'pelota-de-voley-gold-numero-5-amarilla-121040000330002-1.jpg', NULL, '2024-06-01 10:29:12', '2024-06-01 10:29:12'),
-(2, 'Pelota de Fútbol rojo y azul', NULL, 'U', 20000.00, 'Otro', 1, 'Rojo', 13, NULL, 'accesorio', 'ambos', '1414-2.jpg', NULL, '2024-06-01 10:33:03', '2024-06-01 10:33:03'),
-(3, 'Botines de futbol 11', NULL, 'U', 34350.00, 'Adidas', 1, 'Blanco', 10, NULL, 'calzado', 'adultos', 'ADHQ8944-1.JPG', NULL, '2024-06-01 10:34:38', '2024-06-01 10:34:38'),
-(4, 'Botines de futbol 11 rosa adidas', NULL, 'F', 45320.00, 'Adidas', 1, 'Fuxia', 9, NULL, 'calzado', 'adultos', 'botines.JPG', NULL, '2024-06-01 10:36:56', '2024-06-01 10:36:56');
+INSERT INTO `articulos` (`id`, `nombre`, `genero`, `precio`, `marca`, `id_categoria`, `color`, `stock`, `descripcion`, `tipo_producto`, `dirigido_a`, `foto`, `descuento_id`, `created_at`, `updated_at`) VALUES
+(1, 'Pelota de Voley amarilla y azul', 'U', 13000.00, 'Gold', 1, 'Amarillo', 10, NULL, 'accesorio', 'ambos', 'pelota-de-voley-gold-numero-5-amarilla-121040000330002-1.jpg', NULL, '2024-06-01 10:29:12', '2024-06-01 10:29:12'),
+(2, 'Pelota de Fútbol rojo y azul', 'U', 20000.00, 'Otro', 1, 'Rojo', 13, NULL, 'accesorio', 'ambos', '1414-2.jpg', NULL, '2024-06-01 10:33:03', '2024-06-01 10:33:03'),
+(3, 'Botines de futbol 11', 'U', 34350.00, 'Adidas', 1, 'Blanco', 10, NULL, 'calzado', 'adultos', 'ADHQ8944-1.JPG', NULL, '2024-06-01 10:34:38', '2024-06-01 10:34:38'),
+(4, 'Botines de futbol 11 rosa adidas', 'F', 45320.00, 'Adidas', 1, 'Fuxia', 9, NULL, 'calzado', 'adultos', 'botines.JPG', NULL, '2024-06-01 10:36:56', '2024-06-01 10:36:56');
 
 -- --------------------------------------------------------
 

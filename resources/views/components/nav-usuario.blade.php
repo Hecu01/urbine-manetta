@@ -66,6 +66,8 @@
                         <ul class="dropdown-menu w-16" id="funciones">
                             <li><a class="dropdown-item" href=" {{ route('mi-perfil.index') }} "><i
                                         class="fa-solid fa-user mx-1"></i> Mi perfil</a></li>
+                            <li><a class="dropdown-item" href="{{ asset('compras-realizadas') }} "><i class="fa-solid fa-bag-shopping"></i> Compras</a>
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -95,7 +97,8 @@
                                     </h1>
                                 </div>
                                 <div class="no-notificaciones flex content-center justify-center mt-5 opacity-30 scale-105">
-                                    <img src="{{asset('assets/img/sportivo-logo.svg')}}" alt="" draggable="false" class="max-w-[50%] h-auto" style="max-height: 50%;">
+                                    <img src="{{ asset('assets/img/sportivo-logo.svg') }}" alt="" draggable="false"
+                                        class="max-w-[50%] h-auto" style="max-height: 50%;">
                                 </div>
                             </div>
                         </ul>
@@ -205,13 +208,14 @@
         </a>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos' => ['masculino', 'unisex'], 'publico_dirigido' => ['adultos']]) }}" id="navbarDropdown" role="button"
-                {{-- data-bs-toggle="dropdown" 
+                href="{{ route('buscar', ['generos' => ['masculino', 'unisex'], 'publico_dirigido' => ['adultos']]) }}"
+                id="navbarDropdown" role="button" {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 HOMBRE
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{ route('buscar', ['generos' => ['masculino', 'unisex']]) }}">Hombre</a>
+                <li><a class="dropdown-item"
+                        href="{{ route('buscar', ['generos' => ['masculino', 'unisex']]) }}">Hombre</a>
                 </li>
                 <li><a class="dropdown-item" href="#">Another action</a></li>
                 <li>
@@ -222,8 +226,8 @@
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos[]' => ['femenino', 'unisex'] , 'publico_dirigido' => ['adultos']]) }}" id="navbarDropdown" role="button"
-                {{-- data-bs-toggle="dropdown" 
+                href="{{ route('buscar', ['generos[]' => ['femenino', 'unisex'], 'publico_dirigido' => ['adultos']]) }}"
+                id="navbarDropdown" role="button" {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 MUJER
             </a>
@@ -238,8 +242,8 @@
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos' => ['niños', 'unisex'], 'publico_dirigido' => ['niños']]) }}" id="navbarDropdown" role="button"
-                {{-- data-bs-toggle="dropdown" 
+                href="{{ route('buscar', ['generos' => ['niños', 'unisex'], 'publico_dirigido' => ['niños']]) }}"
+                id="navbarDropdown" role="button" {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 NIÑOS
             </a>
@@ -253,19 +257,21 @@
             </ul>
         </div>
         <div class="nav-item dropdown">
-            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4" href="#"
+                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 DEPORTE
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 @foreach ($allDeportes as $deporte)
                     <li>
-                        <a class="dropdown-item" href="{{ route('buscar', ['deportes' => $deporte]) }}">{{ $deporte }}</a>
+                        <a class="dropdown-item"
+                            href="{{ route('buscar', ['deportes' => $deporte]) }}">{{ $deporte }}</a>
                     </li>
                 @endforeach
             </ul>
         </div>
-        
-        
+
+
 
         @guest
         @else
