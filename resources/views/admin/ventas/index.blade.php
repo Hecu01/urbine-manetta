@@ -5,7 +5,9 @@
       text-align: center;
     }
   </style>
-
+  @if (session('success'))
+    @include('admin.partials.MsjDelSistema.VendidoConExito') 
+  @endif 
   <div class="w-fit">
 
     <article class="article0    px-2 bg-green-500 "  >

@@ -18,7 +18,7 @@ class PublicidadController extends Controller
         $publicidades = Publicidad::all();
 
         // Cambia la ruta de la vista a la carpeta correcta
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.articulosDeportivos.publicidad', compact('publicidades'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.publicidad.index', compact('publicidades'));
     }
 
     public function mostrarPublicidades()

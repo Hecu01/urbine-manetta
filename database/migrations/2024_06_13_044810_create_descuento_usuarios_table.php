@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('motivo_descuento')->nullable();
             $table->string('foto_certificado',1000)->nullable();
             $table->integer('porcentaje_descuento')->nullable();
+            $table->string('aceptado')->nullable();
             $table->boolean('descuento_activo')->deafult(false);
 
 

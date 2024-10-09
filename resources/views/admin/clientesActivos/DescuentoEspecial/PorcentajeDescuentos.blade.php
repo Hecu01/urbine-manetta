@@ -85,9 +85,20 @@
     </table>
   </section>
 
-  <div class="aside">
-    <h1>aside</h1>
-  </div>
+  <a href="{{ route('clientes-activos.index') }}" class="text-white no-underline article0 article1 px-2">
+    <div class="top">
+        <span>
+            <i class="fa-solid fa-user-plus"></i>
+        </span>
+        <span class="recuento">
+            0
+        </span>
+    </div>
+    <div class="bottom">
+        <p>Clientes activos</p>
+    </div>
+ </a>
+
 
   <style>
     .cabecera-tabla th, .tbody-tabla tr td{

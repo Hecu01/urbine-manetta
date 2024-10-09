@@ -46,6 +46,7 @@ class CarritoController extends Controller
         $imagen = $request->input('imagen');
         $cantidad = $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
+        $calzadoTalle = $request->input('calzadoTalle', null);
 
         $precioFinal = $precio * $cantidad;
 
@@ -60,6 +61,7 @@ class CarritoController extends Controller
             'quantity' => $cantidad,
             'imagen' => $imagen,
             'discount' => $descuento,
+            'calzadoTalle' => $calzadoTalle,
         ];
 
         // Guarda el carrito actualizado en la sesión

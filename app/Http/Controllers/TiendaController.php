@@ -83,13 +83,13 @@ class TiendaController extends Controller
         }
 
         // Guardar la compra por el id del usuario
-    $compra = Compra::create([
-        'total' => $totalPrice,
-        'fecha' => now(),
-        'user_id' => Auth::id(), 
+        $compra = Compra::create([
+            'total' => $totalPrice,
+            'fecha' => now(),
+            'user_id' => Auth::id(), 
 
-        // dd(Auth::id())
-    ]);
+            // dd(Auth::id())
+        ]);
 
         // dd($compra);
 

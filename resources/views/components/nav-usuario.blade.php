@@ -430,11 +430,11 @@
                             <h1 class="text-lg text-center shadow-sm  uppercase bg-slate-500  text-white hover:bg-black-600">Carrito de compras</h1>
                         </div>
                         
-                        <div class="h-96 overflow-y-auto">
+                        <div class=" overflow-y-auto " style="max-height:500px">
                            
 
                             @foreach ($cartItems as $item)
-                                <div class="flex h-fit m-1 mt-3 mx-3">
+                                <div class="flex h-fit m-1 mt-3 mx-3" >
                                     <div class="pb-2">
                                         <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
                                             height="100px">
@@ -443,7 +443,7 @@
     
                                         <ul class="font-semibold">
                                             <li>{{ $item['name'] }}</li>
-                                            <li class="my-1">
+                                            <li >
                                                 {{-- Precio: $ {{ number_format($item['price'], 0, ',', '.') }} AR --}}
                                                 Precio: $ {{ number_format($item['price'], 0, ',', '.') }} AR
                                                 {{-- <span class="bg-red-500 text-white"
@@ -454,18 +454,25 @@
                             
                                                 </span> --}}
                                             </li>
+
+                                            @if($item['calzadoTalle'] !== null)
+                                                <li>
+                                                    Talle: N° {{ $item['calzadoTalle'] }} 
+                                                </li>
+                                            @endif
                                             <li>
                                                 Cantidad: {{ $item['quantity'] }} 
                                                 <div class="mx-1 inline">
 
-                                                    {{-- <button class="btn btn-success btn-sm" style="font-size: .67rem">+</button>
-                                                    <button class="btn btn-danger btn-sm" style="font-size: .67rem">-</button> --}}
-                                                   
+                                                    <!--
+                                                     <button class="btn btn-success btn-sm" style="font-size: .67rem">+</button>
+                                                    <button class="btn btn-danger btn-sm" style="font-size: .67rem">-</button> 
+                                                   -->
                                                     <!-- Botón de Eliminar -->
                                                     <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="btn btn-dark btn-sm" style="font-size: .67rem" type="submit">
+                                                        <button class="btn btn-dark btn-sm" style="font-size: .67rem" type="submit" title="Quitar del carrito"> 
 
                                                             <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
                                                         </button>

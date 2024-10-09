@@ -109,8 +109,10 @@ class VentaController extends Controller
             }
         }
 
+        // Después de agregar el artículo exitosamente
+        Session::flash('success', true);
         // Redirigir a una ruta específica o devolver una respuesta si es necesario
-        return redirect()->route('ventas.index')->with('');
+        return redirect()->route('ventas.index');
     }
 
     /**

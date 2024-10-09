@@ -98,18 +98,18 @@
                                             <div class="inline-block relative " style="width:120px">
 
                                                 <select
-                                                    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer"
+                                                    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle"
                                                     id="talle">
-                                                    <option value=""selected hidden>Elija talle</option>
+                                                    <option value="0"selected hidden>Elija talle</option>
                                                     @foreach ($resultado->calzados as $calzado)
                                                         @if ($calzado->pivot->stocks > 0)
-                                                            <option value="{{ $calzado->id }}"
+                                                            <option value="{{ $calzado->calzado }}" data-id=""
                                                                 data-stock="{{ $calzado->pivot->stocks }}">Talle
                                                                 {{ $calzado->calzado }} </option>
                                                         @endif
                                                     @endforeach
                                                 </select>
-
+                                                <input type="text" class="tieneTalleCalzado" value="true" hidden>
                                             </div>
                                         </div>
                                     @endif
@@ -258,101 +258,105 @@
 
         // Usar `$(this)` para referenciar el botón clickeado y buscar los inputs dentro del formulario
         var formulario = $(this).closest('form');
+
+        // Obtener el valor de la clase que indica si el producto tiene talle o no
+        var tieneTalleCalzado = formulario.find('.tieneTalleCalzado').val();
+
+        // Variable para almacenar el talle (si existe)
+        var calzadoTalle = null;
+
+        // Validar si se necesita seleccionar un talle para este producto
+        if (tieneTalleCalzado === "true") {
+            calzadoTalle = formulario.find('.calzadoTalle').val();
+
+            if (!calzadoTalle || calzadoTalle == 0) {
+                alert('Por favor, elige un talle antes de agregar al carrito.');
+                return; // Detener la ejecución si no se seleccionó un talle
+            }
+        }
+
+        // Obtener los valores de otros campos del formulario
         var productoId = formulario.find('.producto_id').val();
         var nombre = formulario.find('.nombre').val();
         var precio = formulario.find('.precio').val();
         var imagen = formulario.find('.imagen').val();
         var cantidad = formulario.find('.unidades').val() || 1; // Si no se especifica cantidad, usar 1 por defecto
         var descuento = $('.descuento').val();
-        //   var precioFinal = precio - descuento;
 
+        // Hacer la solicitud AJAX
+        $.ajax({
+            url: "{{ route('carrito.añadir') }}", // Ruta a la que se envía la petición
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}', // Asegúrate de enviar el token CSRF
+                producto_id: productoId,
+                nombre: nombre,
+                precio: precio,
+                imagen: imagen,
+                descuento: descuento,
+                cantidad: cantidad,
+                calzadoTalle: calzadoTalle // Incluir el talle en la petición si está disponible
+            },
+            success: function(response) {
+                // Mostrar un mensaje de éxito o actualizar la interfaz
+                alert(response.message);
 
-      $.ajax({
-        url: "{{ route('carrito.añadir') }}", // Ruta a la que se envía la petición
-        method: 'POST',
-        data: {
-          _token: '{{ csrf_token() }}', // Asegúrate de enviar el token CSRF
-          producto_id: productoId,
-          nombre: nombre,
-          precio: precio,
-          imagen: imagen,
-          cantidad: cantidad
-        },
-        success: function(response) {
-          // Mostrar un mensaje de éxito o actualizar la interfaz
-          alert(response.message);
-            
-          // Actualizar la cantidad de productos en el carrito
-          $('#carrito-de-compras .badge').text(response.carrito.length);
+                // Actualizar la cantidad de productos en el carrito
+                $('#carrito-de-compras .badge').text(response.carrito.length);
 
-          // Actualizar el contenido del carrito (el dropdown)
-          let carritoContent = '';
-          response.carrito.forEach(function(item) {
-            
-            const removeUrl = `/carrito/remove/${item.id}`;
-            carritoContent += `
-                  
+                // Actualizar el contenido del carrito (el dropdown)
+                let carritoContent = '';
+                response.carrito.forEach(function(item) {
+                    const removeUrl = `/carrito/remove/${item.id}`;
+                    carritoContent += `
+                        <div class="flex h-fit m-1 mt-3 mx-3">
+                            <div class="pb-2">
+                                <img src="{{ url('producto/') }}/${item.imagen}" alt="" width="100px" height="100px">
+                            </div>
+                            <div>
+                                <ul class="font-semibold">
+                                    <li>${item.name}</li>
+                                    <li>Precio: $${item.price.toLocaleString()}</li>
+                                    ${item.calzadoTalle ? `<li>Talle: ${item.calzadoTalle}</li>` : ''} <!-- Mostrar solo si calzadoTalle tiene un valor -->
 
-                    <div class="flex h-fit m-1 mt-3 mx-3">
-                        <div class="pb-2">
-                             <img src="{{ url('producto/') }}/${item.imagen}" alt="" width="100px" height="100px">
-                        </div>
-                        <div>
-
-                            <ul class="font-semibold">
-                                <li>${item.name}</li>
-                                <li>Precio: $${item.price.toLocaleString()}</li>
-                                <li>
-                                    // Cantidad: ${item.quantity}
+                                    <li>Cantidad: ${item.quantity}</li>
+                                    ${item.talle ? `<li>Talle: n°${item.talle}</li>` : ''} <!-- Mostrar talle si está disponible -->
                                     <div class="mx-1 inline">
-
-                                        // <button class="btn btn-success btn-sm" style="font-size: .67rem">+</button>
-                                        // <button class="btn btn-danger btn-sm" style="font-size: .67rem">-</button>
-                                        
-                                        <!-- Botón de Eliminar -->
-                                        <form action="${removeUrl}"  method="POST">
+                                        <form action="${removeUrl}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-dark btn-sm" style="font-size: .67rem" type="submit">
-
                                                 <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
                                             </button>
                                         </form>
                                     </div>
-                                </li>
-                                
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
-                        
-                    </div>
-                    <hr>
-                  
-                  
-                  
-            `;
-          });
+                        <hr>`;
+                });
 
-          if (response.carrito.length > 0) {
-            $('#carrito-de-compras .dropdown-menu').html(`
-                <div class="">
-                    <h1 class="text-lg text-center shadow-sm  uppercase bg-slate-500  text-white hover:bg-black-600">Carrito de compras</h1>
-                </div>
-                ${carritoContent}
-                <div class="flex justify-center"  >
-
-                    <a href="{{ route('carrito.index') }}" class="shadow-sm border-t no-underline bg-rose-500  text-white hover:bg-rose-600 p-1 px-3 rounded text-lg" style=" display: block;  text-align: center;">Entrar al carrito</a>
-                </div>
-            `);
-          } else {
-            $('#carrito-de-compras .dropdown-menu').html('<h1 class="text-lg text-center">El carrito está vacío</h1>');
-          }
-        },
-        error: function(xhr, status, error) {
-          var errorMessage = xhr.status + ': ' + xhr.statusText;
-          alert('Error - ' + errorMessage);
-        }
-      });
+                if (response.carrito.length > 0) {
+                    $('#carrito-de-compras .dropdown-menu').html(`
+                        <div class="">
+                            <h1 class="text-lg text-center shadow-sm  uppercase bg-slate-500  text-white hover:bg-black-600">Carrito de compras</h1>
+                        </div>
+                        ${carritoContent}
+                        <div class="flex justify-center">
+                            <a href="{{ route('carrito.index') }}" class="shadow-sm border-t no-underline bg-rose-500 text-white hover:bg-rose-600 p-1 px-3 rounded text-lg" style="display: block; text-align: center;">Entrar al carrito</a>
+                        </div>
+                    `);
+                } else {
+                    $('#carrito-de-compras .dropdown-menu').html('<h1 class="text-lg text-center">El carrito está vacío</h1>');
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Error - ' + errorMessage);
+            }
+        });
     });
+
 
 
 

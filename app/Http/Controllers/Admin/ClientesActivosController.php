@@ -133,7 +133,7 @@ class ClientesActivosController extends Controller
         $HabilitarDescuento = DescuentoUsuario::findOrFail($id);
         
         // Cambiar el estado de la tupla
-        $HabilitarDescuento->aceptado = true;
+        $HabilitarDescuento->aceptado = "si";
         $HabilitarDescuento->descuento_activo = true;
         $HabilitarDescuento->save();
 
@@ -145,7 +145,7 @@ class ClientesActivosController extends Controller
         $RechazarDescuento = DescuentoUsuario::findOrFail($id);
         
         // Cambiar el estado de la tupla
-        $RechazarDescuento->aceptado = false;
+        $RechazarDescuento->aceptado = "no";
         $RechazarDescuento->save();
         
         return redirect()->back()->with('success', 'Rechazado con exito el descuento');
