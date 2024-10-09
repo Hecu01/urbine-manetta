@@ -396,7 +396,7 @@
 
             {{-- Logueado --}}
         @else
-            <div class="dropdown " id="carrito-de-compras">
+            <div class="dropdown " id="carrito-de-compras" >
                 <a href="#" class="btn btn-secondary" style="margin-top: -4px;  text-decoration: none"
                     data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#miModal">
                     <span style="">
@@ -412,39 +412,72 @@
                     @endphp
 
 
-                    @if ($cantCarrito != 0)
-                        <span class="badge bg-danger">
+                    <span class="badge bg-danger">
 
-                            {{ $cantCarrito }}
-                        </span>
-                    @endif
+                        {{ $cantCarrito }}
+                    </span>
                 </a>
 
-                <ul class="dropdown-menu w-96 h-96 overflow-y-auto">
-                    @if ($contarItems > 0)
-                        <h1 class="text-lg text-center shadow-sm">Carrito de compras</h1>
-                        @foreach ($cartItems as $item)
-                            <div class="flex h-fit m-1 mt-3 mx-3">
-                                <div class="pb-2">
-                                    <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
-                                        height="100px">
-                                </div>
-                                <div>
+                <ul class="dropdown-menu   " style="min-width:500px">
+                        <div class="">
 
-                                    <ul>
-                                        <li>{{ $item['name'] }}</li>
-                                        <li>Precio: $ {{ number_format($item['price'], 0, ',', '.') }} AR</li>
-                                        <li>Cantidad: {{ $item['quantity'] }}</li>
-                                        {{-- <li>talle: {{ $item['quantity'] }}</li> --}}
-                                    </ul>
+                            <h1 class="text-lg text-center shadow-sm  uppercase bg-slate-500  text-white hover:bg-black-600">Carrito de compras</h1>
+                        </div>
+                        
+                        <div class="h-96 overflow-y-auto">
+                           
+
+                            @foreach ($cartItems as $item)
+                                <div class="flex h-fit m-1 mt-3 mx-3">
+                                    <div class="pb-2">
+                                        <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
+                                            height="100px">
+                                    </div>
+                                    <div>
+    
+                                        <ul class="font-semibold">
+                                            <li>{{ $item['name'] }}</li>
+                                            <li class="my-1">
+                                                Precio: $ {{ number_format($item['price'], 0, ',', '.') }} AR
+                                                {{-- <span class="bg-red-500 text-white"
+                                                style="padding: 0px 3px ;font-size:13px; right:38px; top:106px; font-family:'Times New Roman', Times, serif">
+                                                - 20%
+                                                    OFF
+                            
+                            
+                                                </span> --}}
+                                            </li>
+                                            <li>
+                                                Cantidad: {{ $item['quantity'] }} 
+                                                <div class="mx-1 inline">
+
+                                                    <button class="btn btn-success btn-sm" style="font-size: .67rem">+</button>
+                                                    <button class="btn btn-danger btn-sm" style="font-size: .67rem">-</button>
+                                                   
+                                                    <!-- Botón de Eliminar -->
+                                                    <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-dark btn-sm" style="font-size: .67rem" type="submit">
+
+                                                            <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                    
                                 </div>
-                            </div>
-                            <hr>
-                        @endforeach
-                        <a href="http://127.0.0.1:8000/carrito-de-compras#" class="no-underline text-black hover:bg-slate-200 p-1 px-3 rounded text-lg" style=" display: block; width: 100%; text-align: center;">Entrar al carrito</a>
-                    @else
-                        <h1 class="text-lg text-center">El carrito está vacío</h1>
-                    @endif
+                                <hr>
+                            @endforeach
+                        </div>
+                        <div class="flex justify-center"  >
+
+                            <a href="{{ route('carrito.index') }}" class="shadow-sm border-t no-underline bg-rose-500  text-white hover:bg-rose-600 p-1 px-3 rounded text-lg" style=" display: block;  text-align: center;">Entrar al carrito</a>
+                        </div>
+
 
                 </ul>
             </div>

@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('section-principal')
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+
+
 <div class="bg-neutral-50 py-12">
     <div class="container mx-auto">
         <div class="flex flex-col gap-6 flex-row">
@@ -10,12 +19,21 @@
 
                 @foreach ($cartItems as $item)
                     <div class="shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm flex mt-0">
-                        <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="70px" height="70px" class="mr-4">
+                        <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="130px" height="70px" class="mr-4">
                         <div>
                             <p>ID: {{ $item['id'] }}</p>
                             <p>Nombre: {{ $item['name'] }}</p>
-                            <p>Precio: $ {{ number_format($item['price'], 0, ',', '.') }}</p>
+                            <p>
+                                Precio: $ {{ number_format($item['price'], 0, ',', '.') }}
+                            </p>
                             <p>Cantidad: {{ $item['quantity'] }}</p>
+
+                            <!-- Botón de Eliminar -->
+                            <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
                         </div>
                     </div>
                 @endforeach

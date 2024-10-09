@@ -6,7 +6,7 @@
                 <div class="logo-y-nombre">
                     <div class="imagen-logo mr-1">
 
-                        <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="" draggable="false" style="min-width: 100px">
+                        <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="" draggable="false" style="min-width: 100px; background: #fff">
                     </div>
                     <span >
                         Sportivo

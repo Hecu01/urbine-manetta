@@ -14,17 +14,18 @@ class CarritoController extends Controller
     {
         // Recupera el carrito de la sesión
         $carrito = session()->get('carrito', []);
-
+        $totalPrice = 0;
+        
         // Convierte el carrito en una colección para ser compatible con darryldecode/cart
         $cartItems = collect($carrito);
 
-        $totalPrice = 0;
-        foreach ($cartItems as $item) {
-            $totalPrice += $item['price'] * $item['quantity'];
+        foreach ($cartItems as $item){
+            $totalPrice += $item['price'];
+
         }
 
         // Retornar la vista con el contenido del carrito
-        return view('users.MiCarrito', ['cartItems' => $cartItems, 'totalPrice' => $totalPrice]);
+        return view('users.MiCarrito', compact('cartItems', 'totalPrice'));
     }
 
     // Método para añadir un producto al carrito
@@ -36,36 +37,58 @@ class CarritoController extends Controller
                 return response()->json(['error' => 'Por favor, proporciona tu dirección antes de agregar al carrito.'], 400);
             }
             return redirect()->route('domicilio')->with('mensaje', 'Por favor, proporciona tu dirección antes de agregar al carrito.');
-        } else{ 
+        }
 
-            $productoId = $request->input('producto_id');
-            $nombre = $request->input('nombre');
-            $precio = $request->input('precio');
-            $imagen = $request->input('imagen');
-            $cantidad = $request->input('cantidad', 1);
-    
-            // Recupera el carrito de la sesión
-            $carrito = session()->get('carrito', []);
-    
-            // Añade el producto al carrito
-            $carrito[] = [
-                'id' => $productoId,
-                'name' => $nombre,
-                'price' => $precio,
-                'quantity' => $cantidad,
-                'imagen' => $imagen,
-            ];
-    
-            // Guarda el carrito actualizado en la sesión
-            session()->put('carrito', $carrito);
-    
-            // Redirigir a la página del carrito
-            return redirect()->route('carrito.index');
+        $productoId = $request->input('producto_id');
+        $nombre = $request->input('nombre');
+        $precio = $request->input('precio');
+        $imagen = $request->input('imagen');
+        $cantidad = $request->input('cantidad', 1);
+        $descuento = $request->input('descuento', 0);
+
+
+        // Recupera el carrito de la sesión
+        $carrito = session()->get('carrito', []);
+
+        // Añade el producto al carrito
+        $carrito[] = [
+            'id' => $productoId,
+            'name' => $nombre,
+            'price' => $precio,
+            'quantity' => $cantidad,
+            'imagen' => $imagen,
+            'discount' => $descuento,
+        ];
+
+        // Guarda el carrito actualizado en la sesión
+        session()->put('carrito', $carrito);
+
+        // Respuesta para peticiones AJAX
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'Producto añadido al carrito exitosamente',
+                'carrito' => $carrito,
+            ]);
         }
 
 
     }
 
+    public function remove($id)
+    {
+        $carrito = session()->get('carrito', []);
+
+        // Buscar el producto en el carrito y eliminarlo
+        foreach ($carrito as $key => $item) {
+            if ($item['id'] == $id) {
+                unset($carrito[$key]); // Eliminar el producto del carrito
+                session()->put('carrito', $carrito); // Actualizar la sesión con el nuevo carrito
+                break; // Terminar el bucle al encontrar el producto
+            }
+        }
+
+        return redirect()->back()->with('success', 'Producto eliminado del carrito.');
+    }
 
     // public function finalizarCompra(){
     //     $client = new PreferenceClient();
@@ -95,4 +118,5 @@ class CarritoController extends Controller
     //         ]
     //     ]);
     // }
+    
 }

@@ -24,14 +24,16 @@
                 <div class="form-group">
                     {{-- FILTRO POR GENERO --}}
                     <span class="font-semibold">Filtrar por género</span>
-                    @foreach ($allGeneros as $genero)
-                        <div class="form-check ml-3">
-                            <input class="form-check-input" type="checkbox" name="generos[]"
-                                id="genero_{{ $genero }}" value="{{ $genero }}"
-                                {{ in_array($genero, $selectedGeneros) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="genero_{{ $genero }}">{{ $genero }}</label>
-                        </div>
-                    @endforeach
+                    <div class="" >
+                        @foreach ($allGeneros as $genero)
+                            <div class="form-check ml-3">
+                                <input class="form-check-input" type="checkbox" name="generos[]"
+                                    id="genero_{{ $genero }}" value="{{ $genero }}"
+                                    {{ in_array($genero, $selectedGeneros) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="genero_{{ $genero }}">{{ $genero }}</label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -52,15 +54,18 @@
                 {{-- FILTRO POR DEPORTE --}}
                 <div class="form-group">
                     <span class="font-semibold">Filtrar por deporte</span>
-                    @foreach ($allDeportes as $deporte)
-                        <div class="form-check ml-3">
-                            <input class="form-check-input" type="checkbox" name="deportes[]"
-                                id="deporte_{{ $deporte }}" value="{{ $deporte }}"
-                                {{ in_array($deporte, $selectedDeporte) ? 'checked' : '' }}>
-                            <label class="form-check-label"
-                                for="deporte_{{ $deporte }}">{{ $deporte }}</label>
-                        </div>
-                    @endforeach
+                    <div class="" style="max-height: 100px; overflow:auto; max-width:200px">
+
+                        @foreach ($allDeportes as $deporte)
+                            <div class="form-check ml-3">
+                                <input class="form-check-input" type="checkbox" name="deportes[]"
+                                    id="deporte_{{ $deporte }}" value="{{ $deporte }}"
+                                    {{ in_array($deporte, $selectedDeporte) ? 'checked' : '' }}>
+                                <label class="form-check-label"
+                                    for="deporte_{{ $deporte }}">{{ $deporte }}</label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
             <div class="botones">
