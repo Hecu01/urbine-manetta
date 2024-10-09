@@ -445,7 +445,7 @@
                                             <li>{{ $item['name'] }}</li>
                                             <li class="my-1">
                                                 {{-- Precio: $ {{ number_format($item['price'], 0, ',', '.') }} AR --}}
-                                                Precio: $ {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }} AR
+                                                Precio: $ {{ number_format($item['price'], 0, ',', '.') }} AR
                                                 {{-- <span class="bg-red-500 text-white"
                                                 style="padding: 0px 3px ;font-size:13px; right:38px; top:106px; font-family:'Times New Roman', Times, serif">
                                                 - 20%

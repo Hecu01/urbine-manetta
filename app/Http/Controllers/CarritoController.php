@@ -21,7 +21,7 @@ class CarritoController extends Controller
 
         foreach ($cartItems as $item){
             // $totalPrice += $item['price'];
-            $totalPrice += $item['price'] * $item['quantity'];
+            $totalPrice += $item['price'];
 
         }
 
@@ -47,6 +47,7 @@ class CarritoController extends Controller
         $cantidad = $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
 
+        $precioFinal = $precio * $cantidad;
 
         // Recupera el carrito de la sesión
         $carrito = session()->get('carrito', []);
@@ -55,7 +56,7 @@ class CarritoController extends Controller
         $carrito[] = [
             'id' => $productoId,
             'name' => $nombre,
-            'price' => $precio,
+            'price' => $precioFinal,
             'quantity' => $cantidad,
             'imagen' => $imagen,
             'discount' => $descuento,
