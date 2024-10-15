@@ -1,24 +1,24 @@
 <footer class="navbar mt-3" id="footer-admin" style="">
-    <div class="informacion-footer flex justify-between w-100" style="position: relative">
-        <div class="w-64 mx-2">
+    <div class="informacion-footer flex justify-between w-100" style="position: relative; ">
+        <div class="w-64 mx-2 ">
             <div class="center">
                 <!-- Logo y nombre -->
                 <div class="logo-y-nombre">
-                    <div class="imagen-logo mr-1">
+                    <div class="imagen-logo mr-6">
 
-                        <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="" draggable="false" style="min-width: 100px; background: #fff">
+                        <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="" draggable="false" style="min-width: 150px; min-height: 150px; max-width: 200px; max-height: 200px; background: #fff; padding:3px; border: 1px solid black; border-radius:50%">
                     </div>
-                    <span >
+                    <span class="text-black font-weight-bold" style="font-size:3.5em; text-decoration: none; text-shadow:1px 1px 0 #fdfdfd, 4px 4px 0 rgba(81, 81, 81, 0.5), 0 0 1px #fdfdfd;">
                         Sportivo
                     </span>
                 </div>
             </div>
 
-            <span>
+            {{-- <span>
                 Nosotros somos Sportivo, una tienda que vende articulos deportivos. Hacemos venta tanto online como presencial. Hacemos envíos gratis dentro de San Nicolás de los arroyos, te esperamos.
-            </span>
+            </span> --}}
         </div>
-        <div class="redes-sociales " style="width: 300px">
+        <div class="redes-sociales justify-between" style="width: 300px">
             <h1 class="text-2xl "> Nuestras redes sociales</h1>
             <ul class="" style="width: 300px">
                 <li ><a class="text-white" href=""><i class="fa-brands fa-square-instagram"></i> - Sportivo</a></li>
@@ -27,26 +27,22 @@
             </ul>
         </div>
         <div class="preguntas-frecuentes" style="width: 300px">
-            <h1 class="text-2xl "> Preguntas frecuentes</h1>
+            <h1 class="text-2xl"> Ayuda</h1>
             <ol class="" style="width: 300px">
-                <li><a class="text-white"href="">¿Cómo compro online?</a></li>
-                <li><a class="text-white" href="">¿Cómo me creo un usuario?</a></li>
-                <li><a class="text-white" href="">¿Qué es agregar al carrito?</a></li>
-                <li><a class="text-white" href="">Ayuda para medirme calzado</a></li>
-                <li><a class="text-white" href="">¿Cómo medirme para encargar un pantalón?</a></li>
-                <li><a class="text-white" href="">¿Cómo me mido el talle de ropa?</a></li>
+                <li><a class="text-white text-base" href="{{ route('preg-frecuentes') }}">Preguntas frecuentes</a></li>
+                <li><a class="text-white text-base" href=" {{route('descuento-usuario')}} ">Solicitar descuento especial</a></li>
+                <li><a class="text-white text-base" href="">Manual de usuario </a></li>
             </ol>
         </div>
-        <div class="utilidades" >
+        {{-- <div class="utilidades" >
             <h1 class="text-2xl "> Otras acciones</h1>
             <ul class="" style="width: 300px">
-                <li><a class="text-white" href=" {{route('descuento-usuario')}} ">Solicitar descuento especial</a></li>
+                
                 <li><a class="text-white"href="">Acceder a un reembolso</a></li>
-                <li><a class="text-white" href="">Manual de usuario </a></li>
                 <li><a class="text-white" href="">Tabla de talles</a></li>
 
             </ul>
-        </div>
+        </div> --}}
 
 
 

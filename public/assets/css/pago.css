@@ -23,6 +23,7 @@ body {
 	flex-direction: column;
 	margin: auto;
 	max-width: 1000px;
+	/* border: solid 1px red; */
 	padding: 40px 20px;
 	width: 90%;
 }
@@ -99,6 +100,10 @@ body {
 	display: flex;
 	justify-content: space-between;
 	margin-top: 20px;
+}
+
+.flexbox{
+	margin-bottom: 5px;
 }
 
 /* Parte trasera tarjeta */
@@ -223,11 +228,13 @@ body {
 	clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 	padding: 150px 30px 30px 30px;
 	max-width: 700px;
+	/* border: 3px solid blue; */
 	position: relative;
 	transition: clip-path 0.3s ease-in-out;
 	width: 100%;
 	z-index: 2;
 }
+
 
 .form-card.active {
 	clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -255,7 +262,7 @@ body {
 }
 
 .form-card input {
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	text-transform: uppercase;
 }
 
@@ -305,9 +312,12 @@ body {
 	color: #93bfed;	
 }
 
-.form-card .flexbox .group-ccv-card-form {
+/* .form-card .flexbox  {
 	min-width: 100px;
-}
+
+} */
+
+
 
 .form-card .btn-send-form-card {
 	background: linear-gradient(rgb(253, 218, 134) 0px, rgb(225, 157, 60) 100%);
