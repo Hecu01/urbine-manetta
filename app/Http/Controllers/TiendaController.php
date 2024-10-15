@@ -59,7 +59,13 @@ class TiendaController extends Controller
                     }
                 },
             ],
-            'cardName' => 'required|string|max:20',
+            'cardName' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z\s]+$/',
+                'min:4',
+                'max:50',
+            ],
             'cardExpiryMonth' => 'required',
             'cardExpiryYear' => 'required',
             'cardCvv' => 'required|regex:/^\d{3}$/',
@@ -70,6 +76,10 @@ class TiendaController extends Controller
             'cardExpiryYear.required' => 'El año de expiración es obligatorio.',
             'cardCvv.required' => 'El CCV es obligatorio.',
             'cardCvv.regex' => 'El CCV debe tener 3 dígitos.',
+            'cardName.required' => 'El nombre en la tarjeta es obligatorio.',
+            'cardName.regex' => 'El nombre en la tarjeta solo puede contener letras y espacios.',
+            'cardName.min' => 'El nombre en la tarjeta debe tener al menos 4 caracteres.',
+            'cardName.max' => 'El nombre en la tarjeta no puede exceder los 50 caracteres.'
         ]);
 
         // Calcular el total
@@ -86,7 +96,7 @@ class TiendaController extends Controller
         $compra = Compra::create([
             'total' => $totalPrice,
             'fecha' => now(),
-            'user_id' => Auth::id(), 
+            'user_id' => Auth::id(),
 
             // dd(Auth::id())
         ]);
@@ -105,19 +115,19 @@ class TiendaController extends Controller
     }
 
     public function comprasRealizadas()
-{
-    if (!Auth::check()) {
-        return redirect()->route('home')->with('error', 'Por favor, inicie sesión para ver sus compras.');
+    {
+        if (!Auth::check()) {
+            return redirect()->route('home')->with('error', 'Por favor, inicie sesión para ver sus compras.');
+        }
+
+        // Obtener las compras del usuario autenticado junto con los artículos
+        $compras = Compra::with('articulos')->where('user_id', Auth::id())->get();
+
+        // Calcular el total de todas las compras (opcional si quieres mostrarlo)
+        $totalPrice = $compras->sum('total'); // Sumar el total de todas las compras
+
+        return view('users.comprasRealizadas', compact('compras', 'totalPrice'));
     }
-
-    // Obtener las compras del usuario autenticado junto con los artículos
-    $compras = Compra::with('articulos')->where('user_id', Auth::id())->get();
-
-    // Calcular el total de todas las compras (opcional si quieres mostrarlo)
-    $totalPrice = $compras->sum('total'); // Sumar el total de todas las compras
-
-    return view('users.comprasRealizadas', compact('compras', 'totalPrice'));
-}
 
 
 
@@ -140,7 +150,6 @@ class TiendaController extends Controller
                 // Redirigir al usuario a una página diferente, como su perfil o algún otro lugar
                 return redirect()->back();
             }
-
         }
         return view('users.AddAddress');
     }

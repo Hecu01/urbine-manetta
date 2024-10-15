@@ -11,6 +11,11 @@
 </head>
 
 <div class="container">
+
+    <a href="{{ route('carrito.index') }}" id="boton-regresar-atras" >
+        <i class="fa-solid fa-circle-arrow-left"></i> Atrás
+    </a>
+
     <!-- Tarjeta -->
     <section id="card" class="card">
         <div class="front-card">
@@ -84,12 +89,12 @@
                 </div>
             </div>
 
-            <p class="legend-card">
+            {{-- <p class="legend-card">
                 Lorem ipsum dolor sit amet consectetur
-            </p>
+            </p> --}}
 
             <a class="link-bank-card" href="javascript:void(0);">
-                www.tubanco.com
+                Gracias por comprar con Sportivo.
             </a>
         </div>
     </section>
@@ -104,70 +109,84 @@
     <!-- Formulario Tarjeta -->
 
     {{-- <form action="javascript:void(0);" id="form-card" class="form-card active"> --}}
-        <form action="{{ route('processPayment') }}" method="POST" id="form-card" class="form-card active">
+    <form action="{{ route('processPayment') }}" method="POST" id="form-card" class="form-card active">
 
-            @csrf
-            <!-- Número de Tarjeta -->
-            <div>
-                <label for="number-card-form">Número Tarjeta</label>
-                @if ($errors->has('cardNumber'))
-                    <div class="error-message">{{ $errors->first('cardNumber') }}</div>
-                @endif
-                <input type="text" id="number-card-form" name="cardNumber" maxlength="19" autocomplete="off"
-                       class="{{ $errors->has('cardNumber') ? 'border-red' : '' }}">
-            </div>
-        
-            <!-- Nombre en la tarjeta -->
-            <div>
-                <label for="name-card-form">Nombre y Apellido</label>
-                @if ($errors->has('cardName'))
-                    <div class="error-message">{{ $errors->first('cardName') }}</div>
-                @endif
-                <input type="text" id="name-card-form" name="cardName" maxlength="20" autocomplete="off"
-                       class="{{ $errors->has('cardName') ? 'border-red' : '' }}">
-            </div>
-        
-            <!-- Fecha de expiración -->
-            <div class="flexbox">
-                <div class="group-expiration-card-form">
-                    <label for="mounth-expiration-card-form">Expiración</label>
-                    <div class="flexbox">
-                        <div class="group-select">
-                            @if ($errors->has('cardExpiryMonth'))
-                                <div class="error-message">{{ $errors->first('cardExpiryMonth') }}</div>
-                            @endif
-                            <select id="mounth-expiration-card-form" name="cardExpiryMonth"
-                                    class="{{ $errors->has('cardExpiryMonth') ? 'border-red' : '' }}">
-                                <option disabled="disabled" selected="selected">Mes</option>
-                                <!-- Opciones de mes -->
-                            </select>
-                        </div>
-                        <div class="group-select">
-                            @if ($errors->has('cardExpiryYear'))
-                                <div class="error-message">{{ $errors->first('cardExpiryYear') }}</div>
-                            @endif
-                            <select id="year-expiration-card-form" name="cardExpiryYear"
-                                    class="{{ $errors->has('cardExpiryYear') ? 'border-red' : '' }}">
-                                <option disabled="disabled" selected="selected">Año</option>
-                                <!-- Opciones de año -->
-                            </select>
-                        </div>
+        @csrf
+        <!-- Número de Tarjeta -->
+        <div>
+            <label for="number-card-form">Número Tarjeta</label>
+            @if ($errors->has('cardNumber'))
+                <div class="error-message">{{ $errors->first('cardNumber') }}</div>
+            @endif
+            <input type="text" id="number-card-form" name="cardNumber" maxlength="19" autocomplete="off"
+                class="{{ $errors->has('cardNumber') ? 'border-red' : '' }}" value="{{ old('cardNumber') }}">
+        </div>
+
+        <!-- Nombre en la tarjeta -->
+        <div style="margin-top: 3%;">
+            <label for="name-card-form">Nombre y Apellido</label>
+            @if ($errors->has('cardName'))
+                <div class="error-message">{{ $errors->first('cardName') }}</div>
+            @endif
+            <input type="text" id="name-card-form" name="cardName" maxlength="50" autocomplete="off"
+                class="{{ $errors->has('cardName') ? 'border-red' : '' }}" value="{{ old('cardName') }}">
+        </div>
+
+        <!-- Fecha de expiración -->
+        <div class="flexbox" style="margin-top: 3%;">
+            <div class="group-expiration-card-form">
+                <label for="mounth-expiration-card-form">Expiración</label>
+                <div class="flexbox">
+                    <div class="group-select">
+                        <!-- Opciones de mes -->
+                        <select id="mounth-expiration-card-form" name="cardExpiryMonth"
+                            class="{{ $errors->has('cardExpiryMonth') ? 'border-red' : '' }}">
+                            <option disabled="disabled" selected="selected">Mes</option>
+                            @for ($i = 1; $i <= 12; $i++)
+                                <option value="{{ sprintf('%02d', $i) }}"
+                                    {{ old('cardExpiryMonth') == sprintf('%02d', $i) ? 'selected' : '' }}>
+                                    {{ sprintf('%02d', $i) }}
+                                </option>
+                            @endfor
+                        </select>
+                        @if ($errors->has('cardExpiryMonth'))
+                            <div class="error-message">{{ $errors->first('cardExpiryMonth') }}</div>
+                        @endif
+                    </div>
+                    <div class="group-select">
+                        <!-- Opciones de año -->
+                        <select id="year-expiration-card-form" name="cardExpiryYear"
+                            class="{{ $errors->has('cardExpiryYear') ? 'border-red' : '' }}">
+                            <option disabled="disabled" selected="selected">Año</option>
+                            @for ($i = date('Y'); $i <= date('Y') + 8; $i++)
+                                <option value="{{ $i }}"
+                                    {{ old('cardExpiryYear') == $i ? 'selected' : '' }}>
+                                    {{ $i }}
+                                </option>
+                            @endfor
+                        </select>
+                        @if ($errors->has('cardExpiryYear'))
+                            <div class="error-message">{{ $errors->first('cardExpiryYear') }}</div>
+                        @endif
                     </div>
                 </div>
-        
-                <!-- CCV -->
-                <div class="group-ccv-card-form">
-                    <label for="ccv-card-form">CCV</label>
-                    @if ($errors->has('cardCvv'))
-                        <div class="error-message">{{ $errors->first('cardCvv') }}</div>
-                    @endif
-                    <input type="text" id="ccv-card-form" name="cardCvv" maxlength="3" autocomplete="off"
-                           class="{{ $errors->has('cardCvv') ? 'border-red' : '' }}">
-                </div>
             </div>
-        
-            <button type="submit" class="btn-send-form-card">Enviar</button>
-        </form>
+
+            <!-- CCV -->
+            <div class="group-ccv-card-form">
+                <label for="ccv-card-form">CCV</label>
+
+                <input type="text" id="ccv-card-form" name="cardCvv" maxlength="3" autocomplete="off"
+                    class="{{ $errors->has('cardCvv') ? 'border-red' : '' }}" value="{{ old('cardCvv') }}">
+                @if ($errors->has('cardCvv'))
+                    <div class="error-message">{{ $errors->first('cardCvv') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <button type="submit" class="btn-send-form-card">Pagar</button>
+    </form>
 
 
 </div>
@@ -249,14 +268,26 @@
         if (valueNumberCardForm[0] === '4') {
             logoCard.innerHTML = '';
             let imgLogo = document.createElement('img');
-            imgLogo.src =
-                'https://firebasestorage.googleapis.com/v0/b/fire-fotos-8e3f9.appspot.com/o/img%2Fvisa.png?alt=media&token=d1324d01-81f6-42d4-a37c-1edc19e1e0b1';
+            imgLogo.src = '{{ asset('assets/img/visa.png') }}';
+            // 'https://firebasestorage.googleapis.com/v0/b/fire-fotos-8e3f9.appspot.com/o/img%2Fvisa.png?alt=media&token=d1324d01-81f6-42d4-a37c-1edc19e1e0b1';
+            imgLogo.style.width = '150px';
+            imgLogo.style.height = 'auto';
             logoCard.appendChild(imgLogo);
         } else if (valueNumberCardForm[0] === '5') {
             logoCard.innerHTML = '';
             let imgLogo = document.createElement('img');
-            imgLogo.src =
-                'https://firebasestorage.googleapis.com/v0/b/fire-fotos-8e3f9.appspot.com/o/img%2Fmastercard.png?alt=media&token=1a5347d2-a282-436f-87a8-f193458830f4';
+            imgLogo.src = '{{ asset('assets/img/master_card.png') }}';
+            // 'https://firebasestorage.googleapis.com/v0/b/fire-fotos-8e3f9.appspot.com/o/img%2Fmastercard.png?alt=media&token=1a5347d2-a282-436f-87a8-f193458830f4';
+            imgLogo.style.width = '150px';
+            imgLogo.style.height = 'auto';
+            logoCard.appendChild(imgLogo);
+        } else if (valueNumberCardForm[0] === '3') {
+            logoCard.innerHTML = '';
+            let imgLogo = document.createElement('img');
+            imgLogo.src = '{{ asset('assets/img/american_express.png') }}';
+            imgLogo.style.width = '150px';
+            imgLogo.style.height = 'auto';
+            // 'https://firebasestorage.googleapis.com/v0/b/fire-fotos-8e3f9.appspot.com/o/img%2Fmastercard.png?alt=media&token=1a5347d2-a282-436f-87a8-f193458830f4';
             logoCard.appendChild(imgLogo);
         }
 
@@ -274,7 +305,7 @@
         firmCard.textContent = valueNameCardForm;
 
         if (valueNameCardForm === '') {
-            nameCard.textContent = 'John Doe';
+            nameCard.textContent = 'Nombre y apellido';
         }
 
         showFrontCard();
@@ -306,5 +337,44 @@
             .replace(/\D/g, '');
 
         ccvCard.textContent = ccvCardForm.value;
+    });
+
+
+    // Lo siguiente utiliza el old para mantener los errores en la tarjeta hasta que se modifiquen
+    document.addEventListener('DOMContentLoaded', () => {
+        const oldCardNumber = "{{ old('cardNumber') }}".trim();
+        if (oldCardNumber) {
+            numberCard.textContent = oldCardNumber;
+            numberCardForm.value = oldCardNumber;
+        }
+
+        const oldCardName = "{{ old('cardName') }}".trim();
+        if (oldCardName) {
+            nameCard.textContent = oldCardName;
+            nameCardForm.value = oldCardName;
+            firmCard.textContent = oldCardName;
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const oldCardExpiryMonth = "{{ old('cardExpiryMonth') }}".trim();
+        if (oldCardExpiryMonth) {
+            selectMounthCardForm.value = oldCardExpiryMonth;
+            mounthExpirationCard.textContent = oldCardExpiryMonth;
+        }
+
+        const oldCardExpiryYear = "{{ old('cardExpiryYear') }}".trim();
+        if (oldCardExpiryYear) {
+            selectYearCardForm.value = oldCardExpiryYear;
+            yearExpirationCard.textContent = oldCardExpiryYear.slice(
+                2); // Mostrar los últimos 2 dígitos del año
+        }
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const oldCcvCard = "{{ old('cardCvv') }}".trim();
+        if (oldCcvCard) {
+            ccvCard.textContent = oldCcvCard;
+            ccvCardForm.value = oldCcvCard;
+        }
     });
 </script>

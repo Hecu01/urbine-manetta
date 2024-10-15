@@ -69,7 +69,13 @@ Route::middleware(['auth'])->group(function(){
         Route::patch('/carrito/update/{id}',  'update')->name('carrito.update');
 
     });
+
+    Route::get('/preg-frecuentes', function() {
+        return view('users.askedQuestions');
+    })->name('preg-frecuentes');
 });
+
+
 
 // Rutas que acceden los admins
 Route::group([], __DIR__ . '/admin.php');
