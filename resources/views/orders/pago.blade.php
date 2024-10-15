@@ -11,6 +11,11 @@
 </head>
 
 <div class="container">
+
+    <a href="{{ route('carrito.index') }}" id="boton-regresar-atras" >
+        <i class="fa-solid fa-circle-arrow-left"></i> Atrás
+    </a>
+
     <!-- Tarjeta -->
     <section id="card" class="card">
         <div class="front-card">
