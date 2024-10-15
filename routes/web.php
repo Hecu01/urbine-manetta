@@ -116,4 +116,4 @@ Route::get('certificados/{filename}', function ($filename2){
 });
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
