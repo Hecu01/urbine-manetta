@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class RopaDepController extends Controller
 {
@@ -38,7 +39,8 @@ class RopaDepController extends Controller
         $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
         $articulos = Articulo::paginate(5);
         $categorias = Categoria::all(); 
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ropasDeportivas.formulario', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
+        $ropas = DB::table('ropas')->pluck('nombre'); 
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ropasDeportivas.formulario', compact( 'talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes', 'ropas'));
 
 
     }

@@ -65,7 +65,7 @@
                                   <label for="publico-dirigido" class="form-label">Público dirigido</label>
                                   
                                   <select name="publico_dirigido" id="publico-dirigido" class="form-select" required>
-                                      <option value="" selected hidden></option>
+                                      <option value="" selected hidden>-</option>
                                       <option value="adultos">Adultos</option>
                                       <option value="niños">Niños</option>
                                       <option value="ambos">Ambos</option>
@@ -88,22 +88,10 @@
                               <div class="input-group d-flex" >
                                   <select name="tipoProducto" id="tipo-ropa" class="form-select SelectTypeProduct" required >
                                       <option value="" selected hidden></option>
-                                      <option value="">Calzas térmicas</option>
-                                      <option value="">Camisetas técnicas</option>
-                                      <option value="">Chalecos</option>
-                                      <option value="">Chaquetas cortaviento</option>
-                                      <option value="">Leggings</option>
-                                      <option value="">Mallas</option>
-                                      <option value="">Musculosa</option>
-                                      <option value="">Pantalones de chándal</option>
-                                      <option value="">Remeras</option>
-                                      <option value="">Ropa de ciclismo</option>
-                                      <option value="">Shorts de running</option>
-                                      <option value="">Sujetadores deportivos</option>
-                                      <option value="">Top deportivo</option>
-                                      <option value="">Trajes de baño</option>
-                                      <option value="">Uniformes de equipo</option>
-      
+                                      <option value="" selected hidden>-</option>
+                                            @foreach ($ropas as $ropa)
+                                                <option value="{{ $ropa }}">{{ $ropa }}</option>
+                                            @endforeach
                                   </select>   
 
                               </div>
