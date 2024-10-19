@@ -35,10 +35,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sportivo - Registro</title>
+    <title>Sportivo</title>
 </head>
 <body>
+    <br>
     <div class="container">
+        <div class="flex justify-content-center">
+            <div class="">
+
+                <a class="btn btn-danger" href="{{ route('login') }}">Regresar</a>
+            </div>
+        </div>
+        <br>
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -80,5 +89,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </body>

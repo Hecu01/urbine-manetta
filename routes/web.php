@@ -41,6 +41,9 @@ Route::controller(BusquedaController::class)->group(function(){
 Route::middleware(['auth'])->group(function(){
     Route::prefix('usuario')->group(function(){
         Route::controller(UsuarioController::class)->group(function(){
+            Route::get('/editar-perfil/{id}', 'descuentoUsuario')->name('descuento-usuario');
+
+
             // Descuento especial
             Route::get('/solicito-mi-descuento', 'descuentoUsuario')->name('descuento-usuario');
             Route::post('/solicito-mi-descuento', 'storeDescuentoEspecial')->name('store-descuento-usuario');
@@ -51,10 +54,10 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/domicilios',  'domicilio')->name('domicilio');
             Route::post('/domicilios', 'agregar_domicilio')->name('agregar_direccion');
         });
+        Route::resource('mi-perfil', UsuarioController::class);
     });
 
     // Perfil
-    Route::resource('mi-perfil', UsuarioController::class);
 
     // Agregar domicilio
     Route::controller(TiendaController::class)->group(function(){

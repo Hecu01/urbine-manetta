@@ -115,7 +115,7 @@ class UsuarioController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -123,7 +123,9 @@ class UsuarioController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $title = "Editar Perfil";
+        $user = Auth::user();
+        return view('users.EditarPerfil', compact('title', 'user'));
     }
 
     /**

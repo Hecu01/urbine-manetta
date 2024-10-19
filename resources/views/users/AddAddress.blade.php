@@ -57,7 +57,7 @@
                                         <option value="San Nicolás de los Arroyos">San Nicolás de los Arroyos</option>
                                         <option value="Ramallo">Ramallo</option>
                                         <option value="Villa Ramallo">Villa Ramallo</option>
-                                        <option value="Villa Gral Savio">Villa Gral Savio</option>
+                                        <option value="Villa Gral Savio">Villa Gral Savio</option>| 
                                         <option value="La Emilia">La Emilia</option>
                                         <option value="Villa Constitución">Villa Constitución</option>
                                     </select>
@@ -68,7 +68,11 @@
                                     <label for="email">Piso</label>
                                 </div>
                                 <div class="form-floating mb-3 col-md-3 ">
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="cod_postal"  required  autofocus>
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror" 
+                                        id="cod_postal" name="cod_postal" placeholder="" 
+                                        required autofocus maxlength="10" 
+                                        oninput="this.value = this.value.toUpperCase();"
+                                    >
                                     <label for="email">Código postal</label>
                                 </div>
 

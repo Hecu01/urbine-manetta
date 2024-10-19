@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('departamento')->nullable();
             $table->string('piso')->nullable();
             $table->string('ciudad');
-            $table->integer('codigo_postal');
+            $table->string('codigo_postal');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
