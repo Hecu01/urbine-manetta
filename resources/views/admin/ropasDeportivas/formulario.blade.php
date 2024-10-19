@@ -1,6 +1,7 @@
 @extends('admin.layouts.plantilla_admin')
 
 @section('section-principal')
+    <link rel="stylesheet" href="{{ asset('css/estilo-especifico.css') }}">
     <main class="principal-main-ropa-deportiva">
 
         <div class="w-fit">
@@ -61,7 +62,8 @@
 
                                     <label for="nombre-ropa" class="form-label">Titulo producto</label>
                                     <input type="text" name="nombre_producto" class="form-control"
-                                        placeholder="Inserte un titulo bonito al producto" required id="nombre-ropa">
+                                        placeholder="Inserte un titulo bonito al producto" required id="nombre-ropa"
+                                        value="{{ old('nombre_producto') }}">
                                 </div>
 
                                 <div class="col-md-12 flex mt-1 justify-between my-1">
@@ -71,9 +73,12 @@
 
                                         <select name="genero" id="genero-ropa" class="form-select" required>
                                             <option value="" selected hidden>Elija una opción</option>
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Femenino">Femenino</option>
-                                            <option value="Unisex">Unisex</option>
+                                            <option value="Masculino" {{ old('genero') == 'Masculino' ? 'selected' : '' }}>
+                                                Masculino</option>
+                                            <option value="Femenino" {{ old('genero') == 'Femenino' ? 'selected' : '' }}>
+                                                Femenino</option>
+                                            <option value="Unisex" {{ old('genero') == 'Unisex' ? 'selected' : '' }}>Unisex
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -81,9 +86,13 @@
 
                                         <select name="publico_dirigido" id="publico-dirigido" class="form-select" required>
                                             <option value="" selected hidden>-</option>
-                                            <option value="adultos">Adultos</option>
-                                            <option value="niños">Niños</option>
-                                            <option value="ambos">Ambos</option>
+                                            <option value="adultos"
+                                                {{ old('publico_dirigido') == 'adultos' ? 'selected' : '' }}>Adultos
+                                            </option>
+                                            <option value="niños"
+                                                {{ old('publico_dirigido') == 'niños' ? 'selected' : '' }}>Niños</option>
+                                            <option value="ambos"
+                                                {{ old('publico_dirigido') == 'ambos' ? 'selected' : '' }}>Ambos</option>
                                         </select>
 
 
@@ -105,19 +114,25 @@
                                             required>
                                             <option value="" selected hidden>-</option>
                                             @foreach ($ropas as $ropa)
-                                                <option value="{{ $ropa }}">{{ $ropa }}</option>
+                                                <option value="{{ $ropa }}"
+                                                    {{ old('tipoProducto') == $ropa ? 'selected' : '' }}>
+                                                    {{ $ropa }}</option>
                                             @endforeach
-                                            <option value="otro">Otro</option>
+                                            <option value="otro" {{ old('tipoProducto') == 'otro' ? 'selected' : '' }}>
+                                                Otro</option>
                                         </select>
                                     </div>
                                     <!-- Para la opción "Otro" -->
-                                    <input type="text" id="other-product-field" name="otro_tipo_producto" class="form-control mt-2" style="display: none;" placeholder="Especifique otro tipo de ropa" />
+                                    <input type="text" id="other-product-field" name="otro_tipo_producto"
+                                        class="form-control mt-2" style="display: none;"
+                                        placeholder="Especifique otro tipo de ropa"
+                                        value="{{ old('otro_tipo_producto') }}" />
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="marca-ropa" class="form-label">Marca</label>
                                     <input type="text" name="marca" class="form-control" id="marca-ropa" required
-                                        placeholder="Adidas, nike, otro">
+                                        placeholder="Adidas, nike, otro" value="{{ old('marca') }}">
                                 </div>
                             </div>
                             <!-- Sección de las etiquetas -->
@@ -142,12 +157,8 @@
                                 </div>
                                 <input type="text" id="etiquetas-hidden" name="etiquetas[]" hidden>
                             </div>
-
-
-
-
-
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="col-md-12" style=" position: relative; display:flex; justify-content:end; ">
 
@@ -174,15 +185,25 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-12 flex justify-end my-3 " style="margin-right: 50px" id="bottom-image">
-                                <div style="margin-right: 90px">
 
-                                    <label class=" text-white  bg-blue-500 hover:bg-blue-600" for="imageInput">
-                                        <input type="file" name="foto" id="imageInput" multiple accept="image/*">
+
+                            <div class="col-md-12 flex justify-end my-3" style="margin-right: 50px;" id="bottom-image">
+                                <div style="margin-right: 90px; display: flex; align-items: center;">
+                                    @if ($errors->has('foto'))
+                                        <div class="error-message"
+                                            style="color: red; font-size: 10pt; margin-right: 10px;">
+                                            {{ $errors->first('foto') }}
+                                        </div>
+                                    @endif
+                                    <label class="text-white bg-blue-500 hover:bg-blue-600" for="imageInput">
                                         Cargar fotos
+                                        <input type="file" name="foto" id="imageInput" multiple accept="image/*"
+                                            class="{{ $errors->has('foto') ? 'border-red' : '' }}" style="display:none;">
                                     </label>
                                 </div>
                             </div>
+
+
 
 
                             <div class="col-md-12 flex justify-end ">
@@ -199,7 +220,7 @@
                                     <div class="ml-5 p-1 p-1">
                                         <label for="color-ropa" class="form-label">Color</label>
                                         <input type="text" name="color" id="color-ropa" class="form-control"
-                                            placeholder="Rojo, fuxia, amarillo..." required>
+                                            placeholder="Rojo, fuxia, amarillo..." value="{{ old('color') }}" required>
 
                                     </div>
 
@@ -211,7 +232,9 @@
                     </div>
 
                     <div id="contenedor-modal-talles">
-                        @include('admin.ropasDeportivas.partials.modal')
+                        @include('admin.ropasDeportivas.partials.modal', [
+                            'oldTalles' => old('talles', []),
+                        ])
                     </div>
 
                     <div class="col-12 d-flex " style="justify-content:space-between">
@@ -221,16 +244,30 @@
                         <div class="col-md-3 ">
                             <button id="agregar-calzados" type="button"
                                 class="bg-slate-600 rounded-full py-2 px-5 hover:cursor-pointer hover:scale-105  text-white "
-                                data-bs-toggle="modal" data-bs-target="#modalTalles">Talles</button>
+                                data-bs-toggle="modal" data-bs-target="#modalTalles" id="talles">Talles
+                                <input type="file" name="talla" id="imageInput" multiple accept="image/*"
+                                    class="{{ $errors->has('talla') ? 'border-red' : '' }}"
+                                    style="display:none;"></button>
+                            @if ($errors->has('talla'))
+                                <div class="error-message" style="color: red; font-size: 10pt; margin-right: 10px;">
+                                    {{ $errors->first('talla') }}
+                                </div>
+                            @endif
                         </div>
+
+
+
+
+
+
                         <div class="col-md-3 d-flex">
                             <label for="inputState" class="form-label mx-2 mt-2">PRECIO</label>
                             <div class="input-group">
                                 <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);"
                                     id="signo-peso">$</span>
                                 <input type="text" name="precio"onwheel="preventScroll(event)" class="form-control"
-                                    id="precioFinal" aria-describedby="inputGroupPrepend2" onsubmit="removeDots()"
-                                    required>
+                                    id="precioFinal" aria-describedby="inputGroupPrepend2" value="{{ old('precio') }}"
+                                    onsubmit="removeDots()" required>
                             </div>
                         </div>
                     </div>
@@ -245,7 +282,7 @@
 
     </main>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
     <script>
@@ -273,16 +310,16 @@
 
         // En caso de que se elija "Otro" en el tipo de ropa
         document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('tipo-ropa').addEventListener('change', function() {
-            var otherProductField = document.getElementById('other-product-field');
-            if (this.value === 'otro') {
-                otherProductField.style.display = 'block';
-                otherField.required = true;
-            } else {
-                otherProductField.style.display = 'none';
-                otherField.required = false;
-            }
+            document.getElementById('tipo-ropa').addEventListener('change', function() {
+                var otherProductField = document.getElementById('other-product-field');
+                if (this.value === 'otro') {
+                    otherProductField.style.display = 'block';
+                    otherField.required = true;
+                } else {
+                    otherProductField.style.display = 'none';
+                    otherField.required = false;
+                }
+            });
         });
-    });
     </script>
 @endsection

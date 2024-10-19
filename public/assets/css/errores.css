@@ -1,0 +1,10 @@
+/* Para en casos que los campos estén vacíos */
+input.border-red,
+select.border-red {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+}

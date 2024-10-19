@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class RopaDepController extends Controller
 {
@@ -72,7 +73,13 @@ class RopaDepController extends Controller
         $request->validate([
             'tipoProducto' => 'required',
             'otroTipoProducto' => 'nullable|string|max:20',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'talla' => 'required',
+        ], [
+            'foto.required' => 'Debes cargar al menos una imagen.',
+            'talla.required' => 'Debes colocar los talles',
         ]);
+
 
         // Al momento de seleccionar el tipo de producto
         if ($request->tipoProducto === 'otro') {
@@ -119,8 +126,9 @@ class RopaDepController extends Controller
         ]);
 
         // Obtener el array de valores desde el formulario
-        $idsDeportes = $request->input('etiquetas');
-
+        // $idsDeportes = $request->input('etiquetas');
+        $idsDeportes = $request->input('select_deportes', []);
+        
         // Convertir el array en una cadena de texto separada por comas
         $idsDeportesString = implode(',', $idsDeportes);
 
