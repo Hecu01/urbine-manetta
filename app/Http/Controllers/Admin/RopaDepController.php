@@ -74,10 +74,10 @@ class RopaDepController extends Controller
             'tipoProducto' => 'required',
             'otroTipoProducto' => 'nullable|string|max:20',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'talla' => 'required',
+            'stock' => 'required|integer|min:1',
         ], [
             'foto.required' => 'Debes cargar al menos una imagen.',
-            'talla.required' => 'Debes colocar los talles',
+            'stock.required' => 'Debes colocar los talles',
         ]);
 
 

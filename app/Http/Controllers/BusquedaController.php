@@ -6,6 +6,7 @@ use App\Models\Deporte;
 use App\Models\Articulo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class BusquedaController extends Controller
 {
@@ -91,4 +92,46 @@ class BusquedaController extends Controller
         // 8. Retornar la vista con las variables necesarias
         return view('busquedas', compact('resultados', 'query', 'contar_resultados', 'orderDirection', 'selectedBrands', 'selectedGeneros', 'selectedDeporte', 'selectedDirigidoA', 'allBrands', 'allGeneros', 'allDeportes'));
     }
+
+
+    public function destroy($id)
+{
+    // Busca el artículo por su ID
+    $articulo = Articulo::find($id);
+
+    if (!$articulo) {
+        return response()->json(['error' => 'Artículo no encontrado'], 404);
+    }
+
+    // Aquí puedes eliminar la foto si tienes su ruta almacenada
+    if($articulo){
+        $imagenPath = storage_path('producto/' . $articulo->foto); 
+        if (file_exists($imagenPath)) {
+            unlink($imagenPath); // Elimina la imagen asociada si la hay
+        }
+
+        $articulo->delete(); //Elimina el articulo de la base de datos
+        // Después de eliminar el artículo exitosamente
+        Session::flash('eliminado', true);
+    }
+
+    // Elimina el artículo
+    $articulo->delete();
+
+    return response()->json(['success' => 'Artículo eliminado con éxito']);
+}
+
+        // if($articulo){
+        //     $imagenPath = storage_path('producto/' . $articulo->foto); 
+        //     if (file_exists($imagenPath)) {
+        //         unlink($imagenPath); // Elimina la imagen asociada si la hay
+        //     }
+
+        //     $articulo->delete(); //Elimina el articulo de la base de datos
+        //     // Después de eliminar el artículo exitosamente
+        //     Session::flash('eliminado', true);
+        // }
+        // // Obtiene la URL anterior con la pestaña actual como fragmento
+        
+        // return redirect()->route('articulos-deportivos.index')->with('success', 'Eliminado correctamente.');
 }
