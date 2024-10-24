@@ -27,21 +27,25 @@
                         <div class="flex justify-center">
                             <div class="col-md-9 flex justify-between">
 
-                                <div class="form-floating mb-3 col-md-4 " style="">
+                                <div class="form-floating mb-3 col-md-5 " style="">
                                     <input type="text" class="form-control   @error('nombre') is-invalid @enderror" id="floatingInput" placeholder=""  name="calle"  required  autofocus>
-                                    <label for="floatingInput">Calle</label>
+                                    <label for="floatingInput">Calle (*)</label>
                                 </div>
 
 
-                                <div class="form-floating mb-3 col-md-4 ">
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="barrio"    autofocus>
-                                    <label for="email">Barrio</label>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-floating mb-3  ">
+                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="distrito"  required  autofocus>
+                                        <label for="email">Ciudad de Residencia (*)</label>
+                                    </div>
+
                                 </div>
 
-                                <div class="form-floating mb-3 col-md-3 ">
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="dpto"    autofocus>
-                                    <label for="email">Dpto</label>
-                                </div>
+
+
+
 
                             </div>
                         </div>
@@ -49,32 +53,48 @@
                     <div class="row ">
                         <div class="flex justify-center">
                             <div class="col-md-9 flex justify-between">
-
-                                <div class="col-md-6">
-
-                                    <select class="form-select " name="distrito" style="height: 60px" aria-label="Default select example">
-                                        <option selected hidden>Seleccione un distrito</option>
-                                        <option value="San Nicolás de los Arroyos">San Nicolás de los Arroyos</option>
-                                        <option value="Ramallo">Ramallo</option>
-                                        <option value="Villa Ramallo">Villa Ramallo</option>
-                                        <option value="Villa Gral Savio">Villa Gral Savio</option>| 
-                                        <option value="La Emilia">La Emilia</option>
-                                        <option value="Villa Constitución">Villa Constitución</option>
-                                    </select>
+                                <div class="form-floating mb-3 col-md-4 ">
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="provincia" placeholder=""  name="provincia"  required  autofocus>
+                                    <label for="provincia">Provincia (*)</label>
                                 </div>
 
-                                <div class="form-floating mb-3 col-md-2 ">
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="piso"    autofocus>
-                                    <label for="email">Piso</label>
-                                </div>
+
                                 <div class="form-floating mb-3 col-md-3 ">
                                     <input type="text" class="form-control @error('email') is-invalid @enderror" 
                                         id="cod_postal" name="cod_postal" placeholder="" 
                                         required autofocus maxlength="10" 
                                         oninput="this.value = this.value.toUpperCase();"
                                     >
-                                    <label for="email">Código postal</label>
+                                    <label for="email">Cód. postal (*)</label>
                                 </div>
+
+
+                                <div class="form-floating mb-3 col-md-4 mx-1">
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="pais"    autofocus required>
+                                    <label for="email">País (*)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="flex justify-center">
+                            <div class="col-md-9 flex justify-center">
+                                <div class="form-floating mb-3 col-md-4 ">
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="barrio"    autofocus>
+                                    <label for="email">Barrio</label>
+                                </div>
+
+                                <div class="form-floating mb-3 col-md-3 mx-1">
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="dpto"    autofocus>
+                                    <label for="email">Depto</label>
+                                </div>
+
+                                <div class="form-floating mb-3 col-md-2 mx-1">
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder=""  name="piso"    autofocus>
+                                    <label for="email">Piso</label>
+                                </div>
+
+
 
                             </div>
                         </div>

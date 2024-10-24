@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\DescuentoUsuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
    
 
 class UsuarioController extends Controller
@@ -67,6 +68,7 @@ class UsuarioController extends Controller
         return view('users.AddAddress');
     }
 
+    // Usuario está agregando domicilio
     public function agregar_domicilio(Request $request){
         // Crear o actualizar la dirección del usuario
         $domicilio = Domicilio::updateOrCreate([
@@ -76,10 +78,12 @@ class UsuarioController extends Controller
             'departamento' => $request->dpto, 
             'piso' => $request->piso, 
             'ciudad' => $request->distrito, 
+            'provincia' => $request->provincia, 
+            'pais' => $request->pais, 
             'codigo_postal' => $request->cod_postal 
         ]);
-        
-        return redirect()->back()->with('mensaje', 'Dirección guardada exitosamente.');
+        Session::flash('mensaje', true);
+        return redirect()->route('mi-perfil.index')->with('mensaje', 'Dirección guardada exitosamente.');
     }
     
 
@@ -133,7 +137,36 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // // Validar los datos del formulario
+        // $request->validate([
+        //     'nombre' => 'required|string|max:255',
+        //     'dni' => 'required|int|max:255',
+        //     // Validación para el domicilio
+        //     'calle' => 'required|string|max:255',
+        //     'ciudad' => 'required|string|max:255',
+        //     'codigo_postal' => 'required|string|max:10',
+        // ]);
+
+        $usuario = auth()->user();
+        $usuario->update([
+            'name' => $request->input('nombre'),
+            'lastname' => $request->input('apellido'),
+            'dni' => $request->input('dni')
+        ]);
+
+        $usuario->domicilio()->update([
+            'calle' => $request->input('calle'),
+            'barrio' => $request->input('barrio'),
+            'ciudad'=> $request->input('ciudad'),
+            'codigo_postal'=> $request->input('codigo_postal'),
+            'departamento'=> $request->input('departamento'),
+            'piso' => $request->input('piso'),
+            'provincia' => $request->input('provincia'),
+            'pais' => $request->input('pais')
+        ]);
+        Session::flash('mensaje', true);
+
+        return redirect()->back()->with('mensaje', 'Se ha actualizado correctamente');
     }
 
     /**

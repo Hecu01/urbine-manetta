@@ -3,17 +3,17 @@
   @if (session('message'))
     <p> {{ session('message') }} </p>
   @endif 
-  <div class="section" style=" background:none; min-height:600px; height:auto">
+<div class="section" style=" background:none; min-height:600px; height:auto">
 
       {{-- <x-orden /> --}}
 
-      <section class="flex justify-center">
+    <section class="flex justify-center">
 
         <aside class="col-2">
             <x-filter :query="$query" :orderDirection="$orderDirection" :resultados="$resultados" :selectedBrands="$selectedBrands" :selectedDeporte="$selectedDeporte" :allBrands="$allBrands"
                 :selectedGeneros="$selectedGeneros" :allGeneros="$allGeneros"/>
         </aside>
-          <div class="contenedor-resultados col-8 flex flex-wrap gap-4">
+        <div class="contenedor-resultados col-8 flex flex-wrap gap-4">
             {{-- Resultados de la búsqueda --}}
             @foreach ($resultados as $resultado)
                 <div class="w-min bg-white shadow-lg p-3 h-fit position-relative">
@@ -221,11 +221,14 @@
                 </div>
             @endforeach
           
-          </div>
-          @if ($contar_resultados < 1)
-              <p style="width:fit-content; background: #ffffff8a; padding:10px">No se ha encontrado nada </p>
-          @endif
-      </section>
+            @if ($contar_resultados < 1)
+                <p style="width:fit-content;  padding:10px; font-size:1.5em" class="uppercase font-semibold">
+                    No se ha encontrado resultados de la búsqueda
+                    <i class="fa-solid fa-ghost"></i>
+                </p>
+            @endif
+        </div>
+    </section>
 
   </div>
 

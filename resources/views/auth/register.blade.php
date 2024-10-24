@@ -192,7 +192,10 @@
                                 <div class="col-md-9 ">
 
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control @error('dni') is-invalid @enderror" id="dni" placeholder="name@example.com"  name="dni" value="{{ old('dni') }}" required autocomplete="dni" autofocus>
+                                        <input type="text" class="form-control @error('dni') is-invalid @enderror" 
+                                        id="dni" placeholder="Ingrese su DNI" name="dni" 
+                                        value="{{ old('dni') }}" required autocomplete="dni" autofocus 
+                                        pattern="\d*" title="Solo se permiten números">
                                         <label for="dni">DNI (sin puntos)</label>
                                     </div>
     

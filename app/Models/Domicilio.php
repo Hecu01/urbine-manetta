@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Domicilio extends Model
 {
-    protected $fillable = ['calle', 'barrio', 'departamento', 'piso', 'ciudad', 'codigo_postal', 'user_id'];
+    protected $fillable = ['calle', 'barrio', 'departamento', 'piso', 'ciudad' , 'provincia', 'pais', 'codigo_postal', 'user_id'];
 
     use HasFactory;
     public function user()

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->unique();
 
             // Domicilio
+            $table->string('pais');
+            $table->string('provincia');
             $table->string('calle');
             $table->string('barrio')->nullable();
             $table->string('departamento')->nullable();
