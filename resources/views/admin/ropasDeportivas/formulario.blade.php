@@ -23,6 +23,7 @@
         @if (session('eliminado'))
             @include('admin.partials.MsjDelSistema.ProductoEliminado')
         @endif
+        
         <section class="center-actions">
             <div class=""style=" border:1px solid rgb(0,0,0,0.2)">
 
@@ -139,7 +140,7 @@
                             <div class="col-md-12 flex justify-between my-1" style="align-content: center; ">
                                 <div class="col-md-10">
                                     <label for="deporte" class="form-label">Etiquetas de deportes</label>
-                                    <select name="select_deportes" id="deporte" class="form-select">
+                                    <select name="select_deportes[]" id="deporte" class="form-select">
                                         <option value="" selected hidden> Agregá los deportes relacionados</option>
                                         @foreach ($deportes as $deporte)
                                             <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
@@ -158,7 +159,7 @@
                                 <input type="text" id="etiquetas-hidden" name="etiquetas[]" hidden>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="col-md-12" style=" position: relative; display:flex; justify-content:end; ">
 
@@ -212,8 +213,17 @@
                                     <div class="col-md-5">
                                         <label for="stock_input_ropa" class="form-label">Stock</label>
                                         <input type="text" name="stock" placeholder="cantidad"
-                                            class="form-control estilo-readonly total stock_input" id="stock_input_ropa"
+                                            class="{{ $errors->has('stock') ? 'border-red' : '' }} form-control estilo-readonly total stock_input" id="stock_input_ropa"
                                             required>
+                                            @if ($errors->has('stock'))
+                                            <div class="error-message"
+                                                style="color: red; font-size: 10pt; margin-right: 10px;">
+                                                {{ $errors->first('stock') }}
+                                            </div>
+                                        @endif
+
+
+
 
                                     </div>
 
@@ -244,18 +254,8 @@
                         <div class="col-md-3 ">
                             <button id="agregar-calzados" type="button"
                                 class="bg-slate-600 rounded-full py-2 px-5 hover:cursor-pointer hover:scale-105  text-white "
-                                data-bs-toggle="modal" data-bs-target="#modalTalles" id="talles">Talles
-                                <input type="file" name="talla" id="imageInput" multiple accept="image/*"
-                                    class="{{ $errors->has('talla') ? 'border-red' : '' }}"
-                                    style="display:none;"></button>
-                            @if ($errors->has('talla'))
-                                <div class="error-message" style="color: red; font-size: 10pt; margin-right: 10px;">
-                                    {{ $errors->first('talla') }}
-                                </div>
-                            @endif
+                                data-bs-toggle="modal" data-bs-target="#modalTalles">Talles</button>
                         </div>
-
-
 
 
 

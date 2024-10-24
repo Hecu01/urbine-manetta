@@ -35,6 +35,7 @@ Route::get('/compras-realizadas', [TiendaController::class, 'comprasRealizadas']
 Route::controller(BusquedaController::class)->group(function(){
     Route::get('/buscar', 'buscar')->name('buscar');
     Route::get('/detalles/{id}', 'verDetalles')->name('detalles');
+    Route::delete('/buscar/{id}', 'destroy')->name('buscar.destroy');
 });
 
 // Rutas de usuarios

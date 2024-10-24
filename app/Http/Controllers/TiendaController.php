@@ -54,7 +54,7 @@ class TiendaController extends Controller
                     }
 
                     // Verificar si empieza con 4 o 5
-                    if (!preg_match('/^[4|5]/', $value)) {
+                    if (!preg_match('/^[3|4|5]/', $value)) {
                         $fail('Número de tarjeta inválido.');
                     }
                 },

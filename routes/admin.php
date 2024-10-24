@@ -85,7 +85,6 @@ Route::middleware(['auth'])->group(function () {
 
         // Articulos Deportivos
         Route::resource('articulos-deportivos', ArtDeportController::class);
-        Route::delete('/articulo-deportivo/{id}', [ArtDeportController::class, 'destroy']);
 
         // Publicidad
         Route::resource('publicidad', PublicidadController::class);

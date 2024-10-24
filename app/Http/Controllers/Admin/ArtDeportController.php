@@ -307,20 +307,13 @@ class ArtDeportController extends Controller{
         return redirect()->back()->with('success', 'Calzados actualizados correctamente.');
     }
 
+
     /* Eliminar artículo deportivo *
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $articulo = Articulo::find($id); 
-        if($articulo){
-            $articulo->delete();
-            // Después de eliminar el artículo exitosamente
-            Session::flash('eliminado', true);
-        }
-        // Obtiene la URL anterior con la pestaña actual como fragmento
-        $url = url()->previous() . '#' . request()->input('nav-link'); // 'tab' es el nombre del campo que almacena el ID de la pestaña
-        // Redirige al usuario a la URL anterior con el fragmento
-        return redirect($url);
+        
+        
     }
 }
