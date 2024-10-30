@@ -190,7 +190,10 @@ class ArtDeportController extends Controller{
      */
     public function update(Request $request, string $id)
     {
+        // Recibir el id del articulo a actualizar
         $articulo = Articulo::findOrFail($id);
+
+        // Verificar si tipo de producto (si es que es relacion muchos a muchos o no)
         $tipoProducto = $request->input('tipoProducto');
         
         // Tipo de producto "Calzado" toma en en cuenta el sig. código.
@@ -239,52 +242,35 @@ class ArtDeportController extends Controller{
             
         }
 
-        // Si falla que muestre un error 404
-        try{
-            // Obtén los datos del array de tallas y el array de stock
-            $deportes = $request->input('deportes');     
-            $deporteIds = $request->input('deporte_ids'); 
-            $verificacion = false;
+        // Intentar hacer la relación con cada etiqueta/deporta
+        try {
+            $deportesSeleccionados = $request->input('deportes', []);
             
-            foreach ($articulo->deportes as $deporte) {
-                // Verifica si el calzado existe en la solicitud y si su checkbox está marcado
-                $indice = array_search($deporte->id, $deporteIds);
-                $checkbox_checked = $indice !== false && isset($deportes[$indice]);
-
-                // Si el calzado existe pero su checkbox está desmarcado, elimínalo de la tabla pivot
-                if (!$checkbox_checked) {
-                    $articulo->deportes()->detach($deporte->id);
-                    $verificacion = true;
-                }
-            }
+            // Obtiene los IDs de los deportes seleccionados en el formulario
+            $deporteIdsSeleccionados = Deporte::whereIn('deporte', $deportesSeleccionados)->pluck('id')->toArray();
             
-            if (!is_null($deportes)){
-
-                foreach ($deportes as $indice => $deporte) {
-    
-                    // Busca el ID del calzado
-                    $deporteId = Deporte::where('deporte', $deporte)->value('id');
-                                
-    
-                    // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
-                    if (!$deporteId) {
-                        $nuevoDeporte = Deporte::create(['deporte' => $deporte]);
-                        $articulo->deportes()->syncWithoutDetaching($nuevoDeporte->id);
-                    } else {
-                        // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
-                        if (isset($deporteIds[$indice])) {
-                            $articulo->deportes()->syncWithoutDetaching($deporteId);
-                            
-                        }
-                    }
-                }
+            // Obtiene los IDs de todos los deportes actualmente relacionados con el artículo
+            $deporteIdsExistentes = $articulo->deportes()->pluck('deportes.id')->toArray();
+        
+            // Calcula las etiquetas a agregar y las que se deben quitar
+            $etiquetasParaAgregar = array_diff($deporteIdsSeleccionados, $deporteIdsExistentes);
+            $etiquetasParaEliminar = array_diff($deporteIdsExistentes, $deporteIdsSeleccionados);
+        
+            // Agrega las etiquetas que faltan
+            if (!empty($etiquetasParaAgregar)) {
+                $articulo->deportes()->attach($etiquetasParaAgregar);
             }
-
+        
+            // Elimina las etiquetas que no están seleccionadas
+            if (!empty($etiquetasParaEliminar)) {
+                $articulo->deportes()->detach($etiquetasParaEliminar);
+            }
+        
         } catch (\Exception $e) {
-            // Mostrar una página de error 404
             return abort(404, 'Algo salió mal.');
-
         }
+        
+        
         
         
         // Actualización datos de tabla articulos

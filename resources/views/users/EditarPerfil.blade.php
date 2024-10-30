@@ -118,14 +118,7 @@
    
   
               
-              @isset(Auth::user()->descuentoUsuario->descuento_activo)
-                @if(Auth::user()->descuentoUsuario->descuento_activo == true)
-                  <li>
-                    <strong style="font-weight: 600">Profesion</strong>: 
-                    {{ $user->descuentoUsuario->profesion_usuario}}
-                  </li>
-                @endif
-              @endisset
+
               @if(isset($user->domicilio))
                 <hr>
                 <li class="my-1">
@@ -212,7 +205,7 @@
         <span class="text-slate-500 text-center"> {{ $user->email }}</span>
         <h3 class="text-center mt-2">Tu foto de perfil</h3>
         <div class="container  shadow-sm border-2 " style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff; ">
-          <img src="{{ url('usuario/'. $user->foto) }}" alt="foto de {{ $user->name }}" style="width:100%">
+          <img src="{{ url('usuario/'. $user->foto) }}" alt="foto de {{ $user->name }}" style="width:100%; height:100%">
         </div>
       </div>
 

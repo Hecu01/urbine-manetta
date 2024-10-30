@@ -102,7 +102,9 @@
                                             Hay {{ $resultado->stock }} unidades disponibles
                                         </div>
                                     </div>
+                                    {{--  Elegir la cantidad --}}
                                     <div class="flex">
+                                        {{-- Si es relación muchos a muchos --}}
                                         @if ($resultado->tipo_producto == 'calzado' && count($resultado->calzados) > 0)
                                             <div class="bg-gray-100 my-2 w-min   hover:cursor ">
                                                 <div class="inline-block relative " style="width:120px">
@@ -123,6 +125,8 @@
                                                 </div>
                                             </div>
                                         @endif
+
+                                        {{-- Si no lo es --}}
                                         <div class="w-fit my-2 mx-3">
                                             <div class="flex items-center">
                                                 <button type="button"
@@ -237,8 +241,9 @@
                             </div>
                         </form>
 
-                </div>
-            @endforeach
+                    </div>
+                @endforeach
+            </div>
           
             @if ($contar_resultados < 1)
                 <p style="width:fit-content;  padding:10px; font-size:1.5em" class="uppercase font-semibold">

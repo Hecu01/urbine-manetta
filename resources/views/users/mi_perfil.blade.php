@@ -84,7 +84,7 @@
       <div class=" col-3" style="display: flex; flex-direction:column-reverse">
         <h3 class="text-center mt-2">Tu foto de perfil</h3>
         <div class="container  shadow-sm border-2 " style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff; ">
-          <img src="{{ url('usuario/'. $user->foto) }}" alt="" >
+          <img src="{{ url('usuario/'. $user->foto) }}" alt="Foto de {{ $user->name }}"  style="height:100%">
         </div>
       </div>
     </div>

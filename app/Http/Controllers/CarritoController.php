@@ -32,6 +32,8 @@ class CarritoController extends Controller
     // Método para añadir un producto al carrito
     public function añadirAlCarrito(Request $request)
     {
+
+        
         // Verificar si el usuario tiene una dirección
         if (!$request->user()->domicilio) {
             if ($request->ajax()) {
