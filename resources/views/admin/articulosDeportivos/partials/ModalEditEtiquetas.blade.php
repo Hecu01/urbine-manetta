@@ -17,33 +17,27 @@
                             @php
                                 $deporteAsociado = $articulo->deportes->firstWhere('pivot.deporte_id', $deporte->id);
                             @endphp
-                    
+                        
                             @if ($index % 7 == 0)
                                 <div class="row" style="display: contents;">
                             @endif
-                    
+                        
                             <div class="deporte-item">
-                                @if ($deporteAsociado)
-                                    {{-- deporte asociado existente --}}
-                                    <input type="hidden" name="deporte_ids[]" value="{{ $deporteAsociado->id }}">
-                                    <input type="checkbox" checked name="deportes[]" id="deporte-{{ $deporteAsociado->id }}" value="{{ $deporteAsociado->id }}" class="form-check-input">
-                                    <label for="deporte-{{ $deporteAsociado->id }}" class="mx-1">{{ $deporteAsociado->deporte }}</label>
-                                @else
-                                    {{-- deporte no esta asociado  --}}
-                                    <input type="hidden" name="deporte_ids[]" value="{{ $deporte->id }}">
-                                    <input type="checkbox" name="deportes[]" id="deporte-{{ $deporte->id }}" value="{{ $deporte->deporte }}" class="form-check-input">
-                                    <label for="deporte-{{ $deporte->id }}" class="mx-1">{{ $deporte->deporte }}</label>
-                                @endif
+                                <input type="checkbox" name="deportes[]" id="deporte-{{ $deporte->id }}"
+                                    value="{{ $deporte->deporte }}"
+                                    class="form-check-input" {{ $deporteAsociado ? 'checked' : '' }}>
+                                <label for="deporte-{{ $deporte->id }}" class="mx-1">{{ $deporte->deporte }}</label>
                             </div>
-                    
+                        
                             @if ($index % 7 == 6)
                                 </div>
                             @endif
                         @endforeach
-                    
+                        
                         @if ($deportes->count() % 7 != 0)
                             </div>
                         @endif
+                    
                     </div>
                     
 

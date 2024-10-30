@@ -245,30 +245,18 @@ class ArtDeportController extends Controller{
         // Intentar hacer la relación con cada etiqueta/deporta
         try {
             $deportesSeleccionados = $request->input('deportes', []);
-            
+        
             // Obtiene los IDs de los deportes seleccionados en el formulario
             $deporteIdsSeleccionados = Deporte::whereIn('deporte', $deportesSeleccionados)->pluck('id')->toArray();
-            
-            // Obtiene los IDs de todos los deportes actualmente relacionados con el artículo
-            $deporteIdsExistentes = $articulo->deportes()->pluck('deportes.id')->toArray();
         
-            // Calcula las etiquetas a agregar y las que se deben quitar
-            $etiquetasParaAgregar = array_diff($deporteIdsSeleccionados, $deporteIdsExistentes);
-            $etiquetasParaEliminar = array_diff($deporteIdsExistentes, $deporteIdsSeleccionados);
-        
-            // Agrega las etiquetas que faltan
-            if (!empty($etiquetasParaAgregar)) {
-                $articulo->deportes()->attach($etiquetasParaAgregar);
-            }
-        
-            // Elimina las etiquetas que no están seleccionadas
-            if (!empty($etiquetasParaEliminar)) {
-                $articulo->deportes()->detach($etiquetasParaEliminar);
-            }
+            // Actualiza las etiquetas en la relación, eliminando las no seleccionadas y agregando nuevas
+            $articulo->deportes()->sync($deporteIdsSeleccionados);
         
         } catch (\Exception $e) {
             return abort(404, 'Algo salió mal.');
         }
+        
+        
         
         
         
