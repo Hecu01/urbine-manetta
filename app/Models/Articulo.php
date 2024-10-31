@@ -23,6 +23,7 @@ class Articulo extends Model
         'color',
         'id_categoria', 
         'foto', 
+        'descripcion',
         'dirigido_a',
         'tipo_producto',
         'compra_id',
@@ -66,4 +67,11 @@ class Articulo extends Model
     {
         return $this->belongsTo(Compra::class, 'compra_id'); 
     }
+
+    // Relacion con una o varias imagenes
+    public function fotos()
+    {
+        return $this->hasMany(Foto::class);
+    }
+
 }

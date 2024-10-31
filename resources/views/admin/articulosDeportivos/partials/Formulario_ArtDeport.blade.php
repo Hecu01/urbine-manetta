@@ -6,24 +6,23 @@
         <div class="col-md-6">
 
             <div class="col-md-12">
-
+                {{-- Titulo principal --}}
                 <div class="col-md-12">
                     <h1 class="text-white text-3xl shadow-1 border-1 bg-sky-500/[0.9] w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner"
                         onclick="alert('Categoria: Nuevo artículo deportivo')">Nuevo artículo deportivo</h1>
                 </div>
-
+                
+                {{-- Titulo producto --}}
                 <div class="col-md-12">
-
                     <label for="inputEmail4" class="form-label">Titulo producto</label>
-                    <input type="text" name="nombre_producto" class="form-control"
-                        placeholder="Inserte un titulo bonito al producto" required>
+                    <input type="text" name="nombre_producto" class="form-control" placeholder="Inserte un titulo bonito al producto" required>
                 </div>
-
+                
                 <div class="col-md-12 flex mt-1 justify-between my-1">
-
+                    
+                    {{-- Género del producto --}}
                     <div class="col-md-5 ">
                         <label for="inputEmail4" class="form-label">Genero del producto</label>
-
                         <select name="genero" id="" class="form-select" required>
                             <option value="" selected hidden>Elija una opción</option>
                             <option value="Masculino">Masculino</option>
@@ -31,18 +30,17 @@
                             <option value="Unisex">Unisex</option>
                         </select>
                     </div>
+
+                    {{-- Público dirigido --}}
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Público dirigido</label>
-
                         <select name="publico_dirigido" id="publico-dirigido" class="form-select" required>
                             <option value="" selected hidden></option>
                             <option value="adultos">Adultos</option>
                             <option value="niños">Niños</option>
                             <option value="ambos">Ambos</option>
                         </select>
-
-
-                        {{-- Categoria --}}
+                        {{-- Categoria: Articulo deportivo--}}
                         <input type="text" name="categoria" id="" value="1" hidden>
                     </div>
                 </div>
@@ -51,8 +49,8 @@
 
 
             <div class="col-md-12 flex justify-between my-1">
-
-
+                
+                {{-- Tipo de producto --}}
                 <div class="col-md-5">
                     <label for="inputState" class="form-label ">Tipo de producto</label>
                     <div class="input-group d-flex">
@@ -66,14 +64,19 @@
                             data-bs-target="#exampleModal">+</span>
                     </div>
                 </div>
+
+                {{-- Marca --}}
                 <div class="col-md-6">
                     <label for="inputAddress" class="form-label">Marca</label>
                     <input type="text" name="marca" class="form-control" id="inputAddress" required
                         placeholder="Adidas, nike, otro">
                 </div>
             </div>
+
             <!-- Sección de las etiquetas -->
             <div class="col-md-12 flex justify-between my-1" style="align-content: center;">
+                
+                {{-- Input select --}}
                 <div class="col-md-10">
                     <label for="deporte" class="form-label">Etiquetas de deportes</label>
                     <select name="select_deportes" id="deporte" class="form-select">
@@ -83,12 +86,15 @@
                         @endforeach
                     </select>
                 </div>
+
+                {{-- Contenedor btn agregar etiqueta --}}
                 <div style="width:50px; margin-top:29px">
-                    <button class="btn btn-primary" style="width: 100%" type="button" onclick="agregarDeporte()"
-                        id="agregar-tag-artdeport">+</button>
+                    <button class="btn btn-primary" style="width: 100%" type="button" onclick="agregarDeporte()" id="agregar-tag-artdeport">+</button>
                 </div>
             </div>
 
+
+            {{-- Contenedor visual de etiquetas --}}
             <div class="col-md-12 flex justify-between mt-2" style="align-content: center">
                 <div id="etiquetas-container" class="etiquetas-container">
                     <!-- Aquí se agregarán las etiquetas dinámicamente -->
@@ -102,13 +108,16 @@
 
         </div>
         <div class="col-md-6">
+
             <div class="col-md-12" style=" position: relative; margin: 10px 0px">
 
                 <div class="container d-flex justify-content-center shadow-sm border-2 "
                     style="height: 250px;width:250px;  display:flex; justify-content: center;align-items:center;  background:#fff">
+
                     <!-- Carrusel para previsualizar imágenes -->
                     <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"
                         data-bs-interval="3000">
+
                         <div class="carousel-inner " id="imagePreviewInner" style="height: 100%">
                             <!-- Las imágenes previsualizadas se mostrarán aquí -->
                         </div>
@@ -118,40 +127,44 @@
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
+
                         <button class="carousel-control-next" type="button" data-bs-target="#imagePreviewCarousel"
                             data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
+
                     </div>
+
                 </div>
 
             </div>
+
+            {{-- Contenedor input y cargar fotos --}}
             <div class="col-md-12 grid justify-center my-3 ">
                 <label class=" btn text-white hover:scale-105 " for="imageInput"
                     style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
-                    <input type="file" name="foto" id="imageInput" multiple accept="image/*">
+                    <input type="file" name="foto[]" id="imageInput" required multiple accept="image/*">
                     Cargar fotos
                 </label>
             </div>
 
-
+            {{-- Abajo del previsualizador de imagenes --}}
             <div class="col-md-12 flex justify-center ">
-                <div class="col-md-9 flex justify-center items-center"
-                    style="border-top: 1px solid rgb(16, 153, 163)">
 
+                <div class="col-md-9 flex justify-center items-center" style="border-top: 1px solid rgb(16, 153, 163)">
 
+                    {{-- Stock --}}
                     <div class="col-md-5">
                         <label for="stock_input" class="form-label">Stock</label>
-                        <input type="text" name="stock" placeholder="cantidad"
-                            class="form-control total stock_input" id="stock_input" required>
+                        <input type="text" name="stock" placeholder="cantidad" class="form-control total stock_input" id="stock_input" required>
 
                     </div>
 
+                    {{-- Marca --}}
                     <div class="ml-5 p-1 p-1">
                         <label for="inputCity" class="form-label">Color</label>
-                        <input type="text" name="color" class="form-control"
-                            placeholder="Rojo, fuxia, amarillo..." required>
+                        <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required>
 
                     </div>
 
@@ -163,15 +176,29 @@
 
     </div>
 
-    <!-- calzados disponibles (acá está el problema de array string conversion) (linea 120) -->
+    {{-- Modal - agregar calzados --}}
     <div style="display: none" id="contenedor-modal-calzados">
         @include('admin.articulosDeportivos.partials.Modal_ArtDeport')
     </div>
+    {{-- Modal - agregar descripción --}}
+    <div class="">
+        @include('admin.articulosDeportivos.partials.AgregarDescripcion')
+    </div>
 
-    <div class="col-12 d-flex " style="justify-content:space-between">
+    {{-- Fila final --}}
+    <div class="col-12 d-flex mt-4" style="justify-content:space-between">
+        
+        {{-- BTN cargar articulo --}}
         <div class="col-md-3">
-            <button type="submit" class="btn btn-primary">Agregar</button>
+            <button type="submit" class="btn btn-primary ">CARGAR ARTICULO</button>
         </div>
+
+        {{-- BTN agregar descripcion --}}
+        <div class="col-md-2">
+            <button class="btn btn-secondary " type="button" id="descripcion-articulo" data-bs-toggle="modal" data-bs-target="#agregar-descripcion-modal">DESCRIPCION</button>
+        </div>
+
+        {{-- Input agregar precio --}}
         <div class="col-md-3 d-flex">
             <label for="inputState" class="form-label mx-2 mt-2">PRECIO</label>
             <div class="input-group">
