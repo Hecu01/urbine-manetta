@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Models\User;
+use App\Models\Foto;
 use App\Models\Talle;
 use App\Models\Calzado;
 use App\Models\Deporte;
@@ -81,89 +82,72 @@ class ArtDeportController extends Controller{
     /* Crear artículo deportivo *
      * Store a newly created resource in storage.
      */
-    public function store(Request $request){
-        // Path para guardar la imagen en storage
-        if($request->hasFile('foto')){
-            $file = $request->file('foto');
-            $carpetaDestino = storage_path('productos');
-            $filename = $file->getClientOriginalName();
-            $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
-        }
-
+    public function store(Request $request) {
         // Crear artículo nuevo
         $articuloNuevo = Articulo::create([
             'nombre' =>  $request->nombre_producto,
             'genero' => $request->genero,
-            'precio' => $request->precio,            
+            'precio' => $request->precio,
             'stock' => $request->stock,
             'descripcion' => $request->descripcion,
             'marca' => $request->marca,
             'color' => $request->color,
             'id_categoria' => $request->categoria,
             'dirigido_a' => $request->publico_dirigido,
-            'tipo_producto' => $request->tipoProducto,
-            'foto' => $filename
+            'tipo_producto' => $request->tipoProducto
         ]);
-
-        // Obtener el array de valores desde el formulario
-        $idsDeportes = $request->input('etiquetas'); 
-
-        // Convertir el array en una cadena de texto separada por comas
-        $idsDeportesString = implode(',', $idsDeportes);
-        
-        // Ahora puedes usar la función explode()
-        $etiquetasArray = explode(',', $idsDeportesString);
-        $cantidad = $articuloNuevo->stock;
-        $length = count($etiquetasArray); // Obtener la longitud del array
-
-        for ($i = 0; $i < $length; $i++) {
-            // Accede al elemento del array en la posición $i
-            $idDeporte = $etiquetasArray[$i];
-            
-            // Aquí puedes realizar las acciones que necesites con cada $idDeporte
-            // Por ejemplo:
-            $deporte = Deporte::find($idDeporte);
-            if ($deporte) {
-                // Realiza alguna operación con $deporte
-                $articuloNuevo->deportes()->attach($deporte->id);
-
+    
+        // Verificar y guardar múltiples fotos si están presentes
+        if($request->hasFile('fotos')) {
+            foreach ($request->file('fotos') as $file) {
+                $filename = $file->getClientOriginalName();
+                $carpetaDestino = storage_path('productos');
+                $file->move($carpetaDestino, $filename);
+    
+                // Crear una entrada en la tabla 'fotos' relacionada con el artículo
+                $articuloNuevo->fotos()->create(['ruta' => $filename]);
             }
         }
-
-
-
-        // Comienzo de la lógica de unión de muchos a muchos,
-        // si es que es un calzado
-        $tipoProducto = $request->input('tipoProducto');
-
-        if($tipoProducto == "calzado"){
-            // Obtén los datos del array de tallas y el array de stock
-            $calzados = $request->input('calzados');      // Acceder al array 
-            $stocks = $request->input('stocks');    
-            $calzadoIds = $request->input('calzado_ids'); // Acceder al array
-            $precios = $request->input('precios');
-
-            // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
-            foreach ($calzados as $indice => $calzado) {
     
-
-                if (isset($stocks[$indice]) > 0) {
-                    // Obtén la instancia de talla existente
-                    $calzado = Calzado::where('calzado', $calzado)->first(); 
-
-                    $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
-                    $precio = isset($precios[$indice]) ? $precios[$indice] : 0; // Verifica si 'precio' está definido
-                    
-                    // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
-                    $articuloNuevo->calzados()->attach($calzado->id, ['stocks' => $stock, 'precio' => $precio]);
-
+        // Obtener y procesar las etiquetas asociadas (deportes)
+        $idsDeportes = $request->input('etiquetas');
+        if ($idsDeportes) {
+            foreach ($idsDeportes as $idDeporte) {
+                $deporte = Deporte::find($idDeporte);
+                if ($deporte) {
+                    $articuloNuevo->deportes()->attach($deporte->id);
                 }
             }
         }
+    
+        // Lógica de unión para calzados si el producto es un calzado
+        $tipoProducto = $request->input('tipoProducto');
+        if ($tipoProducto == "calzado") {
+            $calzados = $request->input('calzados');
+            $stocks = $request->input('stocks');
+            $precios = $request->input('precios');
+    
+            foreach ($calzados as $indice => $calzado) {
+                if (isset($stocks[$indice]) && $stocks[$indice] > 0) {
+                    $calzadoExistente = Calzado::where('calzado', $calzado)->first();
+    
+                    if ($calzadoExistente) {
+                        $stock = $stocks[$indice];
+                        $precio = $precios[$indice];
+                        $articuloNuevo->calzados()->attach($calzadoExistente->id, [
+                            'stocks' => $stock,
+                            'precio' => $precio
+                        ]);
+                    }
+                }
+            }
+        }
+    
         // Después de agregar el artículo exitosamente
         Session::flash('mensaje', true);
         return redirect()->route('articulos-deportivos.index');
     }
+    
 
     /* Mostrar artículo deportivo *
      * Display the specified resource.
@@ -287,7 +271,16 @@ class ArtDeportController extends Controller{
      */
     public function destroy(string $id)
     {
-        
+        $articulo = Articulo::find($id); 
+        if($articulo){
+            $articulo->delete();
+            // Después de eliminar el artículo exitosamente
+            Session::flash('eliminado', true);
+        }
+        // Obtiene la URL anterior con la pestaña actual como fragmento
+        $url = url()->previous() . '#' . request()->input('nav-link'); // 'tab' es el nombre del campo que almacena el ID de la pestaña
+        // Redirige al usuario a la URL anterior con el fragmento
+        return redirect($url);
         
     }
 }

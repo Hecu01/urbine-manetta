@@ -217,7 +217,7 @@ $(document).ready(function(){
         var button = event.relatedTarget;
         var id = button.getAttribute('data-id');
         var form = document.getElementById('formEliminar');
-        form.action = '/admin/articulo-deportivo/' + id; // Ruta de eliminación de productos en Laravel
+        form.action = '/admin/articulos-deportivos/' + id; // Ruta de eliminación de productos en Laravel
     });
 
 

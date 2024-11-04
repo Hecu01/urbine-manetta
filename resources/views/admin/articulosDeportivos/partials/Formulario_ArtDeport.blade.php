@@ -144,7 +144,7 @@
             <div class="col-md-12 grid justify-center my-3 ">
                 <label class=" btn text-white hover:scale-105 " for="imageInput"
                     style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
-                    <input type="file" name="foto[]" id="imageInput" required multiple accept="image/*">
+                    <input type="file" name="fotos[]" id="imageInput" required multiple accept="image/*">
                     Cargar fotos
                 </label>
             </div>

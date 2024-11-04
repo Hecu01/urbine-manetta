@@ -7,6 +7,7 @@ use App\Models\Venta;
 use App\Models\Calzado;
 use App\Models\Deporte;
 use App\Models\Descuento;
+use App\Models\Foto;
 use App\Models\ReposicionMercaderia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
