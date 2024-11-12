@@ -123,6 +123,7 @@ Route::middleware(['auth'])->group(function () {
 
             // Aceptar pedido
             Route::put('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
+            Route::get('/articulos/{articulo_Id}/unidades-aceptadas', 'mostrarUnidadesAceptadas')->name('articulos.unidades_aceptadas');
             Route::post('/articulos/rechazar/{id}', 'rechazarPedido')->name('articulos.rechazar');
             Route::delete('/articulos/eliminar/{id}', 'eliminarPedido')->name('articulos.eliminar');
         });
