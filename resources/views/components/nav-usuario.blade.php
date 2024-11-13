@@ -155,7 +155,7 @@
 
                 </div>
             </div>
-            <div class="d-flex " id="contenedor-dropdown-idiomas" style="">
+            {{-- <div class="d-flex " id="contenedor-dropdown-idiomas" style="">
                 <div class="dropdown" id="display-dropdown">
                     <a href="#" class="dropdown-toggle flex items-center pt-1"
                         style="color: #fff; text-decoration: none" data-bs-toggle="dropdown" aria-expanded="false">
@@ -197,7 +197,7 @@
                     </ul>
                 </div>
 
-            </div>
+            </div> --}}
         </div>
     </div>
     <div
