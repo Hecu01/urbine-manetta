@@ -10,6 +10,7 @@
     // Obtener categorías únicas
     $categorias = Deporte::distinct()->pluck('categoria_deporte');
     $deportes = Deporte::orderBy('deporte', 'asc')->get();
+
     // Cargar los deportes por categoría
     $deportesPorCategoria = [];
     foreach ($categorias as $categoria) {
@@ -436,8 +437,18 @@
                             @foreach ($cartItems as $item)
                                 <div class="flex h-fit m-1 mt-3 mx-3" >
                                     <div class="pb-2">
-                                        <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="100px"
-                                            height="100px">
+                                            {{-- Recuperar el artículo desde la base de datos usando el ID --}}
+                                        @php
+                                            $articulo = \App\Models\Articulo::find($item['id']);
+                                        @endphp
+
+                                        {{-- Verificar si el artículo existe y tiene fotos --}}
+                                        @if ($articulo && $articulo->fotos)
+                                            @foreach ($articulo->fotos as $foto)
+                                                <img src="{{ url('productos/' . $foto->ruta) }}" alt="" width="100px" height="100px">
+                                            @endforeach
+                                        @endif
+
                                     </div>
                                     <div>
     

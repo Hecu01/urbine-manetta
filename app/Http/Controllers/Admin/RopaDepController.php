@@ -73,10 +73,8 @@ class RopaDepController extends Controller
         $request->validate([
             'tipoProducto' => 'required',
             'otroTipoProducto' => 'nullable|string|max:20',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'stock' => 'required|integer|min:1',
         ], [
-            'foto.required' => 'Debes cargar al menos una imagen.',
             'stock.required' => 'Debes colocar los talles',
         ]);
 
@@ -101,13 +99,7 @@ class RopaDepController extends Controller
             return back()->withErrors(['tipoProducto' => 'El tipo de producto es obligatorio.']);
         }
 
-        // Path para guardar la imagen en storage
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $carpetaDestino = storage_path('productos');
-            $filename = $file->getClientOriginalName();
-            $uploadSuccess = $request->file('foto')->move($carpetaDestino, $file->getClientOriginalName());
-        }
+
 
         // Crear artículo nuevo
         $articuloNuevo = Articulo::create([
@@ -122,9 +114,19 @@ class RopaDepController extends Controller
             'dirigido_a' => $request->publico_dirigido,
             // 'tipo_producto' => $request->tipoProducto,
             'tipo_producto' => $tipoProducto,
-            'foto' => $filename
         ]);
 
+        // Verificar y guardar múltiples fotos si están presentes
+        if($request->hasFile('fotos')) {
+            foreach ($request->file('fotos') as $file) {
+                $filename = $file->getClientOriginalName();
+                $carpetaDestino = storage_path('productos');
+                $file->move($carpetaDestino, $filename);
+    
+                // Crear una entrada en la tabla 'fotos' relacionada con el artículo
+                $articuloNuevo->fotos()->create(['ruta' => $filename]);
+            }
+        }
         // Obtener el array de valores desde el formulario
         // $idsDeportes = $request->input('etiquetas');
         $idsDeportes = $request->input('select_deportes', []);
@@ -172,7 +174,7 @@ class RopaDepController extends Controller
         }
         // Después de agregar el artículo exitosamente
         Session::flash('mensaje', true);
-        return redirect()->route('ropa-deportiva.index');
+        return redirect()->route('ropa-deportiva.index')->with('success', 'Ropa creada exitosamente');
     }
 
     /**

@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/principal.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/filter.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/errores.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/VerProducto.css') }}">
 
     <!-- Scrollreveal -->
     <script src="https://unpkg.com/scrollreveal"></script>
@@ -91,6 +92,7 @@
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('assets/js/Nav-Usuario.js') }}"></script>
+    <script src="{{ asset('assets/js/VerProducto.js') }}"></script>
 </body>
 
 </html>

@@ -163,25 +163,26 @@
                         <div class="col-md-6">
                             <div class="col-md-12" style=" position: relative; display:flex; justify-content:end; ">
 
-                                <div class=" d-flex justify-end shadow-sm border-2 "
-                                    style="height: 250px;width:250px;margin-right:10px;  display:flex; ;align-items:center;  background:#fff">
+                                <div class=" d-flex justify-end shadow-sm border-2 " style="height: 250px;width:250px;margin-right:10px;  display:flex; ;align-items:center;  background:#fff">
                                     <!-- Carrusel para previsualizar imágenes -->
-                                    <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel"
-                                        data-bs-interval="3000">
+                                    <div id="imagePreviewCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+
                                         <div class="carousel-inner " id="imagePreviewInner" style="height: 100%">
                                             <!-- Las imágenes previsualizadas se mostrarán aquí -->
                                         </div>
 
-                                        <button class="carousel-control-prev" type="button"
-                                            data-bs-target="#imagePreviewCarousel" data-bs-slide="prev">
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#imagePreviewCarousel"
+                                            data-bs-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="visually-hidden">Previous</span>
                                         </button>
-                                        <button class="carousel-control-next" type="button"
-                                            data-bs-target="#imagePreviewCarousel" data-bs-slide="next">
+
+                                        <button class="carousel-control-next" type="button" data-bs-target="#imagePreviewCarousel"
+                                            data-bs-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="visually-hidden">Next</span>
                                         </button>
+
                                     </div>
                                 </div>
 
@@ -198,8 +199,7 @@
                                     @endif
                                     <label class="text-white bg-blue-500 hover:bg-blue-600" for="imageInput">
                                         Cargar fotos
-                                        <input type="file" name="foto" id="imageInput" multiple accept="image/*"
-                                            class="{{ $errors->has('foto') ? 'border-red' : '' }}" style="display:none;">
+                                        <input type="file" name="fotos[]" id="imageInput" required multiple accept="image/*" class="{{ $errors->has('foto') ? 'border-red' : '' }}" style="display:none;">
                                     </label>
                                 </div>
                             </div>

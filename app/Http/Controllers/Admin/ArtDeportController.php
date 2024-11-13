@@ -145,7 +145,7 @@ class ArtDeportController extends Controller{
     
         // Después de agregar el artículo exitosamente
         Session::flash('mensaje', true);
-        return redirect()->route('articulos-deportivos.index');
+        return redirect()->back()->with('success', 'Producto creado exitosamente.');
     }
     
 

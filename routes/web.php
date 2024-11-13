@@ -34,7 +34,7 @@ Route::get('/compras-realizadas', [TiendaController::class, 'comprasRealizadas']
 // Búsquedas
 Route::controller(BusquedaController::class)->group(function(){
     Route::get('/buscar', 'buscar')->name('buscar');
-    Route::get('/detalles/{id}', 'verDetalles')->name('detalles');
+    Route::get('/producto/{id}', 'show')->name('producto.show');
     Route::delete('/buscar/{id}', 'destroy')->name('buscar.destroy');
 });
 
@@ -88,7 +88,7 @@ Route::group([], __DIR__ . '/admin.php');
 
 
 /* |-------------------- IGNORAR --------------------| */
-Route::get('producto/{filename}', function ($filename){
+Route::get('productos/{filename}', function ($filename){
     $path = storage_path('productos/' . $filename);
     if (!File::exists($path)) {
         abort(404);

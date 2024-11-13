@@ -31,6 +31,7 @@
                             @guest
                             @else
                                 @if (Auth::user()->administrator)
+                                
                                     <div class="position-absolute right-1 rounded-full flex m-1">
                                         <div class="hover:scale-125 mr-1.5">
 
@@ -40,30 +41,42 @@
                                                     class="fa-solid fa-pen"></i></a>
                                         </div>
                                         <div class="hover:scale-125">
-                                            {{-- <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $resultado->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar <i class="fa-solid fa-trash"></i></button> --}}
-                                            <a href=""
-                                                class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline"
-                                                title="Eliminar producto: ID {{ $resultado->id }}">Eliminar <i
-                                                    class="fa-solid fa-trash"></i></a>
-
-                                           
-                                                {{-- <div class="articulo" data-id="{{ $resultado->id }}">
-                                                    <button class="btn btn-danger eliminar-btn"
-                                                        onclick="eliminarArticulo({{ $resultado->id }})">
-                                                        <i class="fas fa-trash-alt"></i> Eliminar
-                                                    </button>
-                                                </div> --}}
-
+                                            <button type="button" onclick="eliminarProducto({{ $resultado->id }})" class="btn-danger p-1 px-2 rounded-full">
+                                                Eliminar <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                            
+                                            
                                         </div>
                                     </div>
+
                                 @endif
                             @endguest
                             <div class="flex font-sans mt-3">
+
                                 <div class="flex w-48 relative content-center">
-                                    <img src="{{ url('producto/' . $resultado->foto) }}" alt="{{ $resultado->nombre }}"
-                                        draggable="false" class="absolute inset-0   object-cover w-full  m-auto"
-                                        loading="lazy" />
+  
+                                    <div id="carousel-{{ $resultado->id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 200px;">
+                                        <div class="carousel-inner">
+                                            @foreach($resultado->fotos as $index => $foto)
+                                                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                                    <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $resultado->nombre }}" style="width: 200px; height: auto;">
+
+                                                </div>
+                                            @endforeach
+                                        </div>
+                            
+                                        <!-- Controles del carrusel -->
+                                        <button class="carousel-control-prev" style="color: red" type="button" data-bs-target="#carousel-{{ $resultado->id }}" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true" style="color: red"></span>
+                                            <span class="visually-hidden" style="color: red">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $resultado->id }}" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>                                    
                                 </div>
+                            
 
 
                                 <div class="flex-auto p-6">
@@ -148,15 +161,16 @@
                                             {{-- Invitado --}}
                                             @guest
                                                 <!-- Botón para abrir el modal -->
-                                                <button data-bs-toggle="modal" data-bs-target="#miModal" type="button"
-                                                    class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white"
-                                                    type="button">
-                                                    Comprar
-                                                </button>
+                                                <a href=" {{ route('producto.show', $resultado->id) }} ">
+                                                    <button type="button"  class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white">
+                                                        Detalles
+                                                    </button>
+
+                                                </a>
 
                                                 <button data-bs-toggle="modal" data-bs-target="#miModal" type="button"
                                                     class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 "
-                                                    type="button">
+                                                    >
                                                     <a href="#" class="text-black no-underline">
                                                         Agregar al carrito
                                                     </a>
@@ -192,9 +206,9 @@
                                             @else
                                                 <button
                                                     class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white"
-                                                    type="button" onclick="alert('te llevaré a los metodos de pago');">
-                                                    <a href="#" class="text-white no-underline">
-                                                        Comprar
+                                                    type="button" >
+                                                    <a href="{{ route('producto.show', $resultado->id) }}" class="text-white no-underline">
+                                                        Detalles
                                                     </a>
                                                 </button>
 
@@ -205,16 +219,13 @@
                                                     class="nombre">
 
                                                 @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
-                                                    <input type="hidden" name="precio"
-                                                        value="{{ $resultado->precio - $resultado->descuento->plata_descuento }}"
-                                                        class="precio">
+                                                    <input type="hidden" name="precio" value="{{ $resultado->precio - $resultado->descuento->plata_descuento }}" class="precio">
                                                 @else
-                                                    <input type="hidden" name="precio" value="{{ $resultado->precio }}"
-                                                        class="precio">
+                                                    <input type="hidden" name="precio" value="{{ $resultado->precio }}" class="precio">
                                                 @endif
 
-                                                <input type="hidden" name="imagen" value="{{ $resultado->foto }}"
-                                                    class="imagen">
+                                                <input type="hidden" name="imagen" value="{{ $resultado->foto }}" class="imagen">
+                                                
                                                 <!-- Cambiado a visible para que el usuario pueda seleccionar la cantidad -->
                                                 <button type="submit"
                                                     class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 agregarAlCarrito">
@@ -243,15 +254,17 @@
 
                     </div>
                 @endforeach
+                @if ($contar_resultados < 1)
+                    <p style="width:fit-content;  padding:10px; font-size:1.5em" class="uppercase font-semibold">
+                        No se ha encontrado resultados de la búsqueda
+                        <i class="fa-solid fa-ghost"></i>
+                    </p>
+                @endif
             </div>
           
-            @if ($contar_resultados < 1)
-                <p style="width:fit-content;  padding:10px; font-size:1.5em" class="uppercase font-semibold">
-                    No se ha encontrado resultados de la búsqueda
-                    <i class="fa-solid fa-ghost"></i>
-                </p>
-            @endif
         </div>
+
+
     </section>
 
     </div>
@@ -444,29 +457,27 @@
             });
         });
 
-
-
-//         function eliminarArticulo(id) {
-//     if (!confirm('¿Estás seguro de que deseas eliminar este artículo?')) {
-//         return; // Cancela si el usuario no está seguro
-//     }
-
-//     $.ajax({
-//         url: `/buscar/${id}`, // Asegúrate de que esta URL es correcta
-//         type: 'DELETE',
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Asegúrate de tener el token CSRF
-//         },
-//         success: function(response) {
-//             console.log(response.success);
-//             // Elimina el artículo del DOM
-//             $(`.buscar[data-id="${id}"]`).remove();
-//         },
-//         error: function(xhr) {
-//             console.error('Error al eliminar:', xhr.responseJSON.error);
-//         }
-//     });
-// }
+        function eliminarProducto(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                fetch(`/eliminar/articulo/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remueve el producto de la vista
+                        document.getElementById(`producto-${id}`).remove();
+                    } else {
+                        alert('Error al eliminar el producto');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
 
     </script>
 @endsection

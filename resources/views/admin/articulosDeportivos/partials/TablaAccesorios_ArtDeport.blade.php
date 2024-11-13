@@ -17,8 +17,9 @@
 
                 <td> 
                   @foreach ($articulo->fotos as $foto)
-                    <img src="{{ url('producto/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px">
+                    <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px">
                   @endforeach
+              
 
 
 

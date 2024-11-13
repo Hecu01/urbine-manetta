@@ -1,22 +1,467 @@
 @extends('layouts.app')
 @section('section-principal')
-    <div class=" section" style="padding: 10px">
-        <div class="container">
+    <form class='container-1 '>
+        @if (Auth::user()->administrator)
+            <div class="position-absolute right-1 rounded-full flex m-1">
+                <div class="hover:scale-125 mr-1.5">
 
-            <div class=""  style="display: flex;">
-                <div class=""  style="background: white; width:min-content; ">
-                    <img src="{{ url('producto/' . $elemento->foto) }}" class="card-img-top" alt="..." style="width: 300px" >
+                    <a href="{{ route('articulos-deportivos.edit', $articulo->id) }}"
+                        class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline"
+                        title="Editar producto: ID {{ $articulo->id }}">Editar <i
+                            class="fa-solid fa-pen"></i></a>
                 </div>
-                <div class="" style="background: white;  margin:0px 10px; width:850px;">
-    
-                    <h1 >{{ $elemento->nombre}}</h1>
-                    <p >Disponibles: {{ $elemento->stock}} </p>
-                    <p >Precio: ${{number_format($elemento->precio, 0, ',', '.')}} </p>
+                <div class="hover:scale-125">
+                    {{-- <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $resultado->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar <i class="fa-solid fa-trash"></i></button> --}}
+                    <a href=""
+                        class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline"
+                        title="Eliminar producto: ID {{ $articulo->id }}">Eliminar <i
+                            class="fa-solid fa-trash"></i></a>
 
-        
+                    
+                        {{-- <div class="articulo" data-id="{{ $resultado->id }}">
+                            <button class="btn btn-danger eliminar-btn"
+                                onclick="eliminarArticulo({{ $resultado->id }})">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </div> --}}
+
                 </div>
             </div>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">volver</a>
+        @endif
+        <div class='highlight-window py-5' id='product-img'>
+            <div class='highlight-overlay' id='highlight-overlay'>
+                <div class="flex  relative content-center" style="z-index: 13">
+                        
+                    <div id="carousel-{{ $articulo->id }}" 
+                        class="carousel slide" 
+                        data-bs-ride="carousel" 
+                        {{-- data-bs-interval="3000" Se cambie la imagen sola cada 3 segundos --}}
+                        style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 300px;z-index:13">
+                        <div class="carousel-inner">
+                            @foreach($articulo->fotos as $index => $foto)
+                                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                    <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" style="width: 300px; height: auto;">
+
+                                </div>
+                            @endforeach
+                        </div>
+            
+                        <!-- Controles del carrusel -->
+
+                            <button class="carousel-control-prev" style="margin-top: 40vh;height: 50px;background:black; margin-left: -47px" type="button" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true" ></span>
+                                <span class="visually-hidden" >Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" style="margin-top: 40vh;height: 50px;background:black; margin-right: -47px" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>                                    
+                </div>
+            </div>
         </div>
-    </div>
+        <div class='window'>
+            <div class='main-content'>
+                <h2 class="uppercase">{{ $articulo->nombre }}</h2>
+                <h1 class="uppercase">{{ $articulo->genero}}</h1>
+                <h3 class="uppercase">Marca: {{ $articulo->marca}}</h3>
+                <div class='description' id='description'>
+
+                    {{ $articulo->descripcion }}
+                </div>
+
+                <div class='options'>
+                    <div class='color-options'>
+                        Unidades:
+                        <div class="col-5">
+                            <input type="number" class="form-control" 
+                            min="1" max="{{ $articulo->stock }}" 
+                            value="1" 
+                            oninput="validarCantidad(this, {{ $articulo->stock }})">
+                     
+                        </div>
+                        
+                        <span class="text-slate-500 text-sm">Disponible: {{ $articulo->stock}} </span>
+
+
+
+                    </div>
+                    @if($articulo->calzados || $articulo->talles)
+                        <div class='size-picker'>
+                            Talle o Calzado:
+                            <div class='range-picker' id='range-picker'>
+
+                                {{-- Si es calzados: leerá éste --}}
+                                @foreach ($articulo->calzados as $calzado)
+                                    <div>
+                                        {{$calzado->calzado}}
+                                    </div>
+                                @endforeach
+
+                                {{-- Si es ropa: leerá este otro --}}
+                                @foreach ($articulo->talles as $talle)
+                                    <div>
+                                        {{$talle->talle_ropa}}
+                                    </div>
+                                @endforeach
+                            </div>
+                            {{-- <a class='small align-right' href='#'>VIEW SIZE-CHART</a> --}}
+                        </div>
+                    @endif
+                </div>
+                <div class='divider'></div>
+        
+                <div class='purchase-info'>
+                <div class='price'>$ {{ number_format($articulo->precio, 0, ',','.')}}</div>
+                <button type="submit" class="button">AÑADIR AL CARRO</button>
+                </div>
+            </div>
+        </div>
+    </form>  
+
+    <script>
+        function validarCantidad(input, maxStock) {
+            // Asegurarse de que el valor sea un número válido y no supere el stock disponible
+            if (input.value < 1) {
+                alert('Recuerde: Sólo se admite números (mayores a 0)');
+                input.value = 1;
+            } else if (input.value > maxStock) {
+                input.value = maxStock;
+            }
+        }
+    </script>
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Muli:400,300italic,300,400italic);
+        
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+        }
+        
+        .container-1 {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            height: 100%;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            background: #999;
+            padding: 20px 0px;
+        }
+
+        .window {
+            background: #fff;
+            width: 470px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            min-height: 450px;
+            position: relative;
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+        }
+        .options {
+            display:-webkit-box;
+            display:-webkit-flex;
+            display:-ms-flexbox;
+            display:flex;
+            margin-top:25px;
+            -webkit-box-pack:justify;
+            -webkit-justify-content:space-between;
+            -ms-flex-pack:justify;
+                justify-content:space-between;
+        }
+        .main-content {
+            padding:50px 46px 25px 20px;
+            box-sizing: border-box;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            color: #222;
+            width: 100%;
+            height: 100%;
+            -webkit-flex-flow: column;
+            -ms-flex-flow: column;
+                flex-flow: column;
+        }
+
+        h1 {
+            letter-spacing: 0px;
+            letter-spacing: .02rem;
+            font-size: 48px;
+            font-size: 3rem;
+        }
+
+        h3 {
+            color: #666;
+            font-size: 19px;
+            font-size: 1.2rem;
+        }
+
+        .description {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .highlight-window {
+            height: 550px;
+            width: 400px;
+            background: #ccc;
+            background-size: cover;
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            position:relative;
+            background-position:center top;
+        }
+
+        .color {
+            height: 30px;
+            cursor:pointer;
+            width: 30px;
+            background: #eee;
+            border: 1px solid #eee;
+            position:relative;
+        }
+        .highlight-overlay {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-size:cover;
+            -webkit-transition:opacity .4s ease;
+                    transition:opacity .4s ease;
+            background-position:center top;
+            display: flex;
+            justify-content: center
+        }
+        .background-element {
+            background: #457;
+            position: absolute;
+            width: 120%;
+            height: 400px;
+            left: -50px;
+            top: -80px;
+            -webkit-transform: rotate(-5deg);
+                -ms-transform: rotate(-5deg);
+                    transform: rotate(-5deg);
+            -webkit-transition:background .6s ease;
+                transition:background .6s ease;
+        }
+        .color.overlay {
+            position:absolute;
+            z-index:10;
+            background:transparent;
+            top:-1px;
+            left:-1px;
+            -webkit-transform:translateX(45px);
+                -ms-transform:translateX(45px);
+                    transform:translateX(45px);
+            border:2px solid #fff;
+            outline:2px solid #ccc;
+            -webkit-transition:-webkit-transform .3s ease;
+                transition:transform .3s ease;
+        }
+        .color-a {
+            background: #333;
+            margin-right:14px;
+        }
+
+        .color-b {
+            background: #457;
+
+        }
+
+        .color-picker {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            width: 77px;
+            margin-top:5px;
+            position:relative;
+        }
+        a {
+            text-decoration:none;
+        }
+        a:hover {
+            text-decoration:underline;
+            color:#666;
+        }
+        .button {
+            background:#333;
+            border:none;
+            font-weight:400;
+            height:40px;
+            margin-top:auto;
+            margin-bottom:auto;
+            padding-left:25px;
+            padding-right:25px;
+            box-sizing:border-box;
+            color:#fff;
+            cursor:pointer;
+            -webkit-transition:all .3s ease;
+                transition:all .3s ease;
+        }
+        .button:hover {
+            background:#555;
+            -webkit-transition:all .3s ease;
+                transition:all .3s ease;
+        }
+        .divider {
+            width:80%;
+            height:1px;
+            background:#ddd;
+            margin-top:20px;
+            margin-bottom:20px;
+            margin-left:auto;
+            margin-right:auto;
+        }
+        .color-options {
+            display:-webkit-box;
+            display:-webkit-flex;
+            display:-ms-flexbox;
+            display:flex;
+            width:50%;
+            -webkit-flex-flow:column;
+            -ms-flex-flow:column;
+                flex-flow:column;
+        }
+        .size-picker {
+            display:-webkit-box;
+            display:-webkit-flex;
+            display:-ms-flexbox;
+            display:flex;
+            -webkit-flex-flow:column;
+            -ms-flex-flow:column;
+                flex-flow:column;
+        }
+        .small {
+            font-size: 11px;
+            font-size:.7rem;
+            color:#999;
+            margin-top:10px;
+        }
+        .align-right {
+            -webkit-align-self:flex-end;
+            -ms-flex-item-align:end;
+                align-self:flex-end;
+        }
+        .size-desc {
+            -webkit-align-self:flex-end;
+            -ms-flex-item-align:end;
+                align-self:flex-end;
+        }
+
+        .purchase-info {
+            -webkit-box-pack:justify;
+            -webkit-justify-content:space-between;
+                -ms-flex-pack:justify;
+                    justify-content:space-between;
+            display:-webkit-box;
+            display:-webkit-flex;
+            display:-ms-flexbox;
+            display:flex;
+        }
+        .price {
+            font-size: 40px;
+            font-size:2.5rem;
+        }
+
+
+        .selection {
+            background:#fff;
+        }
+
+        .range-picker {
+            font-size: 16px;
+            font-size:1rem;
+            display:-webkit-box;
+            display:-webkit-flex;
+            display:-ms-flexbox;
+            display:flex;
+            margin-top:5px;
+            -webkit-box-align:center;
+            -webkit-align-items:center;
+                -ms-flex-align:center;
+                    align-items:center;
+            line-height:.9em;
+        }
+        .range-picker div {
+            display:-webkit-box;
+            display:-webkit-flex;
+            display:-ms-flexbox;
+            display:flex;
+            border-right:1px solid #bbb;
+            border-top:1px solid #bbb;
+            border-bottom:1px solid #bbb;
+            -webkit-box-align:center;
+            -webkit-align-items:center;
+                -ms-flex-align:center;
+                    align-items:center;
+            color:#bbb;
+            width:30px;
+            box-sizing:border-box;
+            cursor:pointer;
+            -webkit-box-pack:center;
+            -webkit-justify-content:center;
+                -ms-flex-pack:center;
+                    justify-content:center;
+            height:30px;
+            -webkit-transition:background .5s ease;
+                transition:background .5s ease;
+        }
+
+        .range-picker .active:hover {
+            background:#fff;
+        }
+        .range-picker .active {
+            -webkit-transform:scale(1.2);
+                -ms-transform:scale(1.2);
+                    transform:scale(1.2);
+            background:#fff;
+            margin-right:3px;
+            margin-left:2px;
+            color:#333;
+            border:1px solid #666;
+            z-index:1;
+        }
+        .check {
+            position:absolute;
+            right:0px;
+            left:0px;
+            margin-left:auto;
+            margin-right:auto;
+            background:transparent;
+            width:0px;
+            bottom:-3px;
+            border-left:10px solid transparent;
+            border-bottom:10px solid #ccc;
+            border-right:10px solid transparent;
+            height:0px;
+        }
+        .range-picker div:hover {
+            background:#eee;
+            -webkit-transition:background .2s;
+                transition:background .2s;
+        }
+        .range-picker div:first-child {
+            border-left:1px solid #bbb;
+        }
+        .range-picker div.active:first-child {
+            border-left:1px solid #333;
+        }
+
+
+    </style>
 @endsection

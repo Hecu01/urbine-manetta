@@ -30,7 +30,14 @@ Route::middleware(['auth'])->group(function () {
         Route::put('cambiar-estado-descuento/{id}', 'cambiarEstadoDescuento')->name('cambiar.estado.descuento');
         Route::delete('/eliminar/{id}', 'eliminarDescuento')->name('eliminar.descuento');
     });
+    
 
+
+
+    Route::delete('/eliminar/articulo/{id}', [ArtDeportController::class, 'destroy']);
+    
+    
+    
     // Articulos deportivos
     Route::controller(ArtDeportController::class)->group(function () {
 
@@ -85,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Articulos Deportivos
         Route::resource('articulos-deportivos', ArtDeportController::class);
+        
 
         // Publicidad
         Route::resource('publicidad', PublicidadController::class);
