@@ -3,59 +3,146 @@
 @section('section-principal')
     <h1>Compras Realizadas</h1>
 
-    @if ($compras->isEmpty())
-        <p>No has realizado ninguna compra.</p>
-    @else
-        <div class="tabs mx-5">
-            @foreach ($compras as $index => $compra)
-                <div class="tab" onclick="toggleTab(event, 'compra-{{ $compra->id }}')">
-                    <table style="width: 100%; text-align: center;">
-                        <thead>
-                            <tr style="vertical-align: middle">
-                                <th>Nº de compra</th>
-                                <th>Total de la compra</th>
-                                <th>Fecha de la compra</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="vertical-align: middle">
-                                <td>{{ $compra->id }}</td>
-                                <td>${{ number_format($compra->total, 2) }}</td>
-                                <td>{{ $compra->created_at->format('d/m/Y') }}</td>
+    {{-- Comprueba si el usuario es administrador --}}
+    @if (Auth::user()->administrator)
+        @if ($compras->isEmpty())
+            <p style="text-align: center; font-size:16pt;">No se ha generado ninguna compra.</p>
+        @else
+            <div class="tabs mx-5">
+                @foreach ($compras as $index => $compra)
+                    <div class="tab" onclick="toggleTab(event, 'compra-{{ $compra->id }}')">
+                        <table style="width: 100%; text-align: center;">
+                            <thead>
+                                <tr style="vertical-align: middle">
+                                    <th>Nº de compra</th>
+                                    <th>Total de la compra</th>
+                                    <th>Fecha de la compra</th>
+                                    <th>Estado</th>
+                                    @if ($compra->estado == 'Pendiente')
+                                        <th>Acción</th>
+                                    @else
+                                        <th>Fecha de engrega</th>
+                                    @endif
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="vertical-align: middle">
+                                    <td>{{ $compras->count() - $index }}</td> <!-- el count - index es para invertir el indice-->
+                                    <td>${{ number_format($compra->total, 2) }}</td>
+                                    <td>{{ $compra->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $compra->estado }}</td>
+                                    <td>
+                                        @if ($compra->estado == 'Pendiente')
+                                            <form action="{{ route('compras.entregar', $compra->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success mb-1">Entregar</button>
+                                            </form>
+                                            <form action="{{ route('compras.cancelar', $compra->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">Cancelar</button>
+                                            </form>
+                                        @else
+                                        {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y') : 'N/A' }}
+                                            {{-- {{ $compra->estado == 'Entregado' ? $compra->updated_at->format('d/m/Y H:i') : 'N/A' }} --}}
+                                        @endif
+                                    </td>
 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
 
-                <!-- Tabla de artículos de la compra -->
-                <div id="compra-{{ $compra->id }}" class="tab-content mx-40" style="display: none;">
-                    <table style="width: 100%; text-align: center;">
-                        <thead>
-                            <tr>
-                                <th>Artículo</th>
-                                <th>Cantidad</th>
-                                <th>Precio Unitario</th>
-                                <th>Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($compra->articulos as $articulo)
+                    <!-- Tabla de artículos de la compra -->
+                    <div id="compra-{{ $compra->id }}" class="tab-content mx-40" style="display: none;">
+                        <table style="width: 100%; text-align: center;">
+                            <thead>
                                 <tr>
-                                    <td class="px-0">{{ $articulo->nombre }}</td>
-                                    <td>{{ $articulo->pivot->cantidad }}</td>
-                                    <td>${{ number_format($articulo->pivot->precio_unitario, 2) }}</td>
-                                    <td>${{ number_format($articulo->pivot->cantidad * $articulo->pivot->precio_unitario, 2) }}
+                                    <th>Artículo</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($compra->articulos as $articulo)
+                                    <tr>
+                                        <td class="px-0">{{ $articulo->nombre }}</td>
+                                        <td>{{ $articulo->pivot->cantidad }}</td>
+                                        <td>${{ number_format($articulo->pivot->precio_unitario, 2) }}</td>
+                                        <td>${{ number_format($articulo->pivot->cantidad * $articulo->pivot->precio_unitario, 2) }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    @else
+    {{-- Si el usuario no es admin --}}
+        @if ($compras->isEmpty())
+            <p style="text-align: center; font-size:16pt;">No has realizado ninguna compra.</p>
+        @else
+            <div class="tabs mx-5">
+                @foreach ($compras as $index => $compra)
+                    <div class="tab" onclick="toggleTab(event, 'compra-{{ $compra->id }}')">
+                        <table style="width: 100%; text-align: center;">
+                            <thead>
+                                <tr style="vertical-align: middle">
+                                    <th>Nº de compra</th>
+                                    <th>Total de la compra</th>
+                                    <th>Fecha de la compra</th>
+                                    <th>Estado</th>
+                                    <th>Fecha de entrega</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="vertical-align: middle">
+                                    {{-- <td>{{ $index + 1 }}</td> --}}
+                                    <td>{{ $compras->count() - $index }}</td>
+                                    <td>${{ number_format($compra->total, 2) }}</td>
+                                    <td>{{ $compra->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $compra->estado }}</td>
+                                    <td>
+                                        {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y') : 'N/A' }}
+                                        {{-- {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y H:i') : 'N/A' }} --}}
                                     </td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endforeach
-        </div>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <!-- Tabla de artículos de la compra -->
+                    <div id="compra-{{ $compra->id }}" class="tab-content mx-40" style="display: none;">
+                        <table style="width: 100%; text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>Artículo</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($compra->articulos as $articulo)
+                                    <tr>
+                                        <td class="px-0">{{ $articulo->nombre }}</td>
+                                        <td>{{ $articulo->pivot->cantidad }}</td>
+                                        <td>${{ number_format($articulo->pivot->precio_unitario, 2) }}</td>
+                                        <td>${{ number_format($articulo->pivot->cantidad * $articulo->pivot->precio_unitario, 2) }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     @endif
 
     <style>
@@ -74,7 +161,7 @@
 
         .tab {
             /* background-color: #f1f1f1;
-                border: 1px solid #ccc; */
+                            border: 1px solid #ccc; */
             cursor: pointer;
             margin: 5px 0;
 

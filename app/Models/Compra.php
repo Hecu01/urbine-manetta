@@ -12,7 +12,8 @@ class Compra extends Model
     protected $fillable = [
         'total',
         'fecha',
-        'user_id', // Agrega este campo
+        'user_id', 
+        'estado',
     ];
     
     public function articulos()

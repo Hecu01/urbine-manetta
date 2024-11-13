@@ -130,20 +130,38 @@ class TiendaController extends Controller
             return redirect()->route('home')->with('error', 'Por favor, inicie sesión para ver sus compras.');
         }
 
-        // // Obtener las compras del usuario autenticado junto con los artículos
-        // $compras = Compra::with('articulos')->where('user_id', Auth::id())->get();
-
-        // // Calcular el total de todas las compras (opcional si quieres mostrarlo)
-        // $totalPrice = $compras->sum('total'); // Sumar el total de todas las compras
-
-        // return view('', compact('compras', 'totalPrice'));
-
-        $compras = Compra::with('articulos')->get();
+        // Verificar si el usuario es administrador
+        if (Auth::user()->administrator) {
+            // Si es administrador, mostrar todas las compras
+            $compras = Compra::with('articulos')->orderByDesc('id')->get();
+        } else {
+            // Si no es administrador, mostrar solo las compras del usuario autenticado
+            $compras = Compra::where('user_id', Auth::id())
+                ->with('articulos')
+                ->orderByDesc('id')
+                ->get();
+        }
 
         return view('users.comprasRealizadas', compact('compras'));
     }
 
-
+    public function entregarCompra($id)
+    {
+        $compra = Compra::findOrFail($id);
+        $compra->estado = 'Entregado';
+        $compra->save();
+    
+        return redirect()->back()->with('success', 'La compra ha sido marcada como Entregada.');
+    }
+    
+    public function cancelarCompra($id)
+    {
+        $compra = Compra::findOrFail($id);
+        $compra->estado = 'Cancelado';
+        $compra->save();
+    
+        return redirect()->back()->with('success', 'La compra ha sido cancelada.');
+    }
 
 
     public function hombres()

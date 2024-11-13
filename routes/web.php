@@ -29,6 +29,8 @@ Route::controller(TiendaController::class)->group(function(){
 
 // Compras realizadas
 Route::get('/compras-realizadas', [TiendaController::class, 'comprasRealizadas'])->name('compras.realizadas');
+Route::post('/compras/{id}/entregar', [TiendaController::class, 'entregarCompra'])->name('compras.entregar');
+Route::post('/compras/{id}/cancelar', [TiendaController::class, 'cancelarCompra'])->name('compras.cancelar');
 
 
 // Búsquedas
