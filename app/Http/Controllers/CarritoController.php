@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Darryldecode\Cart\Facades\CartFacade;
 use MercadoPago\Preference;
 use MercadoPago\Item;
+use Illuminate\Support\Facades\Session;
 
 class CarritoController extends Controller
 {
@@ -29,10 +30,10 @@ class CarritoController extends Controller
         return view('users.MiCarrito', compact('cartItems', 'totalPrice'));
     }
 
-    // Método para añadir un producto al carrito
+    // Método para añadir un producto al carrito 
+    // con AJAX
     public function añadirAlCarrito(Request $request)
     {
-
         
         // Verificar si el usuario tiene una dirección
         if (!$request->user()->domicilio) {
@@ -76,6 +77,54 @@ class CarritoController extends Controller
                 'carrito' => $carrito,
             ]);
         }
+
+
+    }
+    // Método para añadir un producto al carrito 
+    // sin AJAX
+    public function añadirAlCarrito2(Request $request)
+    {
+
+        
+        // Verificar si el usuario tiene una dirección
+        if (!$request->user()->domicilio) {
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Por favor, proporciona tu dirección antes de agregar al carrito.'], 400);
+            }
+            return redirect()->route('domicilio')->with('mensaje', 'Por favor, proporciona tu dirección antes de agregar al carrito.');
+        }
+
+        $productoId = $request->input('producto_id');
+        $nombre = $request->input('nombre');
+        $precio = $request->input('precio');
+        $imagen = $request->input('imagen');
+        $cantidad = $request->input('cantidad', 1);
+        $descuento = $request->input('descuento', 0);
+        $calzadoTalle = $request->input('calzadoTalle', null);
+
+        $precioFinal = $precio * $cantidad;
+
+        // Recupera el carrito de la sesión
+        $carrito = session()->get('carrito', []);
+
+        // Añade el producto al carrito
+        $carrito[] = [
+            'id' => $productoId,
+            'name' => $nombre,
+            'price' => $precioFinal,
+            'quantity' => $cantidad,
+            'imagen' => $imagen,
+            'discount' => $descuento,
+            'calzadoTalle' => $calzadoTalle,
+        ];
+
+        // Guarda el carrito actualizado en la sesión
+        session()->put('carrito', $carrito);
+
+        // Después de agregar al carrito
+        Session::flash('mensaje', true);
+
+        return redirect()->back()->with('success', 'Producto añadido al carrito');
 
 
     }

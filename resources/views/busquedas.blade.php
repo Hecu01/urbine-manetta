@@ -28,8 +28,10 @@
                                 </span>
                             @endif
 
+
                             @guest
                             @else
+                                {{-- Botones admin --}}
                                 @if (Auth::user()->administrator)
                                 
                                     <div class="position-absolute right-1 rounded-full flex m-1">
@@ -122,9 +124,7 @@
                                             <div class="bg-gray-100 my-2 w-min   hover:cursor ">
                                                 <div class="inline-block relative " style="width:120px">
 
-                                                    <select
-                                                        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle"
-                                                        id="talle">
+                                                    <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle" id="talle">
                                                         <option value="0"selected hidden>Elija talle</option>
                                                         @foreach ($resultado->calzados as $calzado)
                                                             @if ($calzado->pivot->stocks > 0)
@@ -142,16 +142,11 @@
                                         {{-- Si no lo es --}}
                                         <div class="w-fit my-2 mx-3">
                                             <div class="flex items-center">
-                                                <button type="button"
-                                                    class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
+                                                <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
 
-                                                <input type="number" id="cantidad" name="cantidad" value="1"
-                                                    min="1" max="{{ $resultado->stock }}"
-                                                    class="text-center w-12 border border-gray-300 h-10 mx-1"
-                                                    style="width: 50px;" />
+                                                <input type="number" id="cantidad" name="cantidad" value="1" min="1" max="{{ $resultado->stock }}" class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" />
 
-                                                <button type="button"
-                                                    class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
+                                                <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -168,9 +163,7 @@
 
                                                 </a>
 
-                                                <button data-bs-toggle="modal" data-bs-target="#miModal" type="button"
-                                                    class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 "
-                                                    >
+                                                <button data-bs-toggle="modal" data-bs-target="#miModal" type="button" class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 ">
                                                     <a href="#" class="text-black no-underline">
                                                         Agregar al carrito
                                                     </a>
@@ -178,8 +171,7 @@
 
 
                                                 <!-- Modal - registrarse -->
-                                                <div class="modal fade" id="miModal" tabindex="-1"
-                                                    aria-labelledby="miModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -204,19 +196,15 @@
                                                 </div>
                                                 {{-- Logueado --}}
                                             @else
-                                                <button
-                                                    class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white"
-                                                    type="button" >
+                                                <button class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white" type="button" >
                                                     <a href="{{ route('producto.show', $resultado->id) }}" class="text-white no-underline">
                                                         Detalles
                                                     </a>
                                                 </button>
 
                                                 @csrf
-                                                <input type="hidden" name="producto_id" value="{{ $resultado->id }}"
-                                                    class="producto_id">
-                                                <input type="hidden" name="nombre" value="{{ $resultado->nombre }}"
-                                                    class="nombre">
+                                                <input type="hidden" name="producto_id" value="{{ $resultado->id }}" class="producto_id">
+                                                <input type="hidden" name="nombre" value="{{ $resultado->nombre }}" class="nombre">
 
                                                 @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
                                                     <input type="hidden" name="precio" value="{{ $resultado->precio - $resultado->descuento->plata_descuento }}" class="precio">
@@ -235,9 +223,7 @@
                                             @endguest
 
                                         </div>
-                                        <button
-                                            class="hover:scale-105 hover:shadow-md hover:cursor-pointer flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200"
-                                            type="button" aria-label="Like">
+                                        <button class="hover:scale-105 hover:shadow-md hover:cursor-pointer flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200" type="button" aria-label="Like">
                                             <svg width="20" height="20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />

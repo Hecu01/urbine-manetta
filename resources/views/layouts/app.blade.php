@@ -82,11 +82,10 @@
     <!-- Scripts -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- Incluir JS de Bootstrap y jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
 
     <script src="{{ asset('assets/js/scrollreveal.js') }}"></script>
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>

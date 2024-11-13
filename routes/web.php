@@ -68,7 +68,13 @@ Route::middleware(['auth'])->group(function(){
     // Agregar al carrito
     Route::controller(CarritoController::class)->group(function(){
         Route::get('/carrito-de-compras','mi_carrito')->name('carrito.index');
+
+        // Con AJAX
         Route::post('/carrito/añadir','añadirAlCarrito')->name('carrito.añadir');
+
+        // Sin AJAX
+        Route::post('/carrito/añadir2','añadirAlCarrito2')->name('carrito.añadir2');
+
         Route::delete('/carrito/remove/{id}', 'remove')->name('cart.remove');
         Route::patch('/carrito/update/{id}',  'update')->name('carrito.update');
 

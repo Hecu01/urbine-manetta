@@ -1,7 +1,34 @@
 @extends('layouts.app')
 @section('section-principal')
-    <form class='container-1 '>
-        @if (Auth::user()->administrator)
+
+    @if (session('mensaje'))
+
+        <!-- Modal -->
+        <div class="modal fade  "id="art-agreg-con-exito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                        <div class="header flex items-center justify-center">
+                            <img src="{{asset('assets/img/sportivo-logo.svg')}}"  draggable="false" alt="Logo" style="width:130px" class="mr-1 opacity-70">
+                            <h2 class="mb-1 uppercase" style="font-size: 3em;">Sportivo</h2>
+                        </div>
+                        <div class="p-3 center text-center border-t" style="position: relative;">
+                            <p class="mb-2" style="font-size: 2em;">¡{{ session('success') }}!</p>
+                            <span>
+                                <i class="fa-solid fa-circle-check text-[#22c55e]" style="font-size:2.5em"></i>
+                            </span>
+                        </div>
+                
+                            
+                
+
+                </div>
+            </div>
+        </div>
+        
+    @endif 
+
+    <form class='container-1 ' method="POST" action="{{ route('carrito.añadir2') }}" >
+        {{-- @if (Auth::user()->administrator)
             <div class="position-absolute right-1 rounded-full flex m-1">
                 <div class="hover:scale-125 mr-1.5">
 
@@ -12,10 +39,10 @@
                 </div>
                 <div class="hover:scale-125">
                     {{-- <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $resultado->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar <i class="fa-solid fa-trash"></i></button> --}}
-                    <a href=""
+                    {{-- <a href=""
                         class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline"
                         title="Eliminar producto: ID {{ $articulo->id }}">Eliminar <i
-                            class="fa-solid fa-trash"></i></a>
+                            class="fa-solid fa-trash"></i></a> --}}
 
                     
                         {{-- <div class="articulo" data-id="{{ $resultado->id }}">
@@ -25,9 +52,9 @@
                             </button>
                         </div> --}}
 
-                </div>
+                {{-- </div>
             </div>
-        @endif
+        @endif --}} 
         <div class='highlight-window py-5' id='product-img'>
             <div class='highlight-overlay' id='highlight-overlay'>
                 <div class="flex  relative content-center" style="z-index: 13">
@@ -35,7 +62,6 @@
                     <div id="carousel-{{ $articulo->id }}" 
                         class="carousel slide" 
                         data-bs-ride="carousel" 
-                        {{-- data-bs-interval="3000" Se cambie la imagen sola cada 3 segundos --}}
                         style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 300px;z-index:13">
                         <div class="carousel-inner">
                             @foreach($articulo->fotos as $index => $foto)
@@ -74,10 +100,7 @@
                     <div class='color-options'>
                         Unidades:
                         <div class="col-5">
-                            <input type="number" class="form-control" 
-                            min="1" max="{{ $articulo->stock }}" 
-                            value="1" 
-                            oninput="validarCantidad(this, {{ $articulo->stock }})">
+                            <input type="number" class="form-control" min="1" max="{{ $articulo->stock }}"  value="1"  oninput="validarCantidad(this, {{ $articulo->stock }})" name="unidades">
                      
                         </div>
                         
@@ -94,14 +117,21 @@
                                 {{-- Si es calzados: leerá éste --}}
                                 @foreach ($articulo->calzados as $calzado)
                                     <div>
-                                        {{$calzado->calzado}}
+
+                                        <input type="radio" id="calzado_{{ $calzado->id }}" name="calzadoTalle" value="{{ $calzado->calzado }}" required style="display: none">
+                                        <label for="calzado_{{ $calzado->id }}" style="background: none; border:none; transform:none">
+                                            {{ $calzado->calzado }}
+                                        </label>
                                     </div>
                                 @endforeach
 
                                 {{-- Si es ropa: leerá este otro --}}
                                 @foreach ($articulo->talles as $talle)
                                     <div>
-                                        {{$talle->talle_ropa}}
+                                        <input type="radio" id="talle_{{ $talle->id }}" name="calzadoTalle" value="{{ $talle->talle_ropa }}" required style="display: none">
+                                        <label for="talle_{{ $talle->id }}" style="background: none; border:none; transform:none">
+                                            {{ $talle->talle_ropa }}
+                                        </label>
                                     </div>
                                 @endforeach
                             </div>
@@ -110,10 +140,27 @@
                     @endif
                 </div>
                 <div class='divider'></div>
+                
+                {{-- Token @CSRF --}}
+                @csrf
+
+                {{-- Valores cargados al carrito --}}
+                <input type="hidden" name="producto_id" value="{{ $articulo->id }}" class="producto_id">
+                <input type="hidden" name="nombre" value="{{ $articulo->nombre }}" class="nombre">
+
+                {{-- ¿Tiene descuento? de ser así, carga el precio con descuento --}}
+                @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
+                    <input type="hidden" name="precio" value="{{ $articulo->precio - $articulo->descuento->plata_descuento }}" class="precio">
+                @else
+                    <input type="hidden" name="precio" value="{{ $articulo->precio }}" class="precio">
+                @endif
+
+                {{-- Carga la imagen --}}
+                <input type="hidden" name="imagen" value="{{ $articulo->foto }}" class="imagen">
         
                 <div class='purchase-info'>
-                <div class='price'>$ {{ number_format($articulo->precio, 0, ',','.')}}</div>
-                <button type="submit" class="button">AÑADIR AL CARRO</button>
+                    <div class='price'>$ {{ number_format($articulo->precio, 0, ',','.')}}</div>
+                    <button type="submit" class="button">AÑADIR AL CARRO</button>
                 </div>
             </div>
         </div>
@@ -129,7 +176,13 @@
                 input.value = maxStock;
             }
         }
-    </script>
+        // 
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = new bootstrap.Modal(document.getElementById('art-agreg-con-exito'));
+            modal.show();
+        });
+  </script>
 
     <style>
         @import url(https://fonts.googleapis.com/css?family=Muli:400,300italic,300,400italic);
