@@ -28,7 +28,7 @@ class ReposicionMercaderia extends Model
     public function articulos()
     {
         return $this->belongsToMany(Articulo::class, 'articulo_reposicion_mercaderia')
-                    ->withPivot('cantidad', 'talla_id', 'calzado_id', 'valor_calzado_talle')
+                    ->withPivot('cantidad', 'talla_id', 'calzado_id', 'valor_calzado_talle', 'unidades_aceptadas')
                     ->withTimestamps();
     }
 }

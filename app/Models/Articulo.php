@@ -16,14 +16,14 @@ class Articulo extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nombre', 
-        'genero', 
-        'precio', 
-        'stock', 
+        'nombre',
+        'genero',
+        'precio',
+        'stock',
         'marca',
         'color',
-        'id_categoria', 
-        'foto', 
+        'id_categoria',
+        'foto',
         'descripcion',
         'dirigido_a',
         'tipo_producto',
@@ -31,25 +31,28 @@ class Articulo extends Model
     ];
 
     // Vincular los calzados
-    public function calzados(){
+    public function calzados()
+    {
         return $this->belongsToMany(Calzado::class)->withPivot('stocks', 'precio');
     }
 
     // Vincular los talles
-    public function talles(){
+    public function talles()
+    {
         return $this->belongsToMany(Talle::class)->withPivot('stocks');
     }
 
     // Vincular descuentos
-    public function descuento(){
+    public function descuento()
+    {
         return $this->hasOne(Descuento::class);
     }
 
-   // Define la relación con Deporte
-   public function deportes()
-   {
-       return $this->belongsToMany(Deporte::class);
-   }
+    // Define la relación con Deporte
+    public function deportes()
+    {
+        return $this->belongsToMany(Deporte::class);
+    }
     // Relación con las ventas en las que se ha vendido este producto
     public function ventas()
     {
@@ -60,13 +63,14 @@ class Articulo extends Model
     public function reposiciones()
     {
         return $this->belongsToMany(ReposicionMercaderia::class, 'articulo_reposicion_mercaderia')
-                    ->withPivot('cantidad', 'talla_id', 'calzado_id')
-                    ->withTimestamps();
+            ->withPivot('cantidad', 'talla_id', 'calzado_id')
+            ->withTimestamps();
     }
 
-    public function compra()
+    public function compras()
     {
-        return $this->belongsTo(Compra::class, 'compra_id'); 
+        return $this->belongsToMany(Compra::class, 'articulo_compra')
+            ->withPivot('cantidad', 'precio_unitario');
     }
 
     // Relacion con una o varias imagenes
@@ -74,5 +78,4 @@ class Articulo extends Model
     {
         return $this->hasMany(Foto::class);
     }
-
 }

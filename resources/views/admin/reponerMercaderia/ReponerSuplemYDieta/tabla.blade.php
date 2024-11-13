@@ -39,6 +39,7 @@
                   <th style="width: 100px">Nombre</th>
                   <th style="width: 150px">Pedido</th>
                   <th>Estado</th>
+                  <th>Aceptadas</th>
                   <th>Accion</th>
               </tr>
           </thead>
@@ -71,7 +72,7 @@
 
                 @endforeach
         
-                <tr>
+                <tr style="vertical-align: middle">
                     <td>{{ $id }}</td>
                     <td>
                         <img draggable="false" src="{{ url('producto/' . $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
@@ -87,22 +88,22 @@
                             @endif
                         </div>
                     </td>
-                    <td class="flex items-center justify-center">
+                    <td>
                       @switch($estado)
                           @case('Finalizado')
-                            <div class="bg-green-500 text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
+                            <div class="bg-green-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
                               {{ $estado }}
                             </div>
                             @break
 
                           @case('Pendiente')
-                            <div class="bg-yellow-500 text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
+                            <div class="bg-yellow-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
                               {{ $estado }}
                             </div>
                             @break
 
                           @case('Cancelado')
-                            <div class="bg-rose-500 text-white uppercase px-2 py-1 mt-2 rounded-full" style="font-size: .8em">
+                            <div class="bg-rose-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
                               {{ $estado }}
                             </div>
                             @break
@@ -112,25 +113,43 @@
                       @endswitch
 
                     </td>
+
+                    <td>
+                      {{--  --}}
+                      @if ($estado == 'Pendiente')
+                          <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline"
+                              id="formAceptarCantidad">
+                              @method('PUT')
+                              @csrf
+                              <input type="number" name="unidades_aceptadas[]" placeholder="Cantidad" required
+                                  min="0" class="form-control"
+                                  style="width: 100px; display: inline-block">
+
+                              <button type="submit" class="btn btn-outline-success border-0 p-1"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                      @else
+                              <span> {{ $articulo->pivot->unidades_aceptadas ?? 'Aceptada' }}</span>
+                      @endif
+                  </td>
+
                     <td class=" " style="font-size: .8em" id="acciones">
-                        @if($estado == "Pendiente")
-                          <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline" id="formAceptar">
-                            @method('PUT')
-                            @csrf
-                            <button type="submit" class="btn btn-primary btn-sm uppercase mt-2">Llegó</button>
-                          </form>
-                          <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline" id="formCancelar">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Cancelar</button>
-                          </form>
-                        @else
-                          <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline" id="formEliminar">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm uppercase mt-2">Eliminar</button>
-                          </form>
-                        @endif
-                    </td>
+                                @if ($estado == 'Pendiente')
+                                    <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline"
+                                        id="formCancelar">
+                                        @csrf
+                                        <button type="submit"
+                                            class="btn btn-outline-danger btn-lg border-0"><i class="fa-solid fa-ban"></i></i></button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline"
+                                        id="formEliminar">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="btn btn-outline-danger btn-lg border-0"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                @endif
+                            </td>
                 </tr>
 
             @endforeach
