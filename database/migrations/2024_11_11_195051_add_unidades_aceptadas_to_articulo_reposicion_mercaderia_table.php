@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('articulo_reposicion_mercaderia', function (Blueprint $table) {
-            $table->integer('unidades_aceptadas')->nullable();
+            $table->integer('unidades_aceptadas')->nullable()->after('cantidad');
         });
     }
 

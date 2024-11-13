@@ -14,8 +14,10 @@ class Compra extends Model
         'fecha',
         'user_id', // Agrega este campo
     ];
+    
     public function articulos()
     {
-        return $this->hasMany(Articulo::class, 'compra_id'); // Asegúrate de usar el campo correcto para la relación
+        return $this->belongsToMany(Articulo::class, 'articulo_compra')
+                ->withPivot('cantidad', 'precio_unitario');
     }
 }

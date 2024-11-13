@@ -101,6 +101,16 @@ class TiendaController extends Controller
             // dd(Auth::id())
         ]);
 
+        // Guardar cada artículo en la tabla `articulo_compra`
+        if ($cart) {
+            foreach ($cart as $item) {
+                $compra->articulos()->attach($item['id'], [
+                    'cantidad' => $item['quantity'],
+                    'precio_unitario' => $item['price'],
+                ]);
+            }
+        }
+
         // dd($compra);
 
         // Limpiar el carrito después de la compra
@@ -120,13 +130,17 @@ class TiendaController extends Controller
             return redirect()->route('home')->with('error', 'Por favor, inicie sesión para ver sus compras.');
         }
 
-        // Obtener las compras del usuario autenticado junto con los artículos
-        $compras = Compra::with('articulos')->where('user_id', Auth::id())->get();
+        // // Obtener las compras del usuario autenticado junto con los artículos
+        // $compras = Compra::with('articulos')->where('user_id', Auth::id())->get();
 
-        // Calcular el total de todas las compras (opcional si quieres mostrarlo)
-        $totalPrice = $compras->sum('total'); // Sumar el total de todas las compras
+        // // Calcular el total de todas las compras (opcional si quieres mostrarlo)
+        // $totalPrice = $compras->sum('total'); // Sumar el total de todas las compras
 
-        return view('users.comprasRealizadas', compact('compras', 'totalPrice'));
+        // return view('', compact('compras', 'totalPrice'));
+
+        $compras = Compra::with('articulos')->get();
+
+        return view('users.comprasRealizadas', compact('compras'));
     }
 
 
