@@ -103,12 +103,12 @@ class TiendaController extends Controller
             $articulo = Articulo::find($item['id']);
             if ($articulo->calzados()->exists()) {
                 // Descuento en `articulo_calzado`
-                $articulo->calzados()->updateExistingPivot($item['calzadoTalle'], [
+                $articulo->calzados()->updateExistingPivot($item['calzadoTalle_id'], [
                     'stocks' => DB::raw('stocks - ' . $item['quantity'])
                 ]);
             } elseif ($articulo->talles()->exists()) {
                 // Descuento en `articulo_talle`
-                $articulo->talles()->updateExistingPivot($item['calzadoTalle'], [
+                $articulo->talles()->updateExistingPivot($item['calzadoTalle_id'], [
                     'stocks' => DB::raw('stocks - ' . $item['quantity'])
                 ]);
             } else {

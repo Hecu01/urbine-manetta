@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Darryldecode\Cart\Facades\CartFacade;
-use MercadoPago\Preference;
+use App\Models\Talle;
 use MercadoPago\Item;
+use App\Models\Calzado;
+use MercadoPago\Preference;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Darryldecode\Cart\Facades\CartFacade;
 
 class CarritoController extends Controller
 {
@@ -50,7 +52,76 @@ class CarritoController extends Controller
         $cantidad = (int) $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
         $calzadoTalle = $request->input('calzadoTalle', null);
-        $calzadoTalle_id = $request->input('calzadoTalle_id', null);
+
+        // Verificar si el dato es numérico o alfabético
+        if (is_numeric($calzadoTalle)) {
+            // Si es numérico, buscar en la tabla `calzados`
+            $calzado = Calzado::where('calzado', $calzadoTalle)->first();
+            if ($calzado) {
+                $calzadoTalle_id = $calzado->id;  // Guardar el ID del calzado
+            } else {
+                // Manejar el caso en que no se encuentra el calzado
+                // Esto puede ser un error o un valor no válido
+                $calzadoTalle_id = null;
+            }
+        } else {
+            // Si no es numérico, buscar en la tabla `talles`
+            $talle = Talle::where('talle_ropa', $calzadoTalle)->first();
+            if ($talle) {
+                $calzadoTalle_id = $talle->id;  // Guardar el ID del talle
+            } else {
+                // Manejar el caso en que no se encuentra el talle
+                // Esto puede ser un error o un valor no válido
+                $calzadoTalle_id = null;
+            }
+        }
+
+
+
+
+//         // Datos del producto que se agregará al carrito
+// $productoId = $request->input('producto_id');
+// $nombre = $request->input('nombre');
+// $precio = $request->input('precio');
+// $imagen = $request->input('imagen');
+// $cantidad = (int) $request->input('cantidad', 1);
+// $descuento = $request->input('descuento', 0);
+// $calzadoTalle = $request->input('calzadoTalle', null);
+
+// // Obtener o inicializar la sumatoria total de cantidad en la sesión
+// $totalCantidadCarrito = session()->get('totalCantidadCarrito', 0);
+
+// // Actualizar el ID del talle o calzado en función de si es numérico o alfabético
+// if (is_numeric($calzadoTalle)) {
+//     // Buscar en la tabla `calzados` si el dato es numérico
+//     $calzado = Calzado::where('calzado', $calzadoTalle)->first();
+//     $calzadoTalle_id = $calzado ? $calzado->id : null;
+// } else {
+//     // Buscar en la tabla `talles` si el dato no es numérico
+//     $talle = Talle::where('talle_ropa', $calzadoTalle)->first();
+//     $calzadoTalle_id = $talle ? $talle->id : null;
+// }
+
+// // Aquí puedes añadir el producto al carrito (estructura de carrito de ejemplo)
+// $carrito = session()->get('carrito', []);
+// $carrito[] = [
+//     'producto_id' => $productoId,
+//     'nombre' => $nombre,
+//     'precio' => $precio,
+//     'imagen' => $imagen,
+//     'cantidad' => $cantidad,
+//     'descuento' => $descuento,
+//     'calzadoTalle_id' => $calzadoTalle_id,
+// ];
+
+// // Actualizar la sumatoria total de cantidad
+// $totalCantidadCarrito += $cantidad;
+
+// // Guardar el carrito y la sumatoria total en la sesión
+// session()->put('carrito', $carrito);
+// session()->put('totalCantidadCarrito', $totalCantidadCarrito);
+
+        // Ahora puedes usar $calzadoTalle_id en tu lógica
 
         $precioFinal = $precio * $cantidad;
 
@@ -68,6 +139,7 @@ class CarritoController extends Controller
             'calzadoTalle' => $calzadoTalle,
             'calzadoTalle_id' => $calzadoTalle_id,
         ];
+        
 
         // Guarda el carrito actualizado en la sesión
         session()->put('carrito', $carrito);
@@ -104,7 +176,31 @@ class CarritoController extends Controller
         $cantidad = (int) $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
         $calzadoTalle = $request->input('calzadoTalle', null);
-        $calzadoTalle_id = $request->input('calzadoTalle_id', null);
+
+        // Verificar si el dato es numérico o alfabético
+        if (is_numeric($calzadoTalle)) {
+            // Si es numérico, buscar en la tabla `calzados`
+            $calzado = Calzado::where('calzado', $calzadoTalle)->first();
+            if ($calzado) {
+                $calzadoTalle_id = $calzado->id;  // Guardar el ID del calzado
+            } else {
+                // Manejar el caso en que no se encuentra el calzado
+                // Esto puede ser un error o un valor no válido
+                $calzadoTalle_id = null;
+            }
+        } else {
+            // Si no es numérico, buscar en la tabla `talles`
+            $talle = Talle::where('talle_ropa', $calzadoTalle)->first();
+            if ($talle) {
+                $calzadoTalle_id = $talle->id;  // Guardar el ID del talle
+            } else {
+                // Manejar el caso en que no se encuentra el talle
+                // Esto puede ser un error o un valor no válido
+                $calzadoTalle_id = null;
+            }
+        }
+
+        // Ahora puedes usar $calzadoTalle_id en tu lógica
 
         $precioFinal = $precio * $cantidad;
 
@@ -122,7 +218,6 @@ class CarritoController extends Controller
             'calzadoTalle' => $calzadoTalle,
             'calzadoTalle_id' => $calzadoTalle_id,
         ];
-        dd($carrito);
         
         // Guarda el carrito actualizado en la sesión
         session()->put('carrito', $carrito);
