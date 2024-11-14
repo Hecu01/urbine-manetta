@@ -21,15 +21,50 @@
 
                     @foreach ($cartItems as $item)
                         <div class="shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm flex mt-0">
-                            <img src="{{ url('producto/' . $item['imagen']) }}" alt="" width="130px" height="70px"
-                                class="mr-4">
+
+
+                            {{-- Recuperar el artículo desde la base de datos usando el ID --}}
+                            @php
+                                $articulo = \App\Models\Articulo::find($item['id']);
+                            @endphp
+
+                            {{-- Verificar si el artículo existe y tiene fotos --}}
+
+                            <div class="flex w-48 relative content-center">
+  
+                                <div id="carousel-{{ $articulo->id }}" class="carousel slide mr-5" data-bs-ride="carousel"  style="display:flex; align-items:center;width: 200px;">
+                                    <div class="carousel-inner">
+                                        @foreach($articulo->fotos as $index => $foto)
+                                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                                <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" style="width: 200px; height: auto;">
+
+                                            </div>
+                                        @endforeach
+                                    </div>
+                        
+                                    <!-- Controles del carrusel -->
+                                    <button class="carousel-control-prev" style="color: red" type="button" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="color: red"></span>
+                                        <span class="visually-hidden" style="color: red">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>                                    
+                            </div>
+                        
+
                             <div>
                                 <p>ID: {{ $item['id'] }}</p>
                                 <p>Nombre: {{ $item['name'] }}</p>
                                 <p>
-                                    Precio: $ {{ number_format($item['price'], 0, ',', '.') }}
+                                    Precio total: $ {{ number_format($item['price'], 0, ',', '.') }}
                                 </p>
                                 <p>Cantidad: {{ $item['quantity'] }}</p>
+                                @isset( $item['calzadoTalle'])
+                                    <p>Talle: {{ $item['calzadoTalle']  }}</p>
+                                @endisset
 
                                 <!-- Botón de Eliminar -->
                                 <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
@@ -44,7 +79,7 @@
 
                 <!-- Columna del total -->
                 <div
-                    class="sticky space-y-4 rounded-sm border border-neutral-200 bg-white py-6 px-4 shadow-sm sm:px-6 md:w-1/3 md:ml-6">
+                    class="sticky space-y-4 rounded-sm border border-neutral-200 bg-white py-6 px-4 shadow-sm sm:px-6 md:w-1/3 md:ml-6 h-fit">
                     <h4 class="text-2xl font-bold">Resumen de compra</h4>
                     <div class="flex flex-col gap-2">
                         <div class="flex justify-between text-base text-gray-900">

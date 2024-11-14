@@ -79,6 +79,11 @@
                         </table>
                     </div>
                 @endforeach
+                {{-- Paginacion
+                <div class="flex justify-center">
+
+                    {{ $compras->links('pagination::bootstrap-4') }}
+                </div> --}}
             </div>
         @endif
     @else

@@ -100,7 +100,7 @@
                     <div class='color-options'>
                         Unidades:
                         <div class="col-5">
-                            <input type="number" class="form-control" min="1" max="{{ $articulo->stock }}"  value="1"  oninput="validarCantidad(this, {{ $articulo->stock }})" name="unidades">
+                            <input type="number" id="cantidad" class="form-control" min="1" max="{{ $articulo->stock }}"  value="1"  oninput="validarCantidad(this, {{ $articulo->stock }})" name="cantidad">
                      
                         </div>
                         
@@ -118,6 +118,7 @@
                                 @foreach ($articulo->calzados as $calzado)
                                     <div>
 
+                                        <input type="radio" id="calzado_{{ $calzado->id }}" name="calzadoTalle_id" value="{{ $calzado->pivot->calzado_id }}" required style="display: none">
                                         <input type="radio" id="calzado_{{ $calzado->id }}" name="calzadoTalle" value="{{ $calzado->calzado }}" required style="display: none">
                                         <label for="calzado_{{ $calzado->id }}" style="background: none; border:none; transform:none">
                                             {{ $calzado->calzado }}

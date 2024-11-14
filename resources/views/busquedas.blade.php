@@ -32,7 +32,7 @@
                             @guest
                             @else
                                 {{-- Botones admin --}}
-                                @if (Auth::user()->administrator)
+                                {{-- @if (Auth::user()->administrator)
                                 
                                     <div class="position-absolute right-1 rounded-full flex m-1">
                                         <div class="hover:scale-125 mr-1.5">
@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
 
-                                @endif
+                                @endif --}}
                             @endguest
                             <div class="flex font-sans mt-3">
 
@@ -120,6 +120,8 @@
                                     {{--  Elegir la cantidad --}}
                                     <div class="flex">
                                         {{-- Si es relación muchos a muchos --}}
+
+                                        {{-- Calzados --}}
                                         @if ($resultado->tipo_producto == 'calzado' && count($resultado->calzados) > 0)
                                             <div class="bg-gray-100 my-2 w-min   hover:cursor ">
                                                 <div class="inline-block relative " style="width:120px">
@@ -128,15 +130,31 @@
                                                         <option value="0"selected hidden>Elija talle</option>
                                                         @foreach ($resultado->calzados as $calzado)
                                                             @if ($calzado->pivot->stocks > 0)
-                                                                <option value="{{ $calzado->calzado }}" data-id=""
-                                                                    data-stock="{{ $calzado->pivot->stocks }}">Talle
-                                                                    {{ $calzado->calzado }} </option>
+                                                                <option value="{{ $calzado->calzado }}" data-id="" data-stock="{{$calzado->pivot->stocks }}">Talle {{ $calzado->calzado }} </option>
                                                             @endif
                                                         @endforeach
                                                     </select>
                                                     <input type="text" class="tieneTalleCalzado" value="true" hidden>
                                                 </div>
                                             </div>
+
+                                            {{-- Ropa --}}  
+                                        @elseif (count($resultado->talles) > 0)
+                                            <div class="bg-gray-100 my-2 w-min   hover:cursor ">
+                                                <div class="inline-block relative " style="width:120px">
+
+                                                    <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle" id="talle">
+                                                        <option value="0"selected hidden>Elija talle</option>
+                                                        @foreach ($resultado->talles as $talle)
+                                                            @if ($talle->pivot->stocks > 0)
+                                                                <option value="{{ $talle->talle_ropa }}" data-id="" data-stock="{{ $talle->pivot->stocks }}">Talle {{ $talle->talle_ropa }} </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="text" class="tieneTalleCalzado" value="true" hidden>
+                                                </div>
+                                            </div>
+                                        
                                         @endif
 
                                         {{-- Si no lo es --}}

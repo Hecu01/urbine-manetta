@@ -100,23 +100,7 @@
         </a>
         
             
-        <a href="{{ route('compras_online') }}" class="text-white no-underline article0 bg-cyan-500">
-            <div class="top">
-                <span>
-                    <i class="fa-solid fa-coins"></i>
-                </span>
-                <span class="recuento">
-                    0
-                </span>
-            </div>
-            <div class="bottom">
-                <p>Compras online pendiente
 
-                    <br>
-                    <span class="text-l">- Ya pagaron</span>
-                </p>
-            </div>
-        </a>
 
         <!-- Subir publicidad -->
         <a href="{{ route('publicidad.index') }}" class="text-white no-underline article0 bg-purple-500">
@@ -130,21 +114,7 @@
             </div>
         </a>
       
-        
-        <a href="{{ route('AdminesActivos.index') }}" class="text-white no-underline article0 bg-purple-500 border-purple-500">
-            <div class="top">
-                <span>
-                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                </span>
-                <span class="recuento">
-                    {{ $adminesActivos }}
-                </span>
-            </div>
-            <div class="bottom">
-                <p>Admins</p>
-            </div>
-        </a>
-        
+                
         <a href="{{ route('descuentos') }}" class="text-white no-underline article0 bg-red-500 border-red-500">
             <div class="top">
                 <span class="mt-3 text-3xl">
@@ -158,6 +128,21 @@
                 <p>Descuentos</p>
             </div>
         </a> 
+
+        <a href="{{ route('AdminesActivos.index') }}" class="text-white no-underline article0 bg-slate-500 border-purple-500">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                </span>
+                <span class="recuento">
+                    {{ $adminesActivos }}
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Admins</p>
+            </div>
+        </a>
+
     </section>
     @include('admin.layouts.aside-right')
 

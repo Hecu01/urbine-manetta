@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compra;
 use App\Models\Deporte;
 use App\Models\Articulo;
 use App\Models\Categoria;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Publicidad;
-use App\Models\Compra;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -84,39 +85,42 @@ class TiendaController extends Controller
 
         // Calcular el total
         $cart = session()->get('carrito');
-        $totalPrice = 0;
+        $totalPrice = array_reduce($cart, fn($total, $item) => $total + ($item['price'] * $item['quantity']), 0);
 
-        if ($cart) {
-            foreach ($cart as $item) {
-                $totalPrice += $item['price'] * $item['quantity'];
-            }
-        }
-
-        // Guardar la compra por el id del usuario
+        DB::beginTransaction();
         $compra = Compra::create([
             'total' => $totalPrice,
             'fecha' => now(),
             'user_id' => Auth::id(),
-
-            // dd(Auth::id())
         ]);
+        foreach ($cart as $item) {
+            $compra->articulos()->attach($item['id'], [
+                'cantidad' => $item['quantity'],
+                'precio_unitario' => $item['price'],
+            ]);
 
-        // Guardar cada artículo en la tabla `articulo_compra`
-        if ($cart) {
-            foreach ($cart as $item) {
-                $compra->articulos()->attach($item['id'], [
-                    'cantidad' => $item['quantity'],
-                    'precio_unitario' => $item['price'],
+            // Verificar y descontar stock
+            $articulo = Articulo::find($item['id']);
+            if ($articulo->calzados()->exists()) {
+                // Descuento en `articulo_calzado`
+                $articulo->calzados()->updateExistingPivot($item['calzadoTalle'], [
+                    'stocks' => DB::raw('stocks - ' . $item['quantity'])
                 ]);
+            } elseif ($articulo->talles()->exists()) {
+                // Descuento en `articulo_talle`
+                $articulo->talles()->updateExistingPivot($item['calzadoTalle'], [
+                    'stocks' => DB::raw('stocks - ' . $item['quantity'])
+                ]);
+            } else {
+                // Descuento en `articulos`
+                $articulo->decrement('stock', $item['quantity']);
             }
         }
 
-        // dd($compra);
-
-        // Limpiar el carrito después de la compra
+        DB::commit();
         session()->forget('carrito');
-
         return redirect()->route('home')->with('mensaje', 'Su compra ha sido realizada con éxito.');
+
     }
 
     public function mostrarPago()
@@ -134,6 +138,10 @@ class TiendaController extends Controller
         if (Auth::user()->administrator) {
             // Si es administrador, mostrar todas las compras
             $compras = Compra::with('articulos')->orderByDesc('id')->get();
+
+            // Con paginacion
+            // $compras = Compra::with('articulos')->orderByDesc('id')->paginate(5);
+
         } else {
             // Si no es administrador, mostrar solo las compras del usuario autenticado
             $compras = Compra::where('user_id', Auth::id())

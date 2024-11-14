@@ -47,9 +47,10 @@ class CarritoController extends Controller
         $nombre = $request->input('nombre');
         $precio = $request->input('precio');
         $imagen = $request->input('imagen');
-        $cantidad = $request->input('cantidad', 1);
+        $cantidad = (int) $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
         $calzadoTalle = $request->input('calzadoTalle', null);
+        $calzadoTalle_id = $request->input('calzadoTalle_id', null);
 
         $precioFinal = $precio * $cantidad;
 
@@ -65,6 +66,7 @@ class CarritoController extends Controller
             'imagen' => $imagen,
             'discount' => $descuento,
             'calzadoTalle' => $calzadoTalle,
+            'calzadoTalle_id' => $calzadoTalle_id,
         ];
 
         // Guarda el carrito actualizado en la sesión
@@ -80,7 +82,8 @@ class CarritoController extends Controller
 
 
     }
-    // Método para añadir un producto al carrito 
+
+    // Método para añadir un producto al carrito (vista por producto)
     // sin AJAX
     public function añadirAlCarrito2(Request $request)
     {
@@ -98,9 +101,10 @@ class CarritoController extends Controller
         $nombre = $request->input('nombre');
         $precio = $request->input('precio');
         $imagen = $request->input('imagen');
-        $cantidad = $request->input('cantidad', 1);
+        $cantidad = (int) $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
         $calzadoTalle = $request->input('calzadoTalle', null);
+        $calzadoTalle_id = $request->input('calzadoTalle_id', null);
 
         $precioFinal = $precio * $cantidad;
 
@@ -116,8 +120,10 @@ class CarritoController extends Controller
             'imagen' => $imagen,
             'discount' => $descuento,
             'calzadoTalle' => $calzadoTalle,
+            'calzadoTalle_id' => $calzadoTalle_id,
         ];
-
+        dd($carrito);
+        
         // Guarda el carrito actualizado en la sesión
         session()->put('carrito', $carrito);
 
