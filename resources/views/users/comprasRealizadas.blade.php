@@ -13,6 +13,24 @@
                     <div class="tab" onclick="toggleTab(event, 'compra-{{ $compra->id }}')">
                         <table style="width: 100%; text-align: center;">
                             <thead>
+                                <tr class="header-row">
+                                    <th colspan="6">
+                                        <div class="header-line">
+                                            <span class="user"><span class="info">Usuario:</span>
+                                                {{ $compra->user->name ?? 'N/A' }}
+                                                {{ $compra->user->lastname ?? 'N/A' }}</span>
+                                            <span class="address"><span class="info">Dirección:</span>
+                                                {{ $compra->user->domicilio->calle ?? '' }},
+                                                {{ $compra->user->domicilio->ciudad ?? '' }},
+                                                {{ $compra->user->domicilio->provincia ?? '' }}</span>
+                                        </div>
+                                    </th>
+                                    {{-- <th class="user-cell">Usuario: {{ $compra->user->name ?? 'N/A' }} {{ $compra->user->lastname ?? 'N/A' }}
+                                    </th>
+                                    <th class="address-cell">Dirección: {{ $compra->user->domicilio->calle ?? '' }},
+                                        {{ $compra->user->domicilio->ciudad ?? '' }},
+                                        {{ $compra->user->domicilio->provincia ?? '' }}</th> --}}
+                                </tr>
                                 <tr style="vertical-align: middle">
                                     <th>Nº de compra</th>
                                     <th>Total de la compra</th>
@@ -27,7 +45,8 @@
                             </thead>
                             <tbody>
                                 <tr style="vertical-align: middle">
-                                    <td>{{ $compras->count() - $index }}</td> <!-- el count - index es para invertir el indice-->
+                                    <td>{{ $compras->count() - $index }}</td>
+                                    <!-- el count - index es para invertir el indice-->
                                     <td>${{ number_format($compra->total, 2) }}</td>
                                     <td>{{ $compra->created_at->format('d/m/Y') }}</td>
                                     <td>{{ $compra->estado }}</td>
@@ -42,7 +61,7 @@
                                                 <button type="submit" class="btn btn-danger">Cancelar</button>
                                             </form>
                                         @else
-                                        {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y') : 'N/A' }}
+                                            {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y') : 'N/A' }}
                                             {{-- {{ $compra->estado == 'Entregado' ? $compra->updated_at->format('d/m/Y H:i') : 'N/A' }} --}}
                                         @endif
                                     </td>
@@ -87,7 +106,7 @@
             </div>
         @endif
     @else
-    {{-- Si el usuario no es admin --}}
+        {{-- Si el usuario no es admin --}}
         @if ($compras->isEmpty())
             <p style="text-align: center; font-size:16pt;">No has realizado ninguna compra.</p>
         @else
@@ -166,7 +185,7 @@
 
         .tab {
             /* background-color: #f1f1f1;
-                            border: 1px solid #ccc; */
+                                            border: 1px solid #ccc; */
             cursor: pointer;
             margin: 5px 0;
 
@@ -186,17 +205,21 @@
             width: 100%;
             text-align: center;
             border-collapse: collapse;
+            max-width: 100%;
         }
 
         th,
         td {
             padding: 12px;
             border-bottom: 1px solid #e0e0e0;
+            width: auto;
         }
 
         th {
             font-weight: 600;
             color: #555;
+            white-space: nowrap;
+            /* Evita que el texto se rompa en varias líneas */
         }
 
         td {
@@ -211,6 +234,26 @@
             background-color: #86b7fe1f;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
+        }
+
+        .header-line {
+            display: flex;
+            justify-content: space-between;
+            /* border-bottom: 2px solid black; */
+            padding-bottom: 5px;
+        }
+
+        .header-line .user,
+        .header-line .address {
+            flex: 1;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .info {
+            color: #95a5a6;
+            font-size: 18px;
+            
         }
     </style>
 

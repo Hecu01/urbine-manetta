@@ -21,4 +21,10 @@ class Compra extends Model
         return $this->belongsToMany(Articulo::class, 'articulo_compra')
                 ->withPivot('cantidad', 'precio_unitario');
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
+

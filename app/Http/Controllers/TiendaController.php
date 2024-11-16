@@ -137,8 +137,9 @@ class TiendaController extends Controller
         // Verificar si el usuario es administrador
         if (Auth::user()->administrator) {
             // Si es administrador, mostrar todas las compras
-            $compras = Compra::with('articulos')->orderByDesc('id')->get();
-
+            // $compras = Compra::with('articulos')->orderByDesc('id')->get();
+            $compras = Compra::with(['articulos', 'user.domicilio'])->orderByDesc('id')->get();
+            
             // Con paginacion
             // $compras = Compra::with('articulos')->orderByDesc('id')->paginate(5);
 
