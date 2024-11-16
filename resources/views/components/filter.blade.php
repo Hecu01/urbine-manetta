@@ -54,7 +54,7 @@
                 {{-- FILTRO POR DEPORTE --}}
                 <div class="form-group">
                     <span class="font-semibold">Filtrar por deporte</span>
-                    <div class="" style="max-height: 100px; overflow:auto; max-width:200px">
+                    <div class="" style="max-height: 40%; overflow:auto; max-width:200px">
 
                         @foreach ($allDeportes as $deporte)
                             <div class="form-check ml-3">

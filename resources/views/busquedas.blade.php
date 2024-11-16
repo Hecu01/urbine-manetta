@@ -356,7 +356,7 @@
                         carritoContent += `
                         <div class="flex h-fit m-1 mt-3 mx-3">
                             <div class="pb-2">
-                                <img src="{{ url('producto/') }}/${item.imagen}" alt="" width="100px" height="100px">
+                                <img src="{{ url('producto/') }}/${item.foto}" alt="" width="100px" height="100px">
                             </div>
                             <div>
                                 <ul class="font-semibold">
