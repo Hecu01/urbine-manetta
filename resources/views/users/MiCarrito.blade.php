@@ -59,13 +59,15 @@
                                 <p>ID: {{ $item['id'] }}</p>
                                 <p>Nombre: {{ $item['name'] }}</p>
                                 <p>
-                                    Precio total: $ {{ number_format($item['price'], 0, ',', '.') }}
+                                    Precio: $ {{ number_format($item['price'], 0, ',', '.') }}
                                 </p>
                                 <p>Cantidad: {{ $item['quantity'] }}</p>
                                 @isset( $item['calzadoTalle'])
                                     <p>Talle: {{ $item['calzadoTalle']  }}</p>
                                 @endisset
-
+                                <p>
+                                    Total: $ {{ number_format($item['total_price'], 0, ',', '.')  }}
+                                </p>
                                 <!-- Botón de Eliminar -->
                                 <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
                                     @csrf

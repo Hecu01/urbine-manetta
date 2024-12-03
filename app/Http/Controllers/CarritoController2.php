@@ -21,7 +21,7 @@ class CarritoController extends Controller
 
         // Convierte el carrito en una colección para ser compatible con darryldecode/cart
         $cartItems = collect($carrito);
-        // dd(session()->get('carrito'));
+        dd(session()->get('carrito'));
         foreach ($cartItems as $item) {
             // $totalPrice += $item['price'];
             $totalPrice += $item['total_price'];
@@ -77,24 +77,58 @@ class CarritoController extends Controller
         }
 
 
+
+
+        //         // Datos del producto que se agregará al carrito
+        // $productoId = $request->input('producto_id');
+        // $nombre = $request->input('nombre');
+        // $precio = $request->input('precio');
+        // $imagen = $request->input('imagen');
+        // $cantidad = (int) $request->input('cantidad', 1);
+        // $descuento = $request->input('descuento', 0);
+        // $calzadoTalle = $request->input('calzadoTalle', null);
+
+        // // Obtener o inicializar la sumatoria total de cantidad en la sesión
+        // $totalCantidadCarrito = session()->get('totalCantidadCarrito', 0);
+
+        // // Actualizar el ID del talle o calzado en función de si es numérico o alfabético
+        // if (is_numeric($calzadoTalle)) {
+        //     // Buscar en la tabla `calzados` si el dato es numérico
+        //     $calzado = Calzado::where('calzado', $calzadoTalle)->first();
+        //     $calzadoTalle_id = $calzado ? $calzado->id : null;
+        // } else {
+        //     // Buscar en la tabla `talles` si el dato no es numérico
+        //     $talle = Talle::where('talle_ropa', $calzadoTalle)->first();
+        //     $calzadoTalle_id = $talle ? $talle->id : null;
+        // }
+
+        // // Aquí puedes añadir el producto al carrito (estructura de carrito de ejemplo)
+        // $carrito = session()->get('carrito', []);
+        // $carrito[] = [
+        //     'producto_id' => $productoId,
+        //     'nombre' => $nombre,
+        //     'precio' => $precio,
+        //     'imagen' => $imagen,
+        //     'cantidad' => $cantidad,
+        //     'descuento' => $descuento,
+        //     'calzadoTalle_id' => $calzadoTalle_id,
+        // ];
+
+        // // Actualizar la sumatoria total de cantidad
+        // $totalCantidadCarrito += $cantidad;
+
+        // // Guardar el carrito y la sumatoria total en la sesión
+        // session()->put('carrito', $carrito);
+        // session()->put('totalCantidadCarrito', $totalCantidadCarrito);
+
+        // Ahora puedes usar $calzadoTalle_id en tu lógica
+
         $precioFinal = $precio * $cantidad;
 
         // Recupera el carrito de la sesión
         $carrito = session()->get('carrito', []);
 
-        // Verifica si el producto ya existe en el carrito
-    $existe = false;
-    foreach ($carrito as &$item) {
-        if ($item['id'] == $productoId && $item['calzadoTalle_id'] == $calzadoTalle_id) {
-            $item['quantity'] += $cantidad; // Suma la cantidad
-            $item['total_price'] = $item['quantity'] * $item['price']; // Actualiza el total
-            $existe = true;
-            break;
-        }
-    }
-
-    // Si el producto no existe, lo agrega
-    if (!$existe) {
+        // Añade el producto al carrito
         $carrito[] = [
             'id' => $productoId,
             'name' => $nombre,
@@ -106,8 +140,33 @@ class CarritoController extends Controller
             'calzadoTalle' => $calzadoTalle,
             'calzadoTalle_id' => $calzadoTalle_id,
         ];
-    }
 
+
+        // Verifica si el producto ya existe en el carrito
+        $existe = false;
+        foreach ($carrito as &$item) {
+            if ($item['id'] == $productoId) {
+                $item['quantity'] += $cantidad; // Suma la cantidad
+                $item['total_price'] = $item['quantity'] * $item['price']; // Actualiza el total
+                $existe = true;
+                break;
+            }
+        }
+
+        // Si no existe, añade un nuevo producto
+        if (!$existe) {
+            $carrito[] = [
+                'id' => $productoId,
+                'name' => $nombre,
+                'price' => $precio,
+                'quantity' => $cantidad,
+                'total_price' => $precioFinal,
+                'imagen' => $imagen,
+                'discount' => $descuento,
+                'calzadoTalle' => $calzadoTalle,
+                'calzadoTalle_id' => $calzadoTalle_id,
+            ];
+        }
 
 
         // Guarda el carrito actualizado en la sesión
@@ -197,24 +256,22 @@ class CarritoController extends Controller
                 $existe = true;
                 break;
             }
-            else {
-                // Si no existe, añade un nuevo producto
-                $carrito[] = [
-                    'id' => $productoId,
-                    'name' => $nombre,
-                    'price' => $precio,
-                    'quantity' => $cantidad,
-                    'total_price' => $precioFinal,
-                    'imagen' => $imagen,
-                    'discount' => $descuento,
-                    'calzadoTalle' => $calzadoTalle,
-                    'calzadoTalle_id' => $calzadoTalle_id,
-                ];
-            }
         }
 
-        
-        
+        // Si no existe, añade un nuevo producto
+        if (!$existe) {
+            $carrito[] = [
+                'id' => $productoId,
+                'name' => $nombre,
+                'price' => $precio,
+                'quantity' => $cantidad,
+                'total_price' => $precioFinal,
+                'imagen' => $imagen,
+                'discount' => $descuento,
+                'calzadoTalle' => $calzadoTalle,
+                'calzadoTalle_id' => $calzadoTalle_id,
+            ];
+        }
 
         // Guarda el carrito actualizado en la sesión
         session()->put('carrito', $carrito);
@@ -241,5 +298,33 @@ class CarritoController extends Controller
         return redirect()->back()->with('success', 'Producto eliminado del carrito.');
     }
 
+    // public function finalizarCompra(){
+    //     $client = new PreferenceClient();
+    //     $preference = $client->create([
+    //         "external_reference" => "teste",
+    //         "items"=> array(
+    //             array(
+    //             "id" => "4567",
+    //             "title" => "Dummy Title",
+    //             "description" => "Dummy description",
+    //             "picture_url" => "http://www.myapp.com/myimage.jpg",
+    //             "category_id" => "eletronico",
+    //             "quantity" => 1,
+    //             "currency_id" => "BRL",
+    //             "unit_price" => 100
+    //             )
+    //         ),
+    //         "payment_methods" => [
+    //         "default_payment_method_id" => "master",
+    //         "excluded_payment_types" => array(
+    //             array(
+    //             "id" => "ticket"
+    //             )
+    //         ),
+    //         "installments"  => 12,
+    //         "default_installments" => 1
+    //         ]
+    //     ]);
+    // }
 
 }

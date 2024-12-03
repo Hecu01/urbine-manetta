@@ -1,11 +1,12 @@
 @extends('admin.layouts.plantilla_admin')
 
 @section('section-principal')
-
     <div class="w-fit mb-5">
         @include('admin.layouts.aside-left')
         <div class="flex justify-center mt-3">
-            <a href="{{ route('reposicion-mercaderia.index') }}" id="boton-regresar-atras" class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
+            <a href="{{ route('reposicion-mercaderia.index') }}" id="boton-regresar-atras"
+                class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow"
+                style="font-size: 2.5em">
                 <i class="fa-solid fa-circle-arrow-left"></i> Atrás
             </a>
 
@@ -31,29 +32,35 @@
                         <tr>
                             <td class="fixed-column">{{ $articulo->id }}</td>
                             <td class="fixed-column">
-                                <img style="margin: auto" src="{{ url('producto/'. $articulo->foto) }}" alt="{{ $articulo->nombre }}" width="50px" height="50px">
+                                @if ($articulo->fotos->isNotEmpty())
+                                    <img src="{{ url('productos/' . $articulo->fotos->first()->ruta) }}"
+                                        alt="{{ $articulo->nombre }}" width="70px" height="70px" style="display: block; margin: 0 auto;">
+                                @else
+                                    <span></span>
+                                @endif
                             </td>
                             <td>{{ $articulo->nombre }}</td>
                             <td>{{ $articulo->marca }}</td>
                             <td>{{ $articulo->tipo_producto }}</td>
                             <td class="{{ $articulo->stock < 20 ? 'text-rose-500' : '' }}">{{ $articulo->stock }}</td>
-                    
+
                             @php
                                 $reposicionPendiente = $articulo->reposiciones->firstWhere('estado', 'Pendiente');
                             @endphp
-                    
-                            @if($reposicionPendiente)
+
+                            @if ($reposicionPendiente)
                                 <td>
                                     <button class="btn btn-warning btn-sm" disabled>Solicitado</button>
                                 </td>
                             @else
                                 <td>
-                                    <a href="{{ route('solicitarMercaderia', $articulo->id) }}" class="btn btn-success btn-sm">Solicitar</a>
+                                    <a href="{{ route('solicitarMercaderia', $articulo->id) }}"
+                                        class="btn btn-success btn-sm">Solicitar</a>
                                 </td>
                             @endif
                         </tr>
                     @endforeach
-                
+
                 </tbody>
             </table>
         </div>
@@ -62,15 +69,13 @@
     <!-- card reponer mercaderias -->
     @include('admin.reponerMercaderia.partials.CardReposicion')
 
-<style>
-    #table-art-deport-solicitar {
-        width: 680px
-    }
-    .fixed-columns th {
-        background-color: #f2f2f2;
-    }
+    <style>
+        #table-art-deport-solicitar {
+            width: 680px
+        }
 
-</style>
+        .fixed-columns th {
+            background-color: #f2f2f2;
+        }
+    </style>
 @endsection
-
-

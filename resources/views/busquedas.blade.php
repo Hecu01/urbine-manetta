@@ -356,16 +356,22 @@
                         carritoContent += `
                         <div class="flex h-fit m-1 mt-3 mx-3">
                             <div class="pb-2">
-                                <img src="{{ url('producto/') }}/${item.foto}" alt="" width="100px" height="100px">
+                                <img src="{{ url('productos/') }}/${item.foto}" alt="" width="100px" height="100px">
                             </div>
                             <div>
                                 <ul class="font-semibold">
                                     <li>${item.name}</li>
-                                    <li>Precio: $${item.price.toLocaleString()}</li>
+                                    
+                                    
+                                    <li>Precio unitario: $${item.price.toLocaleString()}</li>
                                     ${item.calzadoTalle ? `<li>Talle: ${item.calzadoTalle}</li>` : ''} <!-- Mostrar solo si calzadoTalle tiene un valor -->
 
                                     <li>Cantidad: ${item.quantity}</li>
+                                                                        
                                     ${item.talle ? `<li>Talle: n°${item.talle}</li>` : ''} <!-- Mostrar talle si está disponible -->
+
+                                    <li>Total: $${item.total_price.toLocaleString()}</li>
+
                                     <div class="mx-1 inline">
                                         <form action="${removeUrl}" method="POST">
                                             @csrf
@@ -375,6 +381,9 @@
                                             </button>
                                         </form>
                                     </div>
+
+
+                                    
                                 </ul>
                             </div>
                         </div>

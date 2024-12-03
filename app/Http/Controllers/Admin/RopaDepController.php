@@ -52,7 +52,7 @@ class RopaDepController extends Controller
         $deportes = Deporte::orderBy('deporte', 'asc')->get();
         $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
         $categorias = Categoria::all();
-        $articulos = Articulo::where('id_categoria', '2')->paginate(5);
+        $articulos = Articulo::where('id_categoria', '2')->with('fotos')->paginate(5);
 
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ropasDeportivas.tabla', compact('talles', 'ropaDeportivas', 'articulos', 'categorias', 'deportes'));
     }

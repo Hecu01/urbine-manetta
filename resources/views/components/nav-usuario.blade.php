@@ -465,6 +465,7 @@
                             
                                                 </span> --}}
                                             </li>
+                                            <li>Total: ${{ number_format($item['total_price'], 0, ',', '.') }}</li>
 
                                             @if($item['calzadoTalle'] !== null)
                                                 <li>

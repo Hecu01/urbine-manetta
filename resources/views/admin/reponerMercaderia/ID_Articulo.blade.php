@@ -47,10 +47,10 @@
                         <li><strong>Nombre: </strong>{{ $articulos->nombre }}</li>
                         <li><strong>Stock: </strong>{{ $articulos->stock }}</li>
                     </ul>
-                    <div class="">
+                    {{-- <div class="">
                         <img style="margin: auto" src="{{ url('producto/'. $articulos->foto) }}" alt="{{ $articulos->nombre }}" width="100px" height="100px">
 
-                    </div>
+                    </div> --}}
                 </div>
                 <form method="POST" action="{{ route('reponer_mercaderia', $articulos->id) }}" class="w-max border p-1">
                     @csrf
@@ -71,6 +71,7 @@
                         <li><strong> Mercaderia:</strong> {{$articulos->stock}} en stock</li>
                     </ul>
                     </div>
+                    
                 
                     {{--  --}}
                     <div class="mb-5 mt-1">
@@ -81,7 +82,7 @@
                                 <a class="btn btn-primary" href="{{ route('tablaArticulosDeportivos') }}">TABLA DE PEDIDOS</a>
                             </div>
                         @else
-                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
+                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar</button>
                         @endif
                     </div>
 
@@ -97,10 +98,10 @@
                         <li><strong>Nombre: </strong>{{ $articulos->nombre }}</li>
                         <li><strong>Stock: </strong>{{ $articulos->stock }}</li>
                     </ul>
-                    <div class="">
+                    {{-- <div class="">
                         <img style="margin: auto" src="{{ url('producto/'. $articulos->foto) }}" alt="{{ $articulos->nombre }}" width="100px" height="100px">
 
-                    </div>
+                    </div> --}}
                 </div>
                 <form method="POST" action="{{ route('reponer_mercaderia', $articulos->id) }}" class="p-1">
                     @csrf
@@ -171,7 +172,7 @@
                                 <a class="btn btn-primary" href="{{ route('tablaArticulosDeportivos') }}">TABLA DE PEDIDOS</a>
                             </div>
                         @else
-                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
+                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar</button>
                         @endif
                     </div>
 
@@ -187,10 +188,10 @@
                         <li><strong>Nombre: </strong>{{ $articulos->nombre }}</li>
                         <li><strong>Stock: </strong>{{ $articulos->stock }}</li>
                     </ul>
-                    <div class="">
+                    {{-- <div class="">
                         <img style="margin: auto" src="{{ url('producto/'. $articulos->foto) }}" alt="{{ $articulos->nombre }}" width="100px" height="100px">
 
-                    </div>
+                    </div> --}}
                 </div>
                 <form method="POST" action="{{ route('reponer_mercaderia', $articulos->id) }}" class="p-1">
                     @csrf
@@ -213,6 +214,8 @@
                                     <input type="hidden" name="art_id_muchos_a_muchos[]" value="{{ $talleAsociado->id }}">
                                     <input type="hidden" name="valorCalzadoTalle[]" value="{{ $talleAsociado->talle_ropa }}">
                                     <input type="hidden" name="muchos_a_muchos_bool" value="true">
+
+                                    
                                     
                                     <table class="table table-bordered text-center">
                                         <thead class="font-semibold uppercase">
@@ -248,6 +251,16 @@
                             @endif
                         @endforeach
                     </div>
+                    <div id="contenedor-modal-talles">
+                        @include('admin.ropasDeportivas.partials.talleSinStock', [
+                            'oldTalles' => old('talles', []),
+                        ])
+                    </div>
+                    <div class="col-md-4 ">
+                        <button id="agregar-calzados" type="button"
+                            class="bg-slate-600 rounded-full py-2 px-4 hover:cursor-pointer hover:scale-105  text-white "
+                            data-bs-toggle="modal" data-bs-target="#modalTalles">Nuevos talles</button>
+                    </div>
                     {{--  --}}
                     <div class="mb-5 mt-1">
 
@@ -257,7 +270,7 @@
                                 <a class="btn btn-primary" href="{{ route('tablaRopasDeportivas') }}">TABLA DE PEDIDOS</a>
                             </div>
                         @else
-                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
+                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar</button>
                         @endif
                     </div>
                 </form>
@@ -269,10 +282,10 @@
                         <li><strong>Nombre: </strong>{{ $articulos->nombre }}</li>
                         <li><strong>Stock: </strong>{{ $articulos->stock }}</li>
                     </ul>
-                    <div class="">
+                    {{-- <div class="">
                         <img style="margin: auto" src="{{ url('producto/'. $articulos->foto) }}" alt="{{ $articulos->nombre }}" width="100px" height="100px">
 
-                    </div>
+                    </div> --}}
                 </div>
                 <form method="POST" action="{{ route('reponer_mercaderia', $articulos->id) }}" class="w-max border p-1">
                     @csrf
@@ -303,7 +316,7 @@
                                 <a class="btn btn-primary" href="{{ route('tablaArticulosDeportivos') }}">TABLA DE PEDIDOS</a>
                             </div>
                         @else
-                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar!</button>
+                            <button class="btn btn-success btn-lg mt-2" type="submit">Encargar</button>
                         @endif
                     </div>
 
@@ -318,6 +331,8 @@
 
     <!-- card reponer mercaderias -->
     @include('admin.reponerMercaderia.partials.CardReposicion')
+    
+
     
 
 @endsection

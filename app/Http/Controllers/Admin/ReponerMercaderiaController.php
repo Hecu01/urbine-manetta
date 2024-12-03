@@ -139,6 +139,8 @@ class ReponerMercaderiaController extends Controller
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ID_Articulo', compact('title', 'articulos', 'calzados', 'reposicionesPendientes', 'talles'));
     }
 
+    
+
     // Solicitud enviada a la Database
     public function enviarSolicitudReponerMercaderia(Request $request)
     {
