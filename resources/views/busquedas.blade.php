@@ -16,8 +16,8 @@
             <div class="contenedor-resultados col-8 flex flex-wrap gap-4">
                 {{-- Resultados de la búsqueda --}}
                 @foreach ($resultados as $resultado)
-                    <div class="w-min bg-white shadow-lg p-3 h-fit position-relative">
-                        <form method="POST" class="w-min">
+                    <div class="bg-white shadow-lg p-3 h-fit position-relative" style="width: 75%; border-radius: 2%;">
+                        <form method="POST" class="w-full">
                             @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
                                 <span class="bg-red-500 text-white"
                                     style="padding: 0px 3px ;font-size:13px;position:absolute; right:38px; top:106px; font-family:'Times New Roman', Times, serif">
@@ -55,11 +55,11 @@
                             @endguest
                             <div class="flex font-sans mt-3">
 
-                                <div class="flex w-48 relative content-center">
+                                <div class="flex w-48 relative content-center" style="border-radius: 2%">
 
                                     <div id="carousel-{{ $resultado->id }}" class="carousel slide" data-bs-ride="carousel"
                                         data-bs-interval="3000"
-                                        style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 200px;">
+                                        style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 200px; border-radius: 2%">
                                         <div class="carousel-inner">
                                             @foreach ($resultado->fotos as $index => $foto)
                                                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -195,7 +195,7 @@
                                         </div> --}}
                                     </div>
 
-                                    <div class="flex space-x-4 mb-6 text-sm font-medium ">
+                                    <div class="flex space-x-4 mb-6 text-sm font-medium" >
                                         <div class="flex-auto flex space-x-4">
                                             {{-- Invitado --}}
                                             @guest
