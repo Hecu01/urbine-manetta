@@ -8,7 +8,6 @@ use App\Models\Calzado;
 use MercadoPago\Preference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Darryldecode\Cart\Facades\CartFacade;
 
 class CarritoController extends Controller
 {
@@ -83,30 +82,30 @@ class CarritoController extends Controller
         $carrito = session()->get('carrito', []);
 
         // Verifica si el producto ya existe en el carrito
-    $existe = false;
-    foreach ($carrito as &$item) {
-        if ($item['id'] == $productoId && $item['calzadoTalle_id'] == $calzadoTalle_id) {
-            $item['quantity'] += $cantidad; // Suma la cantidad
-            $item['total_price'] = $item['quantity'] * $item['price']; // Actualiza el total
-            $existe = true;
-            break;
+        $existe = false;
+        foreach ($carrito as &$item) {
+            if ($item['id'] == $productoId && $item['calzadoTalle_id'] == $calzadoTalle_id) {
+                $item['quantity'] += $cantidad; // Suma la cantidad
+                $item['total_price'] = $item['quantity'] * $item['price']; // Actualiza el total
+                $existe = true;
+                break;
+            }
         }
-    }
 
-    // Si el producto no existe, lo agrega
-    if (!$existe) {
-        $carrito[] = [
-            'id' => $productoId,
-            'name' => $nombre,
-            'price' => $precio,
-            'total_price' => $precioFinal,
-            'quantity' => $cantidad,
-            'imagen' => $imagen,
-            'discount' => $descuento,
-            'calzadoTalle' => $calzadoTalle,
-            'calzadoTalle_id' => $calzadoTalle_id,
-        ];
-    }
+        // Si el producto no existe, lo agrega
+        if (!$existe) {
+            $carrito[] = [
+                'id' => $productoId,
+                'name' => $nombre,
+                'price' => $precio,
+                'total_price' => $precioFinal,
+                'quantity' => $cantidad,
+                'imagen' => $imagen,
+                'discount' => $descuento,
+                'calzadoTalle' => $calzadoTalle,
+                'calzadoTalle_id' => $calzadoTalle_id,
+            ];
+        }
 
 
 
@@ -175,46 +174,34 @@ class CarritoController extends Controller
         // Recupera el carrito de la sesión
         $carrito = session()->get('carrito', []);
 
-        // Añade el producto al carrito
-        $carrito[] = [
-            'id' => $productoId,
-            'name' => $nombre,
-            'price' => $precio,
-            'total_price' => $precioFinal,
-            'quantity' => $cantidad,
-            'imagen' => $imagen,
-            'discount' => $descuento,
-            'calzadoTalle' => $calzadoTalle,
-            'calzadoTalle_id' => $calzadoTalle_id,
-        ];
-
         // Verifica si el producto ya existe en el carrito
         $existe = false;
         foreach ($carrito as &$item) {
-            if ($item['id'] == $productoId) {
+            if ($item['id'] == $productoId && $item['calzadoTalle_id'] == $calzadoTalle_id) {
                 $item['quantity'] += $cantidad; // Suma la cantidad
                 $item['total_price'] = $item['quantity'] * $item['price']; // Actualiza el total
                 $existe = true;
                 break;
             }
-            else {
-                // Si no existe, añade un nuevo producto
-                $carrito[] = [
-                    'id' => $productoId,
-                    'name' => $nombre,
-                    'price' => $precio,
-                    'quantity' => $cantidad,
-                    'total_price' => $precioFinal,
-                    'imagen' => $imagen,
-                    'discount' => $descuento,
-                    'calzadoTalle' => $calzadoTalle,
-                    'calzadoTalle_id' => $calzadoTalle_id,
-                ];
-            }
         }
 
-        
-        
+        // Si el producto no existe, lo agrega
+        if (!$existe) {
+            $carrito[] = [
+                'id' => $productoId,
+                'name' => $nombre,
+                'price' => $precio,
+                'total_price' => $precioFinal,
+                'quantity' => $cantidad,
+                'imagen' => $imagen,
+                'discount' => $descuento,
+                'calzadoTalle' => $calzadoTalle,
+                'calzadoTalle_id' => $calzadoTalle_id,
+            ];
+        }
+
+
+
 
         // Guarda el carrito actualizado en la sesión
         session()->put('carrito', $carrito);
@@ -240,6 +227,4 @@ class CarritoController extends Controller
 
         return redirect()->back()->with('success', 'Producto eliminado del carrito.');
     }
-
-
 }
