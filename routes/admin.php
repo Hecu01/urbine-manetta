@@ -52,6 +52,11 @@ Route::middleware(['auth'])->group(function () {
 
         // Suplmentos y dieta
         Route::resource('suplementos-dieta', SuplemDietaController::class);
+        Route::controller(SuplemDietaController::class)->group(function(){
+
+            Route::get('/suplementos-dieta-tabla', 'tabla')->name('suplementos-dieta.tabla');
+        });
+
 
         // Clientes activos
         Route::resource('clientes-activos', ClientesActivosController::class);

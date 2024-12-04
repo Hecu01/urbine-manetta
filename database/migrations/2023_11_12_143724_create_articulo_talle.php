@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('articulo_id');
             $table->unsignedBigInteger('talle_id');
+            $table->decimal('precio', 8, 2);
             $table->integer('stocks');
             $table->timestamps();
 

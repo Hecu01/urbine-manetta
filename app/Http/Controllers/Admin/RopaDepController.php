@@ -66,7 +66,7 @@ class RopaDepController extends Controller
     }
 
 
-    /* Crear artículo deportivo */
+    /* Crear ropa deportiva */
     public function store(Request $request)
     {
         // Validaciones
@@ -190,19 +190,104 @@ class RopaDepController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $articulo = Articulo::findOrFail($id);
+        $deportes = Deporte::orderBy('deporte', 'asc')->get();
+        $talles = Talle::all();
+        $ropaDeportivas = Articulo::where('id_categoria', '2')->count();
+        $title = "Editando ropa";
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.ropasDeportivas.edit', compact('articulo', 'talles', 'title', 'deportes','ropaDeportivas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    /* Actualizar ropa deportiva *
+        * Update the specified resource in storage.
+        */
+   public function update(Request $request, string $id)
+   {
+       // Recibir el id del articulo a actualizar
+       $articulo = Articulo::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
+       // Verificar si tipo de producto (si es que es relacion muchos a muchos o no)
+       $tipoProducto = $request->input('tipoProducto');
+       
+        // Obtén los datos del array de tallas y el array de stock
+        $talles = $request->input('talles');       
+        $stocks = $request->input('stocks');          
+        $talleIds = $request->input('talle_ids'); 
+        $precios = $request->input('precios');
+        
+        foreach ($articulo->talles as $talle) {
+            // Verifica si el talle existe en la solicitud y si su checkbox está marcado
+            $indice = array_search($talle->id, $talleIds);
+            $checkbox_checked = $indice !== false && isset($talles[$indice]);
+
+            // Si el calzado existe pero su checkbox está desmarcado, elimínalo de la tabla pivot
+            if (!$checkbox_checked) {
+                $articulo->talles()->detach($talle->id);
+            }
+        }
+
+        $contenidoTalleIdSeleccionados = [];
+
+        // dd($talles);
+        foreach ($talles as $indice => $talle) {
+            $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0;
+            $precio = isset($precios[$indice]) ? $precios[$indice] : 0;
+
+            // Busca el ID del talle
+            $talleId = Talle::where('id', $talle)->value('id');
+            $contenidoTalleIdSeleccionados[] = $talleId; 
+
+            // Crea un arreglo con los datos del calzado
+            $datosTalle = ['stocks' => $stock, 'precio' => $precio];
+
+            // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
+            if (!$talleId) {
+                $nuevoTalle = Talle::create(['talle' => $talle]);
+                $articulo->talles()->syncWithoutDetaching([$nuevoTalle->id => $datosTalle]);
+            } else {
+                // Si el calzado existe y su checkbox está marcado, actualiza los valores de stock y precio en la tabla pivot
+                if (isset($talleIds[$indice])) {
+                    $articulo->talles()->syncWithoutDetaching([$talleId => $datosTalle]);
+                    
+                }
+            }
+        }
+
+       // Intentar hacer la relación con cada etiqueta/deporta
+       try {
+           $deportesSeleccionados = $request->input('deportes', []);
+       
+           // Obtiene los IDs de los deportes seleccionados en el formulario
+           $deporteIdsSeleccionados = Deporte::whereIn('deporte', $deportesSeleccionados)->pluck('id')->toArray();
+       
+           // Actualiza las etiquetas en la relación, eliminando las no seleccionadas y agregando nuevas
+           $articulo->deportes()->sync($deporteIdsSeleccionados);
+       
+       } catch (\Exception $e) {
+           return abort(404, 'Algo salió mal.');
+       }
+       
+       // Actualización datos de tabla articulos
+       $articulo->update([
+           'nombre' => $request->nombre_producto,
+           'genero' => $request->genero,
+           'dirigido_a' => $request->publico_dirigido,
+           'tipo_producto' => $request->tipoProducto,
+           'marca' => $request->marca,
+           'descripcion' => $request->descripcion,
+           'stock' => $request->stock,
+           'color' => $request->color,
+           'precio' => $request->precio,
+       ]);
+       
+       // Mensaje de actualización exitosa
+       Session::flash('mensaje', true);
+       
+       // Una vez finalizado, el redireccionamiento
+       return redirect()->back()->with('success', 'Calzados actualizados correctamente.');
+   }
+
+    /*     * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {

@@ -217,6 +217,7 @@
                                     <table class="table table-bordered text-center">
                                         <thead class="font-semibold uppercase">
                                             <td>Talle</td>
+                                            <td>Genero</td>
                                             <td>Disponibles</td>
                                             <td>solicitar</td>
                                         </thead>
@@ -224,6 +225,9 @@
                                             <tr>
                                                 <td >
                                                     {{ $talleAsociado->talle_ropa }}
+                                                </td>
+                                                <td class="uppercase">
+                                                    {{ $talleAsociado->genero }}
                                                 </td>
                                                 <td >
                                                     <div class="flex justify-center">

@@ -10,7 +10,7 @@
         @include('admin.layouts.aside-left')
 
         <div class="flex justify-center mt-3">
-            <a href="{{ route('articulos-deportivos.index') }}" id="boton-regresar-atras"
+            <a href="{{ route('suplementos-dieta.tabla') }}" id="boton-regresar-atras"
                 class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow"
                 style="font-size: 2.5em">
                 <i class="fa-solid fa-circle-arrow-left"></i> Atrás
@@ -20,12 +20,11 @@
 
     </div>
 
-
     <div class="estilos-crear-articulos-ropa mt-2">
 
         <div class="estilos-crear-articulos-ropa2">
             <!-- Formulario actualizar -->
-            <form class="row g-3 p-3" action="{{ route('articulos-deportivos.update', $articulo->id) }}" method="POST" id="FormArtDeport" enctype="multipart/form-data">
+            <form class="row g-3 p-3" action="{{ route('suplementos-dieta.update', $articulo->id) }}" method="POST" id="FormArtDeport" enctype="multipart/form-data">
                 @method('put')
                 @csrf
                 <div class="col-md-12 flex ">
@@ -35,7 +34,7 @@
                         <div class="col-md-12">
 
                             <div class="col-md-12">
-                                <h1 class="text-white text-3xl shadow-1 border-1 bg-sky-500/[0.9] w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo artículo deportivo')">Edición del articulo n°{{ $articulo->id }}</h1>
+                                <h1 class="text-white text-3xl shadow-1 border-1 bg-blue-500/[0.9] w-fit px-2 py-1 rounded-full hover:scale-105 hover:cursor-pointer shadow-inner" onclick="alert('Categoria: Nuevo artículo deportivo')">Editar suplemento ID: {{ $articulo->id }}</h1>
                             </div>
 
                             <div class="col-md-12">
@@ -87,7 +86,7 @@
 
 
                                     {{-- Categoria --}}
-                                    <input type="text" name="categoria" id="" value="1" hidden>
+                                    <input type="text" name="categoria" id="" value="3" hidden>
                                 </div>
                             </div>
                         </div>
@@ -102,26 +101,13 @@
                                 <div class="input-group d-flex" >
                                     <select name="tipoProducto" id="" class="form-select SelectTypeProduct">
 
-                                        @if ($articulo->tipo_producto == 'calzado')
-                                            <option value="{{ $articulo->tipo_producto }}" selected>Calzado (Original)
-                                            </option>
-                                        @else
-                                            <option value="{{ $articulo->tipo_producto }}" selected>Accesorio (Original)
-                                            </option>
-                                        @endif
+                                        <option value="{{ $articulo->tipo_producto }}" selected>{{ $articulo->tipo_producto }} (Original)
+                                        </option>
+
 
                                     </select>
-                                    @if ($articulo->tipo_producto == 'calzado')
-                                        <span id="addCalzados"
-                                            class="input-group-text hover:cursor-pointer hover:scale-105 "
-                                            style="border:1px solid rgb(16, 153, 163, 0.377);" data-bs-toggle="modal"
-                                            data-bs-target="#editar-calzados-modal">+</span>
-                                    @else
-                                        <span id="addCalzados"
-                                            class="input-group-text hover:cursor-pointer hover:scale-105 "
-                                            style="border:1px solid rgb(16, 153, 163, 0.377); display: none;"
-                                            data-bs-toggle="modal" data-bs-target="#editar-calzados-modal">+</span>
-                                    @endif
+
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -131,8 +117,11 @@
                         </div>
                         <!-- Sección de las etiquetas -->
                         <div class="col-md-12 flex justify-between mt-3" style="align-content: center; ">
-                            <div class="col-md-12 grid">
-                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editar-etiquetas-modal" type="button" >Actualizar etiquetas</button>
+                            <div class="col-md-5 grid">
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#editar-etiquetas-modal" type="button" >Etiquetas</button>
+                            </div>
+                            <div class="col-md-6 grid">
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editar-descripcion-modal" type="button" >Descripción</button>
                             </div>
 
                         </div>
@@ -161,8 +150,7 @@
                         
                     </div>
                     <div class="col-md-6">
-  
-                        <div id="carousel-{{ $articulo->id }}" class="carousel slide" data-bs-slide="30000s" data-bs-ride="carousel"  style="background: rgba(0, 0, 0, 0.404); display:block; align-items:center;width: 200px;margin:auto;margin-bottom:10px">
+                        <div id="carousel-{{ $articulo->id }}" class="carousel slide" data-bs-slide="300000s" data-bs-ride="carousel"  style="background: rgba(0, 0, 0, 0.404); display:block; align-items:center;width: 200px;margin:auto;margin-bottom:10px">
                             <div class="carousel-inner">
                                 @foreach($articulo->fotos as $index => $foto)
                                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -181,9 +169,7 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
-                        </div>                                    
-
-                        
+                        </div>     
 
 
                         
@@ -192,20 +178,17 @@
 
 
                                 <div class="col-md-5">
-                                    @if($articulo->tipo_producto == 'calzado')
-                                        <label for="stock-calzados" class="form-label">Stock</label>
-                                        <input type="text" readonly  name="stock" placeholder="cantidad" class="form-control estilo-readonly total stock_input " id="stock-calzados"  required value={{$articulo->stock}} >
-                                    @else
-                                        <label for="stock-accesorios" class="form-label">Stock</label>
-                                        <input type="text"  name="stock" placeholder="cantidad"  class="form-control total " id="stock-accesorios" required value={{$articulo->stock}} >
-                                    @endif
+                                    <label for="stock-calzados" class="form-label">Stock</label>
+                                    <input type="text"   name="stock" placeholder="cantidad" class="form-control"  required value={{$articulo->stock}} >
+                        
+
                                     
 
                                 </div>
 
                                 <div class="ml-5 p-1 p-1">
-                                    <label for="inputCity" class="form-label">Color</label>
-                                    <input type="text" name="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required value={{$articulo->color}}>
+                                    <label for="color" class="form-label">Color</label>
+                                    <input type="text" name="color" id="color" class="form-control" placeholder="Rojo, fuxia, amarillo..." required value={{ $articulo->color }}>
 
                                 </div>
 
@@ -219,15 +202,19 @@
 
                 {{-- Modals --}}
                 <div style="display: block" id="contenedor-modal-calzados">
-                    @include('admin.articulosDeportivos.partials.ModalEditCalzados')
+                    @include('admin.ropasDeportivas.partials.ModalEditDescripcion')
                     @include('admin.articulosDeportivos.partials.ModalEditEtiquetas')
                 </div>
 
-                {{-- Botón actualizar / cambiar precio --}}
-                <div class="col-12 d-flex " style="justify-content:space-between">
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                {{-- 
+                    Botón: 
+                    Actualizar /  Cambiar precio 
+                --}}
+                <div class="col-12 d-flex mt-5" style="justify-content:space-between">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">ACTUALIZAR PRODUCTO</button>
                     </div>
+
                     <div class="col-md-3 d-flex">
                         <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
                         <div class="input-group">
@@ -292,22 +279,21 @@
 
 
 
-    <!-- Artículos deportivos -->
-    <article class="article0 article4   px-2" id="redirigirBoton">
-        <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
-            <div class="top">
-                <span>
-                    <i class="fa-solid fa-football"></i>
-                </span>
-                <span class="recuento">
-                    {{-- {{ $artDeportivos }} --}}
-                </span>
-            </div>
-            <div class="bottom">
-                <p>Artículos deportivos <br> disponibles</p>
-            </div>
+    <!-- Sumplementos y dieta -->
+    <a href="{{ route('suplementos-dieta.index') }}" class="text-white no-underline article0 article3 px-1">
+        <div class="top">
+            <span>
+            <i class="fa-solid fa-heart"></i>
+            </span>
+            <span class="recuento">
+            {{ $suplementos }}
+            </span>
+        </div>
+        <div class="bottom">
+            <p>Sumplementos y dieta</p>
+        </div>
         </a>
-    </article>
+
 
 
    

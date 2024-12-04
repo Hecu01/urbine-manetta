@@ -11,7 +11,11 @@
       @foreach ($articulos as $articulo)
         @if($articulo->id_categoria == 1 && $articulo->tipo_producto == "calzado")
             <tr>
-                <td> <img src="{{ url('producto/'. $articulo->foto) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px"> </td>
+                <td> 
+                    @foreach ($articulo->fotos as $foto)
+                        <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px">
+                    @endforeach
+                </td>
                 <td>{{ $articulo->id }}</td>
                 <td><a href="{{ $articulo->id }}">{{ $articulo->nombre}}</a></td>
                 <td class="precio">$ {{ number_format($articulo->precio, 0, ',', '.') }}</td>

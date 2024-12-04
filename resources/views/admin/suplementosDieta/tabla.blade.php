@@ -5,12 +5,10 @@
   <div class="w-fit mb-5">
     @include('admin.layouts.aside-left')
     <div class="flex justify-center mt-3">
-      <a href="{{ route('ropa-deportiva.index') }}" id="boton-regresar-atras" class="bg-blue-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
+      <a href="{{ route('suplementos-dieta.index') }}" id="boton-regresar-atras" class="bg-blue-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow" style="font-size: 2.5em">
         <i class="fa-solid fa-circle-arrow-left"></i> Atrás
       </a>
-
     </div>
-  
   </div>
 
   @if (session('mensaje'))
@@ -19,6 +17,7 @@
   @if (session('eliminado'))
       @include('admin.partials.MsjDelSistema.ProductoEliminado') 
   @endif 
+  
   <section class="center-actions " style="max-width: 800px">
       <div class="">
         <table class="table table-bordered" id="resultsTable">
@@ -29,7 +28,6 @@
             <th>Precio</th>
             <th>Marca</th>
             <th>Stock</th>
-            <th>Talles (U) (G) </th>
             <th>Acciones </th>
           </thead>
           <tbody  id="tabla-articulos-deportivos">
@@ -51,19 +49,10 @@
                   
                   {{ $articulo->stock }}
                 </td>
-                <td>
-                  @foreach($articulo->talles as $talle)
-                  
-                    <span>
-                      - <strong>{{$talle->talle_ropa}}</strong> ({{ $talle->pivot->stocks}}) 
-                      ({{ $talle->genero == "masculino" ? "M" : "F"}})
-                      <br>
-                    </span>
-                  @endforeach
-                </td>
+
                 <td class="acciones">
                     <div class="d-flex justify-content-center">
-                        <a href="{{ route('ropa-deportiva.edit', $articulo->id) }}" class="btn btn-success btn-sm" title="Editar">
+                        <a href="{{ route('suplementos-dieta.edit', $articulo->id) }}" class="btn btn-success btn-sm" title="Editar">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $articulo->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar"><i class="fa-solid fa-trash"></i></button>
@@ -76,9 +65,21 @@
         </table>
       </div>
   </section>
-  <div class="aside " >
-    @include('admin.ropasDeportivas.partials.right')
-  </div>
+    <!-- Sumplementos y dieta -->
+    <a href="{{ route('suplementos-dieta.index') }}" class="text-white no-underline article0 article3 px-1">
+      <div class="top">
+        <span>
+          <i class="fa-solid fa-heart"></i>
+        </span>
+        <span class="recuento">
+          {{ $suplementos }}
+        </span>
+      </div>
+      <div class="bottom">
+        <p>Sumplementos y dieta</p>
+      </div>
+    </a>
+  
     
   <!-- Modal -->
   <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">

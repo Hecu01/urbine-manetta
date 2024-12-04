@@ -7,7 +7,7 @@
         <div class="w-fit">
             @include('admin.layouts.aside-left')
             <div class="flex justify-center mt-3">
-                <a href="{{ route('ir_admin') }}" id="boton-regresar-atras"
+                <a href="{{ route('ropa-deportiva.index') }}" id="boton-regresar-atras"
                     class="bg-cyan-500  px-3 text-white rounded-full no-underline hover:scale-105 hover:shadow"
                     style="font-size: 2.5em">
                     <i class="fa-solid fa-circle-arrow-left"></i> Atrás
@@ -256,6 +256,10 @@
                                 class="bg-slate-600 rounded-full py-2 px-5 hover:cursor-pointer hover:scale-105  text-white "
                                 data-bs-toggle="modal" data-bs-target="#modalTalles">Talles</button>
                         </div>
+                        {{-- BTN agregar descripcion --}}
+                        <div class="col-md-2">
+                            <button class="btn btn-secondary " type="button" id="descripcion-articulo" data-bs-toggle="modal" data-bs-target="#agregar-descripcion-modal">DESCRIPCION</button>
+                        </div>
 
 
 
@@ -278,6 +282,7 @@
         </section>
         <div class="aside ">
             @include('admin.ropasDeportivas.partials.right')
+            @include('admin.ropasDeportivas.partials.agregarDescripcion')
         </div>
 
     </main>

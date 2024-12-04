@@ -56,77 +56,116 @@
                     </thead>
                     <tbody>
                         @foreach ($descuentos as $descuento)
-                            <tr class="text-center">
+                            @if ($descuento->articulo)
+                                <tr class="text-center">
+                                        
+                                    <td>{{ $descuento->articulo->id}}</td>
+
+                                    <td>
+
                                     
-                                <td>{{ $descuento->articulo->id}}</td>
+                                        {{-- Recuperar el artículo desde la base de datos usando el ID --}}
+                                        @php
+                                            $articulo = \App\Models\Articulo::find($descuento->articulo->id);
+                                        @endphp
 
-                                <td><img src="{{ url('producto/'. $descuento->articulo->foto) }}" alt="{{ $descuento->articulo->nombre }}" width="100px" height="100px"> </td>
+                                        {{-- Verificar si el artículo existe y tiene fotos --}}
 
-                                <td>{{ $descuento->articulo->nombre}}</td>
-                                <td> 
-                                    <span >
-                                        $ {{ number_format($descuento->articulo->precio, 0, ',', '.')}}
-                                    </span>
+                                        <div class="flex w-48 relative content-center">
+
+                                            <div id="carousel-{{ $articulo->id }}" class="carousel slide mr-5" data-bs-ride="carousel"  style="display:flex; align-items:center;width: 200px;">
+                                                <div class="carousel-inner">
+                                                    @foreach($articulo->fotos as $index => $foto)
+                                                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                                            <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" style="width: 100px; height: auto;">
+
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                    
+                                                <!-- Controles del carrusel -->
+                                                <button class="carousel-control-prev" style="color: red" type="button" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true" style="color: red"></span>
+                                                    <span class="visually-hidden" style="color: red">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </div>                                    
+                                        </div>
+                                    
+                                    
+                                    
+                                    
                                     </td>
-                                <td> <span class="bg-green-500  p-1 text-white font-semibold">{{ number_format($descuento->porcentaje, 0, ',', '.') }}%</span></td>
-                                <td>
-                                    <span class="font-semibold">
-                                        $ {{ number_format($descuento->articulo->precio - $descuento->plata_descuento, 0, ',', '.') }}
-                                    </span>
-                                </td>
-                                <td> 
+
+                                    <td>{{ $descuento->articulo->nombre}}</td>
+                                    <td> 
+                                        <span >
+                                            $ {{ number_format($descuento->articulo->precio, 0, ',', '.')}}
+                                        </span>
+                                        </td>
+                                    <td> <span class="bg-green-500  p-1 text-white font-semibold">{{ number_format($descuento->porcentaje, 0, ',', '.') }}%</span></td>
+                                    <td>
+                                        <span class="font-semibold">
+                                            $ {{ number_format($descuento->articulo->precio - $descuento->plata_descuento, 0, ',', '.') }}
+                                        </span>
+                                    </td>
+                                    <td> 
+                                        @if($descuento->activo == true)
+                                            <span class="bg-blue-500 text-white p-1 px-2 rounded-full">
+                                                Sí
+                                            </span>
+                                        @else
+                                            <span class="bg-red-500 text-white p-1 px-2 rounded-full">
+                                                No
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td>
+
+                                    {{-- Desactivar/activar descuento --}}
+                                    <form id="cambiar-estado-form-{{ $descuento->id }}" action="{{ route('cambiar.estado.descuento', $descuento->id) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('PUT')
+                                    </form>
+                                    
                                     @if($descuento->activo == true)
-                                        <span class="bg-blue-500 text-white p-1 px-2 rounded-full">
-                                            Sí
-                                        </span>
+                                        <button onclick="event.preventDefault();
+                                            if(confirm('¿Estás seguro de desactivar el descuento?')) {
+                                                document.getElementById('cambiar-estado-form-{{ $descuento->id }}').submit();
+                                            }" class="btn btn-warning btn-sm">
+                                            Desactivar
+                                        </button>
                                     @else
-                                        <span class="bg-red-500 text-white p-1 px-2 rounded-full">
-                                            No
-                                        </span>
+                                        <button onclick="event.preventDefault();
+                                            if(confirm('¿Querés activar el descuento?')) {
+                                                document.getElementById('cambiar-estado-form-{{ $descuento->id }}').submit();
+                                            }" class="btn btn-success btn-sm">
+                                            Activar
+                                        </button>
                                     @endif
-                                </td>
-                                <td>
 
-                                {{-- Desactivar/activar descuento --}}
-                                <form id="cambiar-estado-form-{{ $descuento->id }}" action="{{ route('cambiar.estado.descuento', $descuento->id) }}" method="POST" style="display: none;">
-                                    @csrf
-                                    @method('PUT')
-                                </form>
-                                
-                                @if($descuento->activo == true)
-                                    <button onclick="event.preventDefault();
-                                        if(confirm('¿Estás seguro de desactivar el descuento?')) {
-                                            document.getElementById('cambiar-estado-form-{{ $descuento->id }}').submit();
-                                        }" class="btn btn-warning btn-sm">
-                                        Desactivar
-                                    </button>
-                                @else
-                                    <button onclick="event.preventDefault();
-                                        if(confirm('¿Querés activar el descuento?')) {
-                                            document.getElementById('cambiar-estado-form-{{ $descuento->id }}').submit();
-                                        }" class="btn btn-success btn-sm">
-                                        Activar
-                                    </button>
-                                @endif
-
-                                
-                                
-                                {{-- Eliminar descuento --}}
-                                <a href="{{ route('eliminar.descuento', $descuento->id) }}" class="btn btn-danger btn-sm"
-                                    onclick="event.preventDefault();
-                                                if(confirm('¿Estás seguro de eliminar este descuento?')) {
-                                                    document.getElementById('eliminar-form-{{ $descuento->id }}').submit();
-                                                }">
-                                    Eliminar
-                                </a>
-                                
-                                <form id="eliminar-form-{{ $descuento->id }}" action="{{ route('eliminar.descuento', $descuento->id) }}" method="POST" style="display: none;">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                                     
-                                </td>
-                            </tr>
+                                    
+                                    
+                                    {{-- Eliminar descuento --}}
+                                    <a href="{{ route('eliminar.descuento', $descuento->id) }}" class="btn btn-danger btn-sm"
+                                        onclick="event.preventDefault();
+                                                    if(confirm('¿Estás seguro de eliminar este descuento?')) {
+                                                        document.getElementById('eliminar-form-{{ $descuento->id }}').submit();
+                                                    }">
+                                        Eliminar
+                                    </a>
+                                    
+                                    <form id="eliminar-form-{{ $descuento->id }}" action="{{ route('eliminar.descuento', $descuento->id) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                        
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                         {{-- <tr>
                             <td>35</td>
@@ -159,12 +198,12 @@
         
                 </table>
             </div>
-            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+            {{-- <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                 ...
             </div>
             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                 ...
-            </div>
+            </div> --}}
         </div>
 
 
@@ -174,8 +213,8 @@
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Nuevo descuento</button>
                 <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Descuentos activos</button>
-                <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
-                <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
+                {{-- <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button> --}}
+                {{-- <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button> --}}
             </div>
 
         </div>
