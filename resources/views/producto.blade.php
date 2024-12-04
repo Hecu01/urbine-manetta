@@ -60,11 +60,18 @@
 
                     <div id="carousel-{{ $articulo->id }}" class="carousel slide" data-bs-ride="carousel"
                         style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 300px;z-index:13">
+
                         <div class="carousel-inner">
                             @foreach ($articulo->fotos as $index => $foto)
                                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                    <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}"
-                                        style="width: 300px; height: auto;">
+                                    <img 
+                                src="{{ url('productos/' . $foto->ruta) }}" 
+                                alt="{{ $articulo->nombre }}" 
+                                class="carousel-image"
+                                style="width: 300px; height: auto; cursor: pointer;"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#imageModal" 
+                                data-image="{{ url('productos/' . $foto->ruta) }}">
 
                                 </div>
                             @endforeach
@@ -88,6 +95,17 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal para la imagen ampliada -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body">
+                <img id="modalZoomImage" src="" alt="Zoom Image" class="img-fluid" style="cursor: zoom-in;">
+            </div>
+        </div>
+    </div>
+</div>
         <div class='window'>
             <div class='main-content'>
                 <h2 class="uppercase">{{ $articulo->nombre }}</h2>
@@ -190,6 +208,8 @@
         </div>
     </form>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/elevatezoom/jquery.elevatezoom.js"></script>
     <script>
         function validarCantidad(input, maxStock) {
             // Asegurarse de que el valor sea un número válido y no supere el stock disponible
@@ -232,6 +252,39 @@
                 }
             });
         });
+
+        //Zoom imagen
+        $(document).ready(function() {
+        // Abrir el modal con la imagen seleccionada
+        $('.carousel-image').on('click', function() {
+            const imageUrl = $(this).data('image');
+            const $modalZoomImage = $('#modalZoomImage');
+
+            // Configurar la URL de la imagen
+            $modalZoomImage.attr('src', imageUrl);
+
+            // Asegurar el cursor del dedo señalando
+            $modalZoomImage.css('cursor', 'pointer');
+
+            // Limpiar cualquier zoom previo
+            $modalZoomImage.removeData('elevateZoom').removeData('zoomImage');
+            $('.zoomContainer').remove();
+
+            // Deshabilitar zoom y permitir cierre al hacer clic en la imagen ampliada
+            $modalZoomImage.off('click').on('click', function() {
+                $('#imageModal').modal('hide'); // Cierra el modal
+            });
+        });
+
+        // Limpiar configuraciones al cerrar el modal
+        $('#imageModal').on('hidden.bs.modal', function() {
+            const $modalZoomImage = $('#modalZoomImage');
+
+            // Restablecer configuraciones de la imagen
+            $modalZoomImage.removeData('elevateZoom').removeData('zoomImage');
+            $('.zoomContainer').remove();
+        });
+    });
     </script>
 
     <style>
