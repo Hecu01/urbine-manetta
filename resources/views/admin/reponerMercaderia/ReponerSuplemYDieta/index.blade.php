@@ -31,7 +31,12 @@
                         <tr>
                             <td class="fixed-column">{{ $articulo->id }}</td>
                             <td class="fixed-column">
-                                <img style="margin: auto" src="{{ url('producto/'. $articulo->foto) }}" alt="{{ $articulo->nombre }}" width="50px" height="50px">
+                                @if ($articulo->fotos->isNotEmpty())
+                                    <img src="{{ url('productos/' . $articulo->fotos->first()->ruta) }}"
+                                        alt="{{ $articulo->nombre }}" width="70px" height="70px" style="display: block; margin: 0 auto;">
+                                @else
+                                    <span></span>
+                                @endif
                             </td>
                             <td>{{ $articulo->nombre }}</td>
                             <td>{{ $articulo->marca }}</td>

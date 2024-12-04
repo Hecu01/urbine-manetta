@@ -84,9 +84,9 @@ class TiendaController extends Controller
         ]);
 
         // Calcular el total
-        $cart = session()->get('carrito');
-        $totalPrice = array_reduce($cart, fn($total, $item) => $total + ($item['price'] * $item['quantity']), 0);
-
+        $cart = session()->get('carrito', []);
+        $totalPrice = array_reduce($cart, fn($total, $item) => $total + ($item['price'] * $item['quantity']), 2);
+        
         DB::beginTransaction();
         $compra = Compra::create([
             'total' => $totalPrice,
@@ -97,6 +97,7 @@ class TiendaController extends Controller
             $compra->articulos()->attach($item['id'], [
                 'cantidad' => $item['quantity'],
                 'precio_unitario' => $item['price'],
+                'precio_total' => $item['total_price'],
             ]);
 
             // Verificar y descontar stock
@@ -222,13 +223,15 @@ class TiendaController extends Controller
         }
 
         // Agrega el producto al carrito
-        $cart = Session::get('cart');
+        // $cart = Session::get('cart');
+        $cart = Session::get('cart', []);
         if (!$cart) {
             $cart = [
                 $product_id => [
                     'name' => $product->name,
                     'quantity' => 1,
                     'price' => $product->price,
+                    'total_price' => $product->price
                 ]
             ];
             Session::put('cart', $cart);
@@ -237,11 +240,13 @@ class TiendaController extends Controller
 
         if (isset($cart[$product_id])) {
             $cart[$product_id]['quantity']++;
+            $cart[$product_id]['total_price'] = $cart[$product_id]['price'] * $cart[$product_id]['quantity'];
         } else {
             $cart[$product_id] = [
                 'name' => $product->name,
                 'quantity' => 1,
                 'price' => $product->price,
+                'total_price' => $product->price
             ];
         }
 

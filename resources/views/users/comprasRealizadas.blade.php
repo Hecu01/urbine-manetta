@@ -61,7 +61,7 @@
                                                 <button type="submit" class="btn btn-danger">Cancelar</button>
                                             </form>
                                         @else
-                                            {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y') : 'N/A' }}
+                                            {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y') : '-' }}
                                             {{-- {{ $compra->estado == 'Entregado' ? $compra->updated_at->format('d/m/Y H:i') : 'N/A' }} --}}
                                         @endif
                                     </td>
