@@ -269,9 +269,9 @@
                             <div class="input-group">
                                 <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);"
                                     id="signo-peso">$</span>
-                                <input type="text" name="precio"onwheel="preventScroll(event)" class="form-control"
+                                <input type="text" name="precio" class="form-control"
                                     id="precioFinal" aria-describedby="inputGroupPrepend2" value="{{ old('precio') }}"
-                                    onsubmit="removeDots()" required>
+                                    oninput="validarNumeros(this)"  required>
                             </div>
                         </div>
                     </div>

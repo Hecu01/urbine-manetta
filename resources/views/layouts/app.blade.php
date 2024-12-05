@@ -92,6 +92,7 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('assets/js/Nav-Usuario.js') }}"></script>
     <script src="{{ asset('assets/js/VerProducto.js') }}"></script>
+    <script src="{{ asset('assets/js/OnlyNumbers.js') }}"></script>
 </body>
 
 </html>

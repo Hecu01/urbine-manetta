@@ -157,8 +157,8 @@
                     {{-- Stock --}}
                     <div class="col-md-5">
                         <label for="stock_input" class="form-label">Stock</label>
-                        <input type="text" name="stock" placeholder="cantidad" class="form-control total stock_input" id="stock_input" required>
-
+                        <input type="text" name="stock" placeholder="cantidad" oninput="validarNumeros(this)"  class="form-control total stock_input" id="stock_input" required>
+                        
                     </div>
 
                     {{-- Marca --}}
@@ -205,7 +205,7 @@
                 <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);"
                     id="signo-peso">$</span>
                 <input type="text" name="precio"onwheel="preventScroll(event)" class="form-control"
-                    id="precioFinal" aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
+                    id="precioFinal" aria-describedby="inputGroupPrepend2" oninput="validarNumeros(this)"  required>
             </div>
         </div>
     </div>

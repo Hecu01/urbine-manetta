@@ -56,27 +56,7 @@
 
 
 
-    <script>
-        function formatNumber(input) {
-        // Eliminar caracteres no numéricos
-        var num = input.value.replace(/[^0-9]/g, '');
-        // Formatear con separadores de miles
-        input.value = num.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-        function preventScroll(event) {
-        event.preventDefault();
-        }
 
-        // Remover puntos
-        function removeDots() {
-        var input = document.getElementById('precio');
-        input.value = input.value.replace(/\./g, '');
-        }
-        // Remover puntos
-        function removeDots2() {
-        var input = document.getElementById('stock');
-        input.value = input.value.replace(/\./g, '');
-        }
-    </script>
+
 @endsection
 
