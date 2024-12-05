@@ -208,12 +208,12 @@
 
                                                 </a>
 
-                                                <button data-bs-toggle="modal" data-bs-target="#miModal" type="button"
+                                                {{-- <button data-bs-toggle="modal" data-bs-target="#miModal" type="button"
                                                     class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 ">
                                                     <a href="#" class="text-black no-underline">
                                                         Agregar al carrito
                                                     </a>
-                                                </button>
+                                                </button> --}}
 
 
                                                 <!-- Modal - registrarse -->
@@ -271,10 +271,10 @@
                                                     class="imagen">
 
                                                 <!-- Cambiado a visible para que el usuario pueda seleccionar la cantidad -->
-                                                <button type="submit"
+                                                {{-- <button type="submit"
                                                     class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 agregarAlCarrito">
                                                     Agregar al carrito
-                                                </button>
+                                                </button> --}}
 
                                             @endguest
 
@@ -396,7 +396,7 @@
                         carritoContent += `
                         <div class="flex h-fit m-1 mt-3 mx-3">
                             <div class="pb-2">
-                                <img src="{{ url('productos/') }}/${item.foto}" alt="" width="100px" height="100px">
+                                <img src="{{ url('productos/') }}/${item.fotos.first().ruta}" alt="" width="100px" height="100px">
                             </div>
                             <div>
                                 <ul class="font-semibold">
