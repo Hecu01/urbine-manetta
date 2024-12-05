@@ -264,7 +264,7 @@ $(document).ready(function(){
             // dar un mensaje de que es normal el sólo lectura
             $(".stock_input").on("click", function() {
                 // evalua si está en solo lectura
-                alert('Mensaje');
+                
                 if($(this).prop('readonly')){
     
                     toastr.options = {

@@ -56,8 +56,9 @@
                     <div class="input-group d-flex">
                         <select name="tipoProducto" class="form-select SelectTypeProduct" required>
                             <option value="" selected hidden></option>
-                            <option value="calzado">Calzado</option>
-                            <option value="accesorio">Accesorio</option>
+                            <option value="calzado">Calzados</option>
+                            <option value="accesorio">Accesorios</option>
+                            <option value="pelotas">Pelotas</option>
                         </select>
                         <span id="agregar-calzados" class="input-group-text hover:cursor-pointer hover:scale-105 "
                             style="border:1px solid rgb(16, 153, 163, 0.377); display: none;" data-bs-toggle="modal"

@@ -10,7 +10,7 @@
     </thead>
     <tbody  id="tabla-articulos-deportivos">
       @foreach ($articulos as $articulo)
-        @if($articulo->id_categoria == 1 && $articulo->tipo_producto == "accesorio")
+        @if($articulo->id_categoria == 1 && $articulo->tipo_producto !== "calzado")
             <tr>
 
 

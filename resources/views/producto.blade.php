@@ -27,33 +27,7 @@
     @endif
 
     <form class='container-1 ' method="POST" action="{{ route('carrito.añadir2') }}">
-        {{-- @if (Auth::user()->administrator)
-            <div class="position-absolute right-1 rounded-full flex m-1">
-                <div class="hover:scale-125 mr-1.5">
-
-                    <a href="{{ route('articulos-deportivos.edit', $articulo->id) }}"
-                        class="btn-success p-1 px-2 rounded-full border-3 border-white shadow-sm hover:shadow-lg hover:mr-1 no-underline"
-                        title="Editar producto: ID {{ $articulo->id }}">Editar <i
-                            class="fa-solid fa-pen"></i></a>
-                </div>
-                <div class="hover:scale-125">
-                    {{-- <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $resultado->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar <i class="fa-solid fa-trash"></i></button> --}}
-        {{-- <a href=""
-                        class="btn-danger p-1 px-2 rounded-full border-3 hover:ml-1 border-white shadow-sm hover:shadow-lg no-underline"
-                        title="Eliminar producto: ID {{ $articulo->id }}">Eliminar <i
-                            class="fa-solid fa-trash"></i></a> --}}
-
-
-        {{-- <div class="articulo" data-id="{{ $resultado->id }}">
-                            <button class="btn btn-danger eliminar-btn"
-                                onclick="eliminarArticulo({{ $resultado->id }})">
-                                <i class="fas fa-trash-alt"></i> Eliminar
-                            </button>
-                        </div> --}}
-
-        {{-- </div>
-            </div>
-        @endif --}}
+ 
         <div class='highlight-window py-5' id='product-img'>
             <div class='highlight-overlay' id='highlight-overlay'>
                 <div class="flex  relative content-center" style="z-index: 13">
@@ -97,15 +71,15 @@
         </div>
 
         <!-- Modal para la imagen ampliada -->
-<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-transparent border-0">
-            <div class="modal-body">
-                <img id="modalZoomImage" src="" alt="Zoom Image" class="img-fluid" style="cursor: zoom-in;">
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-transparent border-0">
+                    <div class="modal-body">
+                        <img id="modalZoomImage" src="" alt="Zoom Image" class="img-fluid" style="cursor: zoom-in;">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
         <div class='window'>
             <div class='main-content'>
                 <h2 class="uppercase">{{ $articulo->nombre }}</h2>
@@ -126,15 +100,9 @@
                         </div> --}}
                         <div class="w-fit my-2 mx-3">
                             <div class="flex items-center">
-                                <button type="button"
-                                    class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
-
-                                <input type="number" id="cantidad" name="cantidad" value="1" min="1"
-                                    max="{{ $articulo->stock }}" class="text-center w-12 border border-gray-300 h-10 mx-1"
-                                    style="width: 50px;" />
-
-                                <button type="button"
-                                    class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
+                                <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
+                                <input type="number" id="cantidad"  name="cantidad" value="1" min="1"  max="{{ $articulo->stock }}"  class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)"/>
+                                <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
                             </div>
                         </div>
 
@@ -147,29 +115,26 @@
                         <div class='size-picker'>
                             Talle o Calzado:
                             <div class='range-picker' id='range-picker'>
-
                                 {{-- Si es calzados: leerá éste --}}
                                 @foreach ($articulo->calzados as $calzado)
                                     <div>
-
-                                        <input type="radio" id="calzado_{{ $calzado->id }}" name="calzadoTalle_id"
-                                            value="{{ $calzado->pivot->calzado_id }}" required style="display: none">
-                                        <input type="radio" id="calzado_{{ $calzado->id }}" name="calzadoTalle"
-                                            value="{{ $calzado->calzado }}" required style="display: none">
-                                        <label for="calzado_{{ $calzado->id }}"
-                                            style="background: none; border:none; transform:none">
+                                        <input type="radio" id="calzado_id_{{ $calzado->id }}" name="calzadoTalle_id" value="{{ $calzado->pivot->calzado_id }}" required style="display: none">
+                                        <input type="radio" id="calzado_talle_{{ $calzado->id }}" name="calzadoTalle" value="{{ $calzado->calzado }}" required style="display: none">
+                                        <label 
+                                            style="background: none; border: none; transform: none; cursor: pointer;" 
+                                            onclick="selectCalzado({{ $calzado->id }})"
+                                        >
                                             {{ $calzado->calzado }}
                                         </label>
+
                                     </div>
                                 @endforeach
-
+                            
                                 {{-- Si es ropa: leerá este otro --}}
                                 @foreach ($articulo->talles as $talle)
                                     <div>
-                                        <input type="radio" id="talle_{{ $talle->id }}" name="calzadoTalle"
-                                            value="{{ $talle->talle_ropa }}" required style="display: none">
-                                        <label for="talle_{{ $talle->id }}"
-                                            style="background: none; border:none; transform:none">
+                                        <input type="radio" id="talle_{{ $talle->id }}" name="calzadoTalle" value="{{ $talle->talle_ropa }}" required style="display: none">
+                                        <label for="talle_{{ $talle->id }}" style="background: none; border:none; transform:none">
                                             {{ $talle->talle_ropa }}
                                         </label>
                                     </div>
@@ -199,6 +164,8 @@
 
                 {{-- Carga la imagen --}}
                 <input type="hidden" name="imagen" value="{{ $articulo->foto }}" class="imagen">
+                
+                <input type="hidden" name="id_categoria" value="{{ $articulo->id_categoria}}" class="categoria">
 
                 <div class='purchase-info'>
                     <div class='price'>$ {{ number_format($articulo->precio, 0, ',', '.') }}</div>
@@ -211,15 +178,37 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/elevatezoom/jquery.elevatezoom.js"></script>
     <script>
-        function validarCantidad(input, maxStock) {
-            // Asegurarse de que el valor sea un número válido y no supere el stock disponible
-            if (input.value < 1) {
-                alert('Recuerde: Sólo se admite números (mayores a 0)');
-                input.value = 1;
-            } else if (input.value > maxStock) {
-                input.value = maxStock;
+        function selectCalzado(id) {
+            // Seleccionar ambos radios vinculados
+            document.getElementById(`calzado_id_${id}`).checked = true;
+            document.getElementById(`calzado_talle_${id}`).checked = true;
+        }
+
+        function selectTalle(id) {
+            // Seleccionar el radio del talle
+            document.getElementById(`talle_ropa_id_${id}`).checked = true;
+        }
+
+        // Validar cantidad a comprar
+        function validarCantidad(input) {
+            const min = parseInt(input.min);
+            const max = parseInt(input.max);
+            let value = input.value;
+
+            // Elimina caracteres no numéricos
+            value = value.replace(/[^0-9]/g, '');
+
+            // Convierte el valor a número y verifica el rango
+            value = parseInt(value);
+            if (isNaN(value) || value < min) {
+                input.value = min;
+            } else if (value > max) {
+                input.value = max;
+            } else {
+                input.value = value;
             }
         }
+
         // 
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -255,36 +244,36 @@
 
         //Zoom imagen
         $(document).ready(function() {
-        // Abrir el modal con la imagen seleccionada
-        $('.carousel-image').on('click', function() {
-            const imageUrl = $(this).data('image');
-            const $modalZoomImage = $('#modalZoomImage');
+            // Abrir el modal con la imagen seleccionada
+            $('.carousel-image').on('click', function() {
+                const imageUrl = $(this).data('image');
+                const $modalZoomImage = $('#modalZoomImage');
 
-            // Configurar la URL de la imagen
-            $modalZoomImage.attr('src', imageUrl);
+                // Configurar la URL de la imagen
+                $modalZoomImage.attr('src', imageUrl);
 
-            // Asegurar el cursor del dedo señalando
-            $modalZoomImage.css('cursor', 'pointer');
+                // Asegurar el cursor del dedo señalando
+                $modalZoomImage.css('cursor', 'pointer');
 
-            // Limpiar cualquier zoom previo
-            $modalZoomImage.removeData('elevateZoom').removeData('zoomImage');
-            $('.zoomContainer').remove();
+                // Limpiar cualquier zoom previo
+                $modalZoomImage.removeData('elevateZoom').removeData('zoomImage');
+                $('.zoomContainer').remove();
 
-            // Deshabilitar zoom y permitir cierre al hacer clic en la imagen ampliada
-            $modalZoomImage.off('click').on('click', function() {
-                $('#imageModal').modal('hide'); // Cierra el modal
+                // Deshabilitar zoom y permitir cierre al hacer clic en la imagen ampliada
+                $modalZoomImage.off('click').on('click', function() {
+                    $('#imageModal').modal('hide'); // Cierra el modal
+                });
+            });
+
+            // Limpiar configuraciones al cerrar el modal
+            $('#imageModal').on('hidden.bs.modal', function() {
+                const $modalZoomImage = $('#modalZoomImage');
+
+                // Restablecer configuraciones de la imagen
+                $modalZoomImage.removeData('elevateZoom').removeData('zoomImage');
+                $('.zoomContainer').remove();
             });
         });
-
-        // Limpiar configuraciones al cerrar el modal
-        $('#imageModal').on('hidden.bs.modal', function() {
-            const $modalZoomImage = $('#modalZoomImage');
-
-            // Restablecer configuraciones de la imagen
-            $modalZoomImage.removeData('elevateZoom').removeData('zoomImage');
-            $('.zoomContainer').remove();
-        });
-    });
     </script>
 
     <style>
@@ -507,14 +496,53 @@
         }
 
         .size-picker {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
             display: flex;
-            -webkit-flex-flow: column;
-            -ms-flex-flow: column;
-            flex-flow: column;
+            flex-direction: column;
+            gap: 10px; /* Espaciado entre filas */
+            margin-top: 20px;
         }
+
+        .size-picker > div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }s
+
+        .range-picker {
+            display: flex;
+            gap: 10px; /* Espaciado entre opciones */
+        }
+
+        .range-picker div {
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+        }
+
+        .range-picker div:hover {
+            background: #eee;
+            border-color: #bbb;
+        }
+
+        .range-picker div input[type="radio"] {
+            display: none; /* Ocultar el radio button */
+        }
+
+        .range-picker div label {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .range-picker div input[type="radio"]:checked + label {
+            background: #457;
+            color: #ff0000;
+            border-radius: 5px;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
 
         .small {
             font-size: 11px;
@@ -595,22 +623,11 @@
             -webkit-transition: background .5s ease;
             transition: background .5s ease;
         }
-
         .range-picker .active:hover {
             background: #fff;
         }
 
-        .range-picker .active {
-            -webkit-transform: scale(1.2);
-            -ms-transform: scale(1.2);
-            transform: scale(1.2);
-            background: #fff;
-            margin-right: 3px;
-            margin-left: 2px;
-            color: #333;
-            border: 1px solid #666;
-            z-index: 1;
-        }
+
 
         .check {
             position: absolute;

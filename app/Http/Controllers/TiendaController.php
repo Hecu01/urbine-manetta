@@ -102,16 +102,21 @@ class TiendaController extends Controller
 
             // Verificar y descontar stock
             $articulo = Articulo::find($item['id']);
+
+            
             if ($articulo->calzados()->exists()) {
                 // Descuento en `articulo_calzado`
                 $articulo->calzados()->updateExistingPivot($item['calzadoTalle_id'], [
                     'stocks' => DB::raw('stocks - ' . $item['quantity'])
                 ]);
+                $articulo->decrement('stock', $item['quantity']);
+
             } elseif ($articulo->talles()->exists()) {
                 // Descuento en `articulo_talle`
                 $articulo->talles()->updateExistingPivot($item['calzadoTalle_id'], [
                     'stocks' => DB::raw('stocks - ' . $item['quantity'])
                 ]);
+                $articulo->decrement('stock', $item['quantity']);
             } else {
                 // Descuento en `articulos`
                 $articulo->decrement('stock', $item['quantity']);

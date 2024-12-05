@@ -142,10 +142,10 @@ class CarritoController extends Controller
         $cantidad = (int) $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
         $calzadoTalle = $request->input('calzadoTalle', null);
+        $categoria = (int) $request->input('id_categoria');
 
-
-        // Verificar si el dato es numérico o alfabético
-        if (is_numeric($calzadoTalle)) {
+        // Verificar si es categoria art deport (1) o ropa deport (2)
+        if ($categoria == 1) {
             // Si es numérico, buscar en la tabla `calzados`
             $calzado = Calzado::where('calzado', $calzadoTalle)->first();
             if ($calzado) {
@@ -155,6 +155,7 @@ class CarritoController extends Controller
                 // Esto puede ser un error o un valor no válido
                 $calzadoTalle_id = null;
             }
+
         } else {
             // Si no es numérico, buscar en la tabla `talles`
             $talle = Talle::where('talle_ropa', $calzadoTalle)->first();
