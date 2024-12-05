@@ -444,10 +444,13 @@
 
                                         {{-- Verificar si el artículo existe y tiene fotos --}}
                                         @if ($articulo && $articulo->fotos)
-                                            @foreach ($articulo->fotos as $foto)
-                                                <img src="{{ url('productos/' . $foto->ruta) }}" alt="" width="100px" height="100px">
-                                            @endforeach
-                                        @endif
+    @php
+        $firstFoto = $articulo->fotos->first(); // Obtiene la primera foto
+    @endphp
+    @if ($firstFoto)
+        <img src="{{ url('productos/' . $firstFoto->ruta) }}" alt="" width="100px" height="100px">
+    @endif
+@endif
 
                                     </div>
                                     <div>

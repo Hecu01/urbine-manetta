@@ -16,8 +16,8 @@
             <div class="contenedor-resultados col-8 flex flex-wrap gap-4">
                 {{-- Resultados de la búsqueda --}}
                 @foreach ($resultados as $resultado)
-                    <div class="w-min bg-white shadow-lg p-3 h-fit position-relative">
-                        <form method="POST" class="w-min">
+                    <div class="bg-white shadow-lg p-3 h-fit position-relative" style="width: 75%; border-radius: 2%;">
+                        <form method="POST" class="w-full">
                             @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
                                 <span class="bg-red-500 text-white"
                                     style="padding: 0px 3px ;font-size:13px;position:absolute; right:38px; top:106px; font-family:'Times New Roman', Times, serif">
@@ -55,35 +55,41 @@
                             @endguest
                             <div class="flex font-sans mt-3">
 
-                                <div class="flex w-48 relative content-center">
-  
-                                    <div id="carousel-{{ $resultado->id }}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 200px;">
+                                <div class="flex w-48 relative content-center" style="border-radius: 2%">
+
+                                    <div id="carousel-{{ $resultado->id }}" class="carousel slide" data-bs-ride="carousel"
+                                        data-bs-interval="3000"
+                                        style="background: rgba(0, 0, 0, 0.404); display:flex; align-items:center;width: 200px; border-radius: 2%">
                                         <div class="carousel-inner">
-                                            @foreach($resultado->fotos as $index => $foto)
+                                            @foreach ($resultado->fotos as $index => $foto)
                                                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                                    <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $resultado->nombre }}" style="width: 200px; height: auto;">
+                                                    <img src="{{ url('productos/' . $foto->ruta) }}"
+                                                        alt="{{ $resultado->nombre }}" style="width: 200px; height: auto;">
 
                                                 </div>
                                             @endforeach
                                         </div>
-                            
+
                                         <!-- Controles del carrusel -->
-                                        <button class="carousel-control-prev" style="color: red" type="button" data-bs-target="#carousel-{{ $resultado->id }}" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true" style="color: red"></span>
+                                        <button class="carousel-control-prev" style="color: red" type="button"
+                                            data-bs-target="#carousel-{{ $resultado->id }}" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"
+                                                style="color: red"></span>
                                             <span class="visually-hidden" style="color: red">Previous</span>
                                         </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $resultado->id }}" data-bs-slide="next">
+                                        <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carousel-{{ $resultado->id }}" data-bs-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="visually-hidden">Next</span>
                                         </button>
-                                    </div>                                    
+                                    </div>
                                 </div>
-                            
+
 
 
                                 <div class="flex-auto p-6">
                                     <div class="flex flex-wrap">
-                                        <h1 class="flex-auto text-lg font-semibold text-slate-900">
+                                        <h1 class="flex-auto text-xl font-semibold text-slate-900">
                                             {{ $resultado->nombre }}
                                         </h1>
 
@@ -118,47 +124,67 @@
                                         </div>
                                     </div>
                                     {{--  Elegir la cantidad --}}
-                                    <div class="flex">
+                                    <div class="flex flex-col gap-4">
                                         {{-- Si es relación muchos a muchos --}}
 
                                         {{-- Calzados --}}
                                         @if ($resultado->tipo_producto == 'calzado' && count($resultado->calzados) > 0)
-                                            <div class="bg-gray-100 my-2 w-min   hover:cursor ">
-                                                <div class="inline-block relative " style="width:120px">
-
-                                                    <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle" id="talle">
-                                                        <option value="0"selected hidden>Elija talle</option>
+                                            <div class="p-4 rounded-lg ">
+                                                <div class="w-full flex-none text-sm font-medium text-slate-700 my-2">
+                                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Talles disponibles:
+                                                    </h3>
+                                                    {{-- <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle" id="talle"> --}}
+                                                    {{-- <option value="0"selected hidden>Elija talle</option> --}}
+                                                    <div class="flex gap-2">
                                                         @foreach ($resultado->calzados as $calzado)
+                                                            {{-- @if ($calzado->pivot->stocks > 0)
+                                                                <option
+                                                                    class="block appearance-none bg-white border border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                                                                    value="{{ $calzado->calzado }}" data-id=""
+                                                                    data-stock="{{ $calzado->pivot->stocks }}">
+                                                                    {{ $calzado->calzado }} </option>
+                                                            @endif --}}
                                                             @if ($calzado->pivot->stocks > 0)
-                                                                <option value="{{ $calzado->calzado }}" data-id="" data-stock="{{$calzado->pivot->stocks }}">Talle {{ $calzado->calzado }} </option>
+                                                                <label for="calzado_{{ $calzado->id }}"
+                                                                    class="flex items-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm hover:bg-gray-100">
+                                                                    <input type="radio" id="calzado_{{ $calzado->id }}"
+                                                                        name="calzadoTalle" value="{{ $calzado->calzado }}"
+                                                                        class="hidden" />
+                                                                    <span
+                                                                        class="text-gray-700 font-medium">{{ $calzado->calzado }}</span>
+                                                                </label>
                                                             @endif
                                                         @endforeach
-                                                    </select>
+                                                    </div>
                                                     <input type="text" class="tieneTalleCalzado" value="true" hidden>
                                                 </div>
                                             </div>
 
-                                            {{-- Ropa --}}  
+                                            {{-- Ropa --}}
                                         @elseif (count($resultado->talles) > 0)
-                                            <div class="bg-gray-100 my-2 w-min   hover:cursor ">
-                                                <div class="inline-block relative " style="width:120px">
+                                        <div class="p-4 rounded-lg ">
+                                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Talles:</h3>
+                                            <div class="flex gap-2">
 
-                                                    <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle" id="talle">
-                                                        <option value="0"selected hidden>Elija talle</option>
-                                                        @foreach ($resultado->talles as $talle)
-                                                            @if ($talle->pivot->stocks > 0)
-                                                                <option value="{{ $talle->talle_ropa }}" data-id="" data-stock="{{ $talle->pivot->stocks }}">Talle {{ $talle->talle_ropa }} </option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
+                                                    {{-- <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle" id="talle">
+                                                        <option value="0"selected hidden>Elija talle</option> --}}
+                                                    @foreach ($resultado->talles as $talle)
+                                                        @if ($talle->pivot->stocks > 0)
+                                                            {{-- <option value="{{ $talle->talle_ropa }}" data-id="" data-stock="{{ $talle->pivot->stocks }}">Talle {{ $talle->talle_ropa }} </option> --}}
+                                                            <label for="talle_{{ $talle->id }}" class="flex items-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm hover:bg-gray-100">
+                                                                <input type="radio" id="talle_{{ $talle->id }}" name="ropaTalle" value="{{ $talle->talle_ropa }}" class="hidden" />
+                                                                <span class="text-gray-700 font-medium">{{ $talle->talle_ropa }}</span>
+                                                            </label>
+                                                        @endif
+                                                    @endforeach
+                                                    {{-- </select> --}}
                                                     <input type="text" class="tieneTalleCalzado" value="true" hidden>
                                                 </div>
                                             </div>
-                                        
                                         @endif
 
                                         {{-- Si no lo es --}}
-                                        <div class="w-fit my-2 mx-3">
+                                        {{-- <div class="w-fit my-2 mx-3">
                                             <div class="flex items-center">
                                                 <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
 
@@ -166,30 +192,33 @@
 
                                                 <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
-                                    <div class="flex space-x-4 mb-6 text-sm font-medium ">
+                                    <div class="flex space-x-4 mb-6 text-sm font-medium" >
                                         <div class="flex-auto flex space-x-4">
                                             {{-- Invitado --}}
                                             @guest
                                                 <!-- Botón para abrir el modal -->
                                                 <a href=" {{ route('producto.show', $resultado->id) }} ">
-                                                    <button type="button"  class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white">
+                                                    <button type="button"
+                                                        class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white">
                                                         Detalles
                                                     </button>
 
                                                 </a>
 
-                                                <button data-bs-toggle="modal" data-bs-target="#miModal" type="button" class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 ">
+                                                {{-- <button data-bs-toggle="modal" data-bs-target="#miModal" type="button"
+                                                    class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 ">
                                                     <a href="#" class="text-black no-underline">
                                                         Agregar al carrito
                                                     </a>
-                                                </button>
+                                                </button> --}}
 
 
                                                 <!-- Modal - registrarse -->
-                                                <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="miModal" tabindex="-1"
+                                                    aria-labelledby="miModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -214,39 +243,50 @@
                                                 </div>
                                                 {{-- Logueado --}}
                                             @else
-                                                <button class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white" type="button" >
-                                                    <a href="{{ route('producto.show', $resultado->id) }}" class="text-white no-underline">
+                                                <button
+                                                    class="hover:scale-105 hover:shadow-xl h-10 px-6 font-semibold rounded-md bg-black text-white"
+                                                    type="button">
+                                                    <a href="{{ route('producto.show', $resultado->id) }}"
+                                                        class="text-white no-underline">
                                                         Detalles
                                                     </a>
                                                 </button>
 
                                                 @csrf
-                                                <input type="hidden" name="producto_id" value="{{ $resultado->id }}" class="producto_id">
-                                                <input type="hidden" name="nombre" value="{{ $resultado->nombre }}" class="nombre">
+                                                <input type="hidden" name="producto_id" value="{{ $resultado->id }}"
+                                                    class="producto_id">
+                                                <input type="hidden" name="nombre" value="{{ $resultado->nombre }}"
+                                                    class="nombre">
 
                                                 @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
-                                                    <input type="hidden" name="precio" value="{{ $resultado->precio - $resultado->descuento->plata_descuento }}" class="precio">
+                                                    <input type="hidden" name="precio"
+                                                        value="{{ $resultado->precio - $resultado->descuento->plata_descuento }}"
+                                                        class="precio">
                                                 @else
-                                                    <input type="hidden" name="precio" value="{{ $resultado->precio }}" class="precio">
+                                                    <input type="hidden" name="precio" value="{{ $resultado->precio }}"
+                                                        class="precio">
                                                 @endif
 
-                                                <input type="hidden" name="imagen" value="{{ $resultado->foto }}" class="imagen">
-                                                
+                                                <input type="hidden" name="imagen" value="{{ $resultado->foto }}"
+                                                    class="imagen">
+
                                                 <!-- Cambiado a visible para que el usuario pueda seleccionar la cantidad -->
-                                                <button type="submit"
+                                                {{-- <button type="submit"
                                                     class="hover:scale-105 hover:shadow-md hover:cursor-pointer w-max h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 agregarAlCarrito">
                                                     Agregar al carrito
-                                                </button>
+                                                </button> --}}
 
                                             @endguest
 
                                         </div>
-                                        <button class="hover:scale-105 hover:shadow-md hover:cursor-pointer flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200" type="button" aria-label="Like">
+                                        {{-- <button
+                                            class="hover:scale-105 hover:shadow-md hover:cursor-pointer flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200"
+                                            type="button" aria-label="Like">
                                             <svg width="20" height="20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
                                             </svg>
-                                        </button>
+                                        </button> --}}
                                     </div>
                                     <p class="text-sm text-slate-700">
                                         Tiene hasta 10 días hábiles para cambiarse
@@ -265,8 +305,8 @@
                     </p>
                 @endif
             </div>
-          
-        </div>
+
+    </div>
 
 
     </section>
@@ -356,7 +396,7 @@
                         carritoContent += `
                         <div class="flex h-fit m-1 mt-3 mx-3">
                             <div class="pb-2">
-                                <img src="{{ url('productos/') }}/${item.foto}" alt="" width="100px" height="100px">
+                                <img src="{{ url('productos/') }}/${item.fotos.first().ruta}" alt="" width="100px" height="100px">
                             </div>
                             <div>
                                 <ul class="font-semibold">
@@ -473,24 +513,23 @@
         function eliminarProducto(id) {
             if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
                 fetch(`/eliminar/articulo/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Remueve el producto de la vista
-                        document.getElementById(`producto-${id}`).remove();
-                    } else {
-                        alert('Error al eliminar el producto');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Remueve el producto de la vista
+                            document.getElementById(`producto-${id}`).remove();
+                        } else {
+                            alert('Error al eliminar el producto');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             }
         }
-
     </script>
 @endsection
