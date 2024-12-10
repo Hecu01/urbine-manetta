@@ -36,37 +36,29 @@
                                     <div class="carousel-inner">
                                         @foreach($articulo->fotos as $index => $foto)
                                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                                <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" style="width: 200px; height: auto;">
+                                                <img src="{{ url('productos/' . $foto->first()->ruta) }}" alt="{{ $articulo->nombre }}" style="width: 200px; height: auto;">
 
                                             </div>
                                         @endforeach
                                     </div>
                         
-                                    <!-- Controles del carrusel -->
-                                    <button class="carousel-control-prev" style="color: red" type="button" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="color: red"></span>
-                                        <span class="visually-hidden" style="color: red">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $articulo->id }}" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
+
                                 </div>                                    
                             </div>
                         
 
                             <div>
-                                <p>ID: {{ $item['id'] }}</p>
-                                <p>Nombre: {{ $item['name'] }}</p>
+                                <p><strong>ID</strong>: {{ $item['id'] }}</p>
+                                <p><strong>Nombre</strong>: {{ $item['name'] }}</p>
                                 <p>
-                                    Precio: $ {{ number_format($item['price'], 0, ',', '.') }}
+                                    <strong>Precio</strong>: $ {{ number_format($item['price'], 0, ',', '.') }}
                                 </p>
-                                <p>Cantidad: {{ $item['quantity'] }}</p>
+                                <p><strong>Cantidad</strong>: {{ $item['quantity'] }}</p>
                                 @isset( $item['calzadoTalle'])
-                                    <p>Talle: {{ $item['calzadoTalle']  }}</p>
+                                    <p><strong>Talle</strong>: {{ $item['calzadoTalle']  }}</p>
                                 @endisset
                                 <p>
-                                    Total: $ {{ number_format($item['total_price'], 0, ',', '.')  }}
+                                    <strong>Total</strong>: $ {{ number_format($item['total_price'], 0, ',', '.')  }}
                                 </p>
                                 <!-- Botón de Eliminar -->
                                 <form action="{{ route('cart.remove', $item['id']) }}" method="POST">

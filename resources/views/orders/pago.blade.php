@@ -70,7 +70,7 @@
             <div class="info-card-back">
                 <div id="group-firm-card" class="group-firm-card">
                     <p class="firmaCard">
-                        For emergency service call USA & Canada 1-800-396-9665 and call collect int'11(303)967-1098
+                        Para servicio de emergencia llama a Sportivo al 0800-123-4567 en Argentina y al +54 11 5555-6789
                     </p>
 
                     <div class="firm-card">
@@ -109,9 +109,23 @@
     <!-- Formulario Tarjeta -->
 
     {{-- <form action="javascript:void(0);" id="form-card" class="form-card active"> --}}
-    <form action="{{ route('processPayment') }}" method="POST" id="form-card" class="form-card active">
 
+    <form action="{{ route('processPayment') }}" method="POST" id="form-card" class="form-card active">
+        
+        @if ($errors->any())
+            <div class="alert alert-danger ">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="error-message">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <br>
+        @endif
+
+        {{-- Token CSRF --}}
         @csrf
+
         <!-- Número de Tarjeta -->
         <div>
             <label for="number-card-form">Número Tarjeta</label>
@@ -142,7 +156,7 @@
                         <select id="mounth-expiration-card-form" name="cardExpiryMonth"
                             class="{{ $errors->has('cardExpiryMonth') ? 'border-red' : '' }}">
                             <option disabled="disabled" selected="selected">Mes</option>
-                            @for ($i = 1; $i <= 12; $i++)
+                            @for ($i = 1; $i < 1; $i++)
                                 <option value="{{ sprintf('%02d', $i) }}"
                                     {{ old('cardExpiryMonth') == sprintf('%02d', $i) ? 'selected' : '' }}>
                                     {{ sprintf('%02d', $i) }}
@@ -158,7 +172,7 @@
                         <select id="year-expiration-card-form" name="cardExpiryYear"
                             class="{{ $errors->has('cardExpiryYear') ? 'border-red' : '' }}">
                             <option disabled="disabled" selected="selected">Año</option>
-                            @for ($i = date('Y'); $i <= date('Y') + 8; $i++)
+                            @for ($i = date('Y'); $i < date('Y'); $i++)
                                 <option value="{{ $i }}"
                                     {{ old('cardExpiryYear') == $i ? 'selected' : '' }}>
                                     {{ $i }}

@@ -153,7 +153,7 @@ class ReponerMercaderiaController extends Controller
         $stockMuchos = $request->input('stock_solicitado_muchos_a_muchos');
         $idMuchos = $request->input('art_id_muchos_a_muchos');
         $valorCalzadoTalles = $request->input('valorCalzadoTalle');
-        // dd($valorCalzadoTalle);
+        dd($valorCalzadoTalle);
 
         // Creamos la nueva reposicion, agregamos estado pendiente
         $reposicion = ReposicionMercaderia::create([

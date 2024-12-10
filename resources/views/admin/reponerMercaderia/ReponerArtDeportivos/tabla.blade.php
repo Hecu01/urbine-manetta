@@ -57,9 +57,9 @@
 
                         @foreach ($artDeportivo->articulos as $articulo)
                             @php
-                                $foto = $articulo->foto;
                                 $nombre = $articulo->nombre;
                                 $stock = $articulo->pivot->cantidad;
+                                $foto = $articulo->fotos->first()->ruta;
                                 $calzadoIdArray = [];
                                 foreach ($articulo->calzados as $calzado) {
                                     $calzadoIdArray[] = $calzado->id;
@@ -73,7 +73,7 @@
                         <tr style="vertical-align: middle">
                             <td >{{ $id }}</td>
                             <td>
-                                <img draggable="false" src="{{ url('producto/' . $foto) }}" alt="{{ $nombre }}"
+                                <img draggable="false" src="{{ url('productos/'. $foto) }}" alt="{{ $nombre }}"
                                     width="70px" height="70px">
                             </td>
                             <td>{{ $nombre }}</td>

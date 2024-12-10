@@ -100,34 +100,57 @@
                         </div> --}}
                         <div class="w-fit my-2 mx-3">
                             <div class="flex items-center">
-                                <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
-                                <input type="number" id="cantidad"  name="cantidad" value="1" min="1"  max="{{ $articulo->stock }}"  class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)"/>
-                                <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
+                                <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300" id="leftButton" disabled>-</button>
+
+                                <input type="number" id="cantidad" disabled  name="cantidad" value="1" min="1"    class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)"/>
+
+                                <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300" id="rightButton" disabled>+</button>
                             </div>
                         </div>
 
-                        <span class="text-slate-500 text-sm">Disponible: {{ $articulo->stock }} </span>
-
+                        <span class="text-slate-500 text-sm">Disponible total: {{ $articulo->stock }}</span>
+                        
+                        <span class="text-slate-500 text-sm" id="stock-disponible">Seleccione un talle</span>
+                        
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
 
                     </div>
                     @if($articulo->calzados->isNotEmpty() || $articulo->talles->isNotEmpty())
                         <div class='size-picker'>
-                            Talle o Calzado:
+                            Elija su talle:
                             <div class='range-picker' id='range-picker'>
                                 {{-- Si es calzados: leerá éste --}}
                                 @foreach ($articulo->calzados as $calzado)
-                                    <div>
-                                        <input type="radio" id="calzado_id_{{ $calzado->id }}" name="calzadoTalle_id" value="{{ $calzado->pivot->calzado_id }}" required style="display: none">
-                                        <input type="radio" id="calzado_talle_{{ $calzado->id }}" name="calzadoTalle" value="{{ $calzado->calzado }}" required style="display: none">
-                                        <label 
-                                            style="background: none; border: none; transform: none; cursor: pointer;" 
-                                            onclick="selectCalzado({{ $calzado->id }})"
-                                        >
-                                            {{ $calzado->calzado }}
-                                        </label>
+                                    @if($calzado->pivot->stocks > 0)
+                                        <div>
 
-                                    </div>
+                                            <input 
+                                            type="radio" 
+                                            id="calzado_id_{{ $calzado->id }}" 
+                                            name="calzadoTalle_id" 
+                                            value="{{ $calzado->pivot->calzado_id }}" 
+                                            required 
+                                            style="display: none" 
+                                            data-stock="{{ $calzado->pivot->stocks }}" {{-- Añadimos el stock como atributo --}}
+                                            onclick="actualizarStock({{ $calzado->id }})">
+
+                                            <input type="radio" id="calzado_talle_{{ $calzado->id }}" name="calzadoTalle" value="{{ $calzado->calzado }}" required style="display: none">
+                                            <label style="background: none; border: none; transform: none; cursor: pointer;" onclick="selectCalzado({{ $calzado->id }})" for="calzado_id_{{ $calzado->id }}">
+                                                {{ $calzado->calzado }}
+                                            </label>
+
+                                        </div>
+
+                                    @endif
                                 @endforeach
                             
                                 {{-- Si es ropa: leerá este otro --}}
@@ -176,8 +199,33 @@
     </form>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/elevatezoom/jquery.elevatezoom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/elevatezoom/jquery.elevatezoom.js"></script>
     <script>
+        
+        function actualizarStock(calzadoId) {
+            // Seleccionar el radio button seleccionado
+            const calzadoSeleccionado = document.querySelector(`#calzado_id_${calzadoId}`);
+            
+            // Obtener el stock del data attribute
+            const stockDisponible = calzadoSeleccionado.getAttribute('data-stock');
+
+            // Actualizar el texto con el stock disponible
+            const stockSpan = document.getElementById('stock-disponible');
+            stockSpan.textContent = `Disponible por talle: ${stockDisponible}`;
+
+            // botones (+) y (-)
+            const rightButton = document.getElementById('rightButton');
+            const leftButton = document.getElementById('leftButton');
+            rightButton.disabled = false;
+            leftButton.disabled = false;
+
+            // Actualizar el input de cantidad
+            const inputCantidad = document.getElementById('cantidad');
+            inputCantidad.max = stockDisponible; // Establecer el valor máximo
+            inputCantidad.value = 1; // Reiniciar el valor
+            inputCantidad.disabled = false; // Habilitar el input
+        }
+
         function selectCalzado(id) {
             // Seleccionar ambos radios vinculados
             document.getElementById(`calzado_id_${id}`).checked = true;
@@ -244,6 +292,10 @@
 
         //Zoom imagen
         $(document).ready(function() {
+            $('#cantidad').prop('disabled', true);
+            $('#leftButton').prop('disabled', true);
+            $('#rightButton').prop('disabled', true);
+
             // Abrir el modal con la imagen seleccionada
             $('.carousel-image').on('click', function() {
                 const imageUrl = $(this).data('image');

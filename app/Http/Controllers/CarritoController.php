@@ -144,9 +144,12 @@ class CarritoController extends Controller
         $calzadoTalle = $request->input('calzadoTalle', null);
         $categoria = (int) $request->input('id_categoria');
 
+
+
+
         // Verificar si es categoria art deport (1) o ropa deport (2)
         if ($categoria == 1) {
-            // Si es numérico, buscar en la tabla `calzados`
+            // Buscar en la tabla `calzados`
             $calzado = Calzado::where('calzado', $calzadoTalle)->first();
             if ($calzado) {
                 $calzadoTalle_id = $calzado->id;  // Guardar el ID del calzado

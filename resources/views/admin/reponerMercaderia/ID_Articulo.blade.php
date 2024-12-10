@@ -43,14 +43,14 @@
             @case('accesorio')
                 <div class="flex justify-between">
                     <ul>
-                        <li><strong>Usuario ID: </strong>{{ $articulos->id }}</li>
+                        <li><strong>Producto ID: </strong>{{ $articulos->id }}</li>
                         <li><strong>Nombre: </strong>{{ $articulos->nombre }}</li>
                         <li><strong>Stock: </strong>{{ $articulos->stock }}</li>
                     </ul>
-                    {{-- <div class="">
-                        <img style="margin: auto" src="{{ url('producto/'. $articulos->foto) }}" alt="{{ $articulos->nombre }}" width="100px" height="100px">
+                    <div class="">
+                        <img style="margin: auto" src="{{ url('productos/'. $articulos->fotos->first()->ruta) }}" alt="{{ $articulos->nombre }}" width="100px" height="100px">
 
-                    </div> --}}
+                    </div>
                 </div>
                 <form method="POST" action="{{ route('reponer_mercaderia', $articulos->id) }}" class="w-max border p-1">
                     @csrf
@@ -67,9 +67,9 @@
                         </div>
                     </div>
                     <div class="">
-                    <ul>
-                        <li><strong> Mercaderia:</strong> {{$articulos->stock}} en stock</li>
-                    </ul>
+                        <ul>
+                            <li><strong> Mercaderia:</strong> {{$articulos->stock}} en stock</li>
+                        </ul>
                     </div>
                     
                 
