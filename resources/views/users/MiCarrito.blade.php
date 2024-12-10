@@ -36,7 +36,7 @@
                                     <div class="carousel-inner">
                                         @foreach($articulo->fotos as $index => $foto)
                                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                                <img src="{{ url('productos/' . $foto->first()->ruta) }}" alt="{{ $articulo->nombre }}" style="width: 200px; height: auto;">
+                                                <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" style="width: 200px; height: auto;">
 
                                             </div>
                                         @endforeach
