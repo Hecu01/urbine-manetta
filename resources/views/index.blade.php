@@ -31,7 +31,7 @@
                         @foreach ($publicidades as $publicidad)
                             <div class="slide text-center content-center ml-10">
                                 <a href="{{ $publicidad->url }}">
-                                    <img src="{{ Storage::url($publicidad->foto) }}" alt="{{ $publicidad->nombre }}">
+                                    <img src="{{ asset('publicidades/' . $publicidad->foto) }}" alt="Imagen de Publicidad">
                                 </a>
                             </div>
                         @endforeach

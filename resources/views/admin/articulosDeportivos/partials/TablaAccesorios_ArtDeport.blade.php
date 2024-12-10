@@ -25,7 +25,7 @@
 
                 </td>
                 <td>{{ $articulo->id }}</td>
-                <td><a href="{{ $articulo->id }}">{{ $articulo->nombre}}</a></td>
+                <td>{{ $articulo->nombre}}</td>
                 <td class="precio">$ {{ number_format($articulo->precio, 0, ',', '.') }}</td>
                 <td>{{ $articulo->marca }}</td>
 

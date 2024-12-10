@@ -39,26 +39,37 @@ class PublicidadController extends Controller
             'url' => 'required|url',
         ]);
 
-        // Guardar la imagen en la carpeta 'publicidades' dentro de 'storage/app/public'
-        if ($request->hasFile('foto')) {
-            // Almacenar la imagen y obtener la ruta relativa
-            $rutaImagen = $request->file('foto')->store('publicidades', 'public');
+// Crear nueva entrada de publicidad
+$publicidadNueva = Publicidad::create([
+    'nombre' => $request->titulo, // Asigna el título al campo 'nombre'
+    'url' => $request->url,       // Asigna la URL
+    'foto' => $request->foto,
+]);
+        // Verificar y guardar la foto si está presente
+    if ($request->hasFile('foto')) {
+        $file = $request->file('foto');
+        $filename = $file->getClientOriginalName();
+        $carpetaDestino = storage_path('publicidades'); // Mismo nivel que "productos"
 
-            // Crear nueva entrada en la base de datos
-            $publicidadNueva = new Publicidad();
-            $publicidadNueva->nombre = $request->titulo; // Asigna el título al campo 'nombre'
-            $publicidadNueva->foto = $rutaImagen; // Almacena la ruta de la imagen en el campo 'foto'
-            $publicidadNueva->url = $request->url; // Asigna la URL
-            $publicidadNueva->save(); // Guarda la publicidad en la base de datos
-
-            // Mensaje de éxito
-            Session::flash('mensaje', 'Publicidad creada exitosamente.');
-            return redirect()->route('publicidad.index');
+        // Crear la carpeta si no existe
+        if (!is_dir($carpetaDestino)) {
+            mkdir($carpetaDestino, 0755, true);
         }
 
-        // Mensaje de error si no se subió la imagen
-        return back()->with('error', 'Error al subir la imagen.');
+        // Mover la imagen a la carpeta de destino
+        $file->move($carpetaDestino, $filename);
+
+        // Guardar la ruta de la imagen en el modelo
+        $publicidadNueva->foto = $filename;
+        $publicidadNueva->save();
     }
+
+    // Mensaje de éxito
+    Session::flash('mensaje', 'Publicidad creada exitosamente.');
+    return redirect()->route('publicidad.index');
+}
+
+        
 
     public function destroy($id)
     {
