@@ -52,14 +52,14 @@
                                     <td>{{ $compra->estado }}</td>
                                     <td>
                                         @if ($compra->estado == 'Pendiente')
-                                            <form action="{{ route('compras.entregar', $compra->id) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-success mb-1">Entregar</button>
-                                            </form>
-                                            <form action="{{ route('compras.cancelar', $compra->id) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger">Cancelar</button>
-                                            </form>
+                                        <form action="{{ route('compras.entregar', $compra->id) }}" method="POST" class="form-entregar" id="form-entregar-{{ $compra->id }}">
+                                            @csrf
+                                            <button type="button" class="btn btn-success mb-1" onclick="mostrarAlerta('entregar', {{ $compra->id }})">Entregar</button>
+                                        </form>
+                                        <form action="{{ route('compras.cancelar', $compra->id) }}" method="POST" class="form-cancelar" id="form-cancelar-{{ $compra->id }}">
+                                            @csrf
+                                            <button type="button" class="btn btn-danger" onclick="mostrarAlerta('cancelar', {{ $compra->id }})">Cancelar</button>
+                                        </form>
                                         @else
                                             {{ in_array($compra->estado, ['Entregado', 'Cancelado']) ? $compra->updated_at->format('d/m/Y') : '-' }}
                                             {{-- {{ $compra->estado == 'Entregado' ? $compra->updated_at->format('d/m/Y H:i') : 'N/A' }} --}}
@@ -277,5 +277,107 @@
                 console.log("Element not found for ID:", id); // Informa si el elemento no está en el DOM
             }
         }
+
+        function mostrarAlerta(accion, compraId) {
+        // Definir el mensaje basado en la acción
+        const mensaje = accion === 'entregar' ? 
+            '¿Estás seguro de que deseas marcar esta compra como entregada?' : 
+            '¿Estás seguro de que deseas cancelar esta compra?';
+
+        // Crear la estructura de la alerta
+        const overlay = document.createElement('div');
+        overlay.classList.add('alerta-overlay');
+
+        const alertaBox = document.createElement('div');
+        alertaBox.classList.add('alerta-box');
+
+        // Título de la alerta
+        const titulo = document.createElement('h2');
+        titulo.textContent = mensaje;
+        alertaBox.appendChild(titulo);
+
+        // Botones de confirmar y cancelar
+        const botones = document.createElement('div');
+        botones.classList.add('botones');
+
+        const botonConfirmar = document.createElement('button');
+        botonConfirmar.classList.add('boton', 'boton-confirmar');
+        botonConfirmar.textContent = 'Confirmar';
+        botonConfirmar.onclick = function() {
+            // Enviar el formulario dependiendo de la acción
+            if (accion === 'entregar') {
+                document.getElementById('form-entregar-' + compraId).submit();
+            } else if (accion === 'cancelar') {
+                document.getElementById('form-cancelar-' + compraId).submit();
+            }
+            document.body.removeChild(overlay); // Cerrar la alerta
+        };
+
+        const botonCancelar = document.createElement('button');
+        botonCancelar.classList.add('boton', 'boton-cancelar');
+        botonCancelar.textContent = 'Cancelar';
+        botonCancelar.onclick = function() {
+            document.body.removeChild(overlay); // Cerrar la alerta sin hacer nada
+        };
+
+        botones.appendChild(botonConfirmar);
+        botones.appendChild(botonCancelar);
+
+        alertaBox.appendChild(botones);
+        overlay.appendChild(alertaBox);
+        document.body.appendChild(overlay);
+
+        // Mostrar la alerta
+        overlay.style.display = 'flex';
+    }
     </script>
+
+
+<style>
+    /* Estilo para la alerta personalizada */
+    .alerta-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+    .alerta-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .alerta-box h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    .alerta-box .botones {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    .alerta-box .boton {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    .alerta-box .boton-confirmar {
+        background-color: #28a745;
+        color: white;
+    }
+    .alerta-box .boton-cancelar {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
 @endsection

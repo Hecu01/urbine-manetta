@@ -17,15 +17,14 @@
                     @endforeach
                 </td>
                 <td>{{ $articulo->id }}</td>
-                <td><a href="{{ $articulo->id }}">{{ $articulo->nombre}}</a></td>
+                <td>{{ $articulo->nombre}}</td>
                 <td class="precio">$ {{ number_format($articulo->precio, 0, ',', '.') }}</td>
                 <td>{{ $articulo->marca }}</td>
 
                 <td>
                     @if($articulo->tipo_producto == 'calzado')
-                        <a href="#" id="popoverButton-{{ $articulo->id }}">
+                        
                             {{ $articulo->stock }}
-                        </a>  
 
                         <!-- Contenedor del popover (inicialmente oculto) -->
                         <div id="popoverContent-{{ $articulo->id }}" class="hidden bg-white border p-1 absolute z-10 mt-2 w-fit bg-gray-100 ">
