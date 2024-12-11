@@ -24,7 +24,7 @@
         </div>
     @endif
 
-    <div class="grid ">
+    <div class="grid">
 
         <div class=" py-4 border-y-2">
             <h1 class="text-3xl font-bold text-center text-gray-800 tracking-wider mb-6 shadow-md shadow-black px-4 py-2 rounded-lg"style="background-color: #06B6D4;">
@@ -80,12 +80,12 @@
                     @foreach ($publicidades as $publicidad)
                         <tr class="text-center">
                             <td class="border border-gray-300 px-4 py-2"> <img
-                                    src="{{ Storage::url($publicidad->foto) }}" alt="{{ $publicidad->nombre }}"
+                                    src="{{ asset($publicidad->foto) }}" alt="{{ $publicidad->nombre }}"
                                     width="70px" height="70px"> </td>
                             <td class="border border-gray-300 px-4 py-2">{{ $publicidad->id }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $publicidad->nombre }}</td>
                             <td class="border border-gray-300 px-4 py-2"><a
-                                    href="{{ $publicidad->id }}">{{ $publicidad->url }}</a></td>
+                                    href="{{ $publicidad->url }}">{{ $publicidad->url }}</a></td>
     
                             <td class="acciones border border-gray-300 px-4 py-2">
                                 <div class="d-flex justify-content-center">
@@ -106,7 +106,7 @@
             </table>
         </div>
     </div>
-    <a href="{{ route('clientes-activos.index') }}" class="text-white no-underline article0 bg-purple-500 px-1">
+    <a class="text-white no-underline article0 bg-purple-500 px-1" style="opacity: 0; cursor: default;>
         <div class="top">
             <span>
                 <i class="fa-solid fa-bullhorn"></i>

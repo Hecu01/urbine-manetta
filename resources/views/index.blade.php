@@ -31,7 +31,11 @@
                         @foreach ($publicidades as $publicidad)
                             <div class="slide text-center content-center ml-10">
                                 <a href="{{ $publicidad->url }}">
-                                    <img src="{{ asset('publicidades/' . $publicidad->foto) }}" alt="Imagen de Publicidad">
+                                    <img src="{{ asset($publicidad->foto) }}" alt="{{ $publicidad->nombre }}"
+                                        style="width: auto; height:auto;
+    object-fit: contain;   
+    display: block;     
+    margin: 0 auto;">
                                 </a>
                             </div>
                         @endforeach

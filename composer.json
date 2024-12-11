@@ -11,6 +11,7 @@
         "codeat3/blade-elusive-icons": "^1.4",
         "darryldecode/cart": "^4.2",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^3.9",
         "laravel-lang/lang": "^15.2",
         "laravel/framework": "^10.8",
         "laravel/sanctum": "^3.2",
