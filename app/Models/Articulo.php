@@ -33,7 +33,7 @@ class Articulo extends Model
     // Vincular los calzados
     public function calzados()
     {
-        return $this->belongsToMany(Calzado::class)->withPivot('stocks', 'precio');
+        return $this->belongsToMany(Calzado::class)->withPivot('stocks');
     }
 
     // Vincular los talles

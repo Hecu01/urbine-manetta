@@ -92,26 +92,50 @@
 
                 <div class='options'>
                     <div class='color-options'>
-                        Unidades:
                         {{-- <div class="col-5">
                             <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
                             <input type="number" id="cantidad" class="form-control" min="1" max="{{ $articulo->stock }}"  value="1"  oninput="validarCantidad(this, {{ $articulo->stock }})" name="cantidad">
                             <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
                         </div> --}}
-                        <div class="w-fit my-2 mx-3">
-                            <div class="flex items-center">
-                                <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300" id="leftButton" disabled>-</button>
 
-                                <input type="number" id="cantidad" disabled  name="cantidad" value="1" min="1"    class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)"/>
+                        @if($articulo->tipo_producto == "Calzado" || $articulo->id_categoria == 2)
+                        
+                            {{-- Si es un calzado o ropa --}}
+                            Unidades:
+                            <div class="w-fit my-2 mx-3">
+                                <div class="flex items-center">
+                                    <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300" id="leftButton" disabled>-</button>
 
-                                <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300" id="rightButton" disabled>+</button>
+                                    <input type="number" id="cantidad" disabled  name="cantidad" value="1" min="1"    class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)"/>
+
+                                    <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300" id="rightButton" disabled>+</button>
+                                </div>
                             </div>
-                        </div>
+                            <span class="text-slate-500 text-sm">Disponible total: {{ $articulo->stock }}</span>
+                            
+                            <span class="text-slate-500 text-sm" id="stock-disponible">Seleccione un talle</span>
+                            
+                        @else
+                            {{-- Si es un articulo normal --}}
+                            
+                            @if ($articulo->stock > 0)
+                                Unidades:
+                                <div class="w-fit my-2 mx-3">
+                                    <div class="flex items-center">
+                                        <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300" id="leftButtonNormal" >-</button>
 
-                        <span class="text-slate-500 text-sm">Disponible total: {{ $articulo->stock }}</span>
-                        
-                        <span class="text-slate-500 text-sm" id="stock-disponible">Seleccione un talle</span>
-                        
+                                        <input type="number" id="cantidad2" name="cantidad" value="1" min="1"  max="{{$articulo->stock}}"  class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)" />
+
+                                        <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300" id="rightButtonNormal" >+</button>
+                                    </div>
+                                </div>
+                                <span class="text-slate-500 text-sm">Disponible total: {{ $articulo->stock }}</span>
+                            @else
+                                <h2 class="text-slate-500">Agotado</h2>
+                            @endif
+                            
+                        @endif
+
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -124,10 +148,17 @@
 
 
                     </div>
+
+                    {{-- Condicional importante --}}
                     @if($articulo->calzados->isNotEmpty() || $articulo->talles->isNotEmpty())
+                    
+                        {{-- Titulo --}}
                         <div class='size-picker'>
                             Elija su talle:
+
+                            {{-- Contenedor de los rangos --}}
                             <div class='range-picker' id='range-picker'>
+
                                 {{-- Si es calzados: leerá éste --}}
                                 @foreach ($articulo->calzados as $calzado)
                                     @if($calzado->pivot->stocks > 0)
@@ -155,12 +186,25 @@
                             
                                 {{-- Si es ropa: leerá este otro --}}
                                 @foreach ($articulo->talles as $talle)
-                                    <div>
-                                        <input type="radio" id="talle_{{ $talle->id }}" name="calzadoTalle" value="{{ $talle->talle_ropa }}" required style="display: none">
-                                        <label for="talle_{{ $talle->id }}" style="background: none; border:none; transform:none">
-                                            {{ $talle->talle_ropa }}
-                                        </label>
-                                    </div>
+                                    @if($talle->pivot->stocks > 0)
+                                        <div>
+                                            <input 
+                                            type="radio" 
+                                            id="talle_id_{{ $talle->id }}" 
+                                            name="calzadoTalle_id" 
+                                            value="{{ $talle->pivot->talle_id }}" 
+                                            required 
+                                            style="display: none" 
+                                            data-stock="{{ $talle->pivot->stocks }}" {{-- Añadimos el stock como atributo --}}
+                                            onclick="actualizarStock2({{ $talle->id }})">
+
+                                            <input type="radio" id="calzado_talle_{{ $talle->id }}" name="calzadoTalle" value="{{ $talle->talle_ropa }}" required style="display: none">
+
+                                            <label for="talle_id_{{ $talle->id }}" onclick="selectTalle({{ $talle->id }})" style="background: none; border:none; transform:none">
+                                                {{ $talle->talle_ropa }}
+                                            </label>
+                                        </div>
+                                    @endif
                                 @endforeach
                             </div>
                             {{-- <a class='small align-right' href='#'>VIEW SIZE-CHART</a> --}}
@@ -192,7 +236,11 @@
 
                 <div class='purchase-info'>
                     <div class='price'>$ {{ number_format($articulo->precio, 0, ',', '.') }}</div>
-                    <button type="submit" class="button">AÑADIR AL CARRO</button>
+                    @if($articulo->stock > 0)
+                        <button type="submit" class="button">AÑADIR AL CARRO</button>
+                    @else
+                        <a class="btn btn-primary" href="{{ url()->previous() }}"  style="display: flex; align-items:center; height:35px; text-decoration:none; margin-top:15px">Regresar</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -226,6 +274,30 @@
             inputCantidad.disabled = false; // Habilitar el input
         }
 
+        function actualizarStock2(calzadoId) {
+            // Seleccionar el radio button seleccionado
+            const talleSeleccionado = document.querySelector(`#talle_id_${calzadoId}`);
+            
+            // Obtener el stock del data attribute
+            const stockDisponible = talleSeleccionado.getAttribute('data-stock');
+
+            // Actualizar el texto con el stock disponible
+            const stockSpan = document.getElementById('stock-disponible');
+            stockSpan.textContent = `Disponible por talle: ${stockDisponible}`;
+
+            // botones (+) y (-)
+            const rightButton = document.getElementById('rightButton');
+            const leftButton = document.getElementById('leftButton');
+            rightButton.disabled = false;
+            leftButton.disabled = false;
+
+            // Actualizar el input de cantidad
+            const inputCantidad = document.getElementById('cantidad');
+            inputCantidad.max = stockDisponible; // Establecer el valor máximo
+            inputCantidad.value = 1; // Reiniciar el valor
+            inputCantidad.disabled = false; // Habilitar el input
+        }
+
         function selectCalzado(id) {
             // Seleccionar ambos radios vinculados
             document.getElementById(`calzado_id_${id}`).checked = true;
@@ -234,7 +306,8 @@
 
         function selectTalle(id) {
             // Seleccionar el radio del talle
-            document.getElementById(`talle_ropa_id_${id}`).checked = true;
+            document.getElementById(`talle_id_${id}`).checked = true;
+            document.getElementById(`calzado_talle_${id}`).checked = true;
         }
 
         // Validar cantidad a comprar

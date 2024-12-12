@@ -130,7 +130,7 @@
   </div>
 </div>
 
-<script>
+{{-- <script>
   // Obtener todas las pestañas
   var tabs = document.querySelectorAll('.nav-link');
 
@@ -144,7 +144,7 @@
           window.location.hash = tabId;
       });
   });
-</script>
+</script> --}}
 
 @endsection
 

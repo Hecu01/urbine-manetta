@@ -444,13 +444,13 @@
 
                                         {{-- Verificar si el artículo existe y tiene fotos --}}
                                         @if ($articulo && $articulo->fotos)
-    @php
-        $firstFoto = $articulo->fotos->first(); // Obtiene la primera foto
-    @endphp
-    @if ($firstFoto)
-        <img src="{{ url('productos/' . $firstFoto->ruta) }}" alt="" width="100px" height="100px">
-    @endif
-@endif
+                                            @php
+                                                $firstFoto = $articulo->fotos->first(); // Obtiene la primera foto
+                                            @endphp
+                                            @if ($firstFoto)
+                                                <img src="{{ url('productos/' . $firstFoto->ruta) }}" alt="" width="100px" height="100px">
+                                            @endif
+                                        @endif
 
                                     </div>
                                     <div>

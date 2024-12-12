@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminesActivosController;
 use App\Http\Controllers\Admin\ClientesActivosController;
 use App\Http\Controllers\Admin\ReponerMercaderiaController;
 use App\Http\Controllers\Admin\SuplemDietaController;
+use App\Http\Controllers\Admin\CompraController;
 
 // Rutas que acceden los admins
 Route::middleware(['auth'])->group(function () {
@@ -108,8 +109,8 @@ Route::middleware(['auth'])->group(function () {
         // Route::get('/publicidad', [PublicidadController::class, 'mostrarPublicidades'])->name('mostrar.publicidades');// Ruta para mostrar publicidades a todos los usuarios
         
 
-        // Ventas
-        Route::resource('ventas', VentaController::class);
+        // Compras
+        Route::resource('compras', CompraController::class);
 
         // Reposicion de mercadería -- resource
         Route::resource('reposicion-mercaderia', ReponerMercaderiaController::class);

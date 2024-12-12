@@ -208,7 +208,7 @@ class TiendaController extends Controller
 
             // Un error inesperado dejaría la bd como estaba || redirigir atrás con errores
             DB::rollBack();
-            return redirect()->back()->withErrors('Hubo un problema al procesar su compra. Intente nuevamente.');
+            return redirect()->back()->withErrors('Hubo un problema al procesar su compra. Intente nuevamente.')->withInput();
 
         }
 

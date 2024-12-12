@@ -284,7 +284,7 @@ $(document).ready(function(){
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut"
                     }
-                    toastr["info"]("El campo STOCK es la sumatoria de todos los calzados, no se puede editar", "Información");
+                    toastr["error"]("Stock es la sumatoria de todos los calzados, no se puede modificar.", "Información Sportivo");
                 }
             });
 

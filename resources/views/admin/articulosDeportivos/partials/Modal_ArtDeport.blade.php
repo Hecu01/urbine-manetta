@@ -8,60 +8,63 @@
             </div>
             <div class="modal-body  ">
                 <div class="flex justify-center">
-                    <div id="msj" >
-                        <h2>¡Seleccioná el público dirigido!</h2>
-                    </div>
-                    <!-- left-->
-                    <div  id="calzados-ninios" style="display:none;">
-                        <h3 class="text-center">Para Niños</h3>
-                        @foreach( $calzados as $calzado)
-                            @if($calzado->calzado <= 34)
-                                <div class=" flex my-1">
-                                    <div class="">
+                    <div class="">
+                        <h5 class="text-center" style="margin-right: 5px">Disponibilidad| - |Talle del Calzado| - |Cantidad Disponible</h5>
 
-                                        <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
-                                        <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
-                                        <label for="calzado-{{$calzado->id}}" class="mx-1">N° {{ $calzado->calzado }}</label>
-                                        <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
-                                    </div>
-                                    <div class="mx-2">
-
-                                        <label for="calzado-{{$calzado->id}}" class="mx-1">$ </label>
-                                        <input type="text" disabled name="precios[]" id="precio-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-sumado p-0" style="width:100px;height:22px; " >
-
-                                    </div>
-
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                    <div id="separador" class="mx-3" style="border-right:1px solid #00000096; display:none;"></div>
-                    <!-- center-->
-                    <div  id="calzados-adultos" style="display:none;">
-                        <h3 class="text-center">Para Adultos</h3>
-
-                        @foreach($calzados as $calzado)
-                            @if($calzado->calzado > 34)
-                                <div class="flex my-1">
-                                    <div class="">
-                                        <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
-                                        <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
-                                        <label for="calzado-{{$calzado->id}}" class="mx-1">N° {{ $calzado->calzado }}</label>
-                                        <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
-                                        
-
-                                    
-                                    </div>
-                                    <div class="mx-2">
-
-                                        <label for="calzado-{{$calzado->id}}" class="mx-1">$ </label>
-                                        <input type="text" disabled name="precios[]" id="precio-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-sumado p-0" style="width:100px;height:22px; " >
-
-                                
-                                    </div>
-                                </div>        
-                            @endif
-                        @endforeach
+                        <div class="contenedor-tabla" style="max-height: 400px; overflow:auto; width:500px">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <td>Disponibilidad</td>
+                                    <td>Talle del Calzado</td>
+                                    <td>Cantidad disponible</td>
+                                </thead>
+                                <tbody>
+                                    @foreach( $calzados as $calzado)
+                                        @if($calzado->calzado <= 34)
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
+                                                    <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
+    
+                                                </td>
+                                                <td>
+                                                    <label for="calzado-{{$calzado->id}}" class="mx-1">N° {{ $calzado->calzado }}</label>
+    
+                                                </td>
+                                                <td>
+                                                    <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
+    
+                                                </td>
+                                            </tr>
+    
+                                        @endif
+                                    @endforeach
+            
+                                    @foreach($calzados as $calzado)
+                                        @if($calzado->calzado > 34)
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
+                                                    <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
+    
+                                                </td>
+                                                <td>
+                                                    <label for="calzado-{{$calzado->id}}" class="mx-1">N° {{ $calzado->calzado }}</label>
+    
+                                                </td>
+                                                <td>
+                                                    <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
+    
+                                                </td>
+                                            </tr>
+                                                
+            
+                                        @endif
+                                    @endforeach
+    
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>

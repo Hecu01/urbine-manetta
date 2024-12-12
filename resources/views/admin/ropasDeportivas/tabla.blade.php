@@ -29,16 +29,14 @@
             <th>Precio</th>
             <th>Marca</th>
             <th>Stock</th>
-            <th>Talles (U) (G) </th>
+            <th>Talles</th>
             <th>Acciones </th>
           </thead>
           <tbody  id="tabla-articulos-deportivos">
             @foreach ($articulos as $articulo)
               <tr>
                 <td> 
-                  @foreach ($articulo->fotos as $foto)
-                    <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px">
-                  @endforeach
+                    <img src="{{ url('productos/' . $articulo->fotos->first()->ruta) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px">
               
                 
                 </td>
@@ -55,8 +53,8 @@
                   @foreach($articulo->talles as $talle)
                   
                     <span>
-                      - <strong>{{$talle->talle_ropa}}</strong> ({{ $talle->pivot->stocks}}) 
-                      ({{ $talle->genero == "masculino" ? "M" : "F"}})
+                      - <strong>Talle {{$talle->talle_ropa}}</strong> ({{ $talle->pivot->stocks}} u) 
+                      ({{ $talle->genero == "masculino" ? "Varón" : "Mujer"}})
                       <br>
                     </span>
                   @endforeach
@@ -67,7 +65,7 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $articulo->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar"><i class="fa-solid fa-trash"></i></button>
-                        <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-eye"></i></button>
+                        {{-- <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-eye"></i></button> --}}
                     </div>
                 </td>
               </tr>

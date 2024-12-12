@@ -29,17 +29,8 @@
                                         <input type="hidden" name="calzado_ids[]" value="{{ $calzadoAsociado->id }}">
                                         <input type="checkbox" checked name="calzados[]" id="calzado-{{ $calzadoAsociado->id }}" value="{{ $calzadoAsociado->calzado }}" class="form-check-input">
                                         <label for="calzado-{{ $calzadoAsociado->id }}" class="mx-1">N° {{ $calzadoAsociado->calzado }}</label>
-                                        {{-- <select name="stocks[]" id="stock-{{ $calzadoAsociado->id }}" class="border-1  border-cyan-600/[0.5] text-small input-suma p-0 px-2" style="width:70px;height:30px;">
-                                            @foreach ($stockOptions as $stockOption)
-                                                <option value="{{ $stockOption }}" {{ $calzadoAsociado->pivot->stocks == $stockOption ? 'selected' : '' }}>
-                                                    {{ $stockOption }}
-                                                    {{ $calzadoAsociado->pivot->stocks == $stockOption ? ' (*)' : '' }}
-                                                </option>
-                                            @endforeach
-                                        </select> --}}
+
                                         <input type="text" name="stocks[]" id="stock-{{ $calzadoAsociado->id }}" class="border-1  border-cyan-600/[0.5] text-small input-suma p-0 px-2" style="width:70px;height:30px;" value="{{ $calzadoAsociado->pivot->stocks }}">
-                                        <label class="mx-1">$ </label>
-                                        <input type="text" name="precios[]" id="precio-{{ $calzadoAsociado->id }}" class="border-1  text-center border-cyan-600/[0.5] text-small input-sumado p-0" style="width:100px;height:30px; " value="{{ $calzadoAsociado->pivot->precio }}">
                                     @else
                                         {{-- Calzado no existente --}}
                                         <input type="hidden" name="calzado_ids[]" value="{{ $calzado->id }}">
@@ -48,9 +39,7 @@
 
                                         <label for="calzado-{{ $calzado->id }}" class="mx-1">N° {{ $calzado->calzado }}</label>
                                         <input type="text" name="stocks[]" id="stock-{{ $calzado->id }}" disabled class="border-1 text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:70px;height:30px;">
-                                        <label class="mx-1">$ </label>
 
-                                        <input type="text" name="precios[]" id="precio-{{ $calzado->id }}" disabled class="border-1  text-center border-cyan-600/[0.5] text-small input-sumado p-0" style="width:100px;height:30px;">
                                     @endif
                                 @endif
                             </div>

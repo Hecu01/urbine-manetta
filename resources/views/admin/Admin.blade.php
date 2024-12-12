@@ -20,17 +20,17 @@
             </div>
         </a>
         <!-- Ventas realizadas -->
-        <a href="{{ route('ventas.index') }}" class="text-white no-underline article0 article2">
+        <a href="{{ route('compras.index') }}" class="text-white no-underline article0 article2">
             <div class="top">
                 <span>
                     <i class="fa-solid fa-chart-line"></i>
                 </span>
                 <span class="recuento">
-                    0
+                    {{ $comprasRealizadas }}
                 </span>
             </div>
             <div class="bottom">
-                <p>Ventas realizadas</p>
+                <p>Compras de clientes</p>
             </div>
         </a>
         

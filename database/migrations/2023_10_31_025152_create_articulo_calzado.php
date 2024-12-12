@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('articulo_id');
             $table->unsignedBigInteger('calzado_id');
             $table->integer('stocks');
-            $table->decimal('precio', 8, 2);
+            // $table->decimal('precio', 8, 2); ahora no usaremos mas esto :)
             $table->timestamps();
             $table->foreign('articulo_id')->references('id')->on('articulos')->onDelete('cascade');
             $table->foreign('calzado_id')->references('id')->on('calzados')->onDelete('cascade');
