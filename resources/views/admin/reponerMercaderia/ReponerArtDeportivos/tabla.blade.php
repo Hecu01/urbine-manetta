@@ -44,22 +44,27 @@
                     </tr>
                 </thead>
                 <tbody id="tabla-articulos-deportivos">
-                    @foreach ($artDeportivos as $artDeportivo)
+                    @foreach ($reposiciones as $reposicion)
+                        
+                        {{-- Variables iniciales --}}
                         @php
-                            $id = $artDeportivo->id;
-                            $estado = $artDeportivo->estado;
+                            $id = $reposicion->id;
+                            $estado = $reposicion->estado;
                             $foto = '';
                             $nombre = '';
                             $stockArray = [];
                             $numeroCalzadoArray = [];
-
+                            $totalAceptadas = 0;
                         @endphp
 
-                        @foreach ($artDeportivo->articulos as $articulo)
+                        {{-- Armar información del articulo a reponer --}}
+                        @foreach ($reposicion->articulos as $articulo)
                             @php
+                                $foto = $articulo->fotos->first()->ruta;
                                 $nombre = $articulo->nombre;
                                 $stock = $articulo->pivot->cantidad;
-                                $foto = $articulo->fotos->first()->ruta;
+                                $id_categoria = $articulo->id_categoria;
+                                $tipo_producto = $articulo->tipo_producto;
                                 $calzadoIdArray = [];
                                 foreach ($articulo->calzados as $calzado) {
                                     $calzadoIdArray[] = $calzado->id;
@@ -67,14 +72,14 @@
                                 $numeroCalzadoArray[] = $articulo->pivot->valor_calzado_talle; // Aquí accedes al número del calzado
 
                                 $stockArray[] = $articulo->pivot->cantidad;
+                                $totalAceptadas += $articulo->pivot->unidades_aceptadas;
                             @endphp
                         @endforeach
 
                         <tr style="vertical-align: middle">
                             <td >{{ $id }}</td>
                             <td>
-                                <img draggable="false" src="{{ url('productos/'. $foto) }}" alt="{{ $nombre }}"
-                                    width="70px" height="70px">
+                                <img draggable="false" src="{{ url('productos/'. $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
                             </td>
                             <td>{{ $nombre }}</td>
                             <td style="justify-content: center; align-items: center">
@@ -116,20 +121,31 @@
                             </td>
 
                             <td>
+
                                 {{--  --}}
                                 @if ($estado == 'Pendiente')
-                                    <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline"
-                                        id="formAceptarCantidad">
-                                        @method('PUT')
-                                        @csrf
-                                        <input type="number" name="unidades_aceptadas[]" placeholder="Cantidad" required
-                                            min="0" class="form-control"
-                                            style="width: 100px; display: inline-block">
 
-                                        <button type="submit" class="btn btn-outline-success border-0 p-1"><i class="fa-solid fa-check"></i></button>
-                                    </form>
+
+                                    @if($tipo_producto == 'calzado')
+
+                                        <a href="{{ route('articulos.verificar', $id) }}" class="btn btn-success">
+                                            Verificar
+                                        </a>
+
+                                    @else 
+                                        <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline"
+                                            id="formAceptarCantidad">
+                                            @method('PUT')
+                                            @csrf
+                                            <input type="number" name="unidades_aceptadas" placeholder="Cantidad" required min="0"  max="{{ $stock }}" class="form-control" style="width: 100px; display: inline-block" oninput="validar(this)">
+
+                                            <button type="submit" class="btn btn-outline-success border-0 p-1"><i
+                                                    class="fa-solid fa-check"></i></button>
+                                        </form>
+                                    @endif
+
                                 @else
-                                        <span> {{ $articulo->pivot->unidades_aceptadas ?? 'Aceptada' }}</span>
+                                    <span> {{$totalAceptadas}}</span>
                                 @endif
                             </td>
 
@@ -137,19 +153,15 @@
 
                             <td class=" " style="font-size: .8em" id="acciones">
                                 @if ($estado == 'Pendiente')
-                                    <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline"
-                                        id="formCancelar">
+                                    <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline" id="formCancelar">
                                         @csrf
-                                        <button type="submit"
-                                            class="btn btn-outline-danger btn-lg border-0"><i class="fa-solid fa-ban"></i></i></button>
+                                        <button type="submit" class="btn btn-outline-danger btn-lg border-0"><i class="fa-solid fa-ban"></i></i></button>
                                     </form>
                                 @else
-                                    <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline"
-                                        id="formEliminar">
+                                    <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline" id="formEliminar">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                            class="btn btn-outline-danger btn-lg border-0"><i class="fa fa-trash"></i></button>
+                                        <button type="submit" class="btn btn-outline-danger btn-lg border-0"><i class="fa fa-trash"></i></button>
                                     </form>
                                 @endif
                             </td>
@@ -196,29 +208,37 @@
             input.value = input.value.replace(/\./g, '');
         }
 
+        function validar(input) {
+            // Obtener los valores mínimo y máximo del input
+            const min = parseInt(input.min, 10); // 0
+            const max = parseInt(input.max, 10); // $articulo->pivot->cantidad
+            let value = input.value;
 
-        // function aceptarCantidad(pedidoId) {
-        //     const cantidadAceptada = document.querySelector(`input[name='aceptadas[${pedidoId}]']`).value;
+            // Eliminar ceros iniciales, excepto si el valor es "0"
+            if (value.length > 1 && value.startsWith("0")) {
+                value = value.replace(/^0+/, '');
+            }
 
-        //     fetch(`/aceptar-cantidad/${pedidoId}`, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        //             },
-        //             body: JSON.stringify({
-        //                 cantidad: cantidadAceptada
-        //             })
-        //         })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             if (data.success) {
-        //                 alert('Stock actualizado exitosamente.');
-        //                 location.reload();
-        //             } else {
-        //                 alert('Error al actualizar el stock.');
-        //             }
-        //         });
-        // }
+            // Convertir el valor a número entero
+            const numericValue = parseInt(value, 10);
+
+            // Validar que el valor sea un número válido
+            if (isNaN(numericValue)) {
+                input.value = min; // Si no es un número, asignar el valor mínimo
+
+                return;
+            }
+
+            // Validar que el número esté dentro del rango permitido
+            if (numericValue < min) {
+                input.value = min; // Ajustar al mínimo si es menor
+
+            } else if (numericValue > max) {
+                input.value = max; // Ajustar al máximo si es mayor
+            } else {
+                input.value = numericValue; // Asignar el valor ajustado
+            }
+
+        }
     </script>
 @endsection

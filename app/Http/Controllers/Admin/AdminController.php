@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Talle;
+use App\Models\Compra;
 use App\Models\Calzado;
 use App\Models\Deporte;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Descuento;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\ReposicionMercaderia;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -30,6 +31,7 @@ class AdminController extends Controller
         // Recuento para las cards
         $articulos = Articulo::where('id_categoria', '1')->count();
         $ropas = Articulo::where('id_categoria', '2')->count();
+        $comprasRealizadas = Compra::all()->count();
         $suplementos = Articulo::where('id_categoria', '3')->count();
         $adminesActivos = User::where('administrator', true)->count();
         $descuentosActivos = Descuento::count();
@@ -38,7 +40,7 @@ class AdminController extends Controller
 
 
         $title = "Sportivo - Admin";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'articulos', 'adminesActivos', 'ropas', 'descuentosActivos', 'reposicionesPendientes', 'suplementos', 'clientes'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'articulos', 'adminesActivos', 'ropas', 'descuentosActivos', 'reposicionesPendientes', 'suplementos', 'clientes', 'comprasRealizadas'));
     }
 
     /*

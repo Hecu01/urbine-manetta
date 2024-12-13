@@ -208,7 +208,7 @@ class TiendaController extends Controller
 
             // Un error inesperado dejaría la bd como estaba || redirigir atrás con errores
             DB::rollBack();
-            return redirect()->back()->withErrors('Hubo un problema al procesar su compra. Intente nuevamente.');
+            return redirect()->back()->withErrors('Hubo un problema al procesar su compra. Intente nuevamente.')->withInput();
 
         }
 
@@ -256,7 +256,17 @@ class TiendaController extends Controller
     
     public function cancelarCompra($id)
     {
+        // Obtenemos el id de la compra
         $compra = Compra::findOrFail($id);
+
+        $articulos = [];
+
+        foreach($compra->articulos as $articulo){
+            $articulos[] = $articulo->pivot->cantidad;
+        }
+
+        dd($articulos); 
+
         $compra->estado = 'Cancelado';
         $compra->save();
     

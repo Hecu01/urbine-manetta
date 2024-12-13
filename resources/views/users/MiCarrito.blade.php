@@ -15,9 +15,9 @@
             <div class="flex flex-col gap-6 flex-row">
                 <!-- Columna de items del carrito -->
                 <div class="flex-1 flex flex-col gap-6">
-                    <h1
-                        class="text-2xl font-bold shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm flex mb-0">
-                        Contenido del Carrito</h1>
+                    <h1 class="text-2xl font-bold shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm flex mb-0">
+                        Contenido del Carrito
+                    </h1>
 
                     @foreach ($cartItems as $item)
                         <div class="shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm flex mt-0">
@@ -60,12 +60,20 @@
                                 <p>
                                     <strong>Total</strong>: $ {{ number_format($item['total_price'], 0, ',', '.')  }}
                                 </p>
-                                <!-- Botón de Eliminar -->
-                                <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                </form>
+
+                                <div class="flex">
+                                    <!-- Botón de Eliminar -->
+                                    <div class="">
+                                        <form action="{{ route('cart.remove', $item['id']) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
+                                    <div class="mx-2">
+                                        <a href="{{ route('producto.show', $item['id']) }}" class="btn btn-primary">Ver articulo</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach

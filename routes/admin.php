@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\VentaController;
 use App\Http\Controllers\Admin\RopaDepController;
 use App\Http\Controllers\Admin\ArtDeportController;
 use App\Http\Controllers\Admin\PublicidadController;
@@ -11,10 +10,11 @@ use App\Http\Controllers\Admin\AdminesActivosController;
 use App\Http\Controllers\Admin\ClientesActivosController;
 use App\Http\Controllers\Admin\ReponerMercaderiaController;
 use App\Http\Controllers\Admin\SuplemDietaController;
+use App\Http\Controllers\Admin\CompraController;
 
 // Rutas que acceden los admins
 Route::middleware(['auth'])->group(function () {
-
+    Route::get('/ventas/pdf/{id}', [CompraController::class, 'pdf'])->name('pdf-ventas');
     // Inicio admin
     Route::get('/admin', [AdminController::class, 'admin'])->name('ir_admin');
 
@@ -107,9 +107,10 @@ Route::middleware(['auth'])->group(function () {
         // Route::post('/admin/publicidad', [PublicidadController::class, 'subir'])->name('guardar_publicidad');
         // Route::get('/publicidad', [PublicidadController::class, 'mostrarPublicidades'])->name('mostrar.publicidades');// Ruta para mostrar publicidades a todos los usuarios
         
-
-        // Ventas
-        Route::resource('ventas', VentaController::class);
+        
+        // Compras
+        Route::resource('compras', CompraController::class);
+        Route::get('/tabla-compras', [CompraController::class, 'tabla'])->name('compras.tabla');
 
         // Reposicion de mercadería -- resource
         Route::resource('reposicion-mercaderia', ReponerMercaderiaController::class);
@@ -135,9 +136,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/reponer-mercaderia/{id}', 'enviarSolicitudReponerMercaderia')->name('reponer_mercaderia');
 
             // Aceptar pedido
-            Route::put('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
+            Route::get('/articulos/{id}/verificar', 'paginaVerificacion')->name('articulos.verificar');
             Route::get('/articulos/{articulo_Id}/unidades-aceptadas', 'mostrarUnidadesAceptadas')->name('articulos.unidades_aceptadas');
+
             Route::post('/articulos/rechazar/{id}', 'rechazarPedido')->name('articulos.rechazar');
+            Route::put('/articulos/aceptar/{id}', 'aceptarPedido')->name('articulos.aceptar');
             Route::delete('/articulos/eliminar/{id}', 'eliminarPedido')->name('articulos.eliminar');
         });
 

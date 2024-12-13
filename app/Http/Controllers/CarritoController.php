@@ -142,9 +142,8 @@ class CarritoController extends Controller
         $cantidad = (int) $request->input('cantidad', 1);
         $descuento = $request->input('descuento', 0);
         $calzadoTalle = $request->input('calzadoTalle', null);
+        $talleRopaId = (int) $request->input('calzadoTalle_id', null);
         $categoria = (int) $request->input('id_categoria');
-
-
 
 
         // Verificar si es categoria art deport (1) o ropa deport (2)
@@ -161,7 +160,7 @@ class CarritoController extends Controller
 
         } else {
             // Si no es numérico, buscar en la tabla `talles`
-            $talle = Talle::where('talle_ropa', $calzadoTalle)->first();
+            $talle = Talle::where('id', $talleRopaId)->first();
             if ($talle) {
                 $calzadoTalle_id = $talle->id;  // Guardar el ID del talle
             } else {

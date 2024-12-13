@@ -119,24 +119,20 @@ class ArtDeportController extends Controller{
                 }
             }
         }
-    
+        
         // Lógica de unión para calzados si el producto es un calzado
         $tipoProducto = $request->input('tipoProducto');
         if ($tipoProducto == "calzado") {
             $calzados = $request->input('calzados');
             $stocks = $request->input('stocks');
-            $precios = $request->input('precios');
-    
             foreach ($calzados as $indice => $calzado) {
                 if (isset($stocks[$indice]) && $stocks[$indice] > 0) {
                     $calzadoExistente = Calzado::where('calzado', $calzado)->first();
     
                     if ($calzadoExistente) {
                         $stock = $stocks[$indice];
-                        $precio = $precios[$indice];
                         $articuloNuevo->calzados()->attach($calzadoExistente->id, [
                             'stocks' => $stock,
-                            'precio' => $precio
                         ]);
                     }
                 }
@@ -187,7 +183,6 @@ class ArtDeportController extends Controller{
             $calzados = $request->input('calzados');       
             $stocks = $request->input('stocks');          
             $calzadoIds = $request->input('calzado_ids'); 
-            $precios = $request->input('precios');
             
             foreach ($articulo->calzados as $calzado) {
                 // Verifica si el calzado existe en la solicitud y si su checkbox está marcado
@@ -202,13 +197,12 @@ class ArtDeportController extends Controller{
     
             foreach ($calzados as $indice => $calzado) {
                 $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0;
-                $precio = isset($precios[$indice]) ? $precios[$indice] : 0;
     
                 // Busca el ID del calzado
                 $calzadoId = Calzado::where('calzado', $calzado)->value('id');
                             
                 // Crea un arreglo con los datos del calzado
-                $datosCalzado = ['stocks' => $stock, 'precio' => $precio];
+                $datosCalzado = ['stocks' => $stock];
     
                 // Si el calzado no existe, crea uno nuevo y establece los valores de stock y precio
                 if (!$calzadoId) {

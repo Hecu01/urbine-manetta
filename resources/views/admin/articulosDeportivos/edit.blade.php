@@ -111,17 +111,7 @@
                                         @endif
 
                                     </select>
-                                    @if ($articulo->tipo_producto == 'calzado')
-                                        <span id="addCalzados"
-                                            class="input-group-text hover:cursor-pointer hover:scale-105 "
-                                            style="border:1px solid rgb(16, 153, 163, 0.377);" data-bs-toggle="modal"
-                                            data-bs-target="#editar-calzados-modal">+</span>
-                                    @else
-                                        <span id="addCalzados"
-                                            class="input-group-text hover:cursor-pointer hover:scale-105 "
-                                            style="border:1px solid rgb(16, 153, 163, 0.377); display: none;"
-                                            data-bs-toggle="modal" data-bs-target="#editar-calzados-modal">+</span>
-                                    @endif
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -131,9 +121,19 @@
                         </div>
                         <!-- Sección de las etiquetas -->
                         <div class="col-md-12 flex justify-between mt-3" style="align-content: center; ">
-                            <div class="col-md-12 grid">
-                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editar-etiquetas-modal" type="button" >Actualizar etiquetas</button>
-                            </div>
+                            @if($articulo->tipo_producto == 'calzado')
+                            
+                                <div class="col-md-5 grid">
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#editar-etiquetas-modal" type="button" >Etiquetas</button>
+                                </div>
+                                <div class="col-md-6 grid">
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editar-descripcion-modal" type="button" >Descripción</button>
+                                </div>
+                            @else
+                                <div class="col-md-12 grid">
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#editar-etiquetas-modal" type="button" >Actualizar Etiquetas</button>
+                                </div>
+                            @endif
 
                         </div>
                         <div class="col-md-12 flex justify-between mt-2" style="align-content: center">
@@ -194,7 +194,7 @@
                                 <div class="col-md-5">
                                     @if($articulo->tipo_producto == 'calzado')
                                         <label for="stock-calzados" class="form-label">Stock</label>
-                                        <input type="text" readonly  name="stock" placeholder="cantidad" class="form-control estilo-readonly total stock_input " id="stock-calzados"  required value={{$articulo->stock}} >
+                                        <input type="text" readonly  name="stock" placeholder="cantidad" class="form-control estilo-readonly total stock_input " id="stock-calzados" onclick="mostrarMensaje();"  required value={{$articulo->stock}} >
                                     @else
                                         <label for="stock-accesorios" class="form-label">Stock</label>
                                         <input type="text"  name="stock" placeholder="cantidad"  class="form-control total " id="stock-accesorios" required value={{$articulo->stock}} >
@@ -221,13 +221,23 @@
                 <div style="display: block" id="contenedor-modal-calzados">
                     @include('admin.articulosDeportivos.partials.ModalEditCalzados')
                     @include('admin.articulosDeportivos.partials.ModalEditEtiquetas')
+                    @include('admin.articulosDeportivos.partials.ModalEditDescripcion')
                 </div>
 
                 {{-- Botón actualizar / cambiar precio --}}
                 <div class="col-12 d-flex " style="justify-content:space-between">
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">ACTUALIZAR PRODUCTO</button>
                     </div>
+
+                    <div class=" col-md-3 ">
+                        @if($articulo->tipo_producto == 'calzado')
+                            <button id="addCalzados" type="button" class="bg-slate-600 rounded-full py-2 px-5 hover:cursor-pointer hover:scale-105  text-white " data-bs-toggle="modal" data-bs-target="#editar-calzados-modal">Talles </button>
+                        @else
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editar-descripcion-modal" type="button" >Actualizar descripción</button>
+                        @endif
+                    </div>
+                    
                     <div class="col-md-3 d-flex">
                         <label for="inputState" class="form-label mx-2 mt-2" >PRECIO</label>
                         <div class="input-group">
@@ -310,5 +320,32 @@
     </article>
 
 
+
+
    
 @endsection
+<script>
+
+        function mostrarMensaje() {
+            // evalua si está en solo lectura
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["error"]("Stock es la sumatoria de todos los calzados, no se puede editar.", "Información Sportivo");
+        };    
+</script>
