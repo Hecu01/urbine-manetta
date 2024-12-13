@@ -256,7 +256,17 @@ class TiendaController extends Controller
     
     public function cancelarCompra($id)
     {
+        // Obtenemos el id de la compra
         $compra = Compra::findOrFail($id);
+
+        $articulos = [];
+
+        foreach($compra->articulos as $articulo){
+            $articulos[] = $articulo->pivot->cantidad;
+        }
+
+        dd($articulos); 
+
         $compra->estado = 'Cancelado';
         $compra->save();
     

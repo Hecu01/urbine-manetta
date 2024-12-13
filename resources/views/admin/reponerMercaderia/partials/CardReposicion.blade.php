@@ -1,7 +1,7 @@
 <div class="">
 
     <article class="article0 bg-yellow-500   px-2 hover:scale-105"  >
-        <a href="{{ route('articulos-deportivos.index') }}" class="text-white no-underline">
+        <a href="{{ route('reposicion-mercaderia.index') }}" class="text-white no-underline">
         <div class="top">
             <span>
                 <i class="fa-solid fa-truck"></i>

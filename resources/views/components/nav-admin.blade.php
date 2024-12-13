@@ -98,7 +98,9 @@
         <div class="flex center ml-5">
             <div class="">
                 <div class="mx-2" style="">
-                    <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="logo sportivo" draggable="false" class="p-1" style="background-color: white; width: 58px; height:49.5px; border-radius: 100%;  box-shadow: 0px 0px 4px #fff">
+                    <a href="{{ route('ir_admin') }}" class="">
+                        <img src="{{asset('assets/img/sportivo-logo.svg')}} " alt="logo sportivo" draggable="false" class="p-1 hover:scale-105" style="background-color: white; width: 58px; height:49.5px; border-radius: 100%;  box-shadow: 0px 0px 4px #fff">
+                    </a>
                 </div>
 
             </div>

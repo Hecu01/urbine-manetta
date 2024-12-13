@@ -40,12 +40,15 @@
                         <th style="width: 100px">Nombre</th>
                         <th style="width: 150px">Pedido</th>
                         <th>Estado</th>
-                        <th>Aceptadas</th>
+                        <th>Llegaron (stock)</th>
                         <th>Accion</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-articulos-deportivos">
                     @foreach ($reposiciones as $reposicion)
+
+
+                        {{-- Variables iniciales --}}
                         @php
                             $id = $reposicion->id;
                             $estado = $reposicion->estado;
@@ -53,14 +56,17 @@
                             $nombre = '';
                             $stockArray = [];
                             $numeroCalzadoArray = [];
-
+                            $totalAceptadas = 0;
                         @endphp
 
+                        {{-- Armar información del articulo a reponer --}}
                         @foreach ($reposicion->articulos as $articulo)
                             @php
-                                $foto = $articulo->foto;
+                                $foto = $articulo->fotos->first()->ruta;
                                 $nombre = $articulo->nombre;
                                 $stock = $articulo->pivot->cantidad;
+                                $id_categoria = $articulo->id_categoria;
+                                $tipo_producto = $articulo->tipo_producto;
                                 $talleIdArray = [];
                                 foreach ($articulo->talles as $talle) {
                                     $talleIdArray[] = $talle->id;
@@ -68,18 +74,14 @@
                                 $numeroCalzadoArray[] = $articulo->pivot->valor_calzado_talle; // Aquí accedes al número del calzado
 
                                 $stockArray[] = $articulo->pivot->cantidad;
+                                $totalAceptadas += $articulo->pivot->unidades_aceptadas;
                             @endphp
                         @endforeach
 
                         <tr style="vertical-align: middle">
                             <td>{{ $id }}</td>
                             <td>
-                                @if ($articulo->fotos->isNotEmpty())
-                                    <img src="{{ url('productos/' . $articulo->fotos->first()->ruta) }}"
-                                        alt="{{ $articulo->nombre }}" width="70px" height="70px">
-                                @else
-                                    <span>Sin imagen</span>
-                                @endif
+                                <img src="{{ url('productos/' . $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
                             </td>
                             <td>{{ $nombre }}</td>
                             <td style="justify-content: center; align-items: center">
@@ -121,20 +123,32 @@
                             </td>
 
                             <td>
+
                                 {{--  --}}
                                 @if ($estado == 'Pendiente')
-                                    <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline"
-                                        id="formAceptarCantidad">
-                                        @method('PUT')
-                                        @csrf
-                                        <input type="number" name="unidades_aceptadas[]" placeholder="Cantidad" required
-                                            min="0" class="form-control" style="width: 100px; display: inline-block">
 
-                                        <button type="submit" class="btn btn-outline-success border-0 p-1"><i
-                                                class="fa-solid fa-check"></i></button>
-                                    </form>
+
+                                    @if($id_categoria == 2 || $tipo_producto == 'calzado')
+
+                                        <a href="{{ route('articulos.verificar', $id) }}" class="btn btn-success">
+                                            Verificar
+                                        </a>
+
+                                    @else 
+                                        <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline"
+                                            id="formAceptarCantidad">
+                                            @method('PUT')
+                                            @csrf
+                                            <input type="number" name="unidades_aceptadas[]" placeholder="Cantidad" required
+                                                min="0" class="form-control" style="width: 100px; display: inline-block">
+
+                                            <button type="submit" class="btn btn-outline-success border-0 p-1"><i
+                                                    class="fa-solid fa-check"></i></button>
+                                        </form>
+                                    @endif
+
                                 @else
-                                    <span> {{ $articulo->pivot->unidades_aceptadas ?? 'Aceptada' }}</span>
+                                    <span> {{$totalAceptadas}}</span>
                                 @endif
                             </td>
 
@@ -143,16 +157,18 @@
                                     <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline"
                                         id="formCancelar">
                                         @csrf
-                                        <button type="submit" class="btn btn-outline-danger btn-lg border-0"><i
-                                                class="fa-solid fa-ban"></i></i></button>
+                                        <button type="submit" class="btn btn-danger  border-0">
+                                            Cancelar
+                                        </button>
                                     </form>
                                 @else
                                     <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline"
                                         id="formEliminar">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-lg border-0"><i
-                                                class="fa fa-trash"></i></button>
+                                        <button type="submit" class="btn btn-danger  border-0">
+                                            Borrar
+                                        </button>
                                     </form>
                                 @endif
                             </td>

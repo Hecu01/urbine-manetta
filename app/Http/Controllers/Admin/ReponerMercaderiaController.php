@@ -54,14 +54,14 @@ class ReponerMercaderiaController extends Controller
     public function tablaArticulosDeportivos()
     {
         $user = Auth::user();
-        $artDeportivos = ReposicionMercaderia::where('id_categoria', '1')
+        $reposiciones = ReposicionMercaderia::where('id_categoria', '1')
             ->with('articulos.calzados')
             ->orderBy('id', 'desc')
             ->get();
         $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
         $title = "Tabla reposicion de ropas deportivas";
 
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.tabla', compact('title', 'artDeportivos', 'reposicionesPendientes'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerArtDeportivos.tabla', compact('title', 'reposiciones', 'reposicionesPendientes'));
     }
 
 
@@ -87,7 +87,10 @@ class ReponerMercaderiaController extends Controller
     public function tablaRopasDeportivas()
     {
         $user = Auth::user();
-        $reposiciones = ReposicionMercaderia::where('id_categoria', '2')->with('articulos.talles')->get();
+        $reposiciones = ReposicionMercaderia::where('id_categoria', '2')
+                                            ->with('articulos.talles')  
+                                            ->with('articulos.fotos')
+                                            ->get();
         $reposicionesPendientes = ReposicionMercaderia::where('estado', 'Pendiente')->count();
         $title = "Tabla reposicion de ropas deportivas";
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerRopaDeportiva.tabla', compact('title', 'reposiciones', 'reposicionesPendientes'));
@@ -125,8 +128,29 @@ class ReponerMercaderiaController extends Controller
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.ReponerSuplemYDieta.tabla', compact('title', 'artDeportivos', 'reposicionesPendientes'));
     }
 
+   /*
+    |--------------------------------------------------------------------------
+    | 
+    |--------------------------------------------------------------------------
+    */
 
-    // Pagina para reponer por id
+
+    // Pagina verificar unidades llegadas 
+    public function paginaVerificacion($id)
+    {
+        $user = Auth::user();
+
+        $reposicionesPendientes = ReposicionMercaderia::all()->count();
+
+        $reposicion = ReposicionMercaderia::findOrFail($id);
+
+        $title = "Verificar reposicion";
+
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.reponerMercaderia.verificar', compact('title' , 'reposicion', 'reposicionesPendientes'));
+    }
+
+
+    // Pagina para solicitar mercadería
     public function solicitarMercaderia($id)
     {
         $user = Auth::user();
@@ -141,19 +165,35 @@ class ReponerMercaderiaController extends Controller
 
     
 
-    // Solicitud enviada a la Database
+    // Solicitud POST enviada a la Database
     public function enviarSolicitudReponerMercaderia(Request $request)
     {
 
-        $categoria = $request->input('id_categoria'); // categoria: 1 artDeport 2 ropDeport 3 supDeport
-        $unidades = $request->input('unidades_reposicion'); // Stock a solicitar
-        $tipo_producto = $request->input('tipo_producto'); // Variable tipo producto
-        $id_artDeport = $request->input('id_artDeport'); // Variable tipo producto
-        $relacionMuchos = $request->input('muchos_a_muchos_bool'); // Booleano muchos a muchos
+        /* Categoría importante si es: 1 (articulo deportivo) y calzado // 2 (ropa deportiva, puramente con relacion)
+           // 3 (suplementos y dieta), sin relacion */
+        $categoria = $request->input('id_categoria'); 
+        
+        // Unidades a reponer (sin relacion)
+        $unidades = $request->input('unidades_reposicion'); 
+        
+        // Importante, si es calzado más que nada (hay relacion)
+        $tipo_producto = $request->input('tipo_producto');
+        
+        // Id del producto a reponer 
+        $id_articulo = $request->input('id_articulo'); 
+
+        // Booleano para reposición de articulos con relacion
+        $relacionMuchos = $request->input('muchos_a_muchos_bool'); 
+        
+        // Stock para reponer cada talle o calzado
         $stockMuchos = $request->input('stock_solicitado_muchos_a_muchos');
+
+        // Respectivos ids de los talles a reponer
         $idMuchos = $request->input('art_id_muchos_a_muchos');
+
+        // Respectivo valor de los talles a reponer (XL, XXL, 38, 40, etc)
         $valorCalzadoTalles = $request->input('valorCalzadoTalle');
-        dd($valorCalzadoTalle);
+
 
         // Creamos la nueva reposicion, agregamos estado pendiente
         $reposicion = ReposicionMercaderia::create([
@@ -162,41 +202,61 @@ class ReponerMercaderiaController extends Controller
         ]);
 
 
-        // Hacemos un if logico entre un producto array o no
+        // Si tiene relación, entra al bloque de código (si es false, se ahorra mucho código)
         if ($relacionMuchos == 'true') {
 
-            // Camino sobre relacion de muchos a muchos
+            // Dar la cantidad de vueltas necesarias (se usó $idMuchos, podía haber sido $valorCalzadoTalles)
             foreach ($idMuchos as $indice => $idMucho) {
+
+                // Stock a reponer por cada talle/calzado
                 $stock = $stockMuchos[$indice];
-                $idCalzado = $idMuchos[$indice];
-                $idRopa = $idMuchos[$indice];
+
+                // Carga el valor del talle/calzado
                 $valorCalzadoTalle = $valorCalzadoTalles[$indice];
 
-                // Verificamos si se solicito stock                
+
+                // Verificamos si se solicito stock -si se envió un 0 lo ignora. Simple.       
                 if ($stock > 0) {
 
-                    // if entre calzado y ropa
+                    // ¿Es calzado? Sí => entra; No => va al 'else';
                     if ($tipo_producto == "calzado") {
-                        $reposicion->articulos()->attach($id_artDeport, [
+
+                        // Carga el id de cada calzado
+                        $idCalzado = $idMuchos[$indice];
+
+                        $reposicion->articulos()->attach($id_articulo, [
                             'cantidad' => $stock,
-                            'calzado_id' => $idCalzado,  // Aquí usas el $idCalzado dinámico
+                            'calzado_id' => $idCalzado,  
                             'valor_calzado_talle' => $valorCalzadoTalle,
+                            'unidades_aceptadas' => 0,
                         ]);
+
+
                     } else {
-                        $reposicion->articulos()->attach($id_artDeport, [
+
+                        // Carga el id de cada talle
+                        $idRopa = $idMuchos[$indice];
+
+                        $reposicion->articulos()->attach($id_articulo, [
                             'cantidad' => $stock,
-                            'talla_id' => $idRopa, // Puedes llenar esto según tu lógica
-                            'valor_calzado_talle' => $valorCalzadoTalle
+                            'talla_id' => $idRopa, 
+                            'valor_calzado_talle' => $valorCalzadoTalle,
+                            'unidades_aceptadas' => 0,
                         ]);
+
                     }
                 }
             }
+
         } else {
-            // Por aca si no es relacion de muchos a muchos
-            $reposicion->articulos()->attach(
-                ['id' => $id_artDeport],
-                ['cantidad' => $unidades]
-            );
+
+            // Por aca si no tiene relacion
+            $reposicion->articulos()->attach($id_articulo, [ 
+                'cantidad' => $unidades,
+                'unidades_aceptadas' => 0
+            ]);
+
+
         }
         return redirect()->back()->with('success', 'Solicitud de reposición creada');
     }
@@ -205,65 +265,117 @@ class ReponerMercaderiaController extends Controller
     public function aceptarPedido(Request $request, $id)
     {
         $artDeportivo = ReposicionMercaderia::with(['articulos.calzados', 'articulos.talles'])->find($id);
+        
+        // Validar para evitar que la profe lo rompa
+        // $request->validate([
+        //     'cantidadLlegada.*' => [
+        //         'required', 
+        //         'integer', 
+        //         'min:0', 
+        //         'max:' . $artDeportivo->pivot->cantidad
+        //     ],
+        // ]);
 
-        if ($artDeportivo) {
-            $stockIncrementArray = [];
-            $talleStockIncrementArray = [];
-            $stockPrincipal = 0;
+        // Verifica si tiene relacion (si es ropa o calzado)
+        $tipoProducto= $request->input('tipo_producto'); 
 
-            // Obtiene las unidades aceptadas desde el request
-            $unidadesAceptadas = $request->input('unidades_aceptadas');
+        // Array de la cantidad recibida 
+        $cantidadRecibida = $request->input('cantidadRecibida', []); 
 
-            foreach ($artDeportivo->articulos as $index => $articulo) {
-                // Incrementar stock del artículo si no tiene relación de muchos a muchos
-                if ($articulo->calzados->isEmpty() && $articulo->talles->isEmpty()) {
-                    // Sumar las unidades aceptadas al stock
-                    $articulo->stock += intval($unidadesAceptadas[$index]);
-                    // $articulo->stock += intval($articulo->pivot->cantidad);
-                } else {
-                    $tallaIdArray[] = intval($articulo->pivot->talla_id);
-                    $calzadoIdArray[] = intval($articulo->pivot->calzado_id);
-                    $stockIncrementArray[] = intval($unidadesAceptadas[$index]); // Usa unidades aceptadas
-                    $stockPrincipal += intval($unidadesAceptadas[$index]);
-                    // $stockIncrementArray[] = intval($articulo->pivot->cantidad);
-                    // $stockPrincipal += intval($articulo->pivot->cantidad);
-                    $articulo->stock += $stockPrincipal;
-                }
-                // Guardar las unidades aceptadas en la relación pivot
-                $articulo->pivot->unidades_aceptadas = intval($unidadesAceptadas[$index]);
-                $articulo->pivot->save(); // Guarda la relación pivot
+        // La cantidad recibida pasa a ser int
+        $cantidadRecibida2 = array_map('intval', $cantidadRecibida); // Los datos pasan a ser int
+
+        // Sumatoria del array 
+        $totalRecibidas = array_sum($cantidadRecibida2); // Calcular la suma total
+        
+        // Unidades aceptadas (cuando no tiene relacion)
+        $unidadesAceptadas = $request->input('unidades_aceptadas', 0);
+        // dd($unidadesAceptadas);
+        // $stockIncrementArray = []; No se usa más, $totalRecibidas ocupará su lugar        
+        // $talleStockIncrementArray = []; Tampoco se usa más, array $cantidadRecibida toma su lugar
+        
+
+        // Recorremos los talles solicitados (si no tiene relacion, dará una sola vuelta)
+        foreach ($artDeportivo->articulos as $index => $articulo) {
+
+            // Pregunta ¿El articulo tiene relacion?
+            if ($tipoProducto == 'ropa' || $tipoProducto == 'calzado') {
+
+                $tallaIdArray[] = intval($articulo->pivot->talla_id);
+
+                $calzadoIdArray[] = intval($articulo->pivot->calzado_id);
+                
+                $articulo->pivot->unidades_aceptadas = $cantidadRecibida[$index];
+                
+                $articulo->stock += $totalRecibidas; 
+            } else {
+
+                // Sumar las unidades aceptadas al stock
+                $articulo->stock += intval($unidadesAceptadas);
+                DB::table('articulo_reposicion_mercaderia')
+                    ->where('reposicion_mercaderia_id', $artDeportivo->id)
+                    ->increment('unidades_aceptadas', intval($unidadesAceptadas));
             }
+
             $articulo->save();
 
-
-            // Incrementar stock de calzados o tallas ropa
-            if (!$articulo->calzados->isEmpty() || !$articulo->talles->isEmpty()) {
-                // es calzado
-                if ($articulo->id_categoria == 1) {
-
-                    foreach ($calzadoIdArray as $index => $calzadoId) {
-                        DB::table('articulo_calzado')
-                            ->where('calzado_id', $calzadoId)
-                            ->increment('stocks', $stockIncrementArray[$index]);
-                    }
-                } else {
-
-                    foreach ($tallaIdArray as $index => $tallaId) {
-                        DB::table('articulo_talle')
-                            ->where('talle_id', $tallaId)
-                            ->increment('stocks', $stockIncrementArray[$index]);
-                    }
-                }
-            }
-
-
-            $artDeportivo->estado = 'Finalizado';
-            $artDeportivo->save();
-
-            return redirect()->back()->with('success', 'Pedido aceptado y stock actualizado correctamente.');
+    
         }
 
-        return redirect()->back()->with('danger', 'Pedido no encontrado.');
+        // Incrementar stock de calzados o tallas ropa
+        if ($tipoProducto == 'ropa' || $tipoProducto == 'calzado') {
+
+            // Filtro entre ropa y calzado
+            if ($articulo->id_categoria == 1) {
+
+                foreach ($calzadoIdArray as $index => $calzadoId) {
+                    // Actualizar en la tabla pivot de articulo_talle
+                    DB::table('articulo_calzado')
+                        ->where('calzado_id', $calzadoId)
+                        ->increment('stocks', $cantidadRecibida[$index]);
+                    
+                    // Actualizar en articulo_reposicion_mercaderia
+                    DB::table('articulo_reposicion_mercaderia')
+                        ->where('calzado_id', $calzadoId)
+                        ->where('reposicion_mercaderia_id', $artDeportivo->id)
+                        ->increment('unidades_aceptadas', $cantidadRecibida[$index]);
+                }
+            } else {
+
+                foreach ($tallaIdArray as $index => $tallaId) {
+
+                    // Actualizar en la tabla pivot de articulo_talle
+                    DB::table('articulo_talle')
+                        ->where('talle_id', $tallaId)
+                        ->increment('stocks', $cantidadRecibida[$index]);
+                    
+                    // Actualizar en articulo_reposicion_mercaderia
+                    DB::table('articulo_reposicion_mercaderia')
+                        ->where('talla_id', $tallaId)
+                        ->where('reposicion_mercaderia_id', $artDeportivo->id)
+                        ->increment('unidades_aceptadas', $cantidadRecibida[$index]);
+                }
+
+            }
+        }
+
+        $artDeportivo->estado = 'Finalizado';
+        $artDeportivo->save();
+
+        switch ($articulo->id_categoria) {
+            case 1:
+                return redirect()->route('tablaArticulosDeportivos')->with('success', 'Pedido aceptado y stock actualizado correctamente.');
+                break;
+            case 2:
+                return redirect()->route('tablaRopasDeportivas')->with('success', 'Pedido aceptado y stock actualizado correctamente.');
+                break;
+            case 3:
+                return redirect()->route('tablaSupDieta')->with('success', 'Pedido aceptado y stock actualizado correctamente.');
+                break;
+            
+            default:
+        }
+    
     }
 
     // Visualizar las unidades aceptadas

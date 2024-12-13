@@ -73,57 +73,55 @@
                 @endforeach
         
                 <tr style="vertical-align: middle">
-                    <td>{{ $id }}</td>
-                    <td>
-                        <img draggable="false" src="{{ url('producto/' . $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
-                    </td>
-                    <td>{{ $nombre }}</td>
-                    <td style="justify-content: center; align-items: center">
-                        <div>
-                            @if(empty($calzadoIdArray))
-                                <strong>Unidades:</strong> <br> {{ $stock ?? '' }}
-                            @else
-                                <strong>Talles:</strong> <br> {{ json_encode($numeroCalzadoArray) }} <br>
-                                <strong>Unidades:</strong> <br> {{ json_encode($stockArray) }} <br>
-                            @endif
-                        </div>
-                    </td>
-                    <td>
-                      @switch($estado)
-                          @case('Finalizado')
-                            <div class="bg-green-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
-                              {{ $estado }}
-                            </div>
-                            @break
+                  <td>{{ $id }}</td>
+                  <td>
+                    <img draggable="false" src="{{ url('producto/' . $foto) }}" alt="{{ $nombre }}" width="70px" height="70px">
+                  </td>
+                  <td>{{ $nombre }}</td>
+                  <td style="justify-content: center; align-items: center">
+                    <div>
+                      @if(empty($calzadoIdArray))
+                        <strong>Unidades:</strong> <br> {{ $stock ?? '' }}
+                      @else
+                        <strong>Talles:</strong> <br> {{ json_encode($numeroCalzadoArray) }} <br>
+                        <strong>Unidades:</strong> <br> {{ json_encode($stockArray) }} <br>
+                      @endif
+                    </div>
+                  </td>
+                  <td>
+                    @switch($estado)
+                        @case('Finalizado')
+                          <div class="bg-green-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
+                            {{ $estado }}
+                          </div>
+                          @break
 
-                          @case('Pendiente')
-                            <div class="bg-yellow-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
-                              {{ $estado }}
-                            </div>
-                            @break
+                        @case('Pendiente')
+                          <div class="bg-yellow-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
+                            {{ $estado }}
+                          </div>
+                          @break
 
-                          @case('Cancelado')
-                            <div class="bg-rose-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
-                              {{ $estado }}
-                            </div>
-                            @break
+                        @case('Cancelado')
+                          <div class="bg-rose-500 text-white uppercase px-2 py-1 rounded-full" style="font-size: .8em">
+                            {{ $estado }}
+                          </div>
+                          @break
 
-                          @default
-                              
-                      @endswitch
+                        @default
+                            
+                    @endswitch
 
-                    </td>
+                  </td>
 
-                    <td>
+                  <td>
                       {{--  --}}
                       @if ($estado == 'Pendiente')
                           <form action="{{ route('articulos.aceptar', $id) }}" method="POST" class="d-inline"
                               id="formAceptarCantidad">
                               @method('PUT')
                               @csrf
-                              <input type="number" name="unidades_aceptadas[]" placeholder="Cantidad" required
-                                  min="0" class="form-control"
-                                  style="width: 100px; display: inline-block">
+                              <input type="number" name="unidades_aceptadas" placeholder="Cantidad" required min="0"  max="{{ $stock }}" class="form-control" style="width: 100px; display: inline-block" oninput="validar(this)">
 
                               <button type="submit" class="btn btn-outline-success border-0 p-1"><i class="fa-solid fa-check"></i></button>
                           </form>
@@ -132,24 +130,20 @@
                       @endif
                   </td>
 
-                    <td class=" " style="font-size: .8em" id="acciones">
-                                @if ($estado == 'Pendiente')
-                                    <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline"
-                                        id="formCancelar">
-                                        @csrf
-                                        <button type="submit"
-                                            class="btn btn-outline-danger btn-lg border-0"><i class="fa-solid fa-ban"></i></i></button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline"
-                                        id="formEliminar">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="btn btn-outline-danger btn-lg border-0"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                @endif
-                            </td>
+                  <td class=" " style="font-size: .8em" id="acciones">
+                    @if ($estado == 'Pendiente')
+                      <form action="{{ route('articulos.rechazar', $id) }}" method="POST" class="d-inline" id="formCancelar">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger btn-lg border-0"><i class="fa-solid fa-ban"></i></i></button>
+                      </form>
+                    @else
+                      <form action="{{ route('articulos.eliminar', $id) }}" method="POST" class="d-inline" id="formEliminar">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger btn-lg border-0"><i class="fa fa-trash"></i></button>
+                      </form>
+                    @endif
+                  </td>
                 </tr>
 
             @endforeach
@@ -178,6 +172,38 @@
 
 
   <script>
+    function validar(input) {
+      // Obtener los valores mínimo y máximo del input
+      const min = parseInt(input.min, 10); // 0
+      const max = parseInt(input.max, 10); // $articulo->pivot->cantidad
+      let value = input.value;
+
+      // Eliminar ceros iniciales, excepto si el valor es "0"
+      if (value.length > 1 && value.startsWith("0")) {
+        value = value.replace(/^0+/, '');
+      }
+
+      // Convertir el valor a número entero
+      const numericValue = parseInt(value, 10);
+
+      // Validar que el valor sea un número válido
+      if (isNaN(numericValue)) {
+        input.value = min; // Si no es un número, asignar el valor mínimo
+
+        return;
+      }
+
+      // Validar que el número esté dentro del rango permitido
+      if (numericValue < min) {
+        input.value = min; // Ajustar al mínimo si es menor
+
+      } else if (numericValue > max) {
+        input.value = max; // Ajustar al máximo si es mayor
+      } else {
+        input.value = numericValue; // Asignar el valor ajustado
+    }
+
+  }
     function formatNumber(input) {
       // Eliminar caracteres no numéricos
       var num = input.value.replace(/[^0-9]/g, '');

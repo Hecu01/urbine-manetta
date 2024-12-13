@@ -34,14 +34,11 @@
             @foreach ($articulos as $articulo)
               <tr>
                 <td> 
-                  @foreach ($articulo->fotos as $foto)
-                    <img src="{{ url('productos/' . $foto->ruta) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px">
-                  @endforeach
-              
+                  <img src="{{ url('productos/' . $articulo->fotos->first()->ruta) }}" alt="{{ $articulo->nombre }}" width="70px" height="70px">
                 
                 </td>
                 <td>{{ $articulo->id }}</td>
-                <td style="max-width: 150px"><a href="{{ $articulo->id }}">{{ $articulo->nombre}}</a></td>
+                <td style="max-width: 150px">{{ $articulo->nombre}}</td>
                 <td class="precio">$ {{ number_format($articulo->precio, 0, ',', '.') }}</td>
                 <td>{{ $articulo->marca }}</td>
                 
@@ -56,7 +53,6 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $articulo->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar"><i class="fa-solid fa-trash"></i></button>
-                        <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-eye"></i></button>
                     </div>
                 </td>
               </tr>

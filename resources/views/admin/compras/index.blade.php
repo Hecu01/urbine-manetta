@@ -43,7 +43,7 @@
 
     <div class="">
       <article class="article0 bg-slate-700   px-2 hover:scale-105">
-          <a href="{{ route('solicitar-sup-diet-index') }}" class="text-white no-underline">
+          <a href="{{ route('compras.tabla') }}" class="text-white no-underline">
           <div class="top">
               <span>
                 <i class="fa-solid fa-table"></i>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use App\Models\User;
 use App\Models\Talle;
 use App\Models\Calzado;
@@ -27,10 +29,29 @@ class CompraController extends Controller
         $usuarios = User::where('administrator', false)->get();
         $comprasRealizadas = Compra::all()->count();
         $user = Auth::user();
-        $title = "Sportivo - Ventas";
+        $title = "Sportivo - Compras";
         return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.compras.index', compact('title', 'articulos','deportes', 'usuarios', 'comprasRealizadas'));
     }
 
+    public function tabla()
+    {
+        $compras = Compra::paginate(8);
+        $usuarios = User::where('administrator', false)->get();
+        $comprasRealizadas = Compra::all()->count();
+        $user = Auth::user();
+        $title = "Sportivo - Tabla compras";
+        return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.compras.tabla', compact('title', 'compras', 'usuarios', 'comprasRealizadas'));
+    }
+
+    public function pdf(string $id){
+        $compra = Compra::find($id);
+        $cliente = Compra::with('user')->get();
+
+        $detalleVenta = Compra::with('articulos')->find($id);
+        $pdf = Pdf::loadView('ventas.pdf', compact('venta', 'cliente', 'detalleVenta'));
+        // return $pdf->download('invoice.pdf');
+        return $pdf->stream();
+    }
 
     /**
      * Show the form for creating a new resource.
