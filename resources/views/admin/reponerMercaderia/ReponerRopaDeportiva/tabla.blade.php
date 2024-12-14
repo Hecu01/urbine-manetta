@@ -62,7 +62,7 @@
                         {{-- Armar información del articulo a reponer --}}
                         @foreach ($reposicion->articulos as $articulo)
                             @php
-                                $foto = $articulo->fotos->first()->ruta;
+                                $foto = $articulo->fotos->first() ? $articulo->fotos->first()->ruta : 'imagen-default.jpg';
                                 $nombre = $articulo->nombre;
                                 $stock = $articulo->pivot->cantidad;
                                 $id_categoria = $articulo->id_categoria;

@@ -53,7 +53,7 @@
                     <tbody>
                         @foreach ($reposicion->articulos as $articulo)
                             @php
-                                $foto = $articulo->fotos->first()->ruta;
+                                $foto = $articulo->fotos->first() ? $articulo->fotos->first()->ruta : 'imagen-default.jpg';
                                 $nombre = $articulo->nombre;
                             @endphp
                             <tr class="text-center"> 

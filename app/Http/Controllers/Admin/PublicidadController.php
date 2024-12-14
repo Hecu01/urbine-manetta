@@ -31,26 +31,29 @@ class PublicidadController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validar la entrada
-        $request->validate([
-            'titulo' => 'required|string|max:255',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'url' => 'required|url',
-        ]);
+{
+    // Validar la entrada
+    $request->validate([
+        'titulo' => 'required|string|max:255',
+        'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'url' => 'required|url',
+    ]);
 
-// Crear nueva entrada de publicidad
-$publicidadNueva = Publicidad::create([
-    'nombre' => $request->titulo, // Asigna el título al campo 'nombre'
-    'url' => $request->url,       // Asigna la URL
-    'foto' => $request->foto,
-]);
-        // Verificar y guardar la foto si está presente
+    // Crear nueva entrada de publicidad
+    $publicidadNueva = Publicidad::create([
+        'nombre' => $request->titulo, // Asigna el título al campo 'nombre'
+        'url' => $request->url,       // Asigna la URL
+        'foto' => $request->foto,
+    ]);
+
+    // Verificar y guardar la foto si está presente
     if ($request->hasFile('foto')) {
         $file = $request->file('foto');
-        $filename = $file->getClientOriginalName();
-        $carpetaDestino = storage_path('publicidades'); // Mismo nivel que "productos"
+        $filename = time() . '.' . $file->getClientOriginalExtension(); // Nombre único
 
+        // Guardar la imagen en la carpeta public/publicidades
+        $carpetaDestino = public_path('publicidades'); // Carpeta en public/
+        
         // Crear la carpeta si no existe
         if (!is_dir($carpetaDestino)) {
             mkdir($carpetaDestino, 0755, true);
@@ -60,7 +63,7 @@ $publicidadNueva = Publicidad::create([
         $file->move($carpetaDestino, $filename);
 
         // Guardar la ruta de la imagen en el modelo
-        $publicidadNueva->foto = $filename;
+        $publicidadNueva->foto = 'publicidades/' . $filename; // Guardamos la ruta relativa
         $publicidadNueva->save();
     }
 
@@ -69,7 +72,8 @@ $publicidadNueva = Publicidad::create([
     return redirect()->route('publicidad.index');
 }
 
-        
+
+
 
     public function destroy($id)
     {
