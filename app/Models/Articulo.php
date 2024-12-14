@@ -70,7 +70,7 @@ class Articulo extends Model
     public function compras()
     {
         return $this->belongsToMany(Compra::class, 'articulo_compra')
-            ->withPivot('cantidad', 'precio_unitario');
+            ->withPivot('cantidad', 'precio_unitario', 'talle_id', 'calzado_id');
     }
 
     // Relacion con una o varias imagenes

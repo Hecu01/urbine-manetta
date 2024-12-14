@@ -72,10 +72,10 @@ class TiendaController extends Controller
                 function ($attribute, $value, $fail) use ($request) {
                     $currentYear = now()->year;
                     $currentMonth = now()->month;
-    
+
                     $expiryYear = (int) $request->input('cardExpiryYear');
                     $expiryMonth = (int) $value;
-    
+
                     // Validar que la tarjeta no esté vencida
                     if ($expiryYear < $currentYear || ($expiryYear === $currentYear && $expiryMonth < $currentMonth)) {
                         $fail('La tarjeta está vencida.');
@@ -100,10 +100,10 @@ class TiendaController extends Controller
         // Calcular el total
         $cart = session()->get('carrito', []);
         $totalPrice = array_reduce($cart, fn($total, $item) => $total + ($item['price'] * $item['quantity']), 2);
-        
+
         // Intentar realizar la compra sin errores 
         try {
-            
+
             // Procesar compra
             DB::beginTransaction();
 
@@ -115,14 +115,14 @@ class TiendaController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            
-            
+
+
             // Recorrer los elementos cargados al carrito
-            foreach ($cart as $item) {    
+            foreach ($cart as $item) {
 
                 // Conseguir ID de la BD del producto en el carrito
                 $articulo = Articulo::find($item['id']);
-   
+
                 // Validación de stock
                 if ($articulo->calzados()->exists()) {
 
@@ -132,10 +132,9 @@ class TiendaController extends Controller
 
                     if (!$pivotData || $pivotData->pivot->stocks < $item['quantity']) {
                         return redirect()->back()
-                                    ->withErrors('Stock insuficiente para el Articulo: ' . $articulo->nombre . ' (Talle: ' . $item['calzadoTalle'] . ' Solicitado: ' . $item['quantity'] . ' Unidades). Verifique el talle o el articulo, si hay disponible para dicha cantidad e intente de nuevo.')
-                                    ->withInput();
+                            ->withErrors('Stock insuficiente para el Articulo: ' . $articulo->nombre . ' (Talle: ' . $item['calzadoTalle'] . ' Solicitado: ' . $item['quantity'] . ' Unidades). Verifique el talle o el articulo, si hay disponible para dicha cantidad e intente de nuevo.')
+                            ->withInput();
                     }
-
                 } elseif ($articulo->talles()->exists()) {
 
                     // Obtener el stock del talle específico en `articulo_talle`
@@ -143,22 +142,19 @@ class TiendaController extends Controller
 
                     if (!$pivotData || $pivotData->pivot->stocks < $item['quantity']) {
                         return redirect()->back()
-                                    ->withErrors('Stock insuficiente para el Articulo: ' . $articulo->nombre . ' (Talle: ' . $item['calzadoTalle'] . ' Solicitado: ' . $item['quantity'] . ' Unidades). Verifique el talle o el articulo, si hay disponible para dicha cantidad e intente de nuevo.')
-                                    ->withInput();
-
+                            ->withErrors('Stock insuficiente para el Articulo: ' . $articulo->nombre . ' (Talle: ' . $item['calzadoTalle'] . ' Solicitado: ' . $item['quantity'] . ' Unidades). Verifique el talle o el articulo, si hay disponible para dicha cantidad e intente de nuevo.')
+                            ->withInput();
                     }
-
                 } else {
 
                     // Validar stock en la tabla `articulos`
                     if ($articulo->stock < $item['quantity']) {
                         return redirect()->back()
-                                    ->withErrors('Stock insuficiente para el Articulo: ' . $articulo->nombre . ' (Talle: ' . $item['calzadoTalle'] . ' Solicitado: ' . $item['quantity'] . ' Unidades). Verifique el talle o el articulo, si hay disponible para dicha cantidad e intente de nuevo.')
-                                    ->withInput();
+                            ->withErrors('Stock insuficiente para el Articulo: ' . $articulo->nombre . ' (Talle: ' . $item['calzadoTalle'] . ' Solicitado: ' . $item['quantity'] . ' Unidades). Verifique el talle o el articulo, si hay disponible para dicha cantidad e intente de nuevo.')
+                            ->withInput();
                     }
-
                 }
-                
+
                 // Empieza actualizar el stock de "articulo_calzado", "articulo_talle", o stock en "articulos"
                 if ($articulo->calzados()->exists()) {
 
@@ -166,26 +162,22 @@ class TiendaController extends Controller
                     $articulo->calzados()->updateExistingPivot($item['calzadoTalle_id'], [
                         'stocks' => DB::raw('stocks - ' . $item['quantity'])
                     ]);
-                    
+
                     // Descuenta el stock en la tabla "articulos"
                     $articulo->decrement('stock', $item['quantity']);
-
-    
                 } elseif ($articulo->talles()->exists()) {
 
                     // Descuento en `articulo_talle`
                     $articulo->talles()->updateExistingPivot($item['calzadoTalle_id'], [
                         'stocks' => DB::raw('stocks - ' . $item['quantity'])
                     ]);
-                    
+
                     // Descuenta el stock en la tabla "articulos"
                     $articulo->decrement('stock', $item['quantity']);
-
                 } else {
-                    
+
                     // Solamente descuenta en "articulos"
                     $articulo->decrement('stock', $item['quantity']);
-
                 }
                 // Finalmente, crea una tupla nueva en la tabla pivot "articulo_compra"
                 $compra->articulos()->attach($item['id'], [
@@ -203,15 +195,12 @@ class TiendaController extends Controller
 
             session()->forget('carrito');
             return redirect()->route('home')->with('mensaje', 'Su compra ha sido realizada con éxito.');
-
         } catch (\Exception $e) {
 
             // Un error inesperado dejaría la bd como estaba || redirigir atrás con errores
             DB::rollBack();
             return redirect()->back()->withErrors('Hubo un problema al procesar su compra. Intente nuevamente.')->withInput();
-
         }
-
     }
 
     public function mostrarPago()
@@ -230,7 +219,7 @@ class TiendaController extends Controller
             // Si es administrador, mostrar todas las compras
             // $compras = Compra::with('articulos')->orderByDesc('id')->get();
             $compras = Compra::with(['articulos', 'user.domicilio'])->orderByDesc('id')->get();
-            
+
             // Con paginacion
             // $compras = Compra::with('articulos')->orderByDesc('id')->paginate(5);
 
@@ -250,28 +239,70 @@ class TiendaController extends Controller
         $compra = Compra::findOrFail($id);
         $compra->estado = 'Entregado';
         $compra->save();
-    
+
         return redirect()->back()->with('success', 'La compra ha sido marcada como Entregada.');
     }
-    
+
     public function cancelarCompra($id)
-    {
-        // Obtenemos el id de la compra
-        $compra = Compra::findOrFail($id);
+{
+    // Obtenemos el id de la compra junto con sus artículos
+    $compra = Compra::with('articulos')->findOrFail($id);
 
-        $articulos = [];
+    try {
+        DB::beginTransaction();
 
-        foreach($compra->articulos as $articulo){
-            $articulos[] = $articulo->pivot->cantidad;
+        foreach ($compra->articulos as $articulo) {
+            $item = Articulo::find($articulo['id']);
+
+            // Datos del pivot
+            $talleId = $articulo->pivot->talle_id ?? null;
+            $calzadoId = $articulo->pivot->calzado_id ?? null;
+            $cantidad = $articulo->pivot->cantidad;
+
+            // Depuración de datos para verificar que los pivotes son correctos
+            dd([
+                'articulo_id' => $articulo['id'],
+                'talle_id' => $talleId,
+                'calzado_id' => $calzadoId,
+                'cantidad' => $cantidad,
+            ]);
+
+            if ($calzadoId && $item->calzados()->exists()) {
+                // Incrementar el stock en articulo_calzado
+                $item->calzados()->updateExistingPivot($calzadoId, [
+                    'stocks' => DB::raw('stocks + ' . $cantidad),
+                ]);
+            } elseif ($talleId && $item->talles()->exists()) {
+                // Incrementar el stock en articulo_talle
+                $item->talles()->updateExistingPivot($talleId, [
+                    'stocks' => DB::raw('stocks + ' . $cantidad),
+                ]);
+            } else {
+                // Incrementar el stock general
+                $item->increment('stock', $cantidad);
+            }
         }
 
-        dd($articulos); 
-
+        // Cambiar estado de la compra
         $compra->estado = 'Cancelado';
         $compra->save();
-    
-        return redirect()->back()->with('success', 'La compra ha sido cancelada.');
+
+        DB::commit();
+
+        return redirect()->back()->with('success', 'La compra ha sido cancelada y el stock restaurado.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        // Mostrar error claro
+        dd([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ]);
+
+        return redirect()->back()->with('error', 'Ocurrió un error al cancelar la compra: ' . $e->getMessage());
     }
+}
+
 
 
     public function hombres()
