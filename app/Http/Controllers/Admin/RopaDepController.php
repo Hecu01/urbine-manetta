@@ -73,7 +73,7 @@ class RopaDepController extends Controller
         $request->validate([
             'tipoProducto' => 'required',
             'otroTipoProducto' => 'nullable|string|max:20',
-            'stock' => 'required|integer|min:1',
+            'stock' => 'required|integer',
         ], [
             'stock.required' => 'Debes colocar los talles',
         ]);
@@ -152,26 +152,26 @@ class RopaDepController extends Controller
             }
         }
 
-
         // Obtén los datos del array de tallas y el array de stock
-        $talles = $request->input('talles');      // Acceder al array 
-        $stocks = $request->input('stocks');
-        $calzadoIds = $request->input('talle_ids'); // Acceder al array
+        $stocks = $request->input('stocks', []);
+        
+        $tallesIds = array_map('intval', $request->input('talles', []));
+        $talle_ropa = [];
+
+        // Consultar la tabla 'talles' para obtener los valores de la columna 'talle_ropa'
+        $talle_ropa = Talle::whereIn('id', $tallesIds)->pluck('talle_ropa')->toArray();
+        
 
         // Itera sobre las tallas y sus stocks y guarda la relación con el producto en la tabla pivot
-        foreach ($talles as $indice => $talle) {
+        foreach ($tallesIds as $indice => $talleId) {
+            $stock = $stocks[$indice]; // Obtén el stock correspondiente al índice
 
-
-            if (isset($stocks[$indice]) > 0) {
-                // Obtén la instancia de talla existente
-                $talle = Talle::where('talle_ropa', $talle)->first();
-
-                $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0; // Verifica si 'stock' está definido
-
-                // Asegúrate de tener la relación definida en tu modelo Producto y tu modelo Calzado
-                $articuloNuevo->talles()->attach($talle->id, ['stocks' => $stock]);
-            }
+            // Crea la relación en la tabla pivot
+            $articuloNuevo->talles()->attach($talleId, [
+                'stocks' => $stock,
+            ]);
         }
+
         // Después de agregar el artículo exitosamente
         Session::flash('mensaje', true);
         return redirect()->route('ropa-deportiva.index')->with('success', 'Ropa creada exitosamente');
@@ -216,6 +216,7 @@ class RopaDepController extends Controller
             $precios = $request->input('precios');
             
             foreach ($articulo->talles as $talle) {
+
                 // Verifica si el talle existe en la solicitud y si su checkbox está marcado
                 $indice = array_search($talle->id, $talleIds);
                 $checkbox_checked = $indice !== false && isset($talles[$indice]);
@@ -231,7 +232,6 @@ class RopaDepController extends Controller
             // dd($talles);
             foreach ($talles as $indice => $talle) {
                 $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0;
-                $precio = isset($precios[$indice]) ? $precios[$indice] : 0;
 
                 // Busca el ID del talle
                 $talleId = Talle::where('id', $talle)->value('id');

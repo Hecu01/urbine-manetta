@@ -27,28 +27,40 @@ class DescuentoController extends Controller
         $title = "Sportivo - Descuentos";
         return(!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.descuentos.index', compact('title', 'articulos', 'descuentosActivos', 'descuentos'));
     }
-    /* Búsqueda AJAX accesorio */
-    public function buscarArtParaDescuento(Request $request) {
+
+    
+    /* Búsqueda AJAX para descuentos */
+
+    public function buscarArtParaDescuento(Request $request)
+    {
         $searchTerm3 = $request->input('searchTerm3');
-    
-        // Realizar la lógica de búsqueda en tu modelo y obtener los resultados
-        $results3 = Articulo::where('nombre', 'like', '%'.$searchTerm3.'%')
-                            ->orWhere('precio', 'like', '%'.$searchTerm3.'%')
-                            ->orWhere('id', 'like', '%'.$searchTerm3.'%')
-                            ->with('descuento') // Cargar la relación de descuento
-                            ->get();
-    
-        // Verificar si el descuento existe
-        foreach ($results3 as $articulo) {
-            $descuentoExiste = $articulo->descuento ? true : false;
-            // Asignar el resultado a cada artículo para su posterior manejo en el frontend
-            $articulo->descuento_existe = $descuentoExiste;
+
+        // Retornar temprano si el campo de búsqueda está vacío
+        
+        if (empty($searchTerm3)) {
+            return response()->json(['results3' => []]);
         }
-    
-        return response()->json([
-            'results3' => $results3,
-        ]);
+
+
+        // Continuar solo si hay datos en el campo de búsqueda
+
+        $results3 = Articulo::query()
+            ->where('nombre', 'like', '%' . $searchTerm3 . '%')
+            ->orWhere('precio', 'like', '%' . $searchTerm3 . '%')
+            ->orWhere('id', 'like', '%' . $searchTerm3 . '%')
+            ->with(['descuento', 'fotos'])
+            ->get()
+            ->map(function ($articulo) {
+                // Agregar la propiedad descuento_existe directamente al resultado
+                $articulo->descuento_existe = $articulo->descuento !== null;
+                return $articulo;
+            });
+
+        return response()->json(['results3' => $results3]);
     }
+
+   
+
     public function cambiarEstadoDescuento($id)
     {
         $Descuento = Descuento::findOrFail($id);

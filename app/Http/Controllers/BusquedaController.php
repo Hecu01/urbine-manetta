@@ -95,7 +95,7 @@ class BusquedaController extends Controller
     }
     public function show($id){
 
-        $articulo = Articulo::find($id);
+        $articulo = Articulo::with('descuento')->find($id);
         return view('producto', compact('articulo'));
     }
     public function destroy($id)

@@ -138,11 +138,11 @@
                                             @method('PUT')
                                             @csrf
                                             <input type="number" name="unidades_aceptadas" placeholder="Cantidad" required min="0"  max="{{ $stock }}" class="form-control" style="width: 100px; display: inline-block" oninput="validar(this)">
-
                                             <button type="submit" class="btn btn-outline-success border-0 p-1"><i
                                                     class="fa-solid fa-check"></i></button>
                                         </form>
                                     @endif
+                                    {{-- lo que no puedo conseguir es que aumente el stock de los talles y calzados, si se cancela una remera por ejemplo, aumenta el stock en la tabla articulos, pero no modifica por talles --}}
 
                                 @else
                                     <span> {{$totalAceptadas}}</span>

@@ -153,16 +153,16 @@
                     @if($articulo->calzados->isNotEmpty() || $articulo->talles->isNotEmpty())
                     
                         {{-- Titulo --}}
-                        <div class='size-picker'>
+                        <div class='size-picker' style="max-width: 150px">
                             Elija su talle:
 
                             {{-- Contenedor de los rangos --}}
-                            <div class='range-picker' id='range-picker'>
+                            <div class='range-picker' id='range-picker' style="flex-wrap: wrap; justify-content:start; margin-top: -10px">
 
                                 {{-- Si es calzados: leerá éste --}}
                                 @foreach ($articulo->calzados as $calzado)
                                     @if($calzado->pivot->stocks > 0)
-                                        <div>
+                                        <div style="">
 
                                             <input 
                                             type="radio" 
@@ -175,7 +175,7 @@
                                             onclick="actualizarStock({{ $calzado->id }})">
 
                                             <input type="radio" id="calzado_talle_{{ $calzado->id }}" name="calzadoTalle" value="{{ $calzado->calzado }}" required style="display: none">
-                                            <label style="background: none; border: none; transform: none; cursor: pointer;" onclick="selectCalzado({{ $calzado->id }})" for="calzado_id_{{ $calzado->id }}">
+                                            <label style="background: none; border: none; transform: none; cursor: pointer; width:100%; " onclick="selectCalzado({{ $calzado->id }})" for="calzado_id_{{ $calzado->id }}">
                                                 {{ $calzado->calzado }}
                                             </label>
 
@@ -187,7 +187,7 @@
                                 {{-- Si es ropa: leerá este otro --}}
                                 @foreach ($articulo->talles as $talle)
                                     @if($talle->pivot->stocks > 0)
-                                        <div>
+                                        <div style="margin: 1px; width:fit-content; padding:5px">
                                             <input 
                                             type="radio" 
                                             id="talle_id_{{ $talle->id }}" 
@@ -200,7 +200,7 @@
 
                                             <input type="radio" id="calzado_talle_{{ $talle->id }}" name="calzadoTalle" value="{{ $talle->talle_ropa }}" required style="display: none">
 
-                                            <label for="talle_id_{{ $talle->id }}" onclick="selectTalle({{ $talle->id }})" style="background: none; border:none; transform:none">
+                                            <label for="talle_id_{{ $talle->id }}" onclick="selectTalle({{ $talle->id }})" style="background: none; border: none; cursor: pointer; width:100%; padding 10px 15px ">
                                                 {{ $talle->talle_ropa }}
                                             </label>
                                         </div>
@@ -220,12 +220,19 @@
                 {{-- Valores cargados al carrito --}}
                 <input type="hidden" name="producto_id" value="{{ $articulo->id }}" class="producto_id">
                 <input type="hidden" name="nombre" value="{{ $articulo->nombre }}" class="nombre">
+                
 
                 {{-- ¿Tiene descuento? de ser así, carga el precio con descuento --}}
-                @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
+                @if (isset($articulo->descuento) && $articulo->descuento->activo == true)
                     <input type="hidden" name="precio"
                         value="{{ $articulo->precio - $articulo->descuento->plata_descuento }}" class="precio">
+                        @php 
+                            $precioFinal = $articulo->precio - $articulo->descuento->plata_descuento;
+                        @endphp
                 @else
+                    <?php 
+                       $precioFinal = $articulo->precio; 
+                    ?>
                     <input type="hidden" name="precio" value="{{ $articulo->precio }}" class="precio">
                 @endif
 
@@ -235,7 +242,29 @@
                 <input type="hidden" name="id_categoria" value="{{ $articulo->id_categoria}}" class="categoria">
 
                 <div class='purchase-info'>
-                    <div class='price'>$ {{ number_format($articulo->precio, 0, ',', '.') }}</div>
+                    <div class='price'>
+                        $ {{ number_format($precioFinal, 0, ',', '.') }}
+
+                        @if (isset($articulo->descuento) && $articulo->descuento->activo == true)
+
+                            <div class="text-lg font-semibold text-slate-500 text-sm" style="position:absolute; left:20px; bottom:18px">
+                                <span style="text-decoration:line-through">
+                                    $
+                                    {{ number_format($articulo->precio, 0, ',', '.') }}
+                                </span>
+                                antes
+
+                            </div>
+                            <span class="bg-red-500 text-white"
+                                style="padding: 0px 3px ;font-size:15px;position:absolute; right:38px; top:106px; font-family:'Times New Roman', Times, serif">
+                                -{{ str_replace('.', ',', number_format($articulo->descuento->porcentaje, $articulo->descuento->porcentaje == round($articulo->descuento->porcentaje) ? 0 : 2)) }}%
+                                OFF
+
+
+                            </span>
+                        @endif
+
+                    </div>
                     @if($articulo->stock > 0)
                         <button type="submit" class="button">AÑADIR AL CARRO</button>
                     @else
@@ -661,10 +690,8 @@
         }
 
         .range-picker div input[type="radio"]:checked + label {
-            background: #457;
             color: #ff0000;
             border-radius: 5px;
-            padding: 5px 10px;
             transition: all 0.3s ease;
         }
 

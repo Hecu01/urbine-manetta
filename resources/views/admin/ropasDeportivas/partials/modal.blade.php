@@ -18,7 +18,7 @@
                                 @if($talle->genero == "femenino" && $talle->cintura_para == "arriba" )
                                     <div class="mx-3  my-1">
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
-                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->talle_ropa }}" class="form-check-input" >
+                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
                                         <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
                                     </div>
@@ -32,7 +32,7 @@
                                 @if($talle->genero == "masculino" && $talle->cintura_para == "arriba" )
                                     <div class="mx-3  my-1">
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
-                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->talle_ropa }}" class="form-check-input" >
+                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
                                         <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
                                     </div>
@@ -50,7 +50,7 @@
                                 @if($talle->genero == "femenino" && $talle->cintura_para == "abajo" )
                                     <div class="mx-3  my-1">
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
-                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->talle_ropa }}" class="form-check-input" >
+                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
                                         <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
                                     </div>
@@ -64,7 +64,7 @@
                                 @if($talle->genero == "masculino" && $talle->cintura_para == "abajo" )
                                     <div class="mx-3  my-1">
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
-                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->talle_ropa }}" class="form-check-input" >
+                                        <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
                                         <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
                                     </div>

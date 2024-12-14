@@ -49,91 +49,91 @@ $(document).ready(function(){
 
     /* Página index descuentos */
 
-    var originalTable3 = $('#resultsTable3').html();
-
-    // Busqueda tipeando sin dar a buscar 
-    $('#searchInput3').on('input', function() {
-        var searchTerm3 = $(this).val();
-
-        // está vacío el input:search?
-        if (searchTerm3.trim() === '') {
-            // Restaura la tabla original cuando el campo de búsqueda está vacío
-            $('#resultsTable3').html(originalTable3);
-            return;
-        }
-        else{
+    $(document).ready(function() {
+        var originalTable3 = $('#resultsTable3').html();
+    
+        // Búsqueda dinámica sin dar clic en buscar
+        $('#searchInput3').on('input', function() {
+            var searchTerm3 = $(this).val().trim();
+    
+            if (searchTerm3 === '') {
+                $('#resultsTable3').html(originalTable3);
+                return;
+            }
+    
+            // Realiza la búsqueda si el campo no está vacío
             $.ajax({
                 url: '/descuento',
                 method: 'GET',
-                data: {
-                    searchTerm3: searchTerm3
-                },
+                data: { searchTerm3: searchTerm3 },
                 success: function(response) {
-                    // Elimina todas las filas de datos excepto la primera (encabezados)
-                    $('#resultsTable3 tr:gt(0)').remove();
-
-
-                    // Actualiza la tabla con los resultados de la búsqueda
-                    $.each(response.results3, function(index, resultado) {
-                        // Formatear el precio con separadores de miles y el símbolo de peso
-                        var precioFormateado = '$ ' + resultado.precio.toLocaleString();
+                    // Vaciar la tabla y mantener solo los encabezados
+                    $('#resultsTable3').find('tr:gt(0)').remove();
+    
+                    // Iterar sobre los resultados de la búsqueda
+                    response.results3.forEach(function(resultado) {
+                        // Formatear el precio
+                        var precioFormateado = `$ ${resultado.precio.toLocaleString()}`;
+    
+                        // Crear fila y celda para la imagen
                         var row = $('<tr>');
-                    
-                        // Agregar la imagen como una nueva celda de la tabla
-                        var imagen2 = $('<img>').attr('src', '/producto/' + resultado.foto).attr('alt', resultado.nombre).attr('width', '70px').attr('height', '70px');
-                        var tdImagen = $('<td>').append(imagen2);
-                        row.append(tdImagen);
-                        $('<td>').text(resultado.id).appendTo(row);
-                        $('<td>').text(resultado.nombre).appendTo(row);
-                        $('<td>').text(precioFormateado).addClass('precio').appendTo(row);
-
-
-
-
-                    
-                        // Verificar si el descuento existe
-                        if (resultado.descuento_existe) {
-                            // Crear el botón de editar
-                            var botonDescuento = $('<a>').attr('href', '#')
-                            .text('Activo ')
-                            .addClass('btn btn-warning btn-sm')
-                            .attr('title', 'Descuento está activo')
-                            .append($('<i>').addClass('fa-solid fa-triangle-exclamation'))    
-                            .click(function() {
-                                alert('¡El descuento está activo!');
-                            });
-                            // Agregar los botones a la celda correspondiente
-                            var tdBotones = $('<td>').append(botonDescuento);
-                            
-                            // Agregar la celda de botones a la fila
-                            row.append(tdBotones);
-
+                        var tdImagen = $('<td>');
+                        
+                        // Si tiene fotos, mostrar la primera; si no, mensaje por consola
+                        if (resultado.fotos && resultado.fotos.length > 0) {
+                            var primeraFoto = resultado.fotos[0];
+                            var imagen2 = $('<img>')
+                                .attr('src', '/productos/' + primeraFoto.ruta)
+                                .attr('alt', resultado.nombre)
+                                .attr('width', '70px')
+                                .attr('height', '70px');
+                            tdImagen.append(imagen2);
                         } else {
-                            // Crear el botón de editar
-                            var botonDescuento = $('<a>').attr('href', '/admin/descuento/producto/' + resultado.id)
-                            .text('Descuento ')
-                            .addClass('btn btn-success btn-sm')
-                            .attr('title', 'Descuento')
-                            .append($('<i>').addClass('fa-solid fa-pen-to-square'))
-
-                            // Agregar los botones a la celda correspondiente
-                            var tdBotones = $('<td>').append(botonDescuento);
-                            
-                            // Agregar la celda de botones a la fila
-                            row.append(tdBotones);
-
+                            console.log(`No hay fotos disponibles para el artículo con ID ${resultado.id}`);
                         }
-
-
+    
+                        // Agregar las celdas a la fila
+                        row.append(tdImagen);
+                        row.append($('<td>').text(resultado.id));
+                        row.append($('<td>').text(resultado.nombre));
+                        row.append($('<td>').text(precioFormateado).addClass('precio'));
+    
+                        // Celda de botones según si hay descuento o no
+                        var tdBotones = $('<td>');
+                        var botonDescuento;
+                        if (resultado.descuento_existe) {
+                            botonDescuento = $('<a>')
+                                .attr('href', '#')
+                                .text('Activo ')
+                                .addClass('btn btn-warning btn-sm')
+                                .attr('title', 'Descuento está activo')
+                                .append($('<i>').addClass('fa-solid fa-triangle-exclamation'))
+                                .on('click', function(e) {
+                                    e.preventDefault(); // Evita el comportamiento por defecto del enlace
+                                    alert('¡El descuento está activo!');
+                                });
+                        } else {
+                            botonDescuento = $('<a>')
+                                .attr('href', '/admin/descuento/producto/' + resultado.id)
+                                .text('Descuento ')
+                                .addClass('btn btn-success btn-sm')
+                                .attr('title', 'Agregar descuento')
+                                .append($('<i>').addClass('fa-solid fa-pen-to-square'));
+                        }
+                        tdBotones.append(botonDescuento);
+                        row.append(tdBotones);
+    
                         // Agregar la fila a la tabla
-                        row.appendTo($('#resultsTable3'));
+                        $('#resultsTable3').append(row);
                     });
-                    
+                },
+                error: function(error) {
+                    console.error('Error al realizar la búsqueda:', error);
                 }
             });
-        }
-
+        });
     });
+    
 
     
 });
