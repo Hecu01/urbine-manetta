@@ -12,7 +12,7 @@
                     <i class="fa-solid fa-user-plus"></i>
                 </span>
                 <span class="recuento">
-                    0
+                    {{ $clientes }}
                 </span>
             </div>
             <div class="bottom">
@@ -45,7 +45,7 @@
                 </span>
             </div>
             <div class="bottom">
-                <p>Sumplementos y dieta</p>
+                <p>Sumplementos deportivos</p>
             </div>
         </a>
         
@@ -95,7 +95,7 @@
                 </span>
             </div>
             <div class="bottom">
-                <p>Pedidos para reponer mercadería</p>
+                <p>Reposicion de mercadería</p>
             </div>
         </a>
         

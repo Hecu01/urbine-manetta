@@ -19,7 +19,7 @@ class Compra extends Model
     public function articulos()
     {
         return $this->belongsToMany(Articulo::class, 'articulo_compra')
-                ->withPivot('cantidad', 'precio_unitario');
+                ->withPivot('cantidad', 'precio_unitario', 'talle_id', 'calzado_id');
     }
     
     public function user()

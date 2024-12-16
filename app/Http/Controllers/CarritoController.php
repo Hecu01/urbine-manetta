@@ -144,29 +144,43 @@ class CarritoController extends Controller
         $calzadoTalle = $request->input('calzadoTalle', null);
         $talleRopaId = (int) $request->input('calzadoTalle_id', null);
         $categoria = (int) $request->input('id_categoria');
+        $calzado_id = null;
+        $talle_id = null;
 
 
         // Verificar si es categoria art deport (1) o ropa deport (2)
         if ($categoria == 1) {
+
             // Buscar en la tabla `calzados`
             $calzado = Calzado::where('calzado', $calzadoTalle)->first();
             if ($calzado) {
+
                 $calzadoTalle_id = $calzado->id;  // Guardar el ID del calzado
+                $calzado_id = $calzado->id;
             } else {
+
                 // Manejar el caso en que no se encuentra el calzado
                 // Esto puede ser un error o un valor no válido
                 $calzadoTalle_id = null;
+
             }
 
         } else {
+
             // Si no es numérico, buscar en la tabla `talles`
             $talle = Talle::where('id', $talleRopaId)->first();
+
             if ($talle) {
+
                 $calzadoTalle_id = $talle->id;  // Guardar el ID del talle
+                $talle_id = $talle->id;
+
             } else {
+
                 // Manejar el caso en que no se encuentra el talle
                 // Esto puede ser un error o un valor no válido
                 $calzadoTalle_id = null;
+
             }
         }
 
@@ -199,12 +213,13 @@ class CarritoController extends Controller
                 'imagen' => $imagen,
                 'discount' => $descuento,
                 'calzadoTalle' => $calzadoTalle,
-                'calzadoTalle_id' => $calzadoTalle_id,
+                'calzadoTalle_id' => $calzadoTalle_id, 
+                'talle_id' => $talle_id, 
+                'calzado_id' => $calzado_id, 
             ];
         }
 
-
-
+        
 
         // Guarda el carrito actualizado en la sesión
         session()->put('carrito', $carrito);

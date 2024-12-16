@@ -30,7 +30,7 @@ return new class extends Migration
             // Data Sportivo
             $table->decimal('dinero_en_cuenta', 8, 2)->nullable();
             $table->integer('puntos_sportivo')->nullable();
-            $table->integer('compras_realizadas')->nullable();
+            $table->integer('compras_realizadas')->default(0);
 
             $table->rememberToken();
             $table->timestamps();

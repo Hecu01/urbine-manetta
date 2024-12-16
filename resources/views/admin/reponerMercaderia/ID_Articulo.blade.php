@@ -150,7 +150,7 @@
                                                 <td style="">
                                                     <div class="flex justify-center">
 
-                                                        <input type="text" name="stock_solicitado_muchos_a_muchos[]"  id="stock-{{ $calzadoAsociado->id }}" class="border-1 form-control border-cyan-600/[0.5] text-small my-1 input-suma p-0 px-2" style="width:50px;height:28px;" >
+                                                        <input type="text" name="stock_solicitado_muchos_a_muchos[]"  id="stock-{{ $calzadoAsociado->id }}" class="border-1 form-control border-cyan-600/[0.5] text-small my-1 input-suma p-0 px-2" style="width:50px;height:28px;" min="0" oninput="validar(this)">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -345,5 +345,36 @@
     
 
     
+    <script>
+        function validar(input) {
+            // Obtener los valores mínimo y máximo del input
+            const min = parseInt(input.min, 10); // 0
+            let value = input.value;
 
+            // Eliminar ceros iniciales, excepto si el valor es "0"
+            if (value.length > 1 && value.startsWith("0")) {
+                value = value.replace(/^0+/, '');
+            }
+
+            // Convertir el valor a número entero
+            const numericValue = parseInt(value, 10);
+
+            // Validar que el valor sea un número válido
+            if (isNaN(numericValue)) {
+                input.value = min; // Si no es un número, asignar el valor mínimo
+
+                return;
+            }
+
+            // Validar que el número esté dentro del rango permitido
+            if (numericValue < min) {
+                input.value = min; // Ajustar al mínimo si es menor
+
+
+            } else {
+                input.value = numericValue; // Asignar el valor ajustado
+            }
+
+        }
+    </script>
 @endsection

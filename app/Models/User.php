@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Compra;
 use App\Models\Domicilio;
 use App\Models\DescuentoUsuario;
 use Laravel\Sanctum\HasApiTokens;
@@ -64,6 +65,10 @@ class User extends Authenticatable
     public function domicilio()
     {
         return $this->hasOne(Domicilio::class);
+    }
+    public function compras()
+    {
+        return $this->belongsTo(Compra::class);
     }
 
     

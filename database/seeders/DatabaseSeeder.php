@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             TalleSeeder::class,
 
             // Productos de prueba por defectos
-            ArticulosTableSeeder::class,
-            ArticuloCalzadoTableSeeder::class,
-            ArticuloDeporteTableSeeder::class,
+            // ArticulosTableSeeder::class,
+            // ArticuloCalzadoTableSeeder::class,
+            // ArticuloDeporteTableSeeder::class,
         ]);
 
 

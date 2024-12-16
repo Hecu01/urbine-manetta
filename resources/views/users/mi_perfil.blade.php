@@ -55,28 +55,13 @@
               {{ $user->administrator ? 'Admin' : 'Usuario' }}  
             </li>
 
-            @isset(Auth::user()->descuentoUsuario->descuento_activo)
-                
-              @if(Auth::user()->descuentoUsuario->descuento_activo == true)
-                <li class="bg-rose-500 text-white px-1 w-fit">
-                  <strong style="font-weight: 600">Descuento especial</strong>: 
-                  {{ $user->descuentoUsuario->porcentaje_descuento}}%  
-                </li>
-              @endif
-            @endisset
+
 
             <li>
               <strong style="font-weight: 600">Compras</strong>: 
               {{$user->compras_realizadas == null ? '0' : $user->compras_realizadas }}
             </li>
-            <li >
-              <strong style="font-weight: 600; ">Dinero</strong>: 
-              $ {{ number_format($user->dinero_en_cuenta, 0, ',', '.')}}
-            </li>
-            <li class="text-yellow-500">
-              <strong style="font-weight: 600; ">Puntos</strong>: 
-              {{$user->puntos == null ? '0' : $user->puntos }}
-            </li>
+
 
           </ul>
         </div>

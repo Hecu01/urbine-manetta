@@ -25,7 +25,11 @@
             </div>
         </div>
     @endif
-
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <form class='container-1 ' method="POST" action="{{ route('carrito.añadir2') }}">
  
         <div class='highlight-window py-5' id='product-img'>
@@ -92,30 +96,32 @@
 
                 <div class='options'>
                     <div class='color-options'>
-                        {{-- <div class="col-5">
-                            <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300">-</button>
-                            <input type="number" id="cantidad" class="form-control" min="1" max="{{ $articulo->stock }}"  value="1"  oninput="validarCantidad(this, {{ $articulo->stock }})" name="cantidad">
-                            <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300">+</button>
-                        </div> --}}
+                        
+                        {{-- Condicional sobre si tiene relacion o no --}}
 
-                        @if($articulo->tipo_producto == "Calzado" || $articulo->id_categoria == 2)
+                        @if($articulo->tipo_producto == "calzado" || $articulo->id_categoria == 2)
                         
                             {{-- Si es un calzado o ropa --}}
-                            Unidades:
-                            <div class="w-fit my-2 mx-3">
-                                <div class="flex items-center">
-                                    <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300" id="leftButton" disabled>-</button>
-
-                                    <input type="number" id="cantidad" disabled  name="cantidad" value="1" min="1"    class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)"/>
-
-                                    <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300" id="rightButton" disabled>+</button>
-                                </div>
-                            </div>
-                            <span class="text-slate-500 text-sm">Disponible total: {{ $articulo->stock }}</span>
+                            @if ($articulo->stock > 0)
                             
-                            <span class="text-slate-500 text-sm" id="stock-disponible">Seleccione un talle</span>
+                                Unidades:
+                                <div class="w-fit my-2 mx-3">
+                                    <div class="flex items-center">
+                                        <button type="button" class="decrement bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300" id="leftButton" disabled>-</button>
+
+                                        <input type="number" id="cantidad" disabled  name="cantidad" value="1" min="1"    class="text-center w-12 border border-gray-300 h-10 mx-1" style="width: 50px;" oninput="validarCantidad(this)"/>
+
+                                        <button type="button" class="increment bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300" id="rightButton" disabled>+</button>
+                                    </div>
+                                </div>
+                                <span class="text-slate-500 text-sm">Disponible total: {{ $articulo->stock }}</span>
+                                <span class="text-slate-500 text-sm" id="stock-disponible" style="display: block">Seleccione un talle</span>
+                            @else
+                                <h2 class="text-slate-500">Agotado</h2>
+                            @endif
                             
                         @else
+
                             {{-- Si es un articulo normal --}}
                             
                             @if ($articulo->stock > 0)
@@ -154,7 +160,9 @@
                     
                         {{-- Titulo --}}
                         <div class='size-picker' style="max-width: 150px">
-                            Elija su talle:
+                            @if ($articulo->stock > 0)
+                                Elija su talle:
+                            @endif
 
                             {{-- Contenedor de los rangos --}}
                             <div class='range-picker' id='range-picker' style="flex-wrap: wrap; justify-content:start; margin-top: -10px">
@@ -202,6 +210,8 @@
 
                                             <label for="talle_id_{{ $talle->id }}" onclick="selectTalle({{ $talle->id }})" style="background: none; border: none; cursor: pointer; width:100%; padding 10px 15px ">
                                                 {{ $talle->talle_ropa }}
+                                                {{ $talle->genero == 'femenino' ? ' (F)' : '(M)' }}
+
                                             </label>
                                         </div>
                                     @endif

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\User;
 use App\Models\Deporte;
 use App\Models\Articulo;
 use App\Models\Categoria;
@@ -116,6 +117,8 @@ class TiendaController extends Controller
                 'updated_at' => now(),
             ]);
 
+            // Incrementar en 1 la columna 'compras_realizadas' para el usuario autenticado
+            User::where('id', Auth::id())->increment('compras_realizadas');
 
             // Recorrer los elementos cargados al carrito
             foreach ($cart as $item) {
@@ -181,6 +184,8 @@ class TiendaController extends Controller
                 }
                 // Finalmente, crea una tupla nueva en la tabla pivot "articulo_compra"
                 $compra->articulos()->attach($item['id'], [
+                    'talle_id' => $item['talle_id'],
+                    'calzado_id' => $item['calzado_id'],
                     'cantidad' => $item['quantity'],
                     'precio_unitario' => $item['price'],
                     'precio_total' => $item['total_price'],
@@ -244,64 +249,76 @@ class TiendaController extends Controller
     }
 
     public function cancelarCompra($id)
-{
-    // Obtenemos el id de la compra junto con sus artículos
-    $compra = Compra::with('articulos')->findOrFail($id);
+    {
+        // Obtenemos el id de la compra junto con sus artículos
+        $compra = Compra::with('articulos')->findOrFail($id);
 
-    try {
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-        foreach ($compra->articulos as $articulo) {
-            $item = Articulo::find($articulo['id']);
+            foreach ($compra->articulos as $articulo) {
+                $item = Articulo::find($articulo['id']);
 
-            // Datos del pivot
-            $talleId = $articulo->pivot->talle_id ?? null;
-            $calzadoId = $articulo->pivot->calzado_id ?? null;
-            $cantidad = $articulo->pivot->cantidad;
+                // Datos del pivot
+                $talleId = $articulo->pivot->talle_id ?? null;
+                $calzadoId = $articulo->pivot->calzado_id ?? null;
+                $cantidad = $articulo->pivot->cantidad;
 
-            // Depuración de datos para verificar que los pivotes son correctos
+                // // Depuración de datos para verificar que los pivotes son correctos
+                // dd([
+                //     'articulo_id' => $articulo['id'],
+                //     'talle_id' => $talleId,
+                //     'calzado_id' => $calzadoId,
+                //     'cantidad' => $cantidad,
+                // ]);
+
+                if ($calzadoId && $item->calzados()->exists()) {
+
+                    // Incrementar el stock en articulo_calzado
+                    $item->calzados()->updateExistingPivot($calzadoId, [
+                        'stocks' => DB::raw('stocks + ' . $cantidad),
+                    ]);
+                    $item->increment('stock', $cantidad);
+
+                } elseif ($talleId && $item->talles()->exists()) {
+
+                    // Incrementar el stock en articulo_talle
+                    $item->talles()->updateExistingPivot($talleId, [
+                        'stocks' => DB::raw('stocks + ' . $cantidad),
+                    ]);
+                    $item->increment('stock', $cantidad);
+
+                } else {
+
+                    // Incrementar el stock general
+                    $item->increment('stock', $cantidad);
+
+                }
+            }
+
+            if (Auth::user()->compras_realizadas > 0) {
+                User::where('id', Auth::id())->decrement('compras_realizadas');
+            }
+
+            // Cambiar estado de la compra
+            $compra->estado = 'Cancelado';
+            $compra->save();
+
+            DB::commit();
+
+            return redirect()->back()->with('mensaje', 'La compra ha sido cancelada y el stock restaurado.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // Mostrar error claro
             dd([
-                'articulo_id' => $articulo['id'],
-                'talle_id' => $talleId,
-                'calzado_id' => $calzadoId,
-                'cantidad' => $cantidad,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
 
-            if ($calzadoId && $item->calzados()->exists()) {
-                // Incrementar el stock en articulo_calzado
-                $item->calzados()->updateExistingPivot($calzadoId, [
-                    'stocks' => DB::raw('stocks + ' . $cantidad),
-                ]);
-            } elseif ($talleId && $item->talles()->exists()) {
-                // Incrementar el stock en articulo_talle
-                $item->talles()->updateExistingPivot($talleId, [
-                    'stocks' => DB::raw('stocks + ' . $cantidad),
-                ]);
-            } else {
-                // Incrementar el stock general
-                $item->increment('stock', $cantidad);
-            }
+            return redirect()->back()->with('error', 'Ocurrió un error al cancelar la compra: ' . $e->getMessage());
         }
-
-        // Cambiar estado de la compra
-        $compra->estado = 'Cancelado';
-        $compra->save();
-
-        DB::commit();
-
-        return redirect()->back()->with('success', 'La compra ha sido cancelada y el stock restaurado.');
-    } catch (\Exception $e) {
-        DB::rollBack();
-
-        // Mostrar error claro
-        dd([
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString(),
-        ]);
-
-        return redirect()->back()->with('error', 'Ocurrió un error al cancelar la compra: ' . $e->getMessage());
     }
-}
 
 
 

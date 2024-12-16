@@ -84,7 +84,7 @@
                     </div>
 
                     <!-- Notificaciones -->
-                    <div class="dropdown">
+                    {{-- <div class="dropdown">
                         <a href="#" class="font-custom-roboto text-black flex items-center" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <span class="notificacion" style="margin-left: 10px;">
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </ul>
-                    </div>
+                    </div> --}}
 
                     {{-- <div class="dropdown">
                         <a href="#" class="font-custom-roboto text-black" data-bs-toggle="dropdown" aria-expanded="false">
@@ -116,17 +116,13 @@
                     </div> --}}
 
                     <!-- Ayuda -->
-                    <div class="dropdown">
-                        <a href="#" style="color: black" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="">
+                        <a href="{{ route('preg-frecuentes') }}" style="color: black" >
                             <span style="margin-left: 10px;">
-                                <i class="fa-regular fa-circle-question"></i>
+                               Ayuda <i class="fa-regular fa-circle-question"></i>
                             </span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">¿Cómo comprar?</a></li>
-                            <li><a class="dropdown-item" href="#">¿Cómo canjear puntos?</a></li>
-                            <li><a class="dropdown-item" href="#">Manual de usuario</a></li>
-                        </ul>
+
                     </div>
 
 

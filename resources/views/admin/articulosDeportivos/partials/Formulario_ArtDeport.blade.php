@@ -157,7 +157,7 @@
                     {{-- Stock --}}
                     <div class="col-md-5">
                         <label for="stock_input" class="form-label">Stock</label>
-                        <input type="text" name="stock" placeholder="cantidad" oninput="validarNumeros(this)"  class="form-control total stock_input" id="stock_input" required>
+                        <input type="text" value="0" name="stock" placeholder="" oninput="validarNumeros(this)"  class="form-control total stock_input" id="stock_input" required >
                         
                     </div>
 

@@ -20,48 +20,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach( $calzados as $calzado)
-                                        @if($calzado->calzado <= 34)
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
-                                                    <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
-    
-                                                </td>
-                                                <td>
-                                                    <label for="calzado-{{$calzado->id}}" class="mx-1">N° {{ $calzado->calzado }}</label>
-    
-                                                </td>
-                                                <td>
-                                                    <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
-    
-                                                </td>
-                                            </tr>
-    
-                                        @endif
-                                    @endforeach
-            
-                                    @foreach($calzados as $calzado)
-                                        @if($calzado->calzado > 34)
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
-                                                    <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
-    
-                                                </td>
-                                                <td>
-                                                    <label for="calzado-{{$calzado->id}}" class="mx-1">N° {{ $calzado->calzado }}</label>
-    
-                                                </td>
-                                                <td>
-                                                    <input type="text" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; " >
-    
-                                                </td>
-                                            </tr>
+ 
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" name="calzado_ids[]" value="{{$calzado->id}}">
+                                                <input type="checkbox" name="calzados[]" id="calzado-{{$calzado->id}}" value="{{ $calzado->calzado }}" class="form-check-input" >
+
+                                            </td>
+                                            <td>
+                                                <label for="calzado-{{$calzado->id}}" class="mx-1">N° {{ $calzado->calzado }}</label>
+
+                                            </td>
+                                            <td>
+                                                <input type="text" value="0" min="0" disabled name="stocks[]" id="stock-{{$calzado->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma p-0" style="width:40px;height:22px; "  oninput="validarCantidad(this)">
+
+                                            </td>
+                                        </tr>
                                                 
-            
-                                        @endif
                                     @endforeach
-    
                                 </tbody>
                             </table>
                         </div>
@@ -86,3 +62,23 @@
         /* Agrega otros estilos según sea necesario */
     }
 </style>
+<script>
+        // Validar cantidad a comprar
+    function validarCantidad(input) {
+        const min = parseInt(input.min);
+        let value = input.value;
+
+        // Elimina caracteres no numéricos
+        value = value.replace(/[^0-9]/g, '');
+
+        // Convierte el valor a número y verifica el rango
+        value = parseInt(value);
+        if (isNaN(value) || value < min) {
+            input.value = min;
+        } else if (value > max) {
+            input.value = max;
+        } else {
+            input.value = value;
+        }
+    }
+</script>

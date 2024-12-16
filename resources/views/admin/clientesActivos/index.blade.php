@@ -13,7 +13,7 @@
 
   </div>
   <section>
-    <div class="my-1">
+    {{-- <div class="my-1">
       <a class="btn btn-primary" href=" {{ route('tablaClientesActivos') }} ">Tabla clientes Activos</a>
     </div>
     <div class="my-1" >
@@ -27,16 +27,42 @@
     </div>
     <div class="my-1">
       <a class="btn btn-success" href=" {{ route('RouteCargarSaldo') }} ">Cargar saldo</a>
-    </div>
+    </div> --}}
+  
+    <table class="table table-bordered">
+      <thead>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Dni</th>
+        <th>Email</th>
+        <th>Compras realizadas</th>
+        <th>Se unió en</th>
+      </thead>
+      <tbody>
+        @foreach ($clientes as $cliente)
+          <tr>
+            <td>{{$cliente->id}}</td>
+            <td>{{$cliente->name}} {{$cliente->lastname}}</td>
+            <td>{{$cliente->dni}}</td>
+            <td>{{$cliente->email}}</td>
+            <td>
+              <span>{{$cliente->compras_realizadas}}</span>
+            </td>
+            <td>{{ $cliente->created_at->format('d/m/Y') }}</td>
+          </tr>
+        @endforeach
+
+      </tbody>
+    </table>
   </section>
 
-  <a href="{{ route('clientes-activos.index') }}" class="text-white no-underline article0 article1 px-1">
+  <a href="{{ route('clientes-activos.index') }}" class="text-white no-underline article0 article1 px-2 hover:scale-105">
     <div class="top">
         <span>
             <i class="fa-solid fa-user-plus"></i>
         </span>
         <span class="recuento">
-            0
+            {{ $recuentoClientes }}
         </span>
     </div>
     <div class="bottom">

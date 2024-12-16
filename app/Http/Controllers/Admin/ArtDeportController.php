@@ -127,6 +127,8 @@ class ArtDeportController extends Controller{
             $stocks = $request->input('stocks');
             foreach ($calzados as $indice => $calzado) {
                 if (isset($stocks[$indice]) && $stocks[$indice] > 0) {
+                    
+                    $stock = isset($stocks[$indice]) ? $stocks[$indice] : 0;
                     $calzadoExistente = Calzado::where('calzado', $calzado)->first();
     
                     if ($calzadoExistente) {

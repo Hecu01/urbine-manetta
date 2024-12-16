@@ -36,7 +36,7 @@ $(document).ready(function(){
 
         // Obtén el campo de texto correspondiente y deshabilítalo si el checkbox está desmarcado
         $('#stock-' + calzadoId).prop('disabled', !$(this).prop('checked'));
-        $("#stock_input").prop('readonly', true).val('');
+        $("#stock_input").prop('readonly', true).val('0');
 
         // Habilita o deshabilita el campo de texto según el estado del checkbox
         $('#precio-' + calzadoId).prop('disabled', !$(this).prop('checked'));

@@ -18,7 +18,6 @@ class ArticulosTableSeeder extends Seeder
             [
                 'id' => 1,
                 'nombre' => 'Pelota de Voley amarilla y azul',
-                'talle' => NULL,
                 'genero' => 'U',
                 'precio' => 13000.00,
                 'marca' => 'Gold',

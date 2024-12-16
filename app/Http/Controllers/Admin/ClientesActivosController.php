@@ -16,7 +16,13 @@ class ClientesActivosController extends Controller
     public function index()
     {
         $title = "Admin - Clientes Activos";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.index', compact('title'));
+        $clientes = User::where('administrator', false)
+                    ->with('compras')
+                    ->get();
+        
+        $recuentoClientes = User::where('administrator', false)->count();
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.clientesActivos.index', compact('title', 'clientes', 'recuentoClientes'));
+
     }
     /**
      * Show the form for creating a new resource.
