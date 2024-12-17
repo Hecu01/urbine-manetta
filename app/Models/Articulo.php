@@ -42,6 +42,19 @@ class Articulo extends Model
         return $this->belongsToMany(Talle::class)->withPivot('stocks');
     }
 
+
+    // Vincular los calzados
+    // public function calzadosPDF()
+    // {
+    //     return $this->belongsToMany(Calzado::class, 'articulo_compra', 'articulo_id', 'calzado_id');
+    // }
+
+    // // Vincular los talles
+    // public function tallesPDF()
+    // {
+    //     return $this->belongsToMany(Talle::class, 'articulo_compra', 'articulo_id', 'talle_id');
+    // }
+    
     // Vincular descuentos
     public function descuento()
     {

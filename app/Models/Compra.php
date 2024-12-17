@@ -2,6 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Talle;
+use App\Models\Venta;
+use App\Models\Calzado;
+use App\Models\Deporte;
+use App\Models\Descuento;
+use App\Models\Foto;
+use App\Models\ReposicionMercaderia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

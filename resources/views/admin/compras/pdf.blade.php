@@ -86,9 +86,9 @@
             <tr>
                 <td >
                     <div class="" style="position:relative">
-                        <img src="{{ public_path('assets/img/logo.jpg') }}" width="100px">
+                        <img src="{{ public_path('assets/img/logo.jpg') }}" width="130px" height="90px" style="border:1px solid #00000063; border-radius: 100%">
                         
-                        <span id="nombre-empresa">Macetas de cemento <br>VALCEL</span>
+                        <span id="nombre-empresa">Sportivo <br> E-commerce</span>
                     </div>
                 
                 </td>
@@ -114,18 +114,17 @@
                     <div><h4>Para:</h4></div>
                     <div><strong>Cliente</strong> {{ $compra->user->name }}</div>
                     <div>
-                        {{-- {{ $compra->user->domicilios->ciudad }} --}}
-                        Ciudad cliente
+                        {{ $compra->user->domicilio->ciudad }}
                     </div>
                 </td>
                 <td class="w-half" >
                     <div><h4>De:</h4></div>
-                    <div>Valentin Urbine</div>
+                    <div>Tienda Sportivo</div>
                     <div>San Nicolás</div>
                 </td>
                 <td class="w-half" style="width: 170px;">
                     <div><h4>Detalle:</h4></div>
-                    <div>Fecha: {{ $compra->fecha->format('d/m/Y') }}</div>
+                    <div>Fecha: {{ $compra->created_at->format('d/m/Y') }}</div>
                     <div>San Nicolás</div>
                 </td>
             </tr>
@@ -138,14 +137,32 @@
                 <th>ID</th>
                 <th>Articulo</th>
                 <th>Cantidad</th>
+                <th>Talle</th>
                 <th>Precio unitario</th>
                 <th>Precio sumado</th>
             </tr>
-            @foreach($detalleVenta->articulos as $articulo)
+            
+            @foreach($compra->articulos as $articulo)
                 <tr class="items">
                     <td>#{{ $articulo->id }}</td>
-                    <td>Maceta {{ $articulo->nombre }}</td>
+                    <td>{{ $articulo->nombre }}</td>
                     <td>{{ $articulo->pivot->cantidad }}</td>
+                    <td>
+                        <!-- Acceder al talle desde el id_talle en la tabla pivot -->
+                        @if ($articulo->pivot->talle_id)
+                            <!-- Obtener el talle correspondiente usando el id_talle -->
+                            {{ $articulo->talles->find($articulo->pivot->talle_id)->talle_ropa }}
+
+                        @endif
+
+
+                        <!-- Acceder al talle desde el id_talle en la tabla pivot -->
+                        @if ($articulo->pivot->calzado_id)
+                            <!-- Obtener el talle correspondiente usando el id_talle -->
+                            N° {{ $articulo->calzados->find($articulo->pivot->calzado_id)->calzado }}
+
+                        @endif
+                    </td>
                     <td>$ {{  number_format($articulo->pivot->precio_unitario, 0, ',', '.') }}</td>
                     <td>$ {{ number_format($articulo->pivot->precio_unitario * $articulo->pivot->cantidad, 0, ',', '.') }}</td>
                     
@@ -160,11 +177,11 @@
  
     <div class="footer margin-top">
         <div>Muchas gracias</div>
-        <div>&copy; Macetas Valcel</div>
+        <div>&copy; Tienda Sportivo</div>
     </div>
     <hr>
     <p style="color:grey; text-align:justify">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dolore corporis quisquam facere? Fugit, repellendus expedita perspiciatis nostrum eius inventore deserunt quod, facilis dolorum animi saepe quia sit voluptatum, velit nemo laborum? Quisquam, reiciendis vero! Beatae libero quaerat perspiciatis iusto, rem optio. Ex, ducimus iure!
+        Gracias por confiar en nosotros. Ofrecemos la posibilidad de devolver el producto dentro de los 10 días hábiles posteriores a la recepción del mismo, siempre que esté en perfectas condiciones y con su empaque original. Queremos garantizar su satisfacción, por lo que nuestro equipo estará encantado de asistirle en cada paso del proceso. No dude en contactarnos para cualquier consulta o inconveniente. - Tienda Sportivo
     </p>
 </body>
 </html>

@@ -48,7 +48,7 @@ class CompraController extends Controller
         $cliente = Compra::with('user')->get();
 
         $detalleVenta = Compra::with('articulos')->find($id);
-        $pdf = Pdf::loadView('ventas.pdf', compact('venta', 'cliente', 'detalleVenta'));
+        $pdf = Pdf::loadView('admin.compras.pdf', compact('compra', 'cliente', 'detalleVenta'));
         // return $pdf->download('invoice.pdf');
         return $pdf->stream();
     }

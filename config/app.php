@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
+        
     ])->toArray(),
 
     /*
@@ -186,6 +187,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'Permission' => Spatie\Permission\Facades\Permission::class,
+        'Pdf' => Barryvdh\DomPDF\Facade\Pdf::class,
     ])->toArray(),
 
 ];
