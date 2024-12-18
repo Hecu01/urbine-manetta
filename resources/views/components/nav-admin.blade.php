@@ -48,7 +48,7 @@
                         </ul>
                     </div>
                     <!-- Notificaciones -->
-                    <div class="dropdown">
+                    {{-- <div class="dropdown">
                         <a href="#" style="color: #fff" data-bs-toggle="dropdown" aria-expanded="false">
                             <span style="margin-left: 10px;margin-top: 5px;">
                                 <i class="fa-regular fa-bell"></i>
@@ -66,13 +66,13 @@
                             </div>
 
                         </ul>
-                    </div>
+                    </div> --}}
 
 
                 </div>
             @endguest
             <!-- Ayuda -->
-            <div class=" mt-1 " style="margin-left:10px;">
+            {{-- <div class=" mt-1 " style="margin-left:10px;">
 
 
                 <div class="dropdown ">
@@ -91,7 +91,7 @@
 
 
 
-            </div>
+            </div> --}}
 
         </div>
 

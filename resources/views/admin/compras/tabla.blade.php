@@ -13,13 +13,14 @@
   
   </div>
 
-    @if (session('mensaje'))
-        @include('admin.partials.MsjDelSistema.ArtAgregConExito') 
-    @endif 
-    @if (session('eliminado'))
-        @include('admin.partials.MsjDelSistema.ProductoEliminado') 
-    @endif 
+    
     <section class="center-actions " style="max-width: 800px">
+      @if (session('danger'))
+        <div class="alert alert-danger alert-dismissible fade show my-2" role="alert">
+          <strong>Atención!</strong> {{ session('danger') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      @endif
       <div class="">
         <table class="table table-bordered" id="resultsTable">
           <thead style="text-transform: uppercase; text-align:center" class="table-dark">
@@ -28,7 +29,7 @@
             <th>Usuario</th>
             <th>Fecha</th>
             <th>Estado</th>
-            <th>PDF</th>
+            <th style="min-width:60px">PDF</th>
             <th>Eliminar</th>
 
           </thead>
@@ -41,19 +42,41 @@
                 <td>{{ $compra->fecha }}</td>
                 <td>{{ $compra->estado }}</td>
                 <td>
-                    <a class=" btn btn-danger btn-sm"  href="{{ url("/ventas/pdf/{$compra->id}") }}" title="Generar PDF"  >
-                        PDF
-                        <svg fill="#ffffff" class="ml-2" xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z"/></svg>
+                    <a class=" btn btn-danger btn-sm "  href="{{ url("/ventas/pdf/{$compra->id}") }}" title="Generar PDF"  >
+                      PDF
+                      <svg fill="#ffffff" class="inline" xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z"/></svg>
 
                     </a>
                 
                 </td>
                 <td>
-                    <a class=" btn btn-danger btn-sm"  href="{{ url("/ventas/pdf/{$compra->id}") }}" title="Generar PDF"  >
-                        Eliminar
-                        <svg fill="#ffffff" class="ml-2" xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z"/></svg>
+                  @if($compra->estado == 'Pendiente')
+                    <div class="" onclick="alert('Todavía tiene que entregar el pedido, o cancelarlo.')">
+
+                      <button class="btn btn-danger btn-sm eliminar-btn mx-1" data-id="{{ $compra->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar" disabled >
+                        Eliminar 
+                        <i class="fa-solid fa-trash"></i>
+                      
+                      </button>
+                    </div>
+                  @else
+
+                    <a href="{{ route('compras.destroy', $compra->id) }}" class="btn btn-danger btn-sm"
+                      onclick="event.preventDefault();
+                                  if(confirm('¿Estás seguro de eliminar esta compra?')) {
+                                      document.getElementById('eliminar-form-{{ $compra->id }}').submit();
+                                  }">
+                      Eliminar
+                      <i class="fa-solid fa-trash"></i>
 
                     </a>
+                  
+                    <form id="eliminar-form-{{ $compra->id }}" action="{{ route('compras.destroy', $compra->id) }}" method="POST" style="display: none;">
+                      @csrf
+                      @method('DELETE')
+                    </form>
+                  @endif
+
                 
                 </td>
 
@@ -93,30 +116,10 @@
     </div>
 
     
-  <!-- Modal -->
-  <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalEliminarLabel">Eliminar Producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ¿Estás seguro que deseas eliminar el producto?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <form id="formEliminar" method="POST">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+
   
 
+   
 
 
   <script>

@@ -98,6 +98,12 @@ class CompraController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $compra = Compra::find($id); 
+        if($compra){
+            $compra->delete();
+        }
+        // Redirige al admin
+        return back()->with('danger', 'Compra eliminada');
+        
     }
 }
