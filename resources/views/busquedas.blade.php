@@ -18,6 +18,7 @@
                 @foreach ($resultados as $resultado)
                     <div class="bg-white shadow-lg p-3 h-fit position-relative" style="width: 75%; border-radius: 2%;">
                         <form method="POST" class="w-full">
+
                             @if (isset($resultado->descuento) && $resultado->descuento->activo == true)
                                 <span class="bg-red-500 text-white"
                                     style="padding: 0px 3px ;font-size:13px;position:absolute; right:38px; top:106px; font-family:'Times New Roman', Times, serif">
@@ -163,7 +164,15 @@
                                             {{-- Ropa --}}
                                         @elseif (count($resultado->talles) > 0)
                                         <div class="p-4 rounded-lg ">
-                                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Talles:</h3>
+                                            <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                                                Talles:
+                                                @if($resultado->id_categoria == 2)
+                                                    <span style="margin-left: 10px;padding: 0px 3px ;font-size:13px;position:absolute; font-family:'Times New Roman', Times, serif" class="uppercase">
+                                                        [F = Femenino] - [M = Masculino]
+                                                    </span>
+                                                @endif
+                    
+                                            </h3>
                                             <div class="flex gap-2" style="flex-wrap: wrap">
 
                                                     {{-- <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline hover:cursor-pointer calzadoTalle" id="talle">
@@ -173,7 +182,7 @@
                                                             {{-- <option value="{{ $talle->talle_ropa }}" data-id="" data-stock="{{ $talle->pivot->stocks }}">Talle {{ $talle->talle_ropa }} </option> --}}
                                                             <label for="talle_{{ $talle->id }}" class="flex items-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm hover:bg-gray-100">
                                                                 <input type="radio" id="talle_{{ $talle->id }}" name="ropaTalle" value="{{ $talle->talle_ropa }}" class="hidden" />
-                                                                <span class="text-gray-700 font-medium">{{ $talle->talle_ropa }}</span>
+                                                                <span class="text-gray-700 font-medium">{{ $talle->talle_ropa }} {{ $talle->genero == 'femenino' ? ' (F)' : ' (M)' }} </span>
                                                             </label>
                                                         @endif
                                                     @endforeach

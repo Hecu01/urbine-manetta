@@ -189,20 +189,18 @@
                             </div>
 
 
-                            <div class="col-md-12 flex justify-end my-3" style="margin-right: 50px;" id="bottom-image">
-                                <div style="margin-right: 90px; display: flex; align-items: center;">
-                                    @if ($errors->has('foto'))
-                                        <div class="error-message"
-                                            style="color: red; font-size: 10pt; margin-right: 10px;">
-                                            {{ $errors->first('foto') }}
-                                        </div>
-                                    @endif
-                                    <label class="text-white bg-blue-500 hover:bg-blue-600" for="imageInput">
-                                        Cargar fotos
-                                        <input type="file" name="fotos[]" id="imageInput" required multiple accept="image/*" class="{{ $errors->has('foto') ? 'border-red' : '' }}" style="display:none;">
-                                    </label>
+                            <div class="col-md-12 grid justify-center my-3 " style="margin-left: 55px">
+                                <label class="btn text-white hover:scale-105 " for="imageInput"
+                                    style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
+                                    <input type="file" name="fotos[]" id="imageInput" required multiple accept="image/*" onchange="validateImage()">
+                                    Cargar fotos
+                                </label>
+                                <div id="errorMessage" style="color: red; font-size: 14px; margin-top: 5px; display: none;">
+                                    Falta cargar 1 o más imagenes
                                 </div>
                             </div>
+                
+ 
 
 
 
@@ -275,7 +273,10 @@
                             </div>
                         </div>
                     </div>
+                    @if ($errors->has('precio'))
+                        <div class="error-message" style="color: red">El precio es un número absurdamente alto.</div>
 
+                    @endif
 
                 </form>
             </div>
@@ -291,6 +292,31 @@
 
 
     <script>
+
+    function validateImage() {
+        const imageInput = document.getElementById('imageInput');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Check if any file is selected
+        if (imageInput.files.length === 0) {
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    }
+
+    document.getElementById('cargar-ropa').addEventListener('click', function () {
+        const imageInput = document.getElementById('imageInput');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Verifica si hay imágenes cargadas
+        if (imageInput.files.length === 0) {
+            errorMessage.style.display = 'block'; // Muestra el mensaje
+        } else {
+            errorMessage.style.display = 'none'; // Oculta el mensaje
+            document.getElementById('formulario-ropa-deportiva').submit(); // Envía el formulario
+        }
+    });
         function formatNumber(input) {
             // Eliminar caracteres no numéricos
             var num = input.value.replace(/[^0-9]/g, '');

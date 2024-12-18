@@ -17,18 +17,43 @@ class AdminesActivosController extends Controller
     {
         $user = Auth::user();
         $usuarios = User::where('administrator', false)->get();
-        $title = "Sportivo - Admines";
+        $admines = User::where('administrator', true)->get();
+        
+        $usuariosAdmines = User::where('administrator', true)
+                                ->where('super_administrator', false)
+                                ->get();
 
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.adminesActivos.index', compact('title', 'usuarios'));
+        $title = "Sportivo - Admines";
+        $adminesActivos = User::where('administrator', true)->count();
+
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.adminesActivos.index', compact('title', 'usuarios', 'adminesActivos', 'usuariosAdmines', 'admines'));
     }
 
-    // Habilitar nuevo administrador
-    public function HabilitarAdmin(Request $request, $id) {
+    /**
+     * Habilitar un nuevo admin
+     */
+    public function HabilitarAdmin(Request $request, string $id)
+    {
         $usuario = User::findOrFail($id);
         $cambioValor = 1; // True
         $usuario->administrator = $cambioValor;
         $usuario->save();
-        return redirect()->route('admins');
+
+        // Obtener el nombre del usuario
+        $nombreCompleto = $usuario->name . ' ' . $usuario->lastname;
+        return redirect()->route('AdminesActivos.index')->with('success', "Se ha habilitado al admin: $nombreCompleto");
+    }
+
+    public function QuitarAdmin(Request $request, string $id)
+    {
+        $usuario = User::findOrFail($id);
+        $cambioValor = 0; // false
+        $usuario->administrator = $cambioValor;
+        $usuario->save();
+
+        // Obtener el nombre del usuario
+        $nombreCompleto = $usuario->name . ' ' . $usuario->lastname;
+        return redirect()->route('AdminesActivos.index')->with('danger', "Se le ha quitado el admin a: $nombreCompleto");
     }
 
     /**
@@ -63,13 +88,7 @@ class AdminesActivosController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.

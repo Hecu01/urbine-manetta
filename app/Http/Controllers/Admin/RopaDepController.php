@@ -71,6 +71,10 @@ class RopaDepController extends Controller
     {
         // Validaciones
         $request->validate([
+            'precio' => [
+                'required', 
+                'max:2147483647', // Valor máximo para un INT con signo en MySQL
+            ],
             'tipoProducto' => 'required',
             'otroTipoProducto' => 'nullable|string|max:20',
             'stock' => 'required|integer',
@@ -78,6 +82,7 @@ class RopaDepController extends Controller
             'stock.required' => 'Debes colocar los talles',
         ]);
 
+    
 
         // Al momento de seleccionar el tipo de producto
         if ($request->tipoProducto === 'otro') {

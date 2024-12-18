@@ -83,6 +83,15 @@ class ArtDeportController extends Controller{
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
+        $request->validate([
+            'precio' => [
+                'required',
+                'lt:2147483648', // Menor que el valor máximo para INT con signo
+            ],
+            'tipoProducto' => 'required',
+            'stock' => 'required|integer',
+        ]);
+        
         // Crear artículo nuevo
         $articuloNuevo = Articulo::create([
             'nombre' =>  $request->nombre_producto,

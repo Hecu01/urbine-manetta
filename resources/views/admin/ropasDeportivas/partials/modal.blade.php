@@ -20,7 +20,7 @@
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
                                         <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
-                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
+                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " oninput="validarNumeros(this)" >
                                     </div>
                                 @endif
                             @endforeach
@@ -34,7 +34,7 @@
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
                                         <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
-                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
+                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " oninput="validarNumeros(this)" >
                                     </div>
                                 @endif
                             @endforeach
@@ -52,7 +52,7 @@
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
                                         <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
-                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
+                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " oninput="validarNumeros(this)" >
                                     </div>
                                 @endif
                             @endforeach
@@ -66,7 +66,7 @@
                                         <input type="hidden" name="talle_ids[]" value="{{$talle->id}}">
                                         <input type="checkbox" name="talles[]" id="talle-{{$talle->id}}" value="{{ $talle->id }}" class="form-check-input" >
                                         <label for="talle-{{$talle->id}}" class="mx-1">Talle {{ $talle->talle_ropa }}</label>
-                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " >
+                                        <input type="text" disabled name="stocks[]" id="stock-{{$talle->id}}" class="border-1  text-center border-cyan-600/[0.5] text-small input-suma-ropa p-0" style="width:40px;height:22px; " oninput="validarNumeros(this)" >
                                     </div>
                                 @endif
                             @endforeach

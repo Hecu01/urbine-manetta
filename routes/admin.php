@@ -147,5 +147,6 @@ Route::middleware(['auth'])->group(function () {
         // Los admines
         Route::resource('AdminesActivos', AdminesActivosController::class);
         Route::put('/habilitar-admin/{usuario}', [AdminesActivosController::class, 'HabilitarAdmin'])->name('habilitar_admin');
+        Route::put('/quitar-admin/{usuario}', [AdminesActivosController::class, 'QuitarAdmin'])->name('quitar_admin');
     });
 });

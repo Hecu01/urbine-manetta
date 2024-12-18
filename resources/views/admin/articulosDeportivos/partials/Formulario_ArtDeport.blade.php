@@ -144,9 +144,12 @@
             <div class="col-md-12 grid justify-center my-3 ">
                 <label class=" btn text-white hover:scale-105 " for="imageInput"
                     style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
-                    <input type="file" name="fotos[]" id="imageInput" required multiple accept="image/*">
+                    <input type="file" name="fotos[]" id="imageInput" required multiple accept="image/*" onchange="validateImage()">
                     Cargar fotos
                 </label>
+                <div id="errorMessage" style="color: red; font-size: 14px; margin-top: 5px; display: none;">
+                    Falta cargar 1 o más imagenes
+                </div>
             </div>
 
             {{-- Abajo del previsualizador de imagenes --}}
@@ -190,7 +193,7 @@
         
         {{-- BTN cargar articulo --}}
         <div class="col-md-3">
-            <button type="submit" class="btn btn-primary ">CARGAR ARTICULO</button>
+            <button type="submit" class="btn btn-primary " id="buttonCargarArticulo" >CARGAR ARTICULO</button>
         </div>
 
         {{-- BTN agregar descripcion --}}
@@ -209,7 +212,9 @@
             </div>
         </div>
     </div>
-
+    @if ($errors->has('precio'))
+        <div class="error-message" style="color: red">El precio es un número absurdamente alto.</div>
+    @endif
 
 
     <style>
@@ -258,3 +263,31 @@
         }
     </style>
 </form>
+
+<script>
+
+    function validateImage() {
+        const imageInput = document.getElementById('imageInput');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Check if any file is selected
+        if (imageInput.files.length === 0) {
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    }
+
+    document.getElementById('buttonCargarArticulo').addEventListener('click', function () {
+        const imageInput = document.getElementById('imageInput');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Verifica si hay imágenes cargadas
+        if (imageInput.files.length === 0) {
+            errorMessage.style.display = 'block'; // Muestra el mensaje
+        } else {
+            errorMessage.style.display = 'none'; // Oculta el mensaje
+            document.getElementById('formArtDeport').submit(); // Envía el formulario
+        }
+    });
+</script>
