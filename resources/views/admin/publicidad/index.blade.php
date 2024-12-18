@@ -106,7 +106,7 @@
             </table>
         </div>
     </div>
-    <a class="text-white no-underline article0 bg-purple-500 px-1" style="opacity: 0; cursor: default;>
+    {{-- <a class="text-white no-underline article0 bg-purple-500 px-1" style="opacity: 0; cursor: default;>
         <div class="top">
             <span>
                 <i class="fa-solid fa-bullhorn"></i>
@@ -118,7 +118,7 @@
         <div class="bottom">
             <p>Publicidades activas</p>
         </div>
-    </a>
+    </a> --}}
 
     <script>
         function updateImageName() {

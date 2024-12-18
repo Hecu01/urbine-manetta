@@ -102,7 +102,7 @@
             
 
 
-        <!-- Subir publicidad -->
+        {{-- <!-- Subir publicidad -->
         <a href="{{ route('publicidad.index') }}" class="text-white no-underline article0 bg-purple-500">
             <div class="top">
                 <span>
@@ -112,7 +112,7 @@
             <div class="bottom">
                 <p>Subir Publicidad</p>
             </div>
-        </a>
+        </a> --}}
       
                 
         <a href="{{ route('descuentos') }}" class="text-white no-underline article0 bg-red-500 border-red-500">

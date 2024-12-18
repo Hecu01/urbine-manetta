@@ -36,7 +36,7 @@ class ArtDeportController extends Controller{
         // Importamos modelos 
         $calzados = Calzado::all();
         $categorias = Categoria::all(); 
-        $articulos = Articulo::paginate(6);
+        $articulos = Articulo::paginate(10);
 
         // Si no es admin, redirija a la página de inicio
         return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.articulosDeportivos.index', compact('categorias', 'articulos', 'calzados', 'artDeportivos', 'title','deportes'));
@@ -88,7 +88,6 @@ class ArtDeportController extends Controller{
                 'required',
                 'lt:2147483648', // Menor que el valor máximo para INT con signo
             ],
-            'nombre' => 'required',
             'genero' => 'required',
             'tipoProducto' => 'required',
             'stock' => 'required|integer',
