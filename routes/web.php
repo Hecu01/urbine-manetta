@@ -85,6 +85,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/preg-frecuentes', function() {
         return view('users.askedQuestions');
     })->name('preg-frecuentes');
+
+    Route::get('/documentacion', function() {
+        return view('admin.documentacion');
+    })->name('documentacion');
+
 });
 
 
