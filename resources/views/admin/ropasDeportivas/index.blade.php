@@ -22,36 +22,68 @@
 
     <section class="">
         {{-- <h1>Novedades!</h1> --}}
-        <div class="center-index  mt-5">
+        <div class="center-index flex justify-center ">
 
-            <article class="" style="width: 15rem;">
-
-                @include('admin.ropasDeportivas.partials.right')
-                {{-- <img src="{{ url('producto/apolo.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">El elegido de la semana</h5>
-                    <p class="card-text">Cantidad: 16 unidades</p>
-                </div>
-            </article>
-            <article class="card" style="width: 15rem;">
-                <img src="{{ url('producto/apolo.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">El elegido de la semana</h5>
-                    <p class="card-text">Cantidad: 16 unidades</p>
-                </div>
-            </article>
-            <article class="card" style="width: 15rem;">
-                <img src="{{ url('producto/apolo.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">El elegido de la semana</h5>
-                    <p class="card-text">Cantidad: 16 unidades</p>
-                </div> --}}
-            </article>
+            <div class="">
+                <a href="{{ route('ropa-deportiva.formulario') }}" class="text-white no-underline">
+                    <article class="article0 bg-slate-600   px-2 hover:scale-105">
+                        <div class="top">
+                            <span>
+                            <i class="fa-solid fa-plus" ></i>
+            
+            
+                            </span>
+                            <span class="recuento">
+                                <i class="fa-solid fa-up-long" style="font-size: 1em"></i>
+                            </span>
+                        </div>
+                        <div class="bottom " style="font-size: 1.055em">
+                            <p>Crear nueva ropa</p>
+                        </div>
+                    </article>
+                </a>
+            </div>
+              
+          
+            <div class="">
+                <a href="{{ route('ropa-deportiva.tabla') }}" class="text-white no-underline">
+                    <article class="article0 bg-rose-600   px-2 hover:scale-105">
+                        <div class="top">
+                            <span>
+                            <i class="fa-solid fa-table"></i>
+            
+                            </span>
+                            <span class="recuento">
+                                <i class="fa-solid fa-up-long" style="font-size: 1em"></i>
+                            </span>
+                        </div>
+                        <div class="bottom " style="font-size: 1.055em">
+                            <p>Tabla de Ropas</p>
+                        </div>
+                    </article>
+                </a>
+            </div>
         </div>
     </section>
+    
+    <div class=""style="border-left: 1px solid rgba(0, 0, 0, 0.315)">
+        <!-- Artículos deportivos -->
+        <article class="article0 px-2 bg-blue-500 hover:scale-105" >
+            <a href="{{ route('ropa-deportiva.index') }}" class="text-white no-underline">
+            <div class="top">
+                <span>
+                    <i class="fa-solid fa-shirt"></i>
+                </span>
+                <span class="recuento">
+                    {{ $ropaDeportivas }}
+                </span>
+            </div>
+            <div class="bottom">
+                <p>Ropas deportivas <br> disponibles</p>
+            </div>
+            </a>
+        </article>
 
-    <div class="aside" style="visibility: hidden; pointer-events: none;">
-        @include('admin.ropasDeportivas.partials.right')
     </div>
 
   

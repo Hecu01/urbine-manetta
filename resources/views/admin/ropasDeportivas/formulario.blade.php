@@ -141,7 +141,6 @@
                                 <div class="col-md-10">
                                     <label for="deporte" class="form-label">Etiquetas de deportes</label>
                                     <select name="select_deportes[]" id="deporte" class="form-select">
-                                        <option value="" selected hidden> Agregá los deportes relacionados</option>
                                         @foreach ($deportes as $deporte)
                                             <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
                                         @endforeach

@@ -24,7 +24,6 @@
     
     <section class="center-actions">
         <div class=""style="min-width:800px; max-width:800px;">
-            <h1 class="uppercase text-center">Suplementos deportivos y alimentos dietéticos</h1>
             <div class="flex justify-center">
 
                 <div class="">
@@ -32,14 +31,14 @@
                         <a href="{{ route('suplementos-dieta.create') }}" class="text-white no-underline">
                         <div class="top">
                             <span>
-                                <i class="fa-solid fa-football"></i>
+                                <i class="fa-solid fa-plus"></i>
                             </span>
                             <span class="recuento">
                                 <i class="fa-solid fa-up-long" style="font-size: 1em"></i>
                             </span>
                         </div>
                         <div class="bottom " style="font-size: 1.055em">
-                            <p>Formulario</p>
+                            <p>Agregar nuevo suplemento deportivo</p>
                         </div>
                         </a>
                     </article>
@@ -58,7 +57,7 @@
                             </span>
                         </div>
                         <div class="bottom " style="font-size: 1.055em">
-                            <p>Tabla</p>
+                            <p>Tabla de productos</p>
                         </div>
                         </a>
                     </article>
@@ -84,21 +83,26 @@
             </div>
         </div>
     </section>
-    <hr>
+    
     <!-- Sumplementos y dieta -->
-    <a href="{{ route('suplementos-dieta.index') }}" class="text-white no-underline article0 article3 px-1">
-        <div class="top">
-            <span>
-                <i class="fa-solid fa-heart"></i>
-            </span>
-            <span class="recuento">
-                {{ $suplementos }}
-            </span>
-        </div>
-        <div class="bottom">
-            <p>Sumplementos y dieta</p>
-        </div>
-    </a>
+    <div class=""style="border-left: 1px solid rgba(0, 0, 0, 0.315)">
+        <a href="{{ route('suplementos-dieta.index') }}" class="text-white no-underline ">
+            <article class="article0 article3 px-2">
+                <div class="top">
+                    <span>
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <span class="recuento">
+                        {{ $suplementos }}
+                    </span>
+                </div>
+                <div class="bottom">
+                    <p>Sumplementos y dieta</p>
+                </div>
+            </article>
+                
+        </a>
+    </div>
     
   </main>
   

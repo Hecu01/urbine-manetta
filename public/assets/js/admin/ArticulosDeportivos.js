@@ -298,25 +298,8 @@ $(document).ready(function(){
 
     });
 });
-//
-//
-// Seccion donde se agregan o quitan etiquetas
-//
-//
-function agregarDeporte() {
-    var select = document.getElementById("deporte");
-    var textarea = document.getElementById("contenedor-etiquetas");
 
-    // Obtener el valor seleccionado del select
-    var deporte = select.options[select.selectedIndex].text;
 
-    // Agregar el valor al textarea como etiqueta
-    if (textarea.value === "") {
-        textarea.value = deporte;
-    } else {
-        textarea.value += ", " + deporte;
-    }
-}
 
 // Mostrar u ocultar el campo de opciones de calzado según el tipo seleccionado
 document.querySelector('select[name="tipoProducto"]').addEventListener('change', function() {

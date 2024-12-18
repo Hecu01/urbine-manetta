@@ -61,7 +61,15 @@ class SuplemDietaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'precio' => [
+                'required',
+                'lt:2147483648', // Menor que el valor máximo para INT con signo
+            ],
+            'stock' => 'required|lt:2147483648',
 
+
+        ]);
 
         // Crear artículo nuevo
         $articuloNuevo = Articulo::create([

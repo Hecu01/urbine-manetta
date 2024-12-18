@@ -88,6 +88,8 @@ class ArtDeportController extends Controller{
                 'required',
                 'lt:2147483648', // Menor que el valor máximo para INT con signo
             ],
+            'nombre' => 'required',
+            'genero' => 'required',
             'tipoProducto' => 'required',
             'stock' => 'required|integer',
         ]);
@@ -181,6 +183,13 @@ class ArtDeportController extends Controller{
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'precio' => [
+                'required',
+                'lt:2147483648', // Menor que el valor máximo para INT con signo
+            ],
+        ]);
+        
         // Recibir el id del articulo a actualizar
         $articulo = Articulo::findOrFail($id);
 

@@ -168,6 +168,17 @@ function agregarDeporte() {
     var deporteId = select.value; // Capturamos el ID del deporte seleccionado
     var deporteNombre = select.options[select.selectedIndex].text; // Capturamos el nombre del deporte seleccionado
 
+    // Verificar si ya existe una etiqueta con el mismo ID
+    var etiquetasExistentes = document.querySelectorAll(".etiqueta");
+    var existe = Array.from(etiquetasExistentes).some(function(etiqueta) {
+        return etiqueta.getAttribute("data-deporte-id") === deporteId;
+    });
+
+    if (existe) {
+        alert("El deporte ya está agregado.");
+        return; // Salimos de la función para evitar duplicados
+    }
+
     // Crear la etiqueta visual
     var etiqueta = document.createElement("div");
     etiqueta.classList.add("etiqueta");

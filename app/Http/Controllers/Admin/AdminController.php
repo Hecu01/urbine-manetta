@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Talle;
 use App\Models\Compra;
@@ -25,6 +26,41 @@ class AdminController extends Controller
     */
     public function admin()
     {
+        /* Los datos de las actividades del lado derecho de inicio admin */
+
+        // Obtenemos el inicio del día de hoy
+        $inicioDelDia = Carbon::today(); // 00:00:00 del día de hoy
+
+        // Obtenemos el final del día de hoy (23:59:59)
+        $finDelDia = Carbon::today()->endOfDay(); // 23:59:59 del día de hoy
+
+        // Contamos los  que se registraron hoy
+        $clientesHoy = User::where('administrator', false) 
+                            ->whereBetween('created_at', [$inicioDelDia, $finDelDia])
+                            ->count();
+
+        // Contamos los  que se registraron hoy
+        $comprasHoy = Compra::whereBetween('created_at', [$inicioDelDia, $finDelDia])
+                            ->count();
+        // Contamos los  que se registraron hoy
+        $suplementosHoy = Articulo::where('id_categoria', 3)
+                            ->whereBetween('created_at', [$inicioDelDia, $finDelDia])
+                            ->count();
+        // Contamos los  que se registraron hoy
+        $articulosHoy = Articulo::where('id_categoria', 1)
+                                    ->where('tipo_producto', 'accesorio') 
+                                    ->whereBetween('created_at', [$inicioDelDia, $finDelDia])
+                                    ->count();
+        // Contamos los  que se registraron hoy
+        $ropasHoy = Articulo::where('id_categoria', 2)
+                                    ->whereBetween('created_at', [$inicioDelDia, $finDelDia])
+                                    ->count();
+        // Contamos los  que se registraron hoy
+        $reposicionesHoyPendientes = ReposicionMercaderia::whereBetween('created_at', [$inicioDelDia, $finDelDia])->count();
+
+
+
+
         // Autenticación
         $user = Auth::user();
 
@@ -40,7 +76,7 @@ class AdminController extends Controller
 
 
         $title = "Sportivo - Admin";
-        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'articulos', 'adminesActivos', 'ropas', 'descuentosActivos', 'reposicionesPendientes', 'suplementos', 'clientes', 'comprasRealizadas'));
+        return (!Auth::user()->administrator) ? redirect()->route('pagina_inicio') : view('admin.Admin', compact('title', 'articulos', 'adminesActivos', 'ropas', 'descuentosActivos', 'reposicionesPendientes', 'suplementos', 'clientes', 'comprasRealizadas', 'clientesHoy', 'comprasHoy','suplementosHoy', 'articulosHoy', 'ropasHoy', 'reposicionesHoyPendientes', 'inicioDelDia'));
     }
 
     /*

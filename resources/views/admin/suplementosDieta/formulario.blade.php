@@ -106,7 +106,6 @@
                             <div class="col-md-10">
                                 <label for="deporte" class="form-label">Etiquetas de deportes</label>
                                 <select name="select_deportes" id="deporte" class="form-select">
-                                    <option value="" selected hidden> Agregá los deportes relacionados</option>
                                     @foreach ($deportes as $deporte)
                                         <option value="{{ $deporte->id }}">{{ $deporte->deporte }}</option>
                                     @endforeach
@@ -183,8 +182,8 @@
                                 {{-- Stock --}}
                                 <div class="col-md-5">
                                     <label for="stock_input" class="form-label">Stock</label>
-                                    <input type="text" name="stock" placeholder="cantidad" class="form-control total stock_input" id="stock_input" required>
-            
+                                    <input type="text" name="stock" placeholder="cantidad" class="form-control total stock_input" id="stock_input" oninput="validarNumeros(this)"  required>
+
                                 </div>
             
                                 {{-- Marca --}}
@@ -226,13 +225,28 @@
                         <div class="input-group">
                             <span class="input-group-text " style="border:1px solid rgb(16, 153, 163,0.377);"
                                 id="signo-peso">$</span>
-                            <input type="text" name="precio"onwheel="preventScroll(event)" class="form-control"
-                                id="precioFinal" aria-describedby="inputGroupPrepend2" onsubmit="removeDots()" required>
+                            <input type="text" name="precio" class="form-control"
+                                id="precioFinal" aria-describedby="inputGroupPrepend2"  oninput="validarNumeros(this)"  required>
                         </div>
                     </div>
                 </div>
-            
-            
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if ($errors->has('precio'))
+                    <div class="error-message" style="color: red">El precio es un número absurdamente alto.</div>
+
+                @endif
+                @if ($errors->has('stock'))
+                    <div class="error-message" style="color: red">El stock es absurdamente alto.</div>
+
+                @endif
             
                 <style>
                     .etiqueta {

@@ -205,21 +205,12 @@
         </a>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos' => ['masculino', 'unisex'], 'publico_dirigido' => ['adultos']]) }}"
+                href="{{ route('buscar', ['generos' => ['masculino', 'unisex'], 'publico_dirigido' => ['adultos', 'ambos']]) }}"
                 id="navbarDropdown" role="button" {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 HOMBRE
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item"
-                        href="{{ route('buscar', ['generos' => ['masculino', 'unisex']]) }}">Hombre</a>
-                </li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
@@ -239,7 +230,7 @@
         </div>
         <div class="nav-item dropdown">
             <a class="nav-link mx-3 hover:scale-110 hover:underline hover:underline-offset-4"
-                href="{{ route('buscar', ['generos' => ['niños', 'unisex'], 'publico_dirigido' => ['niños']]) }}"
+                href="{{ route('buscar', ['generos' => ['niños', 'unisex'], 'publico_dirigido' => ['niños', 'ambos']]) }}"
                 id="navbarDropdown" role="button" {{-- data-bs-toggle="dropdown" 
                 aria-expanded="false" --}}>
                 NIÑOS

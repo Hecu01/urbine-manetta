@@ -1,84 +1,3 @@
-{{-- @extends('layouts.app')
-@section('section-principal')    
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6" id="registro">
-                <div class="card esteform">
-                    <div class="card-header">{{ __('Registrarse') }}</div>
-    
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-    
-                            <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
-    
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-    
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-    
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Correo Electrónico') }}</label>
-    
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-    
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-    
-                            <div class="row mb-3">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
-    
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-    
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-    
-                            <div class="row mb-3">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmar contraseñas') }}</label>
-    
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
-    
-                            <div class="row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Registrarse') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-@endsection --}}
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,7 +48,7 @@
 
 
                 <div class="card-body pb-0" style="max-width: 400px">
-                    <form method="POST"  action="{{ route('register') }}" enctype="multipart/form-data">
+                    <form method="POST"  action="{{ route('register') }}" enctype="multipart/form-data" id="register-user-form">
                         @csrf
 
                         <div class="row ">
@@ -146,9 +65,15 @@
                                     </div>
                                     <div class="col-md-12 grid justify-center my-3 ">
                                         <label class=" btn text-white hover:scale-105 " for="imageInput" style="background-color: rgb(16, 153, 163);text-align:center; width:100% ">
-                                            <input type="file" name="foto" id="imageInput" multiple accept="image/*">
+                                            <input type="file" name="foto" id="imageInput" multiple accept="image/*" required>
                                             Cargar foto
                                         </label>
+                                        <div id="errorMessage" style="color: red; font-size: 14px; margin-top: 5px; display: none;">
+                                            Falta cargar la foto
+                                        </div>
+                                        @if ($errors->has('foto'))
+                                            <div class="error-message" style="color: red">La foto es necesaria.</div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -176,14 +101,12 @@
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control   @error('apellido') is-invalid @enderror" id="apellido" placeholder="name@example.com"  name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
                                         <label for="apellido">Apellido</label>
+                                        @if ($errors->has('lastname'))
+                                            <div class="error-message" style="color: red; margin-bottom:10px" >El Apellido es necesario</div>
+                                        @endif
                                     </div>
     
     
-                                    @error('apellido')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>Las credenciales están incorrectas</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -199,11 +122,9 @@
                                         <label for="dni">DNI (sin puntos)</label>
                                     </div>
     
-                                    @error('dni')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>Las credenciales están incorrectas</strong>
-                                        </span>
-                                    @enderror
+                                    @if ($errors->has('dni'))
+                                        <div class="error-message" style="color: red">El dni es absurdamente alto.</div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -215,12 +136,10 @@
                                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="name@example.com"  name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                         <label for="email">Correo Electrónico</label>
                                     </div>
-    
-                                    @error('correo')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>Las credenciales están incorrectas</strong>
-                                        </span>
-                                    @enderror
+                                    @if ($errors->has('email'))
+                                        <div class="error-message" style="color: red">El usuario ya existe</div>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -268,7 +187,7 @@
 
                         <div class="flex justify-center mb-0">
                             <div class="col-md-5 grid">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="registrar-usuario">
                                     {{ __('Registrarse') }}
                                 </button>
 
@@ -295,8 +214,32 @@
         </div>
     </div>
     <script>
+        // Validamos la imagen
+        function validateImage() {
+            const imageInput = document.getElementById('imageInput');
+            const errorMessage = document.getElementById('errorMessage');
 
-    
+            // Check if any file is selected
+            if (imageInput.files.length === 0) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        }
+
+        document.getElementById('registrar-usuario').addEventListener('click', function () {
+            const imageInput = document.getElementById('imageInput');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Verifica si hay imágenes cargadas
+            if (imageInput.files.length === 0) {
+                errorMessage.style.display = 'block'; // Muestra el mensaje
+            } else {
+                errorMessage.style.display = 'none'; // Oculta el mensaje
+                document.getElementById('register-user-form').submit(); // Envía el formulario
+            }
+        });
+        
         document.addEventListener('DOMContentLoaded', function () {
             // Manejar cambios en el campo de entrada de imágenes
             document.getElementById('imageInput').addEventListener('change', handleImagePreview);
